@@ -1,0 +1,32 @@
+name: ESLint Check
+
+# Pull Request가 실행될 때만 실행
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  lint:
+    name: Run ESLint
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. 코드 체크아웃 -> 코드를 가져오기 위해 필요
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # 2. Node.js 설정 -> js파일 린트를 위해 필요
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      # 3. 의존성 설치 -> ESlint 실행 필요
+      - name: Install dependencies
+        run: npm install
+
+      # 4. ESLint 실행 -> 린트 실행!
+      - name: Run ESLint
+        run: npm run lint
