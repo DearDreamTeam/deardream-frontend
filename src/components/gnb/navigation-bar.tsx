@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { NAV_ITEMS } from "@/constants/navItems";
+import { NAV_ITEMS } from "@/constants/nav-items";
 
 import NavigationItem from "./navigation-item";
 
