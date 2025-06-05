@@ -3,17 +3,25 @@
 @import "./typography.css";
 
 @layer utilities {
-  .hide-scrollbar {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+  .overflow-auto-hide-scroll {
+    overflow-y: auto;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE 10+ */
   }
-  .hide-scrollbar::-webkit-scrollbar {
-    display: none;
+
+  .overflow-auto-hide-scroll::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
   }
 }
 
 @layer components {
   .button {
     @apply flex cursor-pointer items-center gap-1 rounded-sm bg-gray-900 p-2 text-gray-50;
+  }
+  .modal-bg {
+    @apply bg-inactive-bg fixed inset-0;
+  }
+  .modal-btn {
+    @apply flex-1 cursor-pointer py-[0.88rem];
   }
 }

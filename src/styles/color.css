@@ -19,4 +19,5 @@
   --color-main-red-50: #ffe0ef;
 
   --shadow-default: 0 0 12px 0 rgb(0 0 0 / 0.08);
+  --color-inactive-bg: rgba(28, 28, 28, 0.5);
 }

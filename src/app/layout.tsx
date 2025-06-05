@@ -34,11 +34,11 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body
-        className={`${pretendard.className} mx-auto h-screen w-screen max-w-[375px]`}
+        className={`${pretendard.className} mx-auto h-screen w-screen max-w-[375px] text-gray-900`}
       >
-        <div className="shadow-default flex h-full flex-col justify-between overflow-hidden bg-gray-50">
+        <div className="shadow-default flex h-full flex-col justify-between bg-gray-50">
           <Header />
-          <div className="flex-1">{children}</div>
+          <main className="flex-1 overflow-hidden">{children}</main>
           <NavigationBar />
         </div>
       </body>

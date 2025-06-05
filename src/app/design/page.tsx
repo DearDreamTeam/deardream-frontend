@@ -1,6 +1,6 @@
 const Design = () => {
   return (
-    <div className="overflow-y-auto">
+    <div className="overflow-auto-hide-scroll h-full">
       <div>
         <h1 className="text-headline-0">design system</h1>
         <h2 className="text-headline-1">grayscale</h2>
