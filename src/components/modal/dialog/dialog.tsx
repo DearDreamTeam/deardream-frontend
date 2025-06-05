@@ -1,6 +1,9 @@
 const Dialog = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="shadow-default bg-gray-0 z-50 rounded-lg">{children}</div>
+    <div className="modal-container">
+      <div className="modal-bg" />
+      <div className="modal-main rounded-lg">{children}</div>
+    </div>
   );
 };
 

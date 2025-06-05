@@ -18,10 +18,16 @@
   .button {
     @apply flex cursor-pointer items-center gap-1 rounded-sm bg-gray-900 p-2 text-gray-50;
   }
+  .modal-container {
+    @apply fixed inset-0 z-50 flex items-center justify-center;
+  }
   .modal-bg {
     @apply bg-inactive-bg fixed inset-0;
   }
   .modal-btn {
     @apply flex-1 cursor-pointer py-[0.88rem];
+  }
+  .modal-main {
+    @apply shadow-default bg-gray-0 relative z-50;
   }
 }
