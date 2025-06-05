@@ -31,7 +31,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body className={`${pretendard.className}`}>{children}</body>
+      <body
+        className={`${pretendard.className} mx-auto h-screen w-screen max-w-[375px]`}
+      >
+        <div className="shadow-default h-full overflow-hidden bg-gray-50">
+          {children}
+        </div>
+      </body>
     </html>
   );
 }
