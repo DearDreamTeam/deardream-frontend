@@ -30,4 +30,11 @@
   .modal-main {
     @apply shadow-default bg-gray-0 relative z-50;
   }
+
+  .modal-container-b {
+    @apply fixed inset-0 z-50 flex items-end justify-center;
+  }
+  .modal-btn-wide {
+    @apply flex-1 cursor-pointer px-32 py-4;
+  }
 }
