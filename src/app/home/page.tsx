@@ -1,4 +1,5 @@
 import InviteFamilyButton from "@/components/button/invite-family-button";
+import PostCard from "@/components/post-card/post-card";
 import Image from "next/image";
 
 const Home = () => {
@@ -17,6 +18,7 @@ const Home = () => {
           채워나가볼까요?
         </p>
         <InviteFamilyButton />
+        <PostCard />
       </div>
     </div>
   );
