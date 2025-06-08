@@ -8,16 +8,25 @@
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none; /* IE 10+ */
   }
-
   .overflow-auto-hide-scroll::-webkit-scrollbar {
     display: none; /* Chrome, Safari, Opera */
+  }
+
+  .rounded-25 {
+    @apply rounded-sm; /* border-radius 0.25 */
+  }
+  .rounded-50 {
+    @apply rounded-b-lg; /* border-radius 0.5 */
   }
 }
 
 @layer components {
+  /* black btn */
   .button {
-    @apply flex cursor-pointer items-center gap-1 rounded-sm bg-gray-900 p-2 text-gray-50;
+    @apply flex items-center gap-1 rounded-sm bg-gray-900 p-2 text-gray-50;
   }
+
+  /* modal-dialog */
   .modal-container {
     @apply fixed inset-0 z-50 flex items-center justify-center;
   }
@@ -25,16 +34,21 @@
     @apply bg-inactive-bg fixed inset-0;
   }
   .modal-btn {
-    @apply flex-1 cursor-pointer py-[0.88rem];
+    @apply flex-1 py-[0.88rem];
   }
   .modal-main {
     @apply shadow-default bg-gray-0 relative z-50;
   }
 
+  /* modal-edit-delete */
   .modal-container-b {
     @apply fixed inset-0 z-50 flex items-end justify-center;
   }
   .modal-btn-wide {
-    @apply flex-1 cursor-pointer px-32 py-4;
+    @apply flex-1 px-32 py-4;
   }
+}
+
+button {
+  cursor: pointer;
 }
