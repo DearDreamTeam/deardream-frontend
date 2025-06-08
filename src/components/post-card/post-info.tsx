@@ -1,8 +1,10 @@
-import { PostCardType } from "@/types/post-card-type";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import More from "@/public/icons/post-card/more.svg";
+
+import { PostCardType } from "@/types/post-card-type";
 import { formatDateToDots } from "@/utils/format-date-to-dots";
+import MoreButton from "./more-button";
+
 const PostInfo = ({
   name,
   relation,
@@ -21,9 +23,7 @@ const PostInfo = ({
             {formatDateToDots(createdAt)}
           </p>
         </div>
-        <button className="text-gray-500">
-          <More />
-        </button>
+        <MoreButton />
       </div>
     </div>
   );
