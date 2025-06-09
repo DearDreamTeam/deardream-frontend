@@ -1,17 +1,11 @@
-import { Dispatch, SetStateAction, useRef } from "react";
-import { useOutsideClick } from "@/hooks/use-outside-click";
 import Edit from "@/public/icons/modal/edit.svg";
 import Delete from "@/public/icons/modal/delete.svg";
 
-const EditDeleteModal = ({
-  setOpen,
-}: {
-  setOpen: Dispatch<SetStateAction<boolean>>;
-}) => {
-  const closeModal = () => setOpen(false);
+import { useOutsideClick } from "@/hooks/use-outside-click";
+import { SetIsOpenType } from "@/types/set-open-type";
 
-  const modalRef = useRef<HTMLDivElement>(null);
-  useOutsideClick(modalRef, closeModal);
+const EditDeleteModal = ({ setIsOpen }: { setIsOpen: SetIsOpenType }) => {
+  const { modalRef, closeModal } = useOutsideClick<HTMLDivElement>(setIsOpen);
 
   return (
     <div className="modal-container-b">

@@ -3,7 +3,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 
 import { PostCardType } from "@/types/post-card-type";
 import { formatDateToDots } from "@/utils/format-date-to-dots";
-import MoreButton from "./more-button";
+import MoreButton from "@/components/button/more-button";
 
 const PostInfo = ({
   name,

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import More from "@/public/icons/post-card/more.svg";
-import EditDeleteModal from "../modal/edit-delete/edit-delete-modal";
+import EditDeleteModal from "@/components/modal/edit-delete/edit-delete-modal";
 
 const MoreButton = () => {
   const [isEditDeleteModalOpen, setIsEditDeleteModalOpen] = useState(false);
@@ -17,7 +17,7 @@ const MoreButton = () => {
       </button>
 
       {isEditDeleteModalOpen && (
-        <EditDeleteModal setOpen={setIsEditDeleteModalOpen} />
+        <EditDeleteModal setIsOpen={setIsEditDeleteModalOpen} />
       )}
     </div>
   );
