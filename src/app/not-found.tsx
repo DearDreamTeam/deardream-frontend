@@ -1,6 +1,7 @@
 "use client";
 
 import Lottie from "@/components/anim/Lottie";
+import Dropdown from "@/components/dropdown/dropdown";
 import AlertDialog from "@/components/modal/dialog/alert-dialog";
 import ConfirmDialog from "@/components/modal/dialog/confirm-dialog";
 import { useRouter } from "next/navigation";
@@ -12,7 +13,7 @@ const NotFound = () => {
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
 
   return (
-    <div className="flex h-full flex-col items-center justify-center gap-4">
+    <div className="overflow-auto-hide-scroll flex h-full flex-col items-center justify-center gap-4">
       <div className="w-fit">
         <Lottie />
       </div>
@@ -43,6 +44,7 @@ const NotFound = () => {
           그래도 삭제하시겠어요?
         </ConfirmDialog>
       )}
+      <Dropdown />
     </div>
   );
 };

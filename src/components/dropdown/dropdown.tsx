@@ -1,0 +1,45 @@
+"use client";
+
+import ArrowDown from "@/public/icons/dropdown/arrow-down.svg";
+import ArrowUp from "@/public/icons/dropdown/arrow-up.svg";
+import { useState } from "react";
+
+const mockServiceStartYear = 2022;
+
+const Dropdown = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const handleToggle = () => {
+    setIsOpen((prev) => !prev);
+  };
+  const year = new Date().getFullYear();
+  const viewYears = Array.from(
+    { length: year - mockServiceStartYear + 1 },
+    (_, i) => year - i,
+  );
+
+  return (
+    <ul
+      className={`bg-gray-0 rounded-25 shadow-default text-caption-2 flex w-[4.375rem] flex-col gap-[0.38rem] py-[0.31rem] text-center text-gray-700`}
+    >
+      <button
+        onClick={handleToggle}
+        className="relative flex w-[3.96rem] items-center"
+      >
+        <li className="w-[3.68263rem]">전체</li>
+        <div className="absolute right-0">
+          {isOpen ? <ArrowDown /> : <ArrowUp />}
+        </div>
+      </button>
+      <div className="">
+        {isOpen &&
+          viewYears.map((year) => (
+            <li className="w-[3.68263rem] text-center" key={year}>
+              {year} 년
+            </li>
+          ))}
+      </div>
+    </ul>
+  );
+};
+
+export default Dropdown;
