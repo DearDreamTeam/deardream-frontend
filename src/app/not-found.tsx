@@ -13,7 +13,7 @@ const NotFound = () => {
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
 
   return (
-    <div className="overflow-auto-hide-scroll flex h-full flex-col items-center justify-center gap-4">
+    <div className="overflow-auto-hide-scroll flex h-full flex-col items-center gap-4">
       <div className="w-fit">
         <Lottie />
       </div>

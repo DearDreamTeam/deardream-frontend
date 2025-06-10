@@ -21,6 +21,11 @@
 }
 
 @layer components {
+  /* header */
+  .header {
+    @apply bg-gray-0 flex border-b border-b-gray-200 px-4;
+  }
+
   /* black btn */
   .button {
     @apply flex items-center gap-1 rounded-sm bg-gray-900 p-2 text-gray-50;

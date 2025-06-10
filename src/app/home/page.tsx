@@ -4,7 +4,7 @@ import Image from "next/image";
 
 const Home = () => {
   return (
-    <div className="overflow-auto-hide-scroll flex h-full flex-col justify-center">
+    <div className="overflow-auto-hide-scroll flex h-full flex-col">
       <Image
         src={"/images/mailbox-empty.svg"}
         alt={"홈페이지 이미지"}
@@ -18,6 +18,8 @@ const Home = () => {
           채워나가볼까요?
         </p>
         <InviteFamilyButton />
+        <PostCard />
+        <PostCard />
         <PostCard />
       </div>
     </div>
