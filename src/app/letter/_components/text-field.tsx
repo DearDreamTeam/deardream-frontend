@@ -14,7 +14,6 @@ const TextField = ({ content, setContent }: TextFieldProps) => {
       value={content}
       onChange={handleChangeContent}
       placeholder="나만의 일상을 남기고 소식지로 선물해보세요!"
-      maxLength={600}
     ></textarea>
   );
 };
