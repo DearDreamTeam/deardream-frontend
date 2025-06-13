@@ -57,3 +57,9 @@
 button {
   cursor: pointer;
 }
+
+textarea {
+  outline: none;
+  resize: none;
+  scrollbar-width: none;
+}

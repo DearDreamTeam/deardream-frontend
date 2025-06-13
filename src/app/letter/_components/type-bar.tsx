@@ -2,16 +2,17 @@
 
 import { useRef, useState } from "react";
 import Gallery from "@/public/icons/photo-selector/gallery.svg";
-import AlertDialog from "../modal/dialog/alert-dialog";
+import AlertDialog from "../../../components/modal/dialog/alert-dialog";
 
 interface TypeBarProps {
-  isImageAdded: boolean;
+  imgLength: number;
   typedLength: number;
+  setImageFiles: React.Dispatch<React.SetStateAction<File[]>>;
 }
 
-const TypeBar = ({ isImageAdded, typedLength }: TypeBarProps) => {
+const TypeBar = ({ imgLength, typedLength, setImageFiles }: TypeBarProps) => {
   /* 이미지가 추가된 상태면 200자, 이미지가 없는 상태면 600자 제한 설정 */
-  const textLimit = isImageAdded ? "200" : "600";
+  const textLimit = imgLength > 0 ? "200" : "600";
 
   const [isAlertOpen, setIsAlertOpen] = useState(false);
 
@@ -23,11 +24,13 @@ const TypeBar = ({ isImageAdded, typedLength }: TypeBarProps) => {
   };
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
-    if (files && files.length > 2) {
+    if (!files) return;
+    if (files.length > 2 || imgLength > 2) {
       setIsAlertOpen(true);
       e.target.value = "";
       return;
     }
+    setImageFiles((prev) => [...prev, ...files]);
   };
 
   return (
