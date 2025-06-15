@@ -5,10 +5,10 @@ export interface User {
   userId: number;
   kakaoId: string;
   name: string;
-  profileImage: string /* url */;
+  profileImage: string | null /* url */;
   createdAt: number /* timestamp */;
   birth: number /* timestamp */;
-  role: FamilyRole;
-  relation: FamilyRelation | string /* 기타 관계 */;
-  familyId: number;
+  role: FamilyRole | null;
+  relation: FamilyRelation | string | null /* 기타 관계 */;
+  familyId: number | null;
 }
