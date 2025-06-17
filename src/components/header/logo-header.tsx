@@ -6,7 +6,8 @@ import { usePathname } from "next/navigation";
 const LogoHeader = () => {
   const pathname = usePathname();
 
-  if (pathname === "/letter/new") return null;
+  if (pathname.startsWith("/letter/")) return null;
+
   return (
     <header className="header py-[0.875rem]">
       <Link href="/home">
@@ -15,6 +16,7 @@ const LogoHeader = () => {
           alt={"이어드림 로고"}
           width={100}
           height={31}
+          priority
         />
       </Link>
     </header>

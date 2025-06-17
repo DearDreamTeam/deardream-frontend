@@ -7,9 +7,14 @@ import AlertDialog from "@/components/modal/dialog/alert-dialog";
 interface GalleryButtonProps {
   imgLength: number;
   setImageFiles: React.Dispatch<React.SetStateAction<File[]>>;
+  setPreviewUrl: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
-const GalleryButton = ({ imgLength, setImageFiles }: GalleryButtonProps) => {
+const GalleryButton = ({
+  imgLength,
+  setImageFiles,
+  setPreviewUrl,
+}: GalleryButtonProps) => {
   const [isAlertOpen, setIsAlertOpen] = useState(false);
 
   /* 이미지 선택 버튼 처리 */
@@ -27,6 +32,10 @@ const GalleryButton = ({ imgLength, setImageFiles }: GalleryButtonProps) => {
       return;
     }
     setImageFiles((prev) => [...prev, ...files]);
+    setPreviewUrl((prev) => [
+      ...prev,
+      ...[...files].map((file) => URL.createObjectURL(file)),
+    ]);
   };
   return (
     <div>

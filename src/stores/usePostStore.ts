@@ -4,11 +4,12 @@ import { Post } from "@/types/post-type";
 
 const POST_STORAGE_KEY = "deardream-post";
 
-interface PostState {
+export interface PostState {
   post: Post[];
   addPost: (letter: Post) => void;
   deletePost: (postId: Post["postId"]) => void;
   editPost: (postId: Post["postId"], letter: Post) => void;
+  getAPostcard: (postId: Post["postId"]) => Post | undefined;
 }
 
 export const usePostStore = create<PostState>()(
@@ -28,6 +29,12 @@ export const usePostStore = create<PostState>()(
           return letter;
         });
         return set({ post: [...newPost] });
+      },
+      getAPostcard: (postId: Post["postId"]) => {
+        const letter = get().post.find(
+          (postcard) => postcard.postId === postId,
+        );
+        return letter;
       },
     }),
     { name: POST_STORAGE_KEY },

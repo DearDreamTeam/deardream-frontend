@@ -8,6 +8,8 @@ import { SetIsOpenType } from "@/types/set-open-type";
 import { usePostStore } from "@/stores/usePostStore";
 import { useState } from "react";
 import ConfirmDialog from "../dialog/confirm-dialog";
+import { useRouter } from "next/navigation";
+import { PATH } from "@/constants/path";
 
 const EditDeleteModal = ({
   postId,
@@ -19,13 +21,17 @@ const EditDeleteModal = ({
   const { modalRef, closeModal } = useOutsideClick<HTMLDivElement>(setIsOpen);
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const { deletePost } = usePostStore();
+  const router = useRouter();
 
   return (
     <div className="modal-container-b">
       <div className="modal-bg" />
       <div ref={modalRef} className="flex flex-col gap-2 py-[1.52rem]">
         <div className="modal-main rounded-sm">
-          <button className="modal-btn-wide flex gap-2">
+          <button
+            onClick={() => router.push(PATH.LETTER_EDIT(postId))}
+            className="modal-btn-wide flex gap-2"
+          >
             <Edit />
             <span>수정하기</span>
           </button>
