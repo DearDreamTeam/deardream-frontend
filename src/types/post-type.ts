@@ -7,4 +7,5 @@ export interface Post {
   content: string;
   imgFiles: File[];
   createdAt: number /* timestamp */;
+  imgUrls: string[] /* temp */;
 }

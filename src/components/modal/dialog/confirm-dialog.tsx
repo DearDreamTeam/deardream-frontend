@@ -1,12 +1,15 @@
 import Dialog from "./dialog";
 import { DialogProps } from "@/types/dialog-props";
 
-const ConfirmDialog = ({ setIsOpen, children }: DialogProps) => {
+const ConfirmDialog = ({ setIsOpen, action, children }: DialogProps) => {
   return (
     <Dialog>
       <Dialog.Message>{children}</Dialog.Message>
       <Dialog.Actions>
-        <button className="text-main-red-300 modal-btn border-r border-r-gray-200">
+        <button
+          onClick={action}
+          className="text-main-red-300 modal-btn border-r border-r-gray-200"
+        >
           삭제
         </button>
         <button

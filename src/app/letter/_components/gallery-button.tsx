@@ -21,7 +21,7 @@ const GalleryButton = ({ imgLength, setImageFiles }: GalleryButtonProps) => {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files) return;
-    if (files.length >= 2 || imgLength >= 2) {
+    if (files.length > 2 || imgLength >= 2) {
       setIsAlertOpen(true);
       e.target.value = "";
       return;
@@ -30,7 +30,7 @@ const GalleryButton = ({ imgLength, setImageFiles }: GalleryButtonProps) => {
   };
   return (
     <div>
-      <button onClick={handleGalleryClick}>
+      <button type="button" onClick={handleGalleryClick}>
         <Gallery />
       </button>
       <input
