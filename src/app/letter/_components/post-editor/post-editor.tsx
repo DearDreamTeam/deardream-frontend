@@ -12,8 +12,9 @@ import GalleryButton from "../gallery-button";
 import { PostState } from "@/stores/usePostStore";
 import { useUserStore } from "@/stores/useUserStore";
 import { Post } from "@/types/post-type";
-import { PATH } from "@/constants/path";
 import { PostEditorProps } from "@/types/post-editor-props";
+import { PATH } from "@/constants/path";
+import { isContentValid } from "@/utils/post-content-rules";
 
 const PostEditor = ({ postcard, submitAction }: PostEditorProps) => {
   const router = useRouter();
@@ -28,17 +29,13 @@ const PostEditor = ({ postcard, submitAction }: PostEditorProps) => {
   );
 
   const [isActive, setIsActive] = useState(false);
-  const imgLength = imageFiles.length;
+  const imageCount = imageFiles.length;
   const { user } = useUserStore();
 
   useEffect(() => {
-    const contentLength = content.length;
-    if (content.trim().length === 0) return setIsActive(false);
-
-    if (imgLength === 0 && contentLength <= 600) return setIsActive(true);
-    if (imgLength <= 2 && contentLength <= 200) return setIsActive(true);
-    return setIsActive(false);
-  }, [imgLength, content]);
+    const isValid = isContentValid(content, imageCount);
+    setIsActive(isValid);
+  }, [content, imageCount]);
 
   const submitLetter = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -88,18 +85,18 @@ const PostEditor = ({ postcard, submitAction }: PostEditorProps) => {
 
       {/* 중앙 image-preview, textarea */}
       <div className="overflow-auto-hide-scroll flex flex-1 flex-col">
-        {imgLength > 0 && <ImagePreviewer imageUrls={previewUrl} />}
+        {imageCount > 0 && <ImagePreviewer imageUrls={previewUrl} />}
         <TextField content={content} setContent={setContent} />
       </div>
 
       {/* 하단 type-bar */}
       <TypeBar>
         <GalleryButton
-          imgLength={imgLength}
+          imageCount={imageCount}
           setImageFiles={setImageFiles}
           setPreviewUrl={setPreviewUrl}
         />
-        <TextLimit imgLength={imgLength} typedLength={content.length} />
+        <TextLimit imageCount={imageCount} typedLength={content.length} />
       </TypeBar>
     </form>
   );

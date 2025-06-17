@@ -5,13 +5,13 @@ import Gallery from "@/public/icons/photo-selector/gallery.svg";
 import AlertDialog from "@/components/modal/dialog/alert-dialog";
 
 interface GalleryButtonProps {
-  imgLength: number;
+  imageCount: number;
   setImageFiles: React.Dispatch<React.SetStateAction<File[]>>;
   setPreviewUrl: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
 const GalleryButton = ({
-  imgLength,
+  imageCount,
   setImageFiles,
   setPreviewUrl,
 }: GalleryButtonProps) => {
@@ -26,7 +26,7 @@ const GalleryButton = ({
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files) return;
-    if (files.length > 2 || imgLength >= 2) {
+    if (files.length > 2 || imageCount >= 2) {
       setIsAlertOpen(true);
       e.target.value = "";
       return;

@@ -1,11 +1,14 @@
+import { getTextLimitByImageCount } from "@/utils/post-content-rules";
+
 interface TextLimitProps {
-  imgLength: number;
+  imageCount: number;
   typedLength: number;
 }
 
-const TextLimit = ({ imgLength, typedLength }: TextLimitProps) => {
-  const textLimit = imgLength > 0 ? 200 : 600;
-  const color = typedLength < textLimit ? "text-gray-600" : "text-main-red-300";
+const TextLimit = ({ imageCount, typedLength }: TextLimitProps) => {
+  const textLimit = getTextLimitByImageCount(imageCount);
+  const color =
+    typedLength <= textLimit ? "text-gray-600" : "text-main-red-300";
 
   return (
     <div className={`text-caption-2 flex gap-1 ${color}`}>
