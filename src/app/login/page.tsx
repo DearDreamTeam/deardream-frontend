@@ -2,8 +2,9 @@
 "use client";
 import Invite from "@/public/images/mail-invite.svg";
 import KaKao from "@/public/images/kakao.svg";
-
+import { useRouter } from "next/navigation";
 const Login = () => {
+  const router = useRouter();
   return (
     <>
       <div className="absolute inset-0 z-[100] mx-auto flex items-center justify-center rounded-lg bg-[#F5F5F5] p-8 shadow-lg md:max-w-[375px]">
@@ -18,12 +19,15 @@ const Login = () => {
           </div>
         </div>
         <div className="absolute bottom-0 left-1/2 h-40 w-full max-w-md translate-x-[-50%] rounded-3xl bg-[#D9D9D9] p-6">
-          <div className="relative flex h-12 w-full items-center justify-center rounded-md bg-[#FEE500]">
+          <div
+            onClick={() => router.replace("/profile")}
+            className="relative flex h-12 w-full cursor-pointer items-center justify-center rounded-md bg-[#FEE500]"
+          >
             <KaKao
               alt="카카오 로그인"
               className="absolute top-1/2 left-7 -translate-x-1/2 -translate-y-1/2"
             />
-            <div className="cursor-pointer text-[13px] leading-tight font-normal text-zinc-900">
+            <div className="text-[13px] leading-tight font-normal text-zinc-900">
               카카오톡으로 10초만에 로그인/회원가입
             </div>
           </div>
