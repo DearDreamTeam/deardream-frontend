@@ -7,7 +7,7 @@ import { useUserStore } from "@/stores/useUserStore";
 
 const tempAction = () => {};
 
-const SHARE_DATA = {
+export const SHARE_DATA = {
   title: "이어드림 가족 초대",
   text: `${useUserStore.getState().user.name}님과 함께 소식지 만들기에 동참해보세요!`,
   url: "https://deardream-frontend.vercel.app/",
@@ -38,6 +38,7 @@ const SHARE_ACTIONS = {
   /* 카카오톡 kakao share sdk */
   handleShareKakao: () => {
     if (!window.Kakao) {
+      console.log("kakao sdk load fail");
       return;
     }
 

@@ -1,13 +1,14 @@
 "use client";
 import { useState } from "react";
 import FileCopy from "@/public/icons/share-options/file-copy.svg";
+import { SHARE_DATA } from "@/constants/share-option-items";
 
-const LinkCopy = ({ link }: { link: string }) => {
+const LinkCopy = () => {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async () => {
     try {
-      await navigator.clipboard.writeText(link);
+      await navigator.clipboard.writeText(SHARE_DATA.url);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch (err) {
@@ -19,7 +20,7 @@ const LinkCopy = ({ link }: { link: string }) => {
     <div className="flex flex-col text-gray-500">
       <p className="text-caption-2 p-1 text-center">또는 링크 복사하기</p>
       <div className="rounded-25 flex gap-1 bg-gray-50 px-4 py-2">
-        <span className="flex-1">{link}</span>
+        <span className="flex-1">{SHARE_DATA.url}</span>
         <button onClick={handleCopy} className="text-gray-900">
           <FileCopy />
         </button>

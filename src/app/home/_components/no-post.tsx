@@ -1,5 +1,6 @@
 import Image from "next/image";
 import InviteFamilyButton from "@/components/button/invite-family-button";
+import KakaoShareScript from "@/components/scripts/kakao-share-script";
 
 const NoPost = () => {
   return (
@@ -18,6 +19,7 @@ const NoPost = () => {
         </p>
         <InviteFamilyButton />
       </div>
+      <KakaoShareScript />
     </div>
   );
 };
