@@ -56,7 +56,7 @@ const SelectModal = ({
         <div className="flex w-full justify-center gap-2">
           <button
             onClick={() => setIsModalOpen(false)}
-            className="w-36 rounded-md bg-gray-200 p-4 text-center text-sm font-normal text-gray-700"
+            className="w-36 rounded-lg rounded-md bg-white p-4 text-center text-sm font-normal text-gray-700 shadow-[0px_0px_8px_0px_rgba(0,0,0,0.15)]"
           >
             취소
           </button>
