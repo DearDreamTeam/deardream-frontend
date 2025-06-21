@@ -38,7 +38,7 @@ const NotFound = () => {
         </AlertDialog>
       )}
       {isConfirmOpen && (
-        <ConfirmDialog setIsOpen={setIsConfirmOpen}>
+        <ConfirmDialog action={() => {}} setIsOpen={setIsConfirmOpen}>
           한 번 삭제하면 다시 되돌릴 수 없어요.
           <br />
           그래도 삭제하시겠어요?
