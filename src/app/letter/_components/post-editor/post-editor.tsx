@@ -23,12 +23,14 @@ import {
   WRITE_CANCEL_WARNING_MESSAGE,
 } from "@/constants/messages";
 import { renderMessageWithLineBreaks } from "@/utils/render-message-with-line-breaks";
+import CompleteLetter from "../complete-letter";
 
 const PostEditor = ({ postcard, submitAction }: PostEditorProps) => {
   const router = useRouter();
   const [warningMessage, setWarningMessage] = useState("");
   const [isAlertOpen, setIsAlertOpen] = useState(false);
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+  const [isComplete, setIsComplete] = useState(false);
 
   /* inputs */
   const [content, setContent] = useState(postcard?.content ?? "");
@@ -77,7 +79,11 @@ const PostEditor = ({ postcard, submitAction }: PostEditorProps) => {
       (submitAction as PostState["addPost"])(letter);
     }
 
-    router.replace(PATH.HOME);
+    setIsComplete(true);
+    setTimeout(() => {
+      setIsComplete(false);
+      router.replace(PATH.HOME);
+    }, 2000);
   };
 
   const handleCancelLetter = () => {
@@ -146,6 +152,7 @@ const PostEditor = ({ postcard, submitAction }: PostEditorProps) => {
           {renderMessageWithLineBreaks(warningMessage)}
         </ConfirmDialog>
       )}
+      {isComplete && <CompleteLetter />}
     </form>
   );
 };
