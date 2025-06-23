@@ -9,7 +9,7 @@ const LogoHeader = () => {
   if (pathname.startsWith("/letter/")) return null;
 
   return (
-    <header className="header py-[0.875rem]">
+    <header className="header py-[0.32rem]">
       <Link href="/home">
         <Image
           src={"/logo/logo.svg"}
