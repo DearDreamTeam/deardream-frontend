@@ -3,11 +3,15 @@ import { usePostStore } from "@/stores/usePostStore";
 import NoPost from "./_components/no-post";
 import PostCard from "@/components/post-card/post-card";
 import { useUserStore } from "@/stores/useUserStore";
+import NoFamilyGroup from "./_components/no-family-group";
 
 const Home = () => {
   const { post } = usePostStore();
   const { user } = useUserStore();
+
+  if (user.familyId === null) return <NoFamilyGroup />;
   if (post.length === 0) return <NoPost />;
+
   return (
     <div className="overflow-auto-hide-scroll h-full">
       {post.map((letter) => (

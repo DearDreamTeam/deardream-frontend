@@ -1,24 +1,24 @@
-import Image from "next/image";
 import InviteFamilyButton from "@/components/button/invite-family-button";
+import EmptyStateLayout from "./empty-state-layout";
 
 const NoPost = () => {
   return (
-    <div className="flex h-full flex-col justify-center">
-      <Image
-        src={"/images/mailbox-empty.svg"}
-        alt={"홈페이지 이미지"}
-        width={198.14}
-        height={218.67}
-        className="self-center pr-8 pb-5"
-      />
-      <div className="flex flex-col items-center gap-4">
+    <EmptyStateLayout>
+      <EmptyStateLayout.Text>
+        <p className="text-headline-1">앗! 소식함이 비어있어요</p>
         <p className="text-label-2 text-center">
-          앗! 아직 아무런 소식이 없어요. <br /> 가족을 초대하고 풍성히
-          채워나가볼까요?
+          가장 먼저 소식을 남기거나,
+          <br />
+          멤버들을 초대해 우리만의 소식함을
+          <br />
+          함께 풍성하게 채워보는 건 어떨까요?
         </p>
+      </EmptyStateLayout.Text>
+
+      <EmptyStateLayout.Action>
         <InviteFamilyButton />
-      </div>
-    </div>
+      </EmptyStateLayout.Action>
+    </EmptyStateLayout>
   );
 };
 
