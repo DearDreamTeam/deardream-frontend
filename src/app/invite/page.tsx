@@ -1,24 +1,26 @@
 // app/page.tsx
 "use client";
-import Invite from "@/public/images/mail-invite.svg";
+import Invite from "@/public/images/mail-blueinvite.svg";
 import KaKao from "@/public/images/kakao.svg";
 import { useRouter } from "next/navigation";
-const Login = () => {
+const InvitePage = () => {
   const router = useRouter();
   return (
     <>
-      <div className="relative flex h-screen flex-col items-center justify-center gap-6 bg-[#C4EAFF]">
+      <div className="relative flex h-screen flex-col items-center justify-center gap-6 bg-[#F6F8FA]">
         <Invite alt="이어드림 초대장" className="" />
 
         <div className="justify-start self-stretch text-center text-2xl leading-9 font-semibold text-zinc-900">
-          로그인이 필요해요
+          초대장이 도착했어요
         </div>
-        <div className="justify-start self-stretch text-center text-base leading-normal font-normal text-zinc-900">
-          우리 모두가 다 함께
+        <div className="justify-start self-stretch text-center text-base leading-normal font-light text-zinc-900">
+          <span className="text-base font-semibold text-zinc-900">김순자</span>
+          님께서 당신을 초대했어요.
           <br />
-          이야기를 나누고, 마음을 이어가기 위해
+          모두의 소식을 담은 이음레터로
           <br />
-          로그인이 필요해요.
+          <span className="text-base font-semibold text-zinc-900">이은희</span>
+          님께 따뜻한 하루를 선물해보세요!
         </div>
         <div className="h-15 w-10" />
         <div
@@ -38,4 +40,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default InvitePage;

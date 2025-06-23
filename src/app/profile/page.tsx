@@ -1,5 +1,6 @@
 // app/page.tsx
 "use client";
+import BirthSelect from "@/components/select/birth-select";
 import SelectModal from "@/components/select/select-modal";
 import Arrow from "@/public/icons/back/arrow.svg";
 import { useState } from "react";
@@ -28,11 +29,7 @@ const Profile = () => {
           </div>
           <div className="flex-start flex flex-col gap-2 text-sm font-normal text-zinc-900">
             생일
-            <input
-              type="date"
-              className="w-80 border-b-1 border-solid border-[#EBEBF0] px-1 py-2 text-xl font-medium text-gray-700 placeholder:text-gray-400 focus:ring-0 focus:outline-none"
-              placeholder="날짜를 입력해주세요"
-            />
+            <BirthSelect />
           </div>
           <div className="flex-start flex flex-col gap-2 text-sm font-normal text-zinc-900">
             받는 분과의 관계
