@@ -10,10 +10,12 @@ const PhotoEditor = ({
   imageUrl,
   onSave,
   onClose,
+  isProfile = false,
 }: {
   imageUrl: string;
   onSave: (editedUrl: string, editedFile: File) => void;
   onClose: () => void;
+  isProfile?: boolean;
 }) => {
   const [crop, setCrop] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
@@ -62,13 +64,16 @@ const PhotoEditor = ({
             onZoomChange={setZoom}
             onRotationChange={setRotation}
             onCropComplete={onCropComplete}
+            cropShape={isProfile ? "round" : "rect"}
           />
         </div>
         <div className="fixed bottom-0 w-full px-4 py-[2.19rem]">
-          <AspectRatioOptions
-            aspectRatio={aspectRatio}
-            setAspectRatio={setAspectRatio}
-          />
+          {!isProfile && (
+            <AspectRatioOptions
+              aspectRatio={aspectRatio}
+              setAspectRatio={setAspectRatio}
+            />
+          )}
           <ActionIconBar
             onClose={onClose}
             toggleFlipX={toggleFlipX}
