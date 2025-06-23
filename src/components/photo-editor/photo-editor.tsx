@@ -53,7 +53,9 @@ const PhotoEditor = ({
   return (
     <div className="fixed inset-0 z-50 box-border flex items-center justify-center bg-gray-900">
       <div className="relative h-full w-full">
-        <div className={`h-full w-full ${flipX ? "scale-x-[-1]" : ""}`}>
+        <div
+          className={`h-full w-full pb-[8.4rem] ${flipX ? "scale-x-[-1]" : ""}`}
+        >
           <Cropper
             image={imageUrl}
             crop={crop}
@@ -66,7 +68,7 @@ const PhotoEditor = ({
             cropShape={isProfile ? "round" : "rect"}
           />
         </div>
-        <div className="fixed bottom-0 w-full px-4 py-[2.19rem]">
+        <div className="fixed bottom-0 w-full bg-gray-900 px-4 py-6">
           {!isProfile && (
             <AspectRatioOptions
               aspectRatio={aspectRatio}
