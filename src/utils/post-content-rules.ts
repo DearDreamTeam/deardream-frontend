@@ -10,7 +10,7 @@ export function getTextLimitByImageCount(imageCount: number): number {
 }
 
 export function isContentValid(content: string, imageCount: number): boolean {
-  if (content.trim().length === 0) {
+  if (content.trim().length === 0 && imageCount === 0) {
     return false;
   }
 
