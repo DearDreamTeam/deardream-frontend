@@ -62,7 +62,6 @@ const PhotoEditor = ({
             aspect={aspectRatio}
             onCropChange={setCrop}
             onZoomChange={setZoom}
-            onRotationChange={setRotation}
             onCropComplete={onCropComplete}
             cropShape={isProfile ? "round" : "rect"}
           />
