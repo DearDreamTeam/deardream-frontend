@@ -12,7 +12,6 @@ const PostCard = ({
   createdAt,
   postImg,
 }: PostcardProps) => {
-  console.log("#", content, postImg, postImg.length);
   return (
     <div className="bg-gray-0 px-4">
       <div className="border-b border-b-gray-200 py-4">
