@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Picker from "react-mobile-picker";
 const relationshipOptions = [
   "부모님",
@@ -19,6 +20,14 @@ const SelectModal = ({
   setSelected,
   setIsModalOpen,
 }: SelectModalProps) => {
+  const [select, setSelect] = useState({
+    relationship: selected.relationship || relationshipOptions[0],
+  });
+  const handleSelect = (value: string) => {
+    setSelect({ ...select, relationship: value });
+    setSelected({ relationship: value });
+    setIsModalOpen(false);
+  };
   return (
     <div
       className="fixed inset-0 z-50 flex touch-pan-y items-end justify-center overflow-hidden bg-black/40"
@@ -32,8 +41,8 @@ const SelectModal = ({
           받는 분과의 관계
         </div>
         <Picker
-          value={selected}
-          onChange={setSelected}
+          value={select}
+          onChange={setSelect}
           wheelMode="natural"
           className="w-[80%]"
         >
@@ -60,7 +69,13 @@ const SelectModal = ({
           >
             취소
           </button>
-          <button className="w-36 rounded-md bg-[#f03f65] p-4 text-center text-sm font-normal text-white">
+          <button
+            onClick={() => {
+              handleSelect(select.relationship);
+              setIsModalOpen(false);
+            }}
+            className="w-36 rounded-md bg-[#f03f65] p-4 text-center text-sm font-normal text-white"
+          >
             선택
           </button>
         </div>
