@@ -2,9 +2,20 @@
 "use client";
 import Invite from "@/public/images/mail-invite.svg";
 import KaKao from "@/public/images/kakao.svg";
-import { useRouter } from "next/navigation";
+
 const Login = () => {
-  const router = useRouter();
+  const REST_API_KEY = process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY;
+  const REDIRECT_URI = process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI;
+
+  const handleLogin = () => {
+    const kakaoURL = new URL("https://kauth.kakao.com/oauth/authorize");
+    kakaoURL.searchParams.append("client_id", REST_API_KEY);
+    kakaoURL.searchParams.append("redirect_uri", REDIRECT_URI);
+    kakaoURL.searchParams.append("response_type", "code");
+
+    window.location.href = kakaoURL.toString();
+  };
+
   return (
     <>
       <div className="relative flex h-screen flex-col items-center justify-center gap-6 bg-[#C4EAFF]">
@@ -22,7 +33,7 @@ const Login = () => {
         </div>
         <div className="h-15 w-10" />
         <div
-          onClick={() => router.replace("/profile")}
+          onClick={handleLogin}
           className="absolute bottom-10 flex h-12 w-[80%] cursor-pointer items-center justify-center rounded-md bg-[#FEE500]"
         >
           <KaKao
