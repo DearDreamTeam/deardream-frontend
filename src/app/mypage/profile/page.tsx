@@ -6,13 +6,11 @@ import ProfileEdit from "@/components/profile/profile-edit";
 const Profile = () => {
   return (
     <>
-      <div className="absolute inset-0 z-[100] mx-auto flex flex-col rounded-lg bg-[#FCFCFE] shadow-lg md:max-w-[375px]">
-        <Header>내 정보 수정</Header>
-        <ProfileEdit isSender={true} />
-        <div className="absolute right-0 bottom-5 left-0 mx-auto inline-flex h-14 w-[90%] items-center justify-center gap-2.5 rounded bg-rose-500 shadow-[0px_0px_12px_0px_rgba(0,0,0,0.08)]">
-          <div className="text-center text-lg leading-loose font-semibold text-white">
-            저장
-          </div>
+      <Header>내 정보 수정</Header>
+      <ProfileEdit isSender={true} />
+      <div className="absolute right-0 bottom-5 left-0 mx-auto inline-flex h-14 w-[90%] items-center justify-center gap-2.5 rounded bg-rose-500 shadow-[0px_0px_12px_0px_rgba(0,0,0,0.08)]">
+        <div className="text-center text-lg leading-loose font-semibold text-white">
+          저장
         </div>
       </div>
     </>

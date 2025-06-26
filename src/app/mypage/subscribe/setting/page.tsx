@@ -8,7 +8,7 @@ const SettingPage = () => {
     <>
       <Header>주소 및 수령 방식</Header>
       <div className="relative mt-20 flex h-full w-full justify-center">
-        <div className="flex w-80 flex-col gap-6">
+        <div className="flex w-96 flex-col gap-6 p-4">
           <div>
             <p className="text-center text-xl font-semibold text-neutral-900">
               [가정 수령 플랜 -<span className="text-rose-500">월 8,900원</span>
