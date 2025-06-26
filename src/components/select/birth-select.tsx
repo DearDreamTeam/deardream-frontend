@@ -12,6 +12,14 @@ const BirthdayInputs = () => {
     setYear(val);
   };
 
+  const handleYearBlur = () => {
+    if (parseInt(year) < 1900 || year.length < 4) {
+      setYear("1900");
+    } else if (parseInt(year) > new Date().getFullYear()) {
+      setYear(new Date().getFullYear().toString());
+    }
+  };
+
   const handleMonthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value.replace(/\D/g, "").slice(0, 2);
     setMonth(val);
@@ -49,6 +57,7 @@ const BirthdayInputs = () => {
             className="w-20 border-b border-gray-300 bg-transparent text-center text-xl focus:outline-none"
             value={year}
             onChange={handleYear}
+            onBlur={handleYearBlur}
           />
           년
         </div>
