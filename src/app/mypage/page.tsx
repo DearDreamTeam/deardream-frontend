@@ -1,5 +1,8 @@
 // app/page.tsx
 "use client";
+
+import { useState } from "react";
+
 const Section = ({
   title,
   children,
@@ -18,6 +21,7 @@ const SectionItem = ({ children }: { children: React.ReactNode }) => (
 );
 
 const MyPage = () => {
+  const [isleader] = useState(false);
   return (
     <>
       <div className="absolute inset-[0] z-[100] mx-auto flex flex-col rounded-lg bg-[#FCFCFE] shadow-lg md:max-w-[375px]">
@@ -34,7 +38,7 @@ const MyPage = () => {
                 <span className="font-normal">님</span>
               </div>
               <div className="flex gap-1.5 text-xs text-neutral-400">
-                <span>가족구성원</span>
+                <span>{isleader ? "가족 대표" : "가족 구성원"}</span>
                 <span>딸</span>
               </div>
             </div>

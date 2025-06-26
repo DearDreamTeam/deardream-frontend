@@ -1,10 +1,11 @@
 // app/page.tsx
 "use client";
+import Header from "@/components/common/header";
 import BirthSelect from "@/components/select/birth-select";
 import SelectModal from "@/components/select/select-modal";
-import Arrow from "@/public/icons/back/arrow.svg";
 import Pencil from "@/public/icons/common/pencil.svg";
 import { useRef, useState } from "react";
+import Image from "next/image";
 
 const Profile = () => {
   const [selected, setSelected] = useState({
@@ -27,14 +28,11 @@ const Profile = () => {
   return (
     <>
       <div className="absolute inset-0 z-[100] mx-auto flex flex-col rounded-lg bg-[#FCFCFE] shadow-lg md:max-w-[375px]">
-        <div className="flex items-center p-4 text-2xl font-semibold">
-          <Arrow className="cursor-pointer" />
-          프로필 설정
-        </div>
+        <Header>프로필 설정</Header>
         <div className="flex w-full flex-col items-center gap-10 border-t-1 border-solid border-[#EBEBF0]">
           <div className="relative mt-8 h-[98px] w-[98px]">
             {imageUrl ? (
-              <img
+              <Image
                 src={imageUrl}
                 alt="프로필 이미지"
                 className="h-full w-full rounded-full object-cover"
