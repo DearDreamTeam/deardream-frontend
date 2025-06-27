@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 import ActionHeader from "@/components/header/action-header";
@@ -16,8 +16,25 @@ import { PostEditorProps } from "@/types/post-editor-props";
 import { PATH } from "@/constants/path";
 import { isContentValid } from "@/utils/post-content-rules";
 
+import AlertDialog from "@/components/modal/dialog/alert-dialog";
+import ConfirmDialog from "@/components/modal/dialog/confirm-dialog";
+import {
+  TEXT_LIMIT_INVALID_MESSAGE,
+  WRITE_CANCEL_WARNING_MESSAGE,
+} from "@/constants/messages";
+import { renderMessageWithLineBreaks } from "@/utils/render-message-with-line-breaks";
+import CompleteLetter from "../complete-letter";
+import PhotoEditor from "@/components/photo-editor/photo-editor";
+
 const PostEditor = ({ postcard, submitAction }: PostEditorProps) => {
   const router = useRouter();
+  const [warningMessage, setWarningMessage] = useState("");
+  const [isAlertOpen, setIsAlertOpen] = useState(false);
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+  const [isComplete, setIsComplete] = useState(false);
+  const [selectedImageIndex, setSelectedImageIndex] = useState<null | number>(
+    null,
+  );
 
   /* inputs */
   const [content, setContent] = useState(postcard?.content ?? "");
@@ -28,17 +45,21 @@ const PostEditor = ({ postcard, submitAction }: PostEditorProps) => {
     postcard?.imgUrls ?? [],
   );
 
-  const [isActive, setIsActive] = useState(false);
+  /* derived states */
   const imageCount = imageFiles.length;
-  const { user } = useUserStore();
+  const isActive = isContentValid(content, imageCount);
 
-  useEffect(() => {
-    const isValid = isContentValid(content, imageCount);
-    setIsActive(isValid);
-  }, [content, imageCount]);
-
-  const submitLetter = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmitLetter = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!isActive) {
+      if (imageCount > 0) {
+        setWarningMessage(TEXT_LIMIT_INVALID_MESSAGE.WITH_IMAGES);
+      } else {
+        setWarningMessage(TEXT_LIMIT_INVALID_MESSAGE.WITHOUT_IMAGES);
+      }
+      setIsAlertOpen(true);
+      return;
+    }
 
     if (postcard) {
       const letter: Post = {
@@ -49,6 +70,7 @@ const PostEditor = ({ postcard, submitAction }: PostEditorProps) => {
       };
       (submitAction as PostState["editPost"])(postcard.postId, letter);
     } else {
+      const user = useUserStore.getState().user;
       const letter: Post = {
         postId: Date.now(),
         authorId: user.userId,
@@ -61,23 +83,54 @@ const PostEditor = ({ postcard, submitAction }: PostEditorProps) => {
       (submitAction as PostState["addPost"])(letter);
     }
 
-    router.replace(PATH.HOME);
+    setIsComplete(true);
+    setTimeout(() => {
+      setIsComplete(false);
+      router.replace(PATH.HOME);
+    }, 2000);
+  };
+
+  const handleCancelLetter = () => {
+    if (postcard) {
+      if (postcard.content !== content) {
+        setWarningMessage(WRITE_CANCEL_WARNING_MESSAGE.EDIT);
+        setIsConfirmOpen(true);
+        return;
+      }
+    } else {
+      if (content.trim() || imageCount) {
+        setWarningMessage(WRITE_CANCEL_WARNING_MESSAGE.NEW);
+        setIsConfirmOpen(true);
+        return;
+      }
+    }
+    router.back();
+  };
+
+  const handleSaveEditedImage = (editedUrl: string, editedFile: File) => {
+    if (selectedImageIndex === null) return;
+    setImageFiles((prev) =>
+      prev.map((file, idx) => (idx === selectedImageIndex ? editedFile : file)),
+    );
+    setPreviewUrl((prev) =>
+      prev.map((url, idx) => (idx === selectedImageIndex ? editedUrl : url)),
+    );
+    setSelectedImageIndex(null);
   };
 
   return (
     <form
-      onSubmit={submitLetter}
+      onSubmit={handleSubmitLetter}
       className="flex h-full flex-1 flex-col justify-between"
     >
       {/* 상단 header */}
       <ActionHeader>
-        <button type="button" className="p-2" onClick={router.back}>
+        <button type="button" className="p-2" onClick={handleCancelLetter}>
           취소
         </button>
         <button
           type="submit"
           className={`p-2 ${isActive ? "text-main-red-300" : "text-gray-300"}`}
-          disabled={!isActive}
         >
           등록
         </button>
@@ -85,7 +138,12 @@ const PostEditor = ({ postcard, submitAction }: PostEditorProps) => {
 
       {/* 중앙 image-preview, textarea */}
       <div className="overflow-auto-hide-scroll flex flex-1 flex-col">
-        {imageCount > 0 && <ImagePreviewer imageUrls={previewUrl} />}
+        {imageCount > 0 && (
+          <ImagePreviewer
+            imageUrls={previewUrl}
+            setSelectedImageIndex={setSelectedImageIndex}
+          />
+        )}
         <TextField content={content} setContent={setContent} />
       </div>
 
@@ -98,6 +156,30 @@ const PostEditor = ({ postcard, submitAction }: PostEditorProps) => {
         />
         <TextLimit imageCount={imageCount} typedLength={content.length} />
       </TypeBar>
+
+      {/* modal */}
+      {isAlertOpen && (
+        <AlertDialog setIsOpen={setIsAlertOpen}>
+          {renderMessageWithLineBreaks(warningMessage)}
+        </AlertDialog>
+      )}
+      {isConfirmOpen && (
+        <ConfirmDialog
+          setIsOpen={setIsConfirmOpen}
+          action={router.back}
+          actionLabel={"확인"}
+        >
+          {renderMessageWithLineBreaks(warningMessage)}
+        </ConfirmDialog>
+      )}
+      {isComplete && <CompleteLetter />}
+      {selectedImageIndex !== null && (
+        <PhotoEditor
+          imageUrl={previewUrl[selectedImageIndex]}
+          onSave={handleSaveEditedImage}
+          onClose={() => setSelectedImageIndex(null)}
+        />
+      )}
     </form>
   );
 };

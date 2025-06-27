@@ -16,7 +16,7 @@ const ImageFallback = ({ url, width }: { url: string; width: number }) => {
         src={url}
         alt={"image"}
         fill
-        style={{ objectFit: "cover" }}
+        style={{ objectFit: "contain" }}
         className="rounded-25"
         onError={() => setHasError(true)}
       />

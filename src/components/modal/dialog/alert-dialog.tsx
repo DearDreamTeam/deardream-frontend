@@ -7,6 +7,7 @@ const AlertDialog = ({ setIsOpen, children }: DialogProps) => {
       <Dialog.Message>{children}</Dialog.Message>
       <Dialog.Actions>
         <button
+          type="button"
           onClick={() => setIsOpen(false)}
           className="text-main-red-300 modal-btn"
         >

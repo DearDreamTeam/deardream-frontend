@@ -16,6 +16,9 @@ export const metadata: Metadata = {
   description:
     "사랑하는 가족들의 소식을 받으며 웃음짓는 건강한 세상을 만듭니다.",
   authors: [{ name: "Yeongseo Kim" }, { name: "Juhee Lee" }],
+  icons: {
+    icon: "/images/mailbox-full.svg",
+  },
   openGraph: {
     title: "이어드림",
     description:
