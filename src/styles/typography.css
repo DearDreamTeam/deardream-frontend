@@ -42,20 +42,20 @@
   --text-title-2--letter-spacing: -0.025em;
   --text-title-2--font-weight: var(--font-weight-medium);
 
-  --text-title-3: 18px;
-  --text-title-3--line-height: 27px;
-  --text-title-3--letter-spacing: -0.025em;
+  --text-title-3: 1.125rem;
+  --text-title-3--line-height: 1.6875rem;
+  --text-title-3--letter-spacing: -0.02813rem;
   --text-title-3--font-weight: var(--font-weight-regular);
 
   /* Label Typography System */
-  --text-label-1: 16px;
-  --text-label-1--line-height: 24px;
+  --text-label-1: 1rem;
+  --text-label-1--line-height: 1.5rem;
   --text-label-1--letter-spacing: -0.015em;
   --text-label-1--font-weight: var(--font-weight-semibold);
 
-  --text-label-2: 16px;
-  --text-label-2--line-height: 24px;
-  --text-label-2--letter-spacing: -0.025em;
+  --text-label-2: 1rem;
+  --text-label-2--line-height: 1.5rem;
+  --text-label-2--letter-spacing: -0.025rem;
   --text-label-2--font-weight: var(--font-weight-regular);
 
   /* Body Typography System */
