@@ -25,7 +25,7 @@ const ProfileEdit = ({ isSender, isInvite }: ProfileEditProps) => {
   };
   return (
     <>
-      <div className="flex w-full flex-col items-center gap-10 border-t-1 border-solid border-[#EBEBF0]">
+      <div className="flex w-full flex-col items-center gap-10">
         <div className="relative mt-8 h-[98px] w-[98px]">
           {imageUrl ? (
             <img
