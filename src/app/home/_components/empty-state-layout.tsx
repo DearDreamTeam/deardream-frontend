@@ -1,6 +1,12 @@
 import Image from "next/image";
 
-const EmptyStateLayout = ({ children }: { children: React.ReactNode }) => {
+const EmptyStateLayout = ({
+  src,
+  children,
+}: {
+  src: string;
+  children: React.ReactNode;
+}) => {
   return (
     <div className="flex h-full flex-col justify-center">
       <div className="relative my-5 h-72 w-[17.1rem] self-center">
@@ -12,7 +18,7 @@ const EmptyStateLayout = ({ children }: { children: React.ReactNode }) => {
           className="absolute bottom-10 z-10 self-center"
         />
         <Image
-          src={"/images/mailbox-3d.svg"}
+          src={src}
           alt={"홈페이지 이미지"}
           width={273.42}
           height={273.42}
