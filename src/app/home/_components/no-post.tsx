@@ -1,5 +1,6 @@
 import InviteFamilyButton from "@/components/button/invite-family-button";
 import EmptyStateLayout from "./empty-state-layout";
+import KakaoShareScript from "@/components/scripts/kakao-share-script";
 
 const NoPost = () => {
   return (
@@ -18,6 +19,7 @@ const NoPost = () => {
       <EmptyStateLayout.Action>
         <InviteFamilyButton />
       </EmptyStateLayout.Action>
+      <KakaoShareScript />
     </EmptyStateLayout>
   );
 };
