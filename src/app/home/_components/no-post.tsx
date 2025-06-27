@@ -3,7 +3,7 @@ import EmptyStateLayout from "./empty-state-layout";
 
 const NoPost = () => {
   return (
-    <EmptyStateLayout src="/images/mailbox-3d.svg">
+    <EmptyStateLayout src="/images/mailbox-empty.svg">
       <EmptyStateLayout.Text>
         <p className="text-headline-1">앗! 소식함이 비어있어요</p>
         <p className="text-label-2 text-center">

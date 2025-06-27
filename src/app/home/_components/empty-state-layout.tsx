@@ -1,9 +1,11 @@
 import Image from "next/image";
 
 const EmptyStateLayout = ({
+  bgSrc = "/images/background-ellipse.png",
   src,
   children,
 }: {
+  bgSrc?: string;
   src: string;
   children: React.ReactNode;
 }) => {
@@ -11,7 +13,7 @@ const EmptyStateLayout = ({
     <div className="flex h-full flex-col justify-center">
       <div className="relative my-5 h-72 w-[17.1rem] self-center">
         <Image
-          src={"/images/background-ellipse.png"}
+          src={bgSrc}
           alt={"img"}
           width={273.42}
           height={273.42}
