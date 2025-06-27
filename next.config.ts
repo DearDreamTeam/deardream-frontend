@@ -10,6 +10,18 @@ const nextConfig: NextConfig = {
 
     return config;
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "avatars.githubusercontent.com",
+      },
+      {
+        protocol: "https",
+        hostname: "hypebeast.kr",
+      },
+    ],
+  },
 };
 
 export default nextConfig;

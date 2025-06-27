@@ -10,7 +10,11 @@ import NavigationItem from "./navigation-item";
 const NavigationBar = () => {
   const pathname = usePathname();
 
-  if (pathname === "/letter/new") return null;
+  if (
+    pathname.startsWith("/letter/") ||
+    ["/invite", "/login", "/profile"].includes(pathname)
+  )
+    return null;
   return (
     <nav className="text-caption-2 bg-gray-0 shadow-default flex justify-center gap-12 px-4 py-[1.29rem]">
       {NAV_ITEMS.map(({ icon: Icon, label, href }) => (

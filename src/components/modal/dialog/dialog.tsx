@@ -8,7 +8,7 @@ const Dialog = ({ children }: { children: React.ReactNode }) => {
 };
 
 const Message = ({ children }: { children: React.ReactNode }) => (
-  <p className="text-label-2 w-2xs border-b border-b-gray-200 px-4 py-7 text-center">
+  <p className="text-label-2 min-w-2xs border-b border-b-gray-200 px-4 py-7 text-center">
     {children}
   </p>
 );
