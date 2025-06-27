@@ -1,6 +1,5 @@
 @import "tailwindcss";
 @import "./color.css";
-@import "./color.css";
 @import "./typography.css";
 
 @layer utilities {

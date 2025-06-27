@@ -24,6 +24,7 @@ import {
 } from "@/constants/messages";
 import { renderMessageWithLineBreaks } from "@/utils/render-message-with-line-breaks";
 import CompleteLetter from "../complete-letter";
+import PhotoEditor from "@/components/photo-editor/photo-editor";
 
 const PostEditor = ({ postcard, submitAction }: PostEditorProps) => {
   const router = useRouter();
@@ -31,6 +32,9 @@ const PostEditor = ({ postcard, submitAction }: PostEditorProps) => {
   const [isAlertOpen, setIsAlertOpen] = useState(false);
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
+  const [selectedImageIndex, setSelectedImageIndex] = useState<null | number>(
+    null,
+  );
 
   /* inputs */
   const [content, setContent] = useState(postcard?.content ?? "");
@@ -103,6 +107,17 @@ const PostEditor = ({ postcard, submitAction }: PostEditorProps) => {
     router.back();
   };
 
+  const handleSaveEditedImage = (editedUrl: string, editedFile: File) => {
+    if (selectedImageIndex === null) return;
+    setImageFiles((prev) =>
+      prev.map((file, idx) => (idx === selectedImageIndex ? editedFile : file)),
+    );
+    setPreviewUrl((prev) =>
+      prev.map((url, idx) => (idx === selectedImageIndex ? editedUrl : url)),
+    );
+    setSelectedImageIndex(null);
+  };
+
   return (
     <form
       onSubmit={handleSubmitLetter}
@@ -123,7 +138,12 @@ const PostEditor = ({ postcard, submitAction }: PostEditorProps) => {
 
       {/* 중앙 image-preview, textarea */}
       <div className="overflow-auto-hide-scroll flex flex-1 flex-col">
-        {imageCount > 0 && <ImagePreviewer imageUrls={previewUrl} />}
+        {imageCount > 0 && (
+          <ImagePreviewer
+            imageUrls={previewUrl}
+            setSelectedImageIndex={setSelectedImageIndex}
+          />
+        )}
         <TextField content={content} setContent={setContent} />
       </div>
 
@@ -153,6 +173,13 @@ const PostEditor = ({ postcard, submitAction }: PostEditorProps) => {
         </ConfirmDialog>
       )}
       {isComplete && <CompleteLetter />}
+      {selectedImageIndex !== null && (
+        <PhotoEditor
+          imageUrl={previewUrl[selectedImageIndex]}
+          onSave={handleSaveEditedImage}
+          onClose={() => setSelectedImageIndex(null)}
+        />
+      )}
     </form>
   );
 };
