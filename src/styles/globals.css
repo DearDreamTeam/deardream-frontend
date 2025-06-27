@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "./color.css";
+@import "./color.css";
 @import "./typography.css";
 
 @layer utilities {
@@ -16,7 +17,7 @@
     @apply rounded-sm; /* border-radius 0.25 */
   }
   .rounded-50 {
-    @apply rounded-b-lg; /* border-radius 0.5 */
+    @apply rounded-lg; /* border-radius 0.5 */
   }
 }
 
