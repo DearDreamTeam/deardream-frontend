@@ -1,7 +1,7 @@
 "use client";
 
-import ArrowDown from "@/public/icons/dropdown/arrow-down.svg";
-import ArrowUp from "@/public/icons/dropdown/arrow-up.svg";
+import ArrowDown from "@/public/icons/letters/arrow-down.svg";
+import ArrowUp from "@/public/icons/letters/arrow-up.svg";
 import { useState } from "react";
 
 const mockServiceStartYear = 2022;
