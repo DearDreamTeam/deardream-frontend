@@ -19,7 +19,7 @@ const Dropdown = () => {
 
   return (
     <ul
-      className={`bg-gray-0 rounded-25 shadow-default text-caption-2 flex w-[4.375rem] flex-col gap-[0.38rem] py-[0.31rem] text-center text-gray-700`}
+      className={`bg-grey-0 rounded-25 shadow-default text-caption-2 text-grey-700 flex w-[4.375rem] flex-col gap-[0.38rem] py-[0.31rem] text-center`}
     >
       <button
         onClick={handleToggle}

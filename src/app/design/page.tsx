@@ -5,25 +5,28 @@ const Design = () => {
         <h1 className="text-headline-0">design system</h1>
         <h2 className="text-headline-1">grayscale</h2>
         <div className="flex">
-          <div className="h-20 w-20 bg-gray-900"></div>
-          <div className="h-20 w-20 bg-gray-800"></div>
-          <div className="h-20 w-20 bg-gray-700"></div>
-          <div className="h-20 w-20 bg-gray-600"></div>
-          <div className="h-20 w-20 bg-gray-500"></div>
-          <div className="h-20 w-20 bg-gray-400"></div>
-          <div className="h-20 w-20 bg-gray-300"></div>
-          <div className="h-20 w-20 bg-gray-200"></div>
-          <div className="h-20 w-20 bg-gray-100"></div>
-          <div className="h-20 w-20 bg-gray-50"></div>
-          <div className="bg-gray-0 h-20 w-20"></div>
+          <div className="bg-grey-900 h-20 w-20"></div>
+          <div className="bg-grey-800 h-20 w-20"></div>
+          <div className="bg-grey-700 h-20 w-20"></div>
+          <div className="bg-grey-600 h-20 w-20"></div>
+          <div className="bg-grey-500 h-20 w-20"></div>
+          <div className="bg-grey-400 h-20 w-20"></div>
+          <div className="bg-grey-300 h-20 w-20"></div>
+          <div className="bg-grey-200 h-20 w-20"></div>
+          <div className="bg-grey-100 h-20 w-20"></div>
+          <div className="bg-grey-50 h-20 w-20"></div>
+          <div className="bg-grey-0 h-20 w-20"></div>
         </div>
         <h2 className="text-headline-1">main/sub color</h2>
         <div className="flex">
           <div className="bg-sub-blue-300 h-20 w-20"></div>
+          <div className="bg-sub-blue-200 h-20 w-20"></div>
           <div className="bg-main-red-300 h-20 w-20"></div>
           <div className="bg-main-red-200 h-20 w-20"></div>
           <div className="bg-main-red-100 h-20 w-20"></div>
           <div className="bg-main-red-50 h-20 w-20"></div>
+          <div className="h-20 w-20 bg-green-300"></div>
+          <div className="h-20 w-20 bg-green-100"></div>
           <div className="shadow-default h-20 w-20"></div>
         </div>
       </div>

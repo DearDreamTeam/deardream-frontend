@@ -22,7 +22,7 @@
     @apply flex-1 py-[0.88rem];
   }
   .modal-main {
-    @apply shadow-default bg-gray-0 relative z-50;
+    @apply shadow-default bg-grey-0 relative z-50;
   }
 
   /* modal-edit-delete */
@@ -35,6 +35,6 @@
 
   /* 소식함 버튼 */
   .letters-btn {
-    @apply text-label-2 flex items-center gap-1 rounded-sm border border-gray-200 p-1 text-gray-500;
+    @apply text-label-2 border-grey-200 text-grey-500 flex items-center gap-1 rounded-sm border p-1;
   }
 }

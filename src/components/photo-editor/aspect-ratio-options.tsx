@@ -12,11 +12,11 @@ const AspectItem = ({
   label: string;
   onClick: () => void;
 }) => {
-  const color = isActive ? "bg-gray-50" : "text-gray-50";
+  const color = isActive ? "bg-grey-50" : "text-grey-50";
   return (
     <div
       onClick={onClick}
-      className={`rounded-25 px-7 py-1 ${color} hover:bg-gray-800 hover:text-gray-50`}
+      className={`rounded-sm px-7 py-1 ${color} hover:bg-grey-800 hover:text-grey-50`}
     >
       {label}
     </div>

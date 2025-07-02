@@ -17,7 +17,7 @@ const Dropdown = () => {
         </div>
       </div>
       {isOpen && (
-        <div className="bg-gray-0 absolute w-[6.5rem] rounded-sm border border-gray-200 py-1 text-center">
+        <div className="bg-grey-0 border-grey-200 absolute w-[6.5rem] rounded-sm border py-1 text-center">
           <button id="NEWEST" className="cursor-pointer px-2">
             최신순
           </button>

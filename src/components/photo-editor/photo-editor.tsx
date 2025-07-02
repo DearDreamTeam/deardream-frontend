@@ -51,7 +51,7 @@ const PhotoEditor = ({
   const toggleFlipX = () => setFlipX((prev) => !prev);
 
   return (
-    <div className="fixed inset-0 z-50 box-border flex items-center justify-center bg-gray-900">
+    <div className="bg-grey-900 fixed inset-0 z-50 box-border flex items-center justify-center">
       <div className="relative h-full w-full">
         <div
           className={`h-full w-full pb-[8.4rem] ${flipX ? "scale-x-[-1]" : ""}`}
@@ -68,7 +68,7 @@ const PhotoEditor = ({
             cropShape={isProfile ? "round" : "rect"}
           />
         </div>
-        <div className="fixed bottom-0 w-full bg-gray-900 px-4 py-6">
+        <div className="bg-grey-900 fixed bottom-0 w-full px-4 py-6">
           {!isProfile && (
             <AspectRatioOptions
               aspectRatio={aspectRatio}
