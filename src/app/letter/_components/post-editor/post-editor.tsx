@@ -130,7 +130,7 @@ const PostEditor = ({ postcard, submitAction }: PostEditorProps) => {
         </button>
         <button
           type="submit"
-          className={`p-2 ${isActive ? "text-main-red-300" : "text-gray-300"}`}
+          className={`p-2 ${isActive ? "text-green-300" : "text-grey-300"}`}
         >
           등록
         </button>

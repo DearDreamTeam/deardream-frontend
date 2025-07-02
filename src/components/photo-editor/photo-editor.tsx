@@ -21,7 +21,7 @@ const PhotoEditor = ({
   const [zoom, setZoom] = useState(1);
   const [rotation, setRotation] = useState(0);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null);
-  const [aspectRatio, setAspectRatio] = useState(1);
+  const [aspectRatio, setAspectRatio] = useState(3 / 4);
   const [flipX, setFlipX] = useState(false);
 
   const onCropComplete = useCallback((_: Area, croppedAreaPixels: Area) => {

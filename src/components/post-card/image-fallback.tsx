@@ -11,13 +11,12 @@ const ImageFallback = ({ url, width }: { url: string; width: number }) => {
   return hasError ? (
     <Skeleton height={194} width={width} />
   ) : (
-    <div className="relative h-[13rem] w-full">
+    <div className="relative aspect-[3/4] w-full">
       <Image
         src={url}
         alt={"image"}
         fill
-        style={{ objectFit: "contain" }}
-        className="rounded-25"
+        className="rounded-sm object-cover"
         onError={() => setHasError(true)}
       />
     </div>

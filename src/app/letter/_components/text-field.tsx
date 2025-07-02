@@ -10,7 +10,7 @@ const TextField = ({ content, setContent }: TextFieldProps) => {
 
   return (
     <textarea
-      className="text-label-2 flex-1 px-4 py-4"
+      className="text-title-3 flex-1 p-4"
       value={content}
       onChange={handleChangeContent}
       placeholder="나만의 일상을 남기고 소식지로 선물해보세요!"

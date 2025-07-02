@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import Gallery from "@/public/icons/photo-selector/gallery.svg";
+import Gallery from "@/public/icons/buttons/imagesmode.svg";
 import AlertDialog from "@/components/modal/dialog/alert-dialog";
 
 interface GalleryButtonProps {
@@ -39,7 +39,11 @@ const GalleryButton = ({
   };
   return (
     <div>
-      <button type="button" onClick={handleGalleryClick}>
+      <button
+        type="button"
+        className="text-grey-600 flex items-center justify-center"
+        onClick={handleGalleryClick}
+      >
         <Gallery />
       </button>
       <input
