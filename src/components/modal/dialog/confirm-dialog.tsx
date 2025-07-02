@@ -2,26 +2,30 @@ import Dialog from "./dialog";
 import { ConfirmDialogProps } from "@/types/dialog-props";
 
 const ConfirmDialog = ({
+  title,
+  content,
   setIsOpen,
   action,
   actionLabel = "삭제",
-  children,
 }: ConfirmDialogProps) => {
   return (
     <Dialog>
-      <Dialog.Message>{children}</Dialog.Message>
+      <Dialog.Message>
+        <Dialog.Title>{title}</Dialog.Title>
+        <Dialog.Content>{content}</Dialog.Content>
+      </Dialog.Message>
       <Dialog.Actions>
         <button
           type="button"
           onClick={action}
-          className="text-main-red-300 modal-btn border-r border-r-gray-200"
+          className="modal-btn border-r-grey-200 border-r text-green-300"
         >
           {actionLabel}
         </button>
         <button
           type="button"
           onClick={() => setIsOpen(false)}
-          className="modal-btn text-gray-700"
+          className="modal-btn text-grey-700"
         >
           취소
         </button>

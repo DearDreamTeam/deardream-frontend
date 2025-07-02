@@ -18,17 +18,17 @@ import { isContentValid } from "@/utils/post-content-rules";
 
 import AlertDialog from "@/components/modal/dialog/alert-dialog";
 import ConfirmDialog from "@/components/modal/dialog/confirm-dialog";
-import {
-  TEXT_LIMIT_INVALID_MESSAGE,
-  WRITE_CANCEL_WARNING_MESSAGE,
-} from "@/constants/messages";
+import { NOTIFICATION_MESSAGES } from "@/constants/messages";
 import { renderMessageWithLineBreaks } from "@/utils/render-message-with-line-breaks";
 import CompleteLetter from "../complete-letter";
 import PhotoEditor from "@/components/photo-editor/photo-editor";
 
 const PostEditor = ({ postcard, submitAction }: PostEditorProps) => {
   const router = useRouter();
-  const [warningMessage, setWarningMessage] = useState("");
+  const [warningMessage, setWarningMessage] = useState({
+    title: "",
+    content: "",
+  });
   const [isAlertOpen, setIsAlertOpen] = useState(false);
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
@@ -53,9 +53,11 @@ const PostEditor = ({ postcard, submitAction }: PostEditorProps) => {
     e.preventDefault();
     if (!isActive) {
       if (imageCount > 0) {
-        setWarningMessage(TEXT_LIMIT_INVALID_MESSAGE.WITH_IMAGES);
+        setWarningMessage(NOTIFICATION_MESSAGES.TEXT_LIMIT_INVALID.WITH_IMAGES);
       } else {
-        setWarningMessage(TEXT_LIMIT_INVALID_MESSAGE.WITHOUT_IMAGES);
+        setWarningMessage(
+          NOTIFICATION_MESSAGES.TEXT_LIMIT_INVALID.WITHOUT_IMAGES,
+        );
       }
       setIsAlertOpen(true);
       return;
@@ -93,13 +95,13 @@ const PostEditor = ({ postcard, submitAction }: PostEditorProps) => {
   const handleCancelLetter = () => {
     if (postcard) {
       if (postcard.content !== content) {
-        setWarningMessage(WRITE_CANCEL_WARNING_MESSAGE.EDIT);
+        setWarningMessage(NOTIFICATION_MESSAGES.WRITE_CANCEL_WARNING.EDIT);
         setIsConfirmOpen(true);
         return;
       }
     } else {
       if (content.trim() || imageCount) {
-        setWarningMessage(WRITE_CANCEL_WARNING_MESSAGE.NEW);
+        setWarningMessage(NOTIFICATION_MESSAGES.WRITE_CANCEL_WARNING.NEW);
         setIsConfirmOpen(true);
         return;
       }
@@ -159,18 +161,20 @@ const PostEditor = ({ postcard, submitAction }: PostEditorProps) => {
 
       {/* modal */}
       {isAlertOpen && (
-        <AlertDialog setIsOpen={setIsAlertOpen}>
-          {renderMessageWithLineBreaks(warningMessage)}
-        </AlertDialog>
+        <AlertDialog
+          title={warningMessage.title}
+          content={renderMessageWithLineBreaks(warningMessage.content)}
+          setIsOpen={setIsAlertOpen}
+        />
       )}
       {isConfirmOpen && (
         <ConfirmDialog
+          title={warningMessage.title}
+          content={renderMessageWithLineBreaks(warningMessage.content)}
           setIsOpen={setIsConfirmOpen}
           action={router.back}
           actionLabel={"확인"}
-        >
-          {renderMessageWithLineBreaks(warningMessage)}
-        </ConfirmDialog>
+        />
       )}
       {isComplete && <CompleteLetter />}
       {selectedImageIndex !== null && (

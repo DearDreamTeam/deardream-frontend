@@ -1,8 +1,9 @@
 import { SetIsOpenType } from "./set-open-type";
 
 export interface DialogProps {
+  title: string;
+  content: string | React.JSX.Element[];
   setIsOpen: SetIsOpenType;
-  children: React.ReactNode;
 }
 
 export interface ConfirmDialogProps extends DialogProps {

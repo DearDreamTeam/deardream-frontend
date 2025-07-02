@@ -3,6 +3,7 @@
 import { useRef, useState } from "react";
 import Gallery from "@/public/icons/buttons/imagesmode.svg";
 import AlertDialog from "@/components/modal/dialog/alert-dialog";
+import { NOTIFICATION_MESSAGES } from "@/constants/messages";
 
 interface GalleryButtonProps {
   imageCount: number;
@@ -55,9 +56,11 @@ const GalleryButton = ({
         onChange={handleFileChange}
       />
       {isAlertOpen && (
-        <AlertDialog setIsOpen={setIsAlertOpen}>
-          사진은 최대 2장까지만 선택할 수 있어요.
-        </AlertDialog>
+        <AlertDialog
+          title={NOTIFICATION_MESSAGES.CANNOT_ADD_MORE_IMAGES.title}
+          content={NOTIFICATION_MESSAGES.CANNOT_ADD_MORE_IMAGES.content}
+          setIsOpen={setIsAlertOpen}
+        />
       )}
     </div>
   );
