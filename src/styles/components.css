@@ -3,12 +3,12 @@
 @layer components {
   /* header */
   .header {
-    @apply bg-gray-0 flex border-b border-b-gray-200 px-4;
+    @apply bg-grey-0 border-b-grey-200 flex border-b px-4;
   }
 
-  /* pink btn */
+  /* green btn */
   .button {
-    @apply bg-main-red-300 flex items-center gap-1 rounded-sm p-2 text-gray-50;
+    @apply text-grey-50 text-title-1 flex items-center gap-1 rounded-sm bg-green-300 p-2;
   }
 
   /* modal-dialog */
