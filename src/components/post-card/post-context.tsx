@@ -11,7 +11,7 @@ const PostContext = ({ content }: Pick<PostcardProps, "content">) => {
   return (
     <p
       onClick={handleToggleContent}
-      className={`text-body-2 my-2 cursor-pointer text-gray-600 ${isExpanded || "line-clamp-3"}`}
+      className={`text-title-3 text-grey-600 my-2 cursor-pointer ${isExpanded || "line-clamp-3"}`}
     >
       {content}
     </p>

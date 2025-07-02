@@ -31,11 +31,11 @@ const PostInfo = ({
       )}
       <div className="flex flex-1">
         <div className="flex-1">
-          <p className="text-caption-1 flex gap-[0.12rem]">
-            <span className="text-main-red-300">{relation}</span>
+          <p className="text-body-2 flex gap-[0.12rem]">
+            <span className="text-green-300">{relation}</span>
             <span>{name}</span>
           </p>
-          <p className="text-caption-2 text-gray-500">
+          <p className="text-caption-2 text-grey-300">
             {formatDateToDots(createdAt)}
           </p>
         </div>

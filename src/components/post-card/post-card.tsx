@@ -13,8 +13,8 @@ const PostCard = ({
   postImg,
 }: PostcardProps) => {
   return (
-    <div className="bg-gray-0 px-4">
-      <div className="border-b border-b-gray-200 py-4">
+    <div className="bg-grey-0 px-4">
+      <div className="border-b-grey-200 border-b py-4">
         <PostInfo
           postId={postId}
           name={name}

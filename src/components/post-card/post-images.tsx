@@ -3,7 +3,7 @@ import ImageFallback from "./image-fallback";
 
 const PostImages = ({ imgUrls }: { imgUrls: string[] }) => {
   return (
-    <div className="rounded-25 flex justify-center gap-1 py-1">
+    <div className="flex justify-center gap-1 rounded-sm py-1">
       {imgUrls.map((url, idx) => (
         <ImageFallback
           key={idx}
