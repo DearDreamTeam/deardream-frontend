@@ -1,11 +1,8 @@
-import TextMessage from "@/public/icons/share-options/text-message.svg";
-import KakaoTalk from "@/public/icons/share-options/kakaotalk.svg";
-import Instagram from "@/public/icons/share-options/instagram.svg";
-import Mail from "@/public/icons/share-options/mail.svg";
+import TextMessage from "@/public/icons/share-options/chat_bubble.svg";
+import KakaoTalk from "@/public/icons/share-options/kakao_logo.svg";
+import Mail from "@/public/icons/share-options/email.svg";
 import Share from "@/public/icons/share-options/share.svg";
 import { useUserStore } from "@/stores/useUserStore";
-
-const tempAction = () => {};
 
 export const SHARE_DATA = {
   title: "이어드림 가족 초대",
@@ -59,7 +56,6 @@ export const SHARE_OPTION_ITEMS = [
     label: "카카오톡",
     action: SHARE_ACTIONS.handleShareKakao,
   },
-  { icon: Instagram, label: "인스타그램", action: tempAction },
   { icon: Mail, label: "이메일", action: SHARE_ACTIONS.handleShareEmail },
   { icon: Share, label: "더보기", action: SHARE_ACTIONS.handleShareMore },
 ];
