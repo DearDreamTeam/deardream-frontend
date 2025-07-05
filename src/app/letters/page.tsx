@@ -4,10 +4,14 @@ import PostList from "./_components/post-list";
 
 const page = () => {
   return (
-    <div className="flex-1 px-4">
-      <FilterOptions />
-      <SortOptions />
-      <PostList />
+    <div className="flex h-full flex-col">
+      <header className="text-title-1 header py-[0.66rem]">소식함</header>
+
+      <div className="overflow-auto-hide-scroll px-4">
+        <FilterOptions />
+        <SortOptions />
+        <PostList />
+      </div>
     </div>
   );
 };

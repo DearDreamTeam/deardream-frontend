@@ -35,6 +35,6 @@
 
   /* 소식함 버튼 */
   .letters-btn {
-    @apply text-label-2 border-grey-200 text-grey-500 flex items-center gap-1 rounded-sm border p-1;
+    @apply text-title-1 border-grey-200 text-grey-500 flex items-center gap-1 rounded-sm border px-2 py-1;
   }
 }
