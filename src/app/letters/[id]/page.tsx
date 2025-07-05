@@ -5,6 +5,7 @@ import Link from "next/link";
 import PdfViewer from "./_components/pdf-viewer";
 
 const PdfPage = () => {
+  const pdfSrc = "/mock/1.pdf";
   return (
     <div>
       <header className="text-title-1 header justify-between py-[0.66rem]">
@@ -14,13 +15,13 @@ const PdfPage = () => {
           </Link>
           <h1>2025년 5월호</h1>
         </div>
-        <button>
+        <a href={pdfSrc} download>
           <Download />
-        </button>
+        </a>
       </header>
 
       <div className="p-4">
-        <PdfViewer />
+        <PdfViewer pdfSrc={pdfSrc} />
       </div>
     </div>
   );

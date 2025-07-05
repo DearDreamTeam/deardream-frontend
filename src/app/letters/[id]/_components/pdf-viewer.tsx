@@ -11,7 +11,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   import.meta.url,
 ).toString();
 
-const PdfViewer = () => {
+const PdfViewer = ({ pdfSrc }: { pdfSrc: string }) => {
   const [numPages, setNumPages] = useState<number>(0);
 
   const onDocumentLoadSuccess = ({ numPages }: { numPages: number }) => {
@@ -39,7 +39,7 @@ const PdfViewer = () => {
       className="overflow-auto-hide-scroll h-screen w-full"
     >
       <Document
-        file={"/mock/1.pdf"}
+        file={pdfSrc}
         onLoadSuccess={onDocumentLoadSuccess}
         className={["flex", "flex-col", "gap-2", "pb-20"]}
       >
