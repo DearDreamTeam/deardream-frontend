@@ -41,7 +41,7 @@ const PdfViewer = () => {
       <Document
         file={"/mock/1.pdf"}
         onLoadSuccess={onDocumentLoadSuccess}
-        className={["flex", "flex-col", "gap-2"]}
+        className={["flex", "flex-col", "gap-2", "pb-20"]}
       >
         {Array.from({ length: numPages }, (_, index) => (
           <Page
