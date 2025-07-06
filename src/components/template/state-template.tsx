@@ -1,35 +1,14 @@
-import Image from "next/image";
-
-const StateTemplate = ({
-  bgSrc = "/images/ellipse/green-100.png",
-  src,
-  width = 129.43,
-  children,
-}: {
-  bgSrc?: string;
-  src: string;
-  width?: number;
-  children: React.ReactNode;
-}) => {
+const StateTemplate = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="flex h-full flex-col items-center justify-center">
-      <div className="relative my-[1.79rem] flex h-56 w-full items-center justify-center">
-        <Image
-          src={bgSrc}
-          alt={"background image"}
-          width={400}
-          height={400}
-          className="absolute z-10"
-        />
-        <Image
-          src={src}
-          alt={"main image"}
-          width={width}
-          height={110}
-          className="absolute z-20"
-        />
-      </div>
+      {children}
+    </div>
+  );
+};
 
+const ImageFiled = ({ children }: { children: React.ReactNode }) => {
+  return (
+    <div className="relative my-4 flex h-56 w-full items-center justify-center">
       {children}
     </div>
   );
@@ -44,9 +23,10 @@ const Content = ({ children }: { children: React.ReactNode }) => (
 );
 
 const Action = ({ children }: { children: React.ReactNode }) => (
-  <div className="self-center py-7">{children}</div>
+  <div className="self-center py-4">{children}</div>
 );
 
+StateTemplate.ImageFiled = ImageFiled;
 StateTemplate.Title = Title;
 StateTemplate.Content = Content;
 StateTemplate.Action = Action;
