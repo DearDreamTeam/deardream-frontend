@@ -30,3 +30,6 @@ export type ResetButtonProps = Pick<
   "setShowOnlyFavorites"
 > &
   Pick<SortOptionProps, "setSortOption">;
+
+export type PostListProps = Pick<FavoriteFilterProps, "showOnlyFavorites"> &
+  Pick<SortOptionProps, "sortOption">;

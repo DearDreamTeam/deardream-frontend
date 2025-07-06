@@ -7,3 +7,12 @@ export const formatDateToDots = (timestamp: number) => {
 
   return `${year}.${month}.${day}`;
 };
+
+export const formatDateForNewsletter = (timestamp: number) => {
+  const date = new Date(timestamp);
+
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+
+  return `${year}년 ${month}월 호`;
+};
