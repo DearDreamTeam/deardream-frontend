@@ -1,6 +1,6 @@
 // app/page.tsx
 "use client";
-import Invite from "@/public/images/mail-invite.svg";
+import GreenRibbon from "@/public/images/green-ribbon.svg";
 import KaKao from "@/public/images/kakao.svg";
 
 const Login = () => {
@@ -18,16 +18,15 @@ const Login = () => {
 
   return (
     <>
-      <div className="relative flex h-screen flex-col items-center justify-center gap-6 bg-[#C4EAFF]">
-        <Invite alt="이어드림 초대장" className="" />
-
+      <div className="relative flex h-screen flex-col items-center justify-center gap-6 bg-[#F0FBF0]">
+        <div className="flex h-60 w-60 items-center justify-center bg-[url('/images/ellipse.svg')] bg-contain bg-center bg-no-repeat">
+          <GreenRibbon className="" />
+        </div>
         <div className="justify-start self-stretch text-center text-2xl leading-9 font-semibold text-zinc-900">
           로그인이 필요해요
         </div>
         <div className="justify-start self-stretch text-center text-base leading-normal font-normal text-zinc-900">
-          우리 모두가 다 함께
-          <br />
-          이야기를 나누고, 마음을 이어가기 위해
+          우리 모두가 다 함께 마음을 이어가기 위해
           <br />
           로그인이 필요해요.
         </div>

@@ -47,7 +47,7 @@ const BirthdayInputs = () => {
   };
   return (
     <>
-      <div className="flex w-80 items-center justify-center gap-2 text-lg text-gray-800">
+      <div className="flex w-80 items-center justify-between gap-2 text-lg text-gray-800">
         <div className="flex items-center">
           <input
             type="text"
@@ -90,20 +90,20 @@ const BirthdayInputs = () => {
           일
         </div>
       </div>
-      <div className="flex justify-around gap-4">
+      <div className="flex gap-10">
         <div className="flex items-center gap-2">
+          양력
           <div
             onClick={() => setIsLunar(!isLunar)}
             className={`${
-              !isLunar ? "bg-rose-500" : "bg-gray-300"
+              !isLunar ? "bg-green-700" : "bg-gray-300"
             } inline-flex h-6 w-6 flex-col items-center justify-center gap-2.5 rounded-[40px] p-1`}
           >
             <Check />
           </div>
-          양력
         </div>
-
         <div className="flex items-center gap-2">
+          음력
           <div
             onClick={() => setIsLunar(!isLunar)}
             className={`${
@@ -112,7 +112,6 @@ const BirthdayInputs = () => {
           >
             <Check />
           </div>
-          음력
         </div>
       </div>
     </>

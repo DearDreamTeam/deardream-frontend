@@ -66,7 +66,7 @@ const ProfileEdit = ({ isSender, isInvite, user }: ProfileEditProps) => {
           />
           <div
             onClick={() => inputRef.current?.click()}
-            className="absolute right-0 bottom-0 m-1 flex h-6 w-6 cursor-pointer items-center justify-center rounded-[40px] bg-rose-500 p-1"
+            className="absolute right-0 bottom-0 m-1 flex h-6 w-6 cursor-pointer items-center justify-center rounded-[40px] bg-green-700 p-1"
           >
             <Pencil />
           </div>
