@@ -9,6 +9,7 @@ export interface Newsletter {
   coverImgUrl: string;
   timestamp: number;
   liked: boolean;
+  status: number;
 }
 
 interface PostboxState {
@@ -21,6 +22,7 @@ const defaultData: Newsletter[] = Array.from({ length: 10 }, (_, i) => ({
   coverImgUrl: `/mock/cover-${i + 1}.png`,
   timestamp: new Date(2025, 7 - i, 1).getTime(),
   liked: false,
+  status: i > 1 ? 2 : i,
 }));
 
 export const useLettersStore = create<PostboxState>()(

@@ -52,4 +52,8 @@
   .navigation-item {
     @apply flex flex-col items-center gap-[0.19];
   }
+
+  .post-status {
+    @apply text-label-1 bg-inactive-bg absolute inset-0 flex h-[9.25rem] w-[6.5rem] items-center justify-center gap-1 rounded-sm text-white;
+  }
 }
