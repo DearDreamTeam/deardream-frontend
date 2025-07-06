@@ -7,6 +7,7 @@ const Login = () => {
   const REST_API_KEY = process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY;
   const REDIRECT_URI = process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI;
 
+  //카카오로그인 URL 생성 함수
   const handleLogin = () => {
     const kakaoURL = new URL("https://kauth.kakao.com/oauth/authorize");
     kakaoURL.searchParams.append("client_id", REST_API_KEY);

@@ -1,14 +1,19 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Check from "@/public/icons/common/check.svg";
-
-const BirthdayInputs = () => {
+import { UserProfile } from "@/types/user-info";
+interface BirthdayInputsProps {
+  setPostUser?: (
+    user: UserProfile | ((prev: UserProfile) => UserProfile),
+  ) => void;
+}
+const BirthdayInputs = ({ setPostUser }: BirthdayInputsProps) => {
   const [year, setYear] = useState("");
   const [month, setMonth] = useState("");
   const [day, setDay] = useState("");
   const [isLunar, setIsLunar] = useState(false);
 
   const handleYear = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const val = e.target.value.replace(/\D/g, "").slice(0, 4);
+    const val = e.target.value.replace(/\D/g, "");
     setYear(val);
   };
 
@@ -45,6 +50,22 @@ const BirthdayInputs = () => {
       setDay("31");
     }
   };
+
+  // 날짜가 바뀌면 setPostUser에 업데이트
+  useEffect(() => {
+    if (setPostUser) {
+      setPostUser((prev) => ({
+        ...prev,
+        birth: {
+          year,
+          month,
+          day,
+          calendarType: isLunar ? "LUNAR" : "SOLAR",
+        },
+      }));
+    }
+  }, [year, month, day, isLunar, setPostUser]);
+
   return (
     <>
       <div className="flex w-80 items-center justify-between gap-2 text-lg text-gray-800">
@@ -94,7 +115,7 @@ const BirthdayInputs = () => {
         <div className="flex items-center gap-2">
           양력
           <div
-            onClick={() => setIsLunar(!isLunar)}
+            onClick={() => setIsLunar(false)}
             className={`${
               !isLunar ? "bg-green-700" : "bg-gray-300"
             } inline-flex h-6 w-6 flex-col items-center justify-center gap-2.5 rounded-[40px] p-1`}
@@ -105,9 +126,9 @@ const BirthdayInputs = () => {
         <div className="flex items-center gap-2">
           음력
           <div
-            onClick={() => setIsLunar(!isLunar)}
+            onClick={() => setIsLunar(true)}
             className={`${
-              isLunar ? "bg-rose-500" : "bg-gray-300"
+              isLunar ? "bg-green-700" : "bg-gray-300"
             } inline-flex h-6 w-6 flex-col items-center justify-center gap-2.5 rounded-[40px] p-1`}
           >
             <Check />

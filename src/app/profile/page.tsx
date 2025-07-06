@@ -2,7 +2,8 @@
 "use client";
 import RedBasicButton from "@/components/button/red-basic-button";
 import Header from "@/components/common/header";
-import ProfileEdit, { UserInfo } from "@/components/profile/profile-edit";
+import ProfileEdit from "@/components/profile/profile-edit";
+import { UserInfo } from "@/types/user-info";
 import axios from "@/lib/axios";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -11,6 +12,8 @@ const Profile = () => {
   const searchParams = useSearchParams();
   const [userData, setUserData] = useState<UserInfo>();
   const kakaoCode = searchParams.get("code");
+
+  // 카카오 로그인 API 호출 함수
   const fetchUserInfo = async () => {
     if (!kakaoCode) return;
 
@@ -20,13 +23,22 @@ const Profile = () => {
           code: kakaoCode,
         },
       });
+      const accessToken = response.data.accessToken;
+      const refreshToken = response.data.refreshToken;
+      localStorage.setItem("accessToken", accessToken);
+      localStorage.setItem("refreshToken", refreshToken);
+      console.log("카카오 로그인 성공:", response.data);
 
       return response.data;
     } catch (error) {
       console.error("카카오 로그인 실패:", error);
+      alert("로그인에 실패했습니다. 다시 시도해주세요.");
+      window.location.href = "/login";
+      return null;
     }
   };
 
+  // 사용자 정보를 가져오는 useEffect 훅 처음 실행 될 때만 실행
   useEffect(() => {
     const fetchData = async () => {
       const userInfo = await fetchUserInfo();

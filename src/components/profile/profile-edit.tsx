@@ -2,22 +2,12 @@
 "use client";
 import BirthSelect from "@/components/select/birth-select";
 import Pencil from "@/public/icons/common/pencil.svg";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import SenderProfile from "./sender-profile";
 import RecieverProfile from "./receiver-profile";
-export interface UserInfo {
-  accessToken: string;
-  email: string;
-  name: string;
-  profileImage: string;
-  refreshToken: string;
-}
-interface ProfileEditProps {
-  isSender?: boolean; // 프로필 타입을 구분하기 위한 선택적 속성
-  isInvite?: boolean; // 초대 프로필 여부
-  user?: UserInfo; // 사용자 정보
-}
+import { UserProfile, ProfileEditProps } from "@/types/user-info";
 
+// 이미지 URL을 포맷팅하는 함수
 const formatImageUrl = (url?: string): string => {
   const kakaoDefaultImage =
     "http://img1.kakaocdn.net/thumb/R640x640.q70/?fname=http://t1.kakaocdn.net/account_images/default_profile.jpeg";
@@ -32,11 +22,23 @@ const formatImageUrl = (url?: string): string => {
   return cleanedUrl;
 };
 
+// 프로필 편집 컴포넌트
 const ProfileEdit = ({ isSender, isInvite, user }: ProfileEditProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [imageUrl, setImageUrl] = useState<string>(
     formatImageUrl(user?.profileImage),
   );
+  const [postUser, setPostUser] = useState<UserProfile>({
+    name: user?.name || "",
+    profileImage: imageUrl,
+    birth: {
+      year: "",
+      month: "",
+      day: "",
+      calendarType: "SOLAR",
+    },
+  });
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -47,6 +49,10 @@ const ProfileEdit = ({ isSender, isInvite, user }: ProfileEditProps) => {
       reader.readAsDataURL(file);
     }
   };
+
+  useEffect(() => {
+    console.log("postUser:", postUser);
+  }, [postUser]);
   return (
     <>
       <div className="flex w-full flex-col items-center gap-10">
@@ -77,12 +83,15 @@ const ProfileEdit = ({ isSender, isInvite, user }: ProfileEditProps) => {
             type="text"
             className="text-medium w-80 border-b-1 border-solid border-[#EBEBF0] px-1 py-2 text-xl font-medium text-gray-700 placeholder:text-gray-400 focus:ring-0 focus:outline-none"
             placeholder="이름을 입력해주세요"
-            value={user?.name}
+            value={postUser.name}
+            onChange={(e) =>
+              setPostUser((prev) => ({ ...prev, name: e.target.value }))
+            }
           />
         </div>
         <div className="flex-start flex flex-col gap-2 text-sm font-normal text-zinc-900">
           생일
-          <BirthSelect />
+          <BirthSelect setPostUser={setPostUser} />
         </div>
         {isSender ? isInvite && <SenderProfile /> : <RecieverProfile />}
       </div>
