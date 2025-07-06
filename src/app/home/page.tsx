@@ -4,6 +4,8 @@ import NoPost from "./_components/no-post";
 import PostCard from "@/components/post-card/post-card";
 import { useUserStore } from "@/stores/useUserStore";
 import NoFamilyGroup from "./_components/no-family-group";
+import HomeBanner from "./_components/home-banner";
+import PeriodNotification from "./_components/period-notification";
 
 const Home = () => {
   const { post } = usePostStore();
@@ -14,6 +16,8 @@ const Home = () => {
 
   return (
     <div className="overflow-auto-hide-scroll h-full">
+      <HomeBanner />
+      <PeriodNotification />
       {post.map((letter) => (
         <PostCard
           key={letter.postId}
