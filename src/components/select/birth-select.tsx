@@ -54,12 +54,8 @@ const BirthdayInputs = () => {
   useEffect(() => {
     if (year && month && day) {
       updateUserProfile({
-        birth: {
-          year: year,
-          month: month,
-          day: day,
-          calendarType: isLunar ? "LUNAR" : "SOLAR",
-        },
+        birth: `${year}-${month}-${day}`,
+        calendarType: isLunar ? "LUNAR" : "SOLAR",
       } as UserProfile);
     }
   }, [year, month, day, isLunar, updateUserProfile]);

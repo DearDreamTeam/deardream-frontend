@@ -20,17 +20,25 @@ const Profile = () => {
 
     try {
       const response = await axios.get("/users/login/kakao", {
-        params: {
-          code: kakaoCode,
-        },
+        params: { code: kakaoCode },
       });
-      const accessToken = response.data.accessToken;
-      const refreshToken = response.data.refreshToken;
+
+      const data = response.data;
+
+      // 응답 유효성 검증
+      if (!data || !data.result) {
+        console.error("로그인 응답이 비정상입니다:", data);
+        throw new Error("잘못된 로그인 응답입니다.");
+      }
+
+      const { accessToken, refreshToken } = data.result;
+
+      // localStorage 저장
       localStorage.setItem("accessToken", accessToken);
       localStorage.setItem("refreshToken", refreshToken);
-      console.log("카카오 로그인 성공:", response.data);
 
-      return response.data;
+      console.log("카카오 로그인 성공:", data);
+      return data.result;
     } catch (error) {
       console.error("카카오 로그인 실패:", error);
       alert("로그인에 실패했습니다. 다시 시도해주세요.");
@@ -42,30 +50,22 @@ const Profile = () => {
   // 사용자 정보를 가져오는 useEffect 훅 처음 실행 될 때만 실행
   useEffect(() => {
     const fetchData = async () => {
-      const userData = await fetchUserInfo();
-      if (userData && userData.result) {
-        const { accessToken, refreshToken, email, name, profileImage } =
-          userData.result;
+      const result = await fetchUserInfo(); // 위에서 return data.result
+      if (!result) return;
 
-        localStorage.setItem("accessToken", accessToken);
-        localStorage.setItem("refreshToken", refreshToken);
+      const { accessToken, refreshToken, email, name, profileImage } = result;
 
-        setUserInfo({ accessToken, refreshToken, email, name, profileImage });
-
-        setUserProfile({
-          name,
-          profileImage,
-          birth: {
-            year: "",
-            month: "",
-            day: "",
-            calendarType: "SOLAR",
-          },
-          relation: "",
-          otherRelation: "",
-        });
-      }
+      setUserInfo({ accessToken, refreshToken, email, name, profileImage });
+      setUserProfile({
+        name,
+        profileImage,
+        birth: "",
+        calendarType: "SOLAR",
+        relation: "",
+        otherRelation: "",
+      });
     };
+
     fetchData();
   }, []);
 

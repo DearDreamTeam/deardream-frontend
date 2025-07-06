@@ -20,9 +20,18 @@ export const useUserStore = create<UserState>((set) => ({
 
   updateUserProfile: (update) =>
     set((state) => ({
-      userProfile: state.userProfile
-        ? { ...state.userProfile, ...update }
-        : null,
+      userProfile: {
+        ...{
+          name: "",
+          profileImage: "",
+          birth: "",
+          calendarType: "SOLAR",
+          relation: "",
+          otherRelation: "",
+        },
+        ...(state.userProfile ?? {}),
+        ...update,
+      },
     })),
 
   clearUser: () => set({ userInfo: null, userProfile: null }),

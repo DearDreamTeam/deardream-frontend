@@ -9,7 +9,8 @@ export interface UserInfo {
 export interface UserProfile {
   name: string;
   profileImage: string;
-  birth: birthInfo;
+  birth: string;
+  calendarType: "SOLAR" | "LUNAR";
   relation?: string;
   otherRelation?: string;
 }
