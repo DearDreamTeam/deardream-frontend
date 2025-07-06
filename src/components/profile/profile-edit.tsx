@@ -5,7 +5,8 @@ import Pencil from "@/public/icons/common/pencil.svg";
 import { useEffect, useRef, useState } from "react";
 import SenderProfile from "./sender-profile";
 import RecieverProfile from "./receiver-profile";
-import { UserProfile, ProfileEditProps } from "@/types/user-info";
+import { ProfileEditProps } from "@/types/user-info";
+import { useUserStore } from "@/stores/useUserStore";
 
 // 이미지 URL을 포맷팅하는 함수
 const formatImageUrl = (url?: string): string => {
@@ -23,22 +24,13 @@ const formatImageUrl = (url?: string): string => {
 };
 
 // 프로필 편집 컴포넌트
-const ProfileEdit = ({ isSender, isInvite, user }: ProfileEditProps) => {
+const ProfileEdit = ({ isSender, isInvite }: ProfileEditProps) => {
+  const { userInfo, userProfile, updateUserProfile } = useUserStore();
+
   const inputRef = useRef<HTMLInputElement>(null);
   const [imageUrl, setImageUrl] = useState<string>(
-    formatImageUrl(user?.profileImage),
+    formatImageUrl(userInfo?.profileImage),
   );
-  const [postUser, setPostUser] = useState<UserProfile>({
-    name: user?.name || "",
-    profileImage: imageUrl,
-    birth: {
-      year: "",
-      month: "",
-      day: "",
-      calendarType: "SOLAR",
-    },
-  });
-
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -51,8 +43,8 @@ const ProfileEdit = ({ isSender, isInvite, user }: ProfileEditProps) => {
   };
 
   useEffect(() => {
-    console.log("postUser:", postUser);
-  }, [postUser]);
+    console.log("postUser:", userProfile);
+  }, [userProfile]);
   return (
     <>
       <div className="flex w-full flex-col items-center gap-10">
@@ -83,15 +75,13 @@ const ProfileEdit = ({ isSender, isInvite, user }: ProfileEditProps) => {
             type="text"
             className="text-medium w-80 border-b-1 border-solid border-[#EBEBF0] px-1 py-2 text-xl font-medium text-gray-700 placeholder:text-gray-400 focus:ring-0 focus:outline-none"
             placeholder="이름을 입력해주세요"
-            value={postUser.name}
-            onChange={(e) =>
-              setPostUser((prev) => ({ ...prev, name: e.target.value }))
-            }
+            value={userProfile?.name}
+            onChange={(e) => updateUserProfile({ name: e.target.value })}
           />
         </div>
         <div className="flex-start flex flex-col gap-2 text-sm font-normal text-zinc-900">
           생일
-          <BirthSelect setPostUser={setPostUser} />
+          <BirthSelect />
         </div>
         {isSender ? isInvite && <SenderProfile /> : <RecieverProfile />}
       </div>

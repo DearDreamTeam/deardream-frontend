@@ -1,16 +1,15 @@
 import { useEffect, useState } from "react";
 import Check from "@/public/icons/common/check.svg";
 import { UserProfile } from "@/types/user-info";
-interface BirthdayInputsProps {
-  setPostUser?: (
-    user: UserProfile | ((prev: UserProfile) => UserProfile),
-  ) => void;
-}
-const BirthdayInputs = ({ setPostUser }: BirthdayInputsProps) => {
+import { useUserStore } from "@/stores/useUserStore";
+
+const BirthdayInputs = () => {
   const [year, setYear] = useState("");
   const [month, setMonth] = useState("");
   const [day, setDay] = useState("");
   const [isLunar, setIsLunar] = useState(false);
+
+  const { updateUserProfile } = useUserStore();
 
   const handleYear = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value.replace(/\D/g, "");
@@ -53,18 +52,17 @@ const BirthdayInputs = ({ setPostUser }: BirthdayInputsProps) => {
 
   // 날짜가 바뀌면 setPostUser에 업데이트
   useEffect(() => {
-    if (setPostUser) {
-      setPostUser((prev) => ({
-        ...prev,
+    if (year && month && day) {
+      updateUserProfile({
         birth: {
-          year,
-          month,
-          day,
+          year: year,
+          month: month,
+          day: day,
           calendarType: isLunar ? "LUNAR" : "SOLAR",
         },
-      }));
+      } as UserProfile);
     }
-  }, [year, month, day, isLunar, setPostUser]);
+  }, [year, month, day, isLunar, updateUserProfile]);
 
   return (
     <>

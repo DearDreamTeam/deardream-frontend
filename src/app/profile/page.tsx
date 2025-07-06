@@ -3,15 +3,16 @@
 import RedBasicButton from "@/components/button/red-basic-button";
 import Header from "@/components/common/header";
 import ProfileEdit from "@/components/profile/profile-edit";
-import { UserInfo } from "@/types/user-info";
 import axios from "@/lib/axios";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useUserStore } from "@/stores/useUserStore";
 
 const Profile = () => {
   const searchParams = useSearchParams();
-  const [userData, setUserData] = useState<UserInfo>();
   const kakaoCode = searchParams.get("code");
+
+  const { setUserInfo, setUserProfile, userInfo } = useUserStore();
 
   // 카카오 로그인 API 호출 함수
   const fetchUserInfo = async () => {
@@ -41,12 +42,28 @@ const Profile = () => {
   // 사용자 정보를 가져오는 useEffect 훅 처음 실행 될 때만 실행
   useEffect(() => {
     const fetchData = async () => {
-      const userInfo = await fetchUserInfo();
-      if (userInfo) {
-        console.log("User Info:", userInfo.result);
-      }
-      if (userInfo && userInfo.result) {
-        setUserData(userInfo.result);
+      const userData = await fetchUserInfo();
+      if (userData && userData.result) {
+        const { accessToken, refreshToken, email, name, profileImage } =
+          userData.result;
+
+        localStorage.setItem("accessToken", accessToken);
+        localStorage.setItem("refreshToken", refreshToken);
+
+        setUserInfo({ accessToken, refreshToken, email, name, profileImage });
+
+        setUserProfile({
+          name,
+          profileImage,
+          birth: {
+            year: "",
+            month: "",
+            day: "",
+            calendarType: "SOLAR",
+          },
+          relation: "",
+          otherRelation: "",
+        });
       }
     };
     fetchData();
@@ -55,8 +72,8 @@ const Profile = () => {
   return (
     <>
       <Header>프로필 설정</Header>
-      {userData ? (
-        <ProfileEdit isSender={true} isInvite={false} user={userData} />
+      {userInfo ? (
+        <ProfileEdit isSender={true} isInvite={false} />
       ) : (
         <div className="flex h-screen w-full flex-col items-center justify-center gap-6 bg-[#F0FBF0] px-4 text-center text-gray-800">
           <div className="border-opacity-50 h-12 w-12 animate-spin rounded-full border-t-4 border-green-600"></div>
