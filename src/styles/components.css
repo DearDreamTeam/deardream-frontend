@@ -37,4 +37,11 @@
   .letters-btn {
     @apply text-title-1 border-grey-200 text-grey-500 flex items-center gap-1 rounded-sm border px-2 py-1;
   }
+
+  .progress-dot {
+    @apply h-2 w-2 rounded-full transition-colors duration-300;
+  }
+  .progress-dot-container {
+    @apply flex justify-center gap-4;
+  }
 }
