@@ -44,4 +44,8 @@
   .progress-dot-container {
     @apply flex justify-center gap-4;
   }
+
+  .navigation-item {
+    @apply flex flex-col items-center gap-[0.19];
+  }
 }
