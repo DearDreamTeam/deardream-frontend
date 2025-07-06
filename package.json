@@ -17,7 +17,8 @@
     "react-dom": "^19.0.0",
     "react-loading-skeleton": "^3.5.0",
     "react-mobile-picker": "^1.1.2",
-    "zustand": "^5.0.6"
+    "zustand": "^5.0.6",
+    "immer": "^10.1.1"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.8.1",

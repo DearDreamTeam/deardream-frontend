@@ -2,11 +2,6 @@ import type { NextConfig } from "next";
 import type { Configuration } from "webpack";
 
 const nextConfig: NextConfig = {
-  // 외부 이미지 도메인 허용
-  images: {
-    domains: ["k.kakaocdn.net"],
-  },
-
   webpack(config: Configuration) {
     config.module?.rules?.push({
       test: /\.svg$/,
@@ -16,13 +11,19 @@ const nextConfig: NextConfig = {
     return config;
   },
 
-  async rewrites() {
-    return [
+  //이미지 관련
+  images: {
+    domains: ["k.kakaocdn.net"],
+    remotePatterns: [
       {
-        source: "/api/:path*", // 프론트에서 이 경로로 요청하면
-        destination: "https://vote-dream.p-e.kr/api/:path*", // 백엔드로 프록시됨
+        protocol: "https",
+        hostname: "avatars.githubusercontent.com",
       },
-    ];
+      {
+        protocol: "https",
+        hostname: "hypebeast.kr",
+      },
+    ],
   },
 };
 

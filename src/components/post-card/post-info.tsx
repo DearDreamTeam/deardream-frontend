@@ -1,18 +1,34 @@
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
-import { PostCardType } from "@/types/post-card-type";
+import { PostcardProps } from "@/types/postcard-props";
 import { formatDateToDots } from "@/utils/format-date-to-dots";
 import MoreButton from "@/components/button/more-button";
+import Image from "next/image";
 
 const PostInfo = ({
+  postId,
   name,
   relation,
   createdAt,
-}: Pick<PostCardType, "name" | "relation" | "createdAt">) => {
+  profileImg,
+}: Pick<
+  PostcardProps,
+  "postId" | "name" | "relation" | "createdAt" | "profileImg"
+>) => {
   return (
     <div className="flex items-center gap-1 px-[0.13rem] py-1">
-      <Skeleton circle={true} width={36} height={36} />
+      {profileImg ? (
+        <Image
+          src={profileImg}
+          alt={"프로필 이미지"}
+          width={36}
+          height={36}
+          className="rounded-full"
+        />
+      ) : (
+        <Skeleton circle={true} width={36} height={36} />
+      )}
       <div className="flex flex-1">
         <div className="flex-1">
           <p className="text-caption-1 flex gap-[0.12rem]">
@@ -23,7 +39,7 @@ const PostInfo = ({
             {formatDateToDots(createdAt)}
           </p>
         </div>
-        <MoreButton />
+        <MoreButton postId={postId} />
       </div>
     </div>
   );

@@ -1,7 +1,8 @@
-import { PostCardType } from "@/types/post-card-type";
+import { PostcardProps } from "@/types/postcard-props";
 import PostContext from "./post-context";
 import PostImages from "./post-images";
 import PostInfo from "./post-info";
+import { PostCardType } from "@/types/post-card-type";
 
 const mockPostCard: PostCardType = {
   name: "김수진",
@@ -18,8 +19,14 @@ const PostCard = () => {
   return (
     <div className="bg-gray-0 px-4">
       <div className="border-b border-b-gray-200 py-4">
-        <PostInfo name={name} relation={relation} createdAt={createdAt} />
-        <PostImages />
+        <PostInfo
+          name={name}
+          relation={relation}
+          createdAt={createdAt}
+          postId={0}
+          profileImg={null}
+        />
+        <PostImages imgUrls={[]} />
         <PostContext content={content} />
       </div>
     </div>

@@ -15,6 +15,7 @@ const InviteFamilyButton = () => {
       >
         <UserAdd />
         <p>가족 초대하기</p>
+        <p>멤버 초대하기</p>
       </button>
 
       {isShareOptionsModalOpen && (

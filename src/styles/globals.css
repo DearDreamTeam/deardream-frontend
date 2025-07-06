@@ -16,7 +16,7 @@
     @apply rounded-sm; /* border-radius 0.25 */
   }
   .rounded-50 {
-    @apply rounded-b-lg; /* border-radius 0.5 */
+    @apply rounded-lg; /* border-radius 0.5 */
   }
 }
 
@@ -26,9 +26,9 @@
     @apply bg-gray-0 flex border-b border-b-gray-200 px-4;
   }
 
-  /* black btn */
+  /* pink btn */
   .button {
-    @apply flex items-center gap-1 rounded-sm bg-gray-900 p-2 text-gray-50;
+    @apply bg-main-red-300 flex items-center gap-1 rounded-sm p-2 text-gray-50;
   }
 
   /* modal-dialog */
@@ -57,7 +57,9 @@
 button {
   cursor: pointer;
 }
-input:focus {
+
+textarea {
   outline: none;
-  ring: 0;
+  resize: none;
+  scrollbar-width: none;
 }

@@ -1,38 +1,41 @@
-import { UserInfo, UserProfile } from "@/types/user-info";
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
+import { immer } from "zustand/middleware/immer";
+
+import { User } from "@/types/user-type";
+import { FAMILY_RELATION } from "@/constants/family-relation";
+import { FAMILY_ROLE } from "@/constants/family-role";
+
+const USER_STORAGE_KEY = "deardream-user";
 
 interface UserState {
-  userInfo: UserInfo | null;
-  userProfile: UserProfile | null;
-  setUserInfo: (info: UserInfo) => void;
-  setUserProfile: (profile: UserProfile) => void;
-  updateUserProfile: (update: Partial<UserProfile>) => void;
-  clearUser: () => void;
+  user: User;
 }
 
-export const useUserStore = create<UserState>((set) => ({
-  userInfo: null,
-  userProfile: null,
+const defaultUser: User = {
+  userId: 777,
+  kakaoId: "mmm",
+  name: "김영서",
+  profileImage: "https://avatars.githubusercontent.com/u/88617509?v=4",
+  createdAt: 1749965489473,
+  birth: 964224000000,
+  role: FAMILY_ROLE.LEADER,
+  relation: FAMILY_RELATION.DAUGHTER,
+  familyId: 22,
+};
 
-  setUserInfo: (info) => set({ userInfo: info }),
-
-  setUserProfile: (profile) => set({ userProfile: profile }),
-
-  updateUserProfile: (update) =>
-    set((state) => ({
-      userProfile: {
-        ...{
-          name: "",
-          profileImage: "",
-          birth: "",
-          calendarType: "SOLAR",
-          relation: "",
-          otherRelation: "",
-        },
-        ...(state.userProfile ?? {}),
-        ...update,
-      },
+export const useUserStore = create<UserState>()(
+  persist(
+    immer((set) => ({
+      user: defaultUser,
+      setUser: (userData: User) => set({ user: userData }),
+      setFamilyId: (familyId: number) =>
+        set((state) => {
+          if (state.user) state.user.familyId = familyId;
+        }),
     })),
-
-  clearUser: () => set({ userInfo: null, userProfile: null }),
-}));
+    {
+      name: USER_STORAGE_KEY,
+    },
+  ),
+);
