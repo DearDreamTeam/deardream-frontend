@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Check from "@/public/icons/common/check.svg";
 import { UserProfile } from "@/types/user-info";
-import { useUserStore } from "@/stores/useUserStore";
+import { useUserStore } from "@/stores/useUserInfoStore";
 
 const BirthdayInputs = () => {
   const [year, setYear] = useState("");

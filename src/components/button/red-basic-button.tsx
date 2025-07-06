@@ -1,7 +1,7 @@
 "use client";
 
 import axios from "@/lib/axios";
-import { useUserStore } from "@/stores/useUserStore";
+import { useUserStore } from "@/stores/useUserInfoStore";
 import React from "react";
 
 const RedBasicButton = ({ children }: { children: React.ReactNode }) => {

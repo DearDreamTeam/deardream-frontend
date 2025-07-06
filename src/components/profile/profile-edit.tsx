@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import SenderProfile from "./sender-profile";
 import RecieverProfile from "./receiver-profile";
 import { ProfileEditProps } from "@/types/user-info";
-import { useUserStore } from "@/stores/useUserStore";
+import { useUserStore } from "@/stores/useUserInfoStore";
 import Image from "next/image";
 
 // 이미지 URL을 포맷팅하는 함수
@@ -65,7 +65,7 @@ const ProfileEdit = ({ isSender, isInvite }: ProfileEditProps) => {
           />
           <div
             onClick={() => inputRef.current?.click()}
-            className="absolute right-0 bottom-0 m-1 flex h-6 w-6 cursor-pointer items-center justify-center rounded-[40px] bg-green-700 p-1"
+            className="absolute bottom-0 right-0 m-1 flex h-6 w-6 cursor-pointer items-center justify-center rounded-[40px] bg-green-700 p-1"
           >
             <Pencil />
           </div>
@@ -74,7 +74,7 @@ const ProfileEdit = ({ isSender, isInvite }: ProfileEditProps) => {
           이름
           <input
             type="text"
-            className="text-medium w-80 border-b-1 border-solid border-[#EBEBF0] px-1 py-2 text-xl font-medium text-gray-700 placeholder:text-gray-400 focus:ring-0 focus:outline-none"
+            className="text-medium border-b-1 w-80 border-solid border-[#EBEBF0] px-1 py-2 text-xl font-medium text-gray-700 placeholder:text-gray-400 focus:outline-none focus:ring-0"
             placeholder="이름을 입력해주세요"
             value={userProfile?.name}
             onChange={(e) => updateUserProfile({ name: e.target.value })}

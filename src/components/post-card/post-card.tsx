@@ -1,4 +1,3 @@
-import { PostcardProps } from "@/types/postcard-props";
 import PostContext from "./post-context";
 import PostImages from "./post-images";
 import PostInfo from "./post-info";
