@@ -1,7 +1,6 @@
 "use client";
 
 import Lottie from "@/components/anim/Lottie";
-import Dropdown from "@/components/dropdown/dropdown";
 import PhotoEditor from "@/components/photo-editor/photo-editor";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -33,8 +32,6 @@ const NotFound = () => {
           isProfile={true}
         />
       )}
-
-      <Dropdown />
     </div>
   );
 };
