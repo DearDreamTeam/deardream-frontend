@@ -69,7 +69,7 @@ const BirthdayInputs = () => {
             inputMode="numeric"
             maxLength={4}
             placeholder="0000"
-            className="w-20 border-b border-gray-300 bg-transparent text-center text-xl focus:outline-none"
+            className="w-20 border-b border-gray-300 bg-transparent text-center text-xl placeholder:text-gray-500 focus:outline-none"
             value={year}
             onChange={handleYear}
             onBlur={handleYearBlur}
@@ -83,7 +83,7 @@ const BirthdayInputs = () => {
             inputMode="numeric"
             maxLength={2}
             placeholder="00"
-            className="w-12 border-b border-gray-300 bg-transparent text-center text-xl focus:outline-none"
+            className="w-12 border-b border-gray-300 bg-transparent text-center text-xl placeholder:text-gray-500 focus:outline-none"
             value={month}
             onChange={handleMonthChange}
             onBlur={handleMonthBlur}
@@ -97,7 +97,7 @@ const BirthdayInputs = () => {
             inputMode="numeric"
             maxLength={2}
             placeholder="00"
-            className="w-12 border-b border-gray-300 bg-transparent text-center text-xl focus:outline-none"
+            className="w-12 border-b border-gray-300 bg-transparent text-center text-xl placeholder:text-gray-500 focus:outline-none"
             value={day}
             onChange={handleDayChange}
             onBlur={handleDayBlur}
