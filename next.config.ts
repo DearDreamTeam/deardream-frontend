@@ -10,6 +10,15 @@ const nextConfig: NextConfig = {
 
     return config;
   },
+
+  async rewrites() {
+    return [
+      {
+        source: "/api/:path*", // 프론트에서 이 경로로 요청하면
+        destination: "https://vote-dream.p-e.kr/api/:path*", // 백엔드로 프록시됨
+      },
+    ];
+  },
 };
 
 export default nextConfig;
