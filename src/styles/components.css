@@ -35,7 +35,11 @@
 
   /* 소식함 버튼 */
   .letters-btn {
-    @apply text-title-1 border-grey-200 text-grey-500 flex items-center gap-1 rounded-sm border px-2 py-1;
+    @apply text-title-1 text-grey-500 flex items-center px-2 py-1;
+    @apply hover:bg-grey-100 hover:text-grey-600 rounded-sm;
+  }
+  .letters-btn-active {
+    @apply bg-grey-200 text-grey-600 rounded-sm;
   }
 
   .progress-dot {
