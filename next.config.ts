@@ -2,6 +2,11 @@ import type { NextConfig } from "next";
 import type { Configuration } from "webpack";
 
 const nextConfig: NextConfig = {
+  // 외부 이미지 도메인 허용
+  images: {
+    domains: ["k.kakaocdn.net"],
+  },
+
   webpack(config: Configuration) {
     config.module?.rules?.push({
       test: /\.svg$/,

@@ -7,6 +7,7 @@ import SenderProfile from "./sender-profile";
 import RecieverProfile from "./receiver-profile";
 import { ProfileEditProps } from "@/types/user-info";
 import { useUserStore } from "@/stores/useUserStore";
+import Image from "next/image";
 
 // 이미지 URL을 포맷팅하는 함수
 const formatImageUrl = (url?: string): string => {
@@ -49,12 +50,12 @@ const ProfileEdit = ({ isSender, isInvite }: ProfileEditProps) => {
     <>
       <div className="flex w-full flex-col items-center gap-10">
         <div className="relative mt-8 h-[98px] w-[98px]">
-          <img
+          <Image
             src={imageUrl || "/images/defaultImg.svg"}
             alt="프로필 이미지"
-            className="h-full w-full rounded-full object-cover"
+            fill
+            className="rounded-full object-cover"
           />
-
           <input
             type="file"
             ref={inputRef}
