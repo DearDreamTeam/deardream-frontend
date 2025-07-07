@@ -37,7 +37,7 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body
-        className={`${pretendard.className} mx-auto h-screen w-screen text-gray-900 md:max-w-[375px]`}
+        className={`${pretendard.className} mx-auto h-[100dvh] w-screen text-gray-900 md:max-w-[375px]`}
       >
         <div className="shadow-default flex h-full flex-col justify-between bg-gray-50">
           <LogoHeader />

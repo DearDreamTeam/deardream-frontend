@@ -58,6 +58,11 @@ button {
   cursor: pointer;
 }
 
+input:focus {
+  outline: none;
+  ring: 0;
+}
+
 textarea {
   outline: none;
   resize: none;

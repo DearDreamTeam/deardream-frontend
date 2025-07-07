@@ -6,7 +6,11 @@ import { usePathname } from "next/navigation";
 const LogoHeader = () => {
   const pathname = usePathname();
 
-  if (pathname.startsWith("/letter/")) return null;
+  if (
+    pathname.startsWith("/letter/") ||
+    ["/invite", "/login", "/profile"].includes(pathname)
+  )
+    return null;
 
   return (
     <header className="header py-[0.32rem]">
