@@ -4,7 +4,10 @@ import React, { useCallback, useState } from "react";
 import Cropper, { Area } from "react-easy-crop";
 import AspectRatioOptions from "./aspect-ratio-options";
 import ActionIconBar from "./action-icon-bar";
-import { getEditedImageUrl } from "@/utils/get-edited-image-url";
+import {
+  getEditedImageUrl,
+  getFlippedImageUrl,
+} from "@/utils/get-edited-image-url";
 
 const PhotoEditor = ({
   imageUrl,
@@ -17,25 +20,25 @@ const PhotoEditor = ({
   onClose: () => void;
   isProfile?: boolean;
 }) => {
+  const [imageSrc, setImageSrc] = useState(imageUrl);
   const [crop, setCrop] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
   const [rotation, setRotation] = useState(0);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null);
-  const [aspectRatio, setAspectRatio] = useState(3 / 4);
-  const [flipX, setFlipX] = useState(false);
+  const [aspectRatio, setAspectRatio] = useState(isProfile ? 1 : 3 / 4);
 
   const onCropComplete = useCallback((_: Area, croppedAreaPixels: Area) => {
     setCroppedAreaPixels(croppedAreaPixels);
+    console.log("complete 실행, croppedAreaPixels", croppedAreaPixels);
   }, []);
 
   const handleSave = async () => {
     if (!croppedAreaPixels) return;
     try {
       const { editedUrl, editedfile } = await getEditedImageUrl(
-        imageUrl,
+        imageSrc,
         croppedAreaPixels,
         rotation,
-        flipX,
       );
       onSave(editedUrl, editedfile);
       onClose();
@@ -48,16 +51,17 @@ const PhotoEditor = ({
     setRotation((prev) => prev - 90);
   }, []);
 
-  const toggleFlipX = () => setFlipX((prev) => !prev);
+  const handleFlipX = async () => {
+    const flippedUrl = await getFlippedImageUrl(imageSrc);
+    setImageSrc(flippedUrl);
+  };
 
   return (
     <div className="bg-grey-900 fixed inset-0 z-50 box-border flex items-center justify-center">
       <div className="relative h-full w-full">
-        <div
-          className={`h-full w-full pb-[8.4rem] ${flipX ? "scale-x-[-1]" : ""}`}
-        >
+        <div className={`h-full w-full pb-[8.4rem]`}>
           <Cropper
-            image={imageUrl}
+            image={imageSrc}
             crop={crop}
             zoom={zoom}
             rotation={rotation}
@@ -77,7 +81,7 @@ const PhotoEditor = ({
           )}
           <ActionIconBar
             onClose={onClose}
-            toggleFlipX={toggleFlipX}
+            toggleFlipX={handleFlipX}
             rotateLeft={rotateLeft}
             onSave={handleSave}
           />
