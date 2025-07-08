@@ -4,18 +4,14 @@ import { useRef, useState } from "react";
 import Gallery from "@/public/icons/buttons/imagesmode.svg";
 import AlertDialog from "@/components/modal/dialog/alert-dialog";
 import { NOTIFICATION_MESSAGES } from "@/constants/messages";
+import { EditableImage } from "@/types/editable-image";
 
 interface GalleryButtonProps {
   imageCount: number;
-  setImageFiles: React.Dispatch<React.SetStateAction<File[]>>;
-  setPreviewUrl: React.Dispatch<React.SetStateAction<string[]>>;
+  setImageFiles: React.Dispatch<React.SetStateAction<EditableImage[]>>;
 }
 
-const GalleryButton = ({
-  imageCount,
-  setImageFiles,
-  setPreviewUrl,
-}: GalleryButtonProps) => {
+const GalleryButton = ({ imageCount, setImageFiles }: GalleryButtonProps) => {
   const [isAlertOpen, setIsAlertOpen] = useState(false);
 
   /* 이미지 선택 버튼 처리 */
@@ -32,10 +28,16 @@ const GalleryButton = ({
       e.target.value = "";
       return;
     }
-    setImageFiles((prev) => [...prev, ...files]);
-    setPreviewUrl((prev) => [
+
+    setImageFiles((prev) => [
       ...prev,
-      ...[...files].map((file) => URL.createObjectURL(file)),
+      ...[...files].map((file) => ({
+        fileId: 0, //ref
+        originalFile: file,
+        originalUrl: URL.createObjectURL(file),
+        previewUrl: URL.createObjectURL(file),
+        editedProps: null,
+      })),
     ]);
   };
   return (

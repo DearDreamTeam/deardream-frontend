@@ -8,6 +8,7 @@ import {
   getEditedImageUrl,
   getFlippedImageUrl,
 } from "@/utils/get-edited-image-url";
+import { EditedProps } from "@/types/editable-image";
 
 const PhotoEditor = ({
   imageUrl,
@@ -16,7 +17,7 @@ const PhotoEditor = ({
   isProfile = false,
 }: {
   imageUrl: string;
-  onSave: (editedUrl: string, editedFile: File) => void;
+  onSave: (editedUrl: string, editedProps: EditedProps) => void;
   onClose: () => void;
   isProfile?: boolean;
 }) => {
@@ -35,12 +36,12 @@ const PhotoEditor = ({
   const handleSave = async () => {
     if (!croppedAreaPixels) return;
     try {
-      const { editedUrl, editedfile } = await getEditedImageUrl(
+      const { editedUrl } = await getEditedImageUrl(
         imageSrc,
         croppedAreaPixels,
         rotation,
       );
-      onSave(editedUrl, editedfile);
+      onSave(editedUrl, { crop, zoom, rotation });
       onClose();
     } catch (e) {
       console.error(e);

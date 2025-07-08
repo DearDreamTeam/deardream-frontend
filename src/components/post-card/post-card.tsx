@@ -11,6 +11,7 @@ const PostCard = ({
   content,
   createdAt,
   postImg,
+  aspectIndex,
 }: PostcardProps) => {
   return (
     <div className="bg-grey-0 px-4">
@@ -22,7 +23,9 @@ const PostCard = ({
           profileImg={profileImg}
           createdAt={createdAt}
         />
-        {!!postImg.length && <PostImages imgUrls={postImg} />}
+        {!!postImg.length && (
+          <PostImages imgUrls={postImg} aspectIndex={aspectIndex} />
+        )}
         <PostContext content={content} />
       </div>
     </div>

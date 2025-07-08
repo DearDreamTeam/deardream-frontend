@@ -1,7 +1,4 @@
-const ASPECT_RATIO_ITEMS = [
-  { label: "3:4", value: 3 / 4 },
-  { label: "4:3", value: 4 / 3 },
-];
+import { ASPECT_RATIO_ITEMS } from "@/types/editable-image";
 
 const AspectItem = ({
   isActive,

@@ -28,6 +28,7 @@ const Home = () => {
           createdAt={letter.createdAt}
           content={letter.content}
           postImg={[...letter.imgUrls]}
+          aspectIndex={letter.aspectIndex}
         />
       ))}
     </div>
