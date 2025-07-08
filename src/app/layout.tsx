@@ -37,7 +37,7 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body
-        className={`${pretendard.className} text-grey-900 mx-auto h-screen w-screen md:max-w-[375px]`}
+        className={`${pretendard.className} text-grey-900 mx-auto h-[100dvh] w-screen md:max-w-[375px]`}
       >
         <div className="shadow-default bg-grey-50 flex h-full flex-col justify-between">
           <LogoHeader />
