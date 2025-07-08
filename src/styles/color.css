@@ -1,22 +1,25 @@
 @import "tailwindcss";
 
 @theme {
-  --color-gray-900: #1c1c1c;
-  --color-gray-800: #313131;
-  --color-gray-700: #4a4a4a;
-  --color-gray-600: #5e5e5e;
-  --color-gray-500: #9a9a9a;
-  --color-gray-400: #b6b6b6;
-  --color-gray-300: #cdcdcd;
-  --color-gray-200: #e3e3e3;
-  --color-gray-100: #f2f2f2;
-  --color-gray-50: #fafafa;
-  --color-gray-0: #fefefe;
-  --color-sub-blue-300: #c4eaff;
-  --color-main-red-300: #f03f65;
-  --color-main-red-200: #ff98cb;
-  --color-main-red-100: #ffc6e2;
-  --color-main-red-50: #ffe0ef;
+  --color-grey-900: oklch(22.65% 0 none);
+  --color-grey-800: oklch(31.32% 0 none);
+  --color-grey-700: oklch(40.91% 0 none);
+  --color-grey-600: oklch(48.19% 0 none);
+  --color-grey-500: oklch(68.62% 0 none);
+  --color-grey-400: oklch(77.63% 0 none);
+  --color-grey-300: oklch(84.83% 0 none);
+  --color-grey-200: oklch(91.58% 0 none);
+  --color-grey-100: oklch(96.12% 0 none);
+  --color-grey-50: oklch(98.51% 0 none);
+  --color-grey-0: oklch(99.7% 0 none);
+  --color-sub-blue-300: oklch(91.72% 0.0486 232.05deg);
+  --color-sub-blue-200: oklch(96.89% 0.0173 234.87deg);
+  --color-main-red-300: oklch(63.99% 0.212 13.45deg);
+  --color-main-red-200: oklch(80.04% 0.1373 349.32deg);
+  --color-main-red-100: oklch(88.54% 0.0737 347.57deg);
+  --color-main-red-50: oklch(93.62% 0.0396 346.61deg);
+  --color-green-300: oklch(55.13% 0.1482 150.94deg);
+  --color-green-100: oklch(97.75% 0.0197 144.39deg);
 
   --shadow-default: 0 0 12px 0 rgb(0 0 0 / 0.08);
   --color-inactive-bg: rgba(28, 28, 28, 0.5);

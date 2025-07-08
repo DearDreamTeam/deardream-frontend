@@ -15,7 +15,7 @@ const ActionIconBar = ({
   onSave: () => Promise<void>;
 }) => {
   return (
-    <div className="flex h-full w-full justify-between text-gray-50">
+    <div className="text-grey-50 flex h-full w-full justify-between">
       <button type="button" onClick={onClose}>
         <Cancel />
       </button>

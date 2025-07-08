@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     "사랑하는 가족들의 소식을 받으며 웃음짓는 건강한 세상을 만듭니다.",
   authors: [{ name: "Yeongseo Kim" }, { name: "Juhee Lee" }],
   icons: {
-    icon: "/images/mailbox-full.svg",
+    icon: "/images/ribbon/ribbon-full.svg",
   },
   openGraph: {
     title: "이어드림",
@@ -37,9 +37,9 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body
-        className={`${pretendard.className} mx-auto h-[100dvh] w-screen text-gray-900 md:max-w-[375px]`}
+        className={`${pretendard.className} text-grey-900 mx-auto h-[100dvh] w-screen md:max-w-[375px]`}
       >
-        <div className="shadow-default flex h-full flex-col justify-between bg-gray-50">
+        <div className="shadow-default bg-grey-50 flex h-full flex-col justify-between">
           <LogoHeader />
           <main className="flex-1 overflow-hidden">{children}</main>
           <NavigationBar />

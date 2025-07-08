@@ -1,4 +1,5 @@
 "use client";
+import { PATH } from "@/constants/path";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -8,18 +9,18 @@ const LogoHeader = () => {
 
   if (
     pathname.startsWith("/letter/") ||
-    ["/invite", "/login", "/profile"].includes(pathname)
+    ["/invite", "/login", "/profile", "/onboarding"].includes(pathname)
   )
     return null;
 
   return (
-    <header className="header py-[0.32rem]">
-      <Link href="/home">
+    <header className="header py-[0.41rem]">
+      <Link href={PATH.HOME}>
         <Image
           src={"/logo/logo.svg"}
           alt={"이어드림 로고"}
           width={100}
-          height={31}
+          height={34.85}
           priority
         />
       </Link>

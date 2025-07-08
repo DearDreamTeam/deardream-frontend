@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import UserAdd from "@/public/icons/invite/user-add.svg";
+import UserAdd from "@/public/icons/buttons/person_add.svg";
 import ShareOptions from "../modal/share-options/share-options";
 
 const InviteFamilyButton = () => {
@@ -11,7 +11,7 @@ const InviteFamilyButton = () => {
     <div>
       <button
         onClick={() => setIsShareOptionsModalOpen(true)}
-        className="button w-fit"
+        className="button"
       >
         <UserAdd />
         <p>멤버 초대하기</p>

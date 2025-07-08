@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import "./color.css";
 @import "./typography.css";
+@import "./components.css";
 
 @layer utilities {
   .overflow-auto-hide-scroll {
@@ -10,47 +11,6 @@
   }
   .overflow-auto-hide-scroll::-webkit-scrollbar {
     display: none; /* Chrome, Safari, Opera */
-  }
-
-  .rounded-25 {
-    @apply rounded-sm; /* border-radius 0.25 */
-  }
-  .rounded-50 {
-    @apply rounded-lg; /* border-radius 0.5 */
-  }
-}
-
-@layer components {
-  /* header */
-  .header {
-    @apply bg-gray-0 flex border-b border-b-gray-200 px-4;
-  }
-
-  /* pink btn */
-  .button {
-    @apply bg-main-red-300 flex items-center gap-1 rounded-sm p-2 text-gray-50;
-  }
-
-  /* modal-dialog */
-  .modal-container {
-    @apply fixed inset-0 z-50 flex items-center justify-center;
-  }
-  .modal-bg {
-    @apply bg-inactive-bg fixed inset-0;
-  }
-  .modal-btn {
-    @apply flex-1 py-[0.88rem];
-  }
-  .modal-main {
-    @apply shadow-default bg-gray-0 relative z-50;
-  }
-
-  /* modal-edit-delete */
-  .modal-container-b {
-    @apply fixed inset-0 z-50 flex items-end justify-center;
-  }
-  .modal-btn-wide {
-    @apply flex-1 px-32 py-4;
   }
 }
 
