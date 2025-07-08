@@ -196,7 +196,11 @@ const PostEditor = ({ postcard, submitAction }: PostEditorProps) => {
 
       {/* 하단 type-bar */}
       <TypeBar>
-        <GalleryButton imageCount={imageCount} setImageFiles={setImageFiles} />
+        <GalleryButton
+          imageCount={imageCount}
+          setImageFiles={setImageFiles}
+          fileIdRef={fileIdRef}
+        />
         <TextLimit imageCount={imageCount} typedLength={content.length} />
       </TypeBar>
 

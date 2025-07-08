@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { RefObject, useRef, useState } from "react";
 import Gallery from "@/public/icons/buttons/imagesmode.svg";
 import AlertDialog from "@/components/modal/dialog/alert-dialog";
 import { NOTIFICATION_MESSAGES } from "@/constants/messages";
@@ -9,9 +9,14 @@ import { EditableImage } from "@/types/editable-image";
 interface GalleryButtonProps {
   imageCount: number;
   setImageFiles: React.Dispatch<React.SetStateAction<EditableImage[]>>;
+  fileIdRef: RefObject<number>;
 }
 
-const GalleryButton = ({ imageCount, setImageFiles }: GalleryButtonProps) => {
+const GalleryButton = ({
+  imageCount,
+  setImageFiles,
+  fileIdRef,
+}: GalleryButtonProps) => {
   const [isAlertOpen, setIsAlertOpen] = useState(false);
 
   /* 이미지 선택 버튼 처리 */
@@ -32,7 +37,7 @@ const GalleryButton = ({ imageCount, setImageFiles }: GalleryButtonProps) => {
     setImageFiles((prev) => [
       ...prev,
       ...[...files].map((file) => ({
-        fileId: 0, //ref
+        fileId: fileIdRef.current++,
         originalFile: file,
         originalUrl: URL.createObjectURL(file),
         previewUrl: URL.createObjectURL(file),
