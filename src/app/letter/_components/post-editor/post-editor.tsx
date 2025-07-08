@@ -22,7 +22,11 @@ import { NOTIFICATION_MESSAGES } from "@/constants/messages";
 import { renderMessageWithLineBreaks } from "@/utils/render-message-with-line-breaks";
 import CompleteLetter from "../complete-letter";
 import PhotoEditor from "@/components/photo-editor/photo-editor";
-import { EditableImage, EditedProps } from "@/types/editable-image";
+import {
+  ASPECT_RATIO_ITEMS,
+  EditableImage,
+  EditedProps,
+} from "@/types/editable-image";
 
 const PostEditor = ({ postcard, submitAction }: PostEditorProps) => {
   const fileIdRef = useRef(0);
@@ -228,6 +232,7 @@ const PostEditor = ({ postcard, submitAction }: PostEditorProps) => {
             imageFiles.find((item) => item.fileId === selectedImageId)
               ?.originalUrl as string
           }
+          aspectRatio={ASPECT_RATIO_ITEMS[aspectIndex].value}
           onSave={handleSaveEditedImage}
           onClose={() => setSelectedImageId(null)}
         />

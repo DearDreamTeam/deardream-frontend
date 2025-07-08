@@ -3,17 +3,17 @@ import { ASPECT_RATIO_ITEMS } from "@/types/editable-image";
 const AspectItem = ({
   isActive,
   label,
-  onClick,
+  // onClick,
 }: {
   isActive: boolean;
   label: string;
-  onClick: () => void;
+  // onClick: () => void;
 }) => {
   const color = isActive ? "bg-grey-50" : "text-grey-50";
   return (
     <div
-      onClick={onClick}
-      className={`rounded-sm px-7 py-1 ${color} hover:bg-grey-800 hover:text-grey-50`}
+      // onClick={onClick}
+      className={`rounded-sm px-7 py-1 ${color}`}
     >
       {label}
     </div>
@@ -22,10 +22,10 @@ const AspectItem = ({
 
 const AspectRatioOptions = ({
   aspectRatio,
-  setAspectRatio,
+  // setAspectRatio,
 }: {
   aspectRatio: number;
-  setAspectRatio: (ration: number) => void;
+  // setAspectRatio: (ration: number) => void;
 }) => {
   return (
     <div className="text-body-2 flex h-full w-full justify-around gap-2 py-4 select-none">
@@ -34,7 +34,7 @@ const AspectRatioOptions = ({
           key={label}
           isActive={aspectRatio === value}
           label={label}
-          onClick={() => setAspectRatio(value)}
+          // onClick={() => setAspectRatio(value)}
         />
       ))}
     </div>

@@ -14,9 +14,11 @@ const PhotoEditor = ({
   imageUrl,
   onSave,
   onClose,
+  aspectRatio,
   isProfile = false,
 }: {
   imageUrl: string;
+  aspectRatio: number;
   onSave: (editedUrl: string, editedProps: EditedProps) => void;
   onClose: () => void;
   isProfile?: boolean;
@@ -26,7 +28,6 @@ const PhotoEditor = ({
   const [zoom, setZoom] = useState(1);
   const [rotation, setRotation] = useState(0);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null);
-  const [aspectRatio, setAspectRatio] = useState(isProfile ? 1 : 3 / 4);
 
   const onCropComplete = useCallback((_: Area, croppedAreaPixels: Area) => {
     setCroppedAreaPixels(croppedAreaPixels);
@@ -66,7 +67,7 @@ const PhotoEditor = ({
             crop={crop}
             zoom={zoom}
             rotation={rotation}
-            aspect={aspectRatio}
+            aspect={isProfile ? 1 : aspectRatio}
             onCropChange={setCrop}
             onZoomChange={setZoom}
             onCropComplete={onCropComplete}
@@ -74,12 +75,7 @@ const PhotoEditor = ({
           />
         </div>
         <div className="bg-grey-900 fixed bottom-0 w-full px-4 py-6">
-          {!isProfile && (
-            <AspectRatioOptions
-              aspectRatio={aspectRatio}
-              setAspectRatio={setAspectRatio}
-            />
-          )}
+          {!isProfile && <AspectRatioOptions aspectRatio={aspectRatio} />}
           <ActionIconBar
             onClose={onClose}
             toggleFlipX={handleFlipX}
