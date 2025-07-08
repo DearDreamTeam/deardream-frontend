@@ -1,7 +1,7 @@
 "use client";
 import { usePostStore } from "@/stores/usePostStore";
 import NoPost from "./_components/no-post";
-import PostCard from "@/components/post-card/post-card";
+import Postcard from "@/components/postcard/postcard";
 import { useUserStore } from "@/stores/useUserStore";
 import NoFamilyGroup from "./_components/no-family-group";
 import HomeBanner from "./_components/home-banner";
@@ -19,7 +19,7 @@ const Home = () => {
       <HomeBanner />
       <PeriodNotification />
       {post.map((letter) => (
-        <PostCard
+        <Postcard
           key={letter.postId}
           postId={letter.postId}
           name={user.name}

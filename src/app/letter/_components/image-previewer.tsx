@@ -1,4 +1,4 @@
-import ImageFallback from "@/components/post-card/image-fallback";
+import ImageFallback from "@/components/postcard/image-fallback";
 import DeleteButton from "@/public/icons/buttons/image-delete.svg";
 import { EditableImage } from "@/types/editable-image";
 

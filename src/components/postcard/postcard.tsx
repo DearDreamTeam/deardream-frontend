@@ -3,7 +3,7 @@ import PostContext from "./post-context";
 import PostImages from "./post-images";
 import PostInfo from "./post-info";
 
-const PostCard = ({
+const Postcard = ({
   postId,
   name,
   relation,
@@ -32,4 +32,4 @@ const PostCard = ({
   );
 };
 
-export default PostCard;
+export default Postcard;
