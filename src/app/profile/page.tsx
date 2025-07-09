@@ -76,14 +76,14 @@ const Profile = () => {
         <ProfileEdit isSender={true} isInvite={false} />
       ) : (
         <div className="flex h-screen w-full flex-col items-center justify-center gap-6 bg-[#F0FBF0] px-4 text-center text-gray-800">
-          <div className="h-12 w-12 animate-spin rounded-full border-t-4 border-green-600 border-opacity-50"></div>
+          <div className="border-opacity-50 h-12 w-12 animate-spin rounded-full border-t-4 border-green-600"></div>
           <div className="text-xl font-semibold">정보를 불러오는 중입니다</div>
           <p className="animate-pulse text-base text-gray-500">
             잠시만 기다려 주세요...
           </p>
         </div>
       )}
-      <div className="absolute bottom-5 left-0 right-0 mx-auto flex h-14 w-full items-center justify-center md:w-[375px]">
+      <div className="absolute right-0 bottom-5 left-0 mx-auto flex h-14 w-full items-center justify-center md:w-[375px]">
         <RedBasicButton>저장</RedBasicButton>
       </div>
     </>

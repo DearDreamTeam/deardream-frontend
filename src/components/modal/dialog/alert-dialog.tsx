@@ -1,15 +1,18 @@
 import Dialog from "./dialog";
 import { DialogProps } from "@/types/dialog-props";
 
-const AlertDialog = ({ setIsOpen, children }: DialogProps) => {
+const AlertDialog = ({ title, content, setIsOpen }: DialogProps) => {
   return (
     <Dialog>
-      <Dialog.Message>{children}</Dialog.Message>
+      <Dialog.Message>
+        <Dialog.Title>{title}</Dialog.Title>
+        <Dialog.Content>{content}</Dialog.Content>
+      </Dialog.Message>
       <Dialog.Actions>
         <button
           type="button"
           onClick={() => setIsOpen(false)}
-          className="text-main-red-300 modal-btn"
+          className="modal-btn text-green-300"
         >
           확인
         </button>

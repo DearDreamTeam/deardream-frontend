@@ -1,0 +1,59 @@
+@import "tailwindcss";
+
+@layer components {
+  /* header */
+  .header {
+    @apply bg-grey-0 border-b-grey-200 flex border-b px-4;
+  }
+
+  /* green btn */
+  .button {
+    @apply text-grey-50 text-title-1 flex items-center justify-center gap-1 rounded-sm bg-green-300 px-[0.88rem] py-2;
+  }
+
+  /* modal-dialog */
+  .modal-container {
+    @apply fixed inset-0 z-50 flex items-center justify-center;
+  }
+  .modal-bg {
+    @apply bg-inactive-bg fixed inset-0;
+  }
+  .modal-btn {
+    @apply flex-1 py-[0.88rem];
+  }
+  .modal-main {
+    @apply shadow-default bg-grey-0 relative z-50;
+  }
+
+  /* modal-edit-delete */
+  .modal-container-b {
+    @apply fixed inset-0 z-50 flex items-end justify-center;
+  }
+  .modal-btn-wide {
+    @apply flex-1 px-32 py-4;
+  }
+
+  /* 소식함 버튼 */
+  .letters-btn {
+    @apply text-title-1 text-grey-500 flex items-center px-2 py-1;
+    @apply hover:bg-grey-100 hover:text-grey-600 rounded-sm;
+  }
+  .letters-btn-active {
+    @apply bg-grey-200 text-grey-600 rounded-sm;
+  }
+
+  .progress-dot {
+    @apply h-2 w-2 rounded-full transition-colors duration-300;
+  }
+  .progress-dot-container {
+    @apply flex justify-center gap-4;
+  }
+
+  .navigation-item {
+    @apply flex flex-col items-center gap-[0.19];
+  }
+
+  .post-status {
+    @apply text-label-1 bg-inactive-bg absolute inset-0 flex h-[9.25rem] w-[6.5rem] items-center justify-center gap-1 rounded-sm text-white;
+  }
+}

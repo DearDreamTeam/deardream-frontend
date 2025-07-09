@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import FileCopy from "@/public/icons/share-options/file-copy.svg";
+import FileCopy from "@/public/icons/share-options/file_copy.svg";
 import { SHARE_DATA } from "@/constants/share-option-items";
 
 const LinkCopy = () => {
@@ -17,17 +17,17 @@ const LinkCopy = () => {
   };
 
   return (
-    <div className="flex flex-col text-gray-500">
-      <p className="text-caption-2 p-1 text-center">또는 링크 복사하기</p>
-      <div className="rounded-25 flex gap-1 bg-gray-50 px-4 py-2">
+    <div className="text-grey-500 flex flex-col">
+      <p className="text-body-2 p-1 text-center">또는 링크 복사하기</p>
+      <div className="bg-grey-50 flex gap-1 rounded-sm px-4 py-[0.69rem]">
         <span className="flex-1">{SHARE_DATA.url}</span>
-        <button onClick={handleCopy} className="text-gray-900">
+        <button onClick={handleCopy}>
           <FileCopy />
         </button>
       </div>
       {copied && (
-        <div className="bg-main-red-300 text-gray-0 rounded-25 absolute self-center p-1">
-          복사 완료!
+        <div className="shadow-default absolute right-4 self-center rounded-sm bg-green-100/90 p-2">
+          초대 링크를 복사했어요!
         </div>
       )}
     </div>

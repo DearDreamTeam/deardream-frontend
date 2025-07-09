@@ -1,9 +1,11 @@
 "use client";
 import { usePostStore } from "@/stores/usePostStore";
 import NoPost from "./_components/no-post";
-import PostCard from "@/components/post-card/post-card";
+import Postcard from "@/components/postcard/postcard";
 import { useUserStore } from "@/stores/useUserStore";
 import NoFamilyGroup from "./_components/no-family-group";
+import HomeBanner from "./_components/home-banner";
+import PeriodNotification from "./_components/period-notification";
 
 const Home = () => {
   const { post } = usePostStore();
@@ -14,8 +16,10 @@ const Home = () => {
 
   return (
     <div className="overflow-auto-hide-scroll h-full">
+      <HomeBanner />
+      <PeriodNotification />
       {post.map((letter) => (
-        <PostCard
+        <Postcard
           key={letter.postId}
           postId={letter.postId}
           name={user.name}
@@ -24,6 +28,7 @@ const Home = () => {
           createdAt={letter.createdAt}
           content={letter.content}
           postImg={[...letter.imgUrls]}
+          aspectIndex={letter.aspectIndex}
         />
       ))}
     </div>

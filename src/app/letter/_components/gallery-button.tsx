@@ -1,19 +1,21 @@
 "use client";
 
-import { useRef, useState } from "react";
-import Gallery from "@/public/icons/photo-selector/gallery.svg";
+import { RefObject, useRef, useState } from "react";
+import Gallery from "@/public/icons/buttons/imagesmode.svg";
 import AlertDialog from "@/components/modal/dialog/alert-dialog";
+import { NOTIFICATION_MESSAGES } from "@/constants/messages";
+import { EditableImage } from "@/types/editable-image";
 
 interface GalleryButtonProps {
   imageCount: number;
-  setImageFiles: React.Dispatch<React.SetStateAction<File[]>>;
-  setPreviewUrl: React.Dispatch<React.SetStateAction<string[]>>;
+  setImageFiles: React.Dispatch<React.SetStateAction<EditableImage[]>>;
+  fileIdRef: RefObject<number>;
 }
 
 const GalleryButton = ({
   imageCount,
   setImageFiles,
-  setPreviewUrl,
+  fileIdRef,
 }: GalleryButtonProps) => {
   const [isAlertOpen, setIsAlertOpen] = useState(false);
 
@@ -31,15 +33,25 @@ const GalleryButton = ({
       e.target.value = "";
       return;
     }
-    setImageFiles((prev) => [...prev, ...files]);
-    setPreviewUrl((prev) => [
+
+    setImageFiles((prev) => [
       ...prev,
-      ...[...files].map((file) => URL.createObjectURL(file)),
+      ...[...files].map((file) => ({
+        fileId: fileIdRef.current++,
+        originalFile: file,
+        originalUrl: URL.createObjectURL(file),
+        previewUrl: URL.createObjectURL(file),
+        editedProps: null,
+      })),
     ]);
   };
   return (
     <div>
-      <button type="button" onClick={handleGalleryClick}>
+      <button
+        type="button"
+        className="text-grey-600 flex items-center justify-center"
+        onClick={handleGalleryClick}
+      >
         <Gallery />
       </button>
       <input
@@ -51,9 +63,11 @@ const GalleryButton = ({
         onChange={handleFileChange}
       />
       {isAlertOpen && (
-        <AlertDialog setIsOpen={setIsAlertOpen}>
-          사진은 최대 2장까지만 선택할 수 있어요.
-        </AlertDialog>
+        <AlertDialog
+          title={NOTIFICATION_MESSAGES.CANNOT_ADD_MORE_IMAGES.title}
+          content={NOTIFICATION_MESSAGES.CANNOT_ADD_MORE_IMAGES.content}
+          setIsOpen={setIsAlertOpen}
+        />
       )}
     </div>
   );

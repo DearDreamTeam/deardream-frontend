@@ -14,11 +14,36 @@ const getRadianAngle = (degreeValue: number): number => {
   return (degreeValue * Math.PI) / 180;
 };
 
+export const getFlippedImageUrl = async (imageSrc: string): Promise<string> => {
+  const img = await createImage(imageSrc);
+
+  const canvas = document.createElement("canvas");
+  canvas.width = img.width;
+  canvas.height = img.height;
+  const ctx = canvas.getContext("2d");
+
+  if (!ctx) throw new Error("Canvas context not available");
+
+  // 3. 좌우 반전
+  ctx.translate(canvas.width, 0);
+  ctx.scale(-1, 1);
+  ctx.drawImage(img, 0, 0);
+
+  return new Promise((resolve) => {
+    canvas.toBlob((blob) => {
+      if (!blob) throw new Error("Failed to convert canvas to Blob");
+
+      const flippedUrl = URL.createObjectURL(blob);
+      URL.revokeObjectURL(imageSrc); // 메모리 정리
+      resolve(flippedUrl);
+    }, "image/png");
+  });
+};
+
 export const getEditedImageUrl = async (
   imageSrc: string,
   pixelCrop: Area,
   rotation: number,
-  flipX: boolean,
 ): Promise<{ editedUrl: string; editedfile: File }> => {
   const image = await createImage(imageSrc);
   const canvas = document.createElement("canvas");
@@ -45,15 +70,10 @@ export const getEditedImageUrl = async (
   // 2. 이미지 중심으로 이동
   ctx.translate(bBoxWidth / 2, bBoxHeight / 2);
 
-  // 3. flip 적용
-  if (flipX) {
-    ctx.scale(-1, 1);
-  }
-
-  // 4. rotate 적용
+  // 3. rotate 적용
   ctx.rotate(rotRad);
 
-  // 5. 이미지 그리기
+  // 4. 이미지 그리기
   ctx.drawImage(image, -image.width / 2, -image.height / 2);
 
   return new Promise<{ editedUrl: string; editedfile: File }>((resolve) => {

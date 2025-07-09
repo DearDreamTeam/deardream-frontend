@@ -11,7 +11,10 @@ const ShareOptions = ({ setIsOpen }: { setIsOpen: SetIsOpenType }) => {
   return (
     <div className="modal-container-b">
       <div className="modal-bg" />
-      <div ref={modalRef} className="modal-main rounded-25 px-[0.94rem] py-2">
+      <div
+        ref={modalRef}
+        className="modal-main w-full rounded-sm px-5 py-6 md:w-lg"
+      >
         <ShareHeader closeModal={closeModal} />
         <IconsBox />
         <LinkCopy />

@@ -1,7 +1,6 @@
 "use client";
 
 import Lottie from "@/components/anim/Lottie";
-import Dropdown from "@/components/dropdown/dropdown";
 import PhotoEditor from "@/components/photo-editor/photo-editor";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -28,13 +27,12 @@ const NotFound = () => {
       {isOpen && (
         <PhotoEditor
           imageUrl="https://image-cdn.hypb.st/https%3A%2F%2Fkr.hypebeast.com%2Ffiles%2F2020%2F04%2Fanimal-crossing-new-horizons-fishing-tournament-schedule-001-1.jpg?q=90&w=1400&cbr=1&fit=max"
+          aspectRatio={1}
           onSave={() => {}}
           onClose={() => setIsOpen(false)}
           isProfile={true}
         />
       )}
-
-      <Dropdown />
     </div>
   );
 };
