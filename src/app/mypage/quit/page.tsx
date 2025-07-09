@@ -44,7 +44,7 @@ const QuitPage = () => {
             <div className="text-headline-1">
               {userPostInfo.name}님, <br />
               탈퇴 하시기 전에 꼭 확인해주세요
-              <p className="text-label-2 text-grey-500 mt-2">
+              <p className="text-label-2 text-grey-500 mt-2 mb-4">
                 탈퇴 후 재가입은 14일이 지나야 할 수 있어요
               </p>
             </div>
@@ -91,7 +91,11 @@ const QuitPage = () => {
             </div>
             <GreenBasicButton
               state={isChecked}
-              handleState={() => setIsChecked(!isChecked)}
+              handleState={() => {
+                if (!isChecked) {
+                  window.location.href = "/mypage/quit/complete";
+                }
+              }}
             >
               회원 탈퇴하기
             </GreenBasicButton>

@@ -70,7 +70,7 @@ const MyPage = () => {
         </div>
 
         <Section title="가족">
-          <SectionItem link="/myfamily">나의 가족</SectionItem>
+          <SectionItem link="myfamily">나의 가족</SectionItem>
         </Section>
 
         <Section title="정기구독">
@@ -81,7 +81,7 @@ const MyPage = () => {
         </Section>
         <Section title="계정">
           <SectionItem link="">로그아웃</SectionItem>
-          <SectionItem link="">회원 탈퇴</SectionItem>
+          <SectionItem link="quit">회원 탈퇴</SectionItem>
         </Section>
       </div>
     </>

@@ -6,6 +6,7 @@ import Crown from "@/public/icons/common/crown.svg";
 import { useState } from "react";
 import Image from "next/image";
 import Add from "@/public/icons/common/add.svg";
+import ShareOptions from "@/components/modal/share-options/share-options";
 
 interface UserInfo {
   name: string;
@@ -67,6 +68,7 @@ const PersonInfo = ({
 const MyFamilyPage = () => {
   //   const [isleader, setIsLeader] = useState(false);
   const [user] = useState<UserInfo>(curUser);
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <>
@@ -95,7 +97,10 @@ const MyFamilyPage = () => {
                 </PersonInfo>
               ))}
             </div>
-            <div className="mt-4 flex w-full items-center gap-3">
+            <div
+              className="mt-4 flex w-full cursor-pointer items-center gap-3"
+              onClick={() => setIsOpen(true)}
+            >
               <div className="flex h-[54px] w-[54px] items-center justify-center rounded-full bg-green-100 p-1.5">
                 <Add />
               </div>
@@ -104,6 +109,7 @@ const MyFamilyPage = () => {
           </>
         )}
       </div>
+      {isOpen && <ShareOptions setIsOpen={setIsOpen} />}
     </>
   );
 };

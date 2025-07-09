@@ -1,6 +1,6 @@
 // app/page.tsx
 "use client";
-import GreenBasicButton from "@/components/button/profile-green-basic-button";
+import GreenBasicButton from "@/components/button/green-basic-button";
 import Header from "@/components/common/header";
 import ProfileEdit from "@/components/profile/profile-edit";
 
