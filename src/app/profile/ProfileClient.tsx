@@ -57,10 +57,10 @@ const ProfileClient = () => {
       {userInfo ? (
         <ProfileEdit isSender={true} isInvite={false} />
       ) : (
-        <div className="flex h-screen w-full flex-col items-center justify-center gap-6 bg-green-100 px-4 text-center text-gray-800">
+        <div className="text-grey-800 flex h-screen w-full flex-col items-center justify-center gap-6 bg-green-100 px-4 text-center">
           <div className="h-12 w-12 animate-spin rounded-full border-t-4 border-green-600"></div>
           <div className="text-xl font-semibold">정보를 불러오는 중입니다</div>
-          <p className="animate-pulse text-base text-gray-500">
+          <p className="text-grey-500 animate-pulse text-base">
             잠시만 기다려 주세요...
           </p>
         </div>

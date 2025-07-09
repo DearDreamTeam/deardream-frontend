@@ -62,14 +62,14 @@ const BirthdayInputs = () => {
 
   return (
     <>
-      <div className="flex w-80 items-center justify-between gap-2 text-lg text-gray-800">
+      <div className="text-grey-800 flex w-80 items-center justify-between gap-2 text-lg">
         <div className="flex items-center">
           <input
             type="text"
             inputMode="numeric"
             maxLength={4}
             placeholder="0000"
-            className="text-headline-3 w-20 border-b border-gray-300 bg-transparent text-center placeholder:text-gray-400 focus:outline-none"
+            className="text-headline-3 placeholder:text-grey-400 w-20 border-b border-gray-300 bg-transparent text-center focus:outline-none"
             value={year}
             onChange={handleYear}
             onBlur={handleYearBlur}
@@ -83,7 +83,7 @@ const BirthdayInputs = () => {
             inputMode="numeric"
             maxLength={2}
             placeholder="00"
-            className="text-headline-3 w-12 border-b border-gray-300 bg-transparent text-center placeholder:text-gray-400 focus:outline-none"
+            className="text-headline-3 placeholder:text-grey-400 w-12 border-b border-gray-300 bg-transparent text-center focus:outline-none"
             value={month}
             onChange={handleMonthChange}
             onBlur={handleMonthBlur}
@@ -97,7 +97,7 @@ const BirthdayInputs = () => {
             inputMode="numeric"
             maxLength={2}
             placeholder="00"
-            className="text-headline-3 w-12 border-b border-gray-300 bg-transparent text-center placeholder:text-gray-400 focus:outline-none"
+            className="text-headline-3 placeholder:text-grey-400 w-12 border-b border-gray-300 bg-transparent text-center focus:outline-none"
             value={day}
             onChange={handleDayChange}
             onBlur={handleDayBlur}
@@ -111,7 +111,7 @@ const BirthdayInputs = () => {
           <div
             onClick={() => setIsLunar(false)}
             className={`${
-              !isLunar ? "bg-green-700" : "bg-gray-300"
+              !isLunar ? "bg-green-700" : "text-grey-300"
             } inline-flex h-6 w-6 flex-col items-center justify-center gap-2.5 rounded-[40px] p-1`}
           >
             <Check />
@@ -122,7 +122,7 @@ const BirthdayInputs = () => {
           <div
             onClick={() => setIsLunar(true)}
             className={`${
-              isLunar ? "bg-green-700" : "bg-gray-300"
+              isLunar ? "bg-green-700" : "text-grey-300"
             } inline-flex h-6 w-6 flex-col items-center justify-center gap-2.5 rounded-[40px] p-1`}
           >
             <Check />

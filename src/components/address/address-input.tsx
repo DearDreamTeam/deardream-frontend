@@ -15,10 +15,10 @@ const AddressInput = ({ isInstitution }: AddressInputProps) => {
             <input
               type="text"
               readOnly
-              className="text-medium w-80 border-b-1 border-solid border-[#EBEBF0] px-1 py-2 text-xl font-medium text-gray-700 placeholder:text-gray-400 focus:ring-0 focus:outline-none"
+              className="text-medium text-grey-700 placeholder:text-grey-400 w-80 border-b-1 border-solid border-[#EBEBF0] px-1 py-2 text-xl font-medium focus:ring-0 focus:outline-none"
               placeholder="코드를 생성해주세요"
             />
-            <button className="absolute right-0 bottom-0 m-2 inline-flex h-8 items-center justify-center rounded bg-gray-500 px-4 text-white">
+            <button className="text-grey-500 absolute right-0 bottom-0 m-2 inline-flex h-8 items-center justify-center rounded px-4 text-white">
               기관 코드 생성
             </button>
           </div>
@@ -27,7 +27,7 @@ const AddressInput = ({ isInstitution }: AddressInputProps) => {
           우편 번호
           <input
             type="text"
-            className="text-medium w-80 border-b-1 border-solid border-[#EBEBF0] px-1 py-2 text-xl font-medium text-gray-700 placeholder:text-gray-400 focus:ring-0 focus:outline-none"
+            className="text-medium text-grey-700 placeholder:text-grey-400 w-80 border-b-1 border-solid border-[#EBEBF0] px-1 py-2 text-xl font-medium focus:ring-0 focus:outline-none"
             placeholder="우편 번호를 입력해주세요"
           />
         </div>
@@ -36,7 +36,7 @@ const AddressInput = ({ isInstitution }: AddressInputProps) => {
           도로명 주소
           <input
             type="text"
-            className="text-medium w-80 border-b-1 border-solid border-[#EBEBF0] px-1 py-2 text-xl font-medium text-gray-700 placeholder:text-gray-400 focus:ring-0 focus:outline-none"
+            className="text-medium text-grey-700 placeholder:text-grey-400 w-80 border-b-1 border-solid border-[#EBEBF0] px-1 py-2 text-xl font-medium focus:ring-0 focus:outline-none"
             placeholder="도로명 주소를 입력해주세요"
           />
         </div>
@@ -45,7 +45,7 @@ const AddressInput = ({ isInstitution }: AddressInputProps) => {
           상세주소
           <input
             type="text"
-            className="text-medium w-80 border-b-1 border-solid border-[#EBEBF0] px-1 py-2 text-xl font-medium text-gray-700 placeholder:text-gray-400 focus:ring-0 focus:outline-none"
+            className="text-medium text-grey-700 placeholder:text-grey-400 w-80 border-b-1 border-solid border-[#EBEBF0] px-1 py-2 text-xl font-medium focus:ring-0 focus:outline-none"
             placeholder="건물, 동호수 등"
           />
         </div>

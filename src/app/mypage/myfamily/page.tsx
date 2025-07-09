@@ -2,14 +2,20 @@
 import GreenBasicButton from "@/components/button/green-basic-button";
 import Header from "@/components/common/header";
 // import RedSpan from "@/components/common/red-span";
-import Bell from "@/public/icons/common/bell.svg";
+import Crown from "@/public/icons/common/crown.svg";
 import { useState } from "react";
 import Image from "next/image";
-
-const PersonInfo = ({ children }: { children: UserInfo }) => {
+import Add from "@/public/icons/common/add.svg";
+const PersonInfo = ({
+  children,
+  isReceiver,
+}: {
+  children: UserInfo;
+  isReceiver: boolean;
+}) => {
   return (
-    <article className="flex h-16 w-full items-center gap-4 rounded bg-white px-4 shadow-[0px_0px_12px_0px_rgba(0,0,0,0.08)]">
-      <div className="relative mt-8 h-[98px] w-[98px]">
+    <div className="flex h-16 w-full items-center gap-3">
+      <div className="relative h-[54px] min-w-[54px]">
         <Image
           src={"/images/default-img.svg"}
           alt="프로필 이미지"
@@ -17,9 +23,19 @@ const PersonInfo = ({ children }: { children: UserInfo }) => {
           className="rounded-full object-cover"
         />
       </div>
-      <span className="text-lg font-medium text-black">{children.name}</span>
-      {/* <RedSpan>대표자</RedSpan> */}
-    </article>
+      <div className="flex w-full flex-col justify-center">
+        <span className="text-title-2 flex gap-1">
+          {children.name} {children.isLeader && <Crown />}
+        </span>
+        {!isReceiver ? (
+          <span className="text-label-2 text-grey-400">
+            {children.relationship}
+          </span>
+        ) : (
+          <span className="text-label-2 text-grey-400">받는 분 정보 수정</span>
+        )}
+      </div>
+    </div>
   );
 };
 interface UserInfo {
@@ -34,7 +50,7 @@ const curUser: UserInfo = {
   isLeader: true,
   isPaying: true, // 기본값은 true로 설정
 };
-const recieverInfo: UserInfo = {
+const receiverInfo: UserInfo = {
   name: "김영화",
   relationship: "어머니",
   isLeader: false,
@@ -53,52 +69,38 @@ const MyFamilyPage = () => {
     <>
       <Header>나의 가족</Header>
 
-      <main className="mt-20 flex w-full justify-center">
-        <div className="flex w-80 flex-col items-center gap-8">
-          {/* 프로필 섹션 */}
-          <section className="flex flex-col items-center gap-4">
-            <div className="flex gap-2 text-sm text-gray-600">
-              <Bell />
-              {user.isPaying ? (
-                <span>
-                  {familyInfo.length}명의 가족이 함께 소식을 만들어가고 있어요!
-                </span>
-              ) : (
-                <span className="text-center">
-                  아직 소식지를 작성할 가족 그룹이 없습니다.
-                  <br />
-                  가족 그룹을 만들어보세요!
-                </span>
-              )}
+      <div className="flex w-full flex-col justify-center p-4">
+        {/* 프로필 섹션 */}
+        {!user.isPaying && (
+          <>
+            <GreenBasicButton>가족 그룹 만들기</GreenBasicButton>
+          </>
+        )}
+
+        {user.isPaying && (
+          <>
+            <div className="mb-4 flex w-full flex-col">
+              <div className="text label-2 text-grey-400 w-full">받는 분</div>
+              <PersonInfo isReceiver={true}>{receiverInfo}</PersonInfo>
             </div>
-          </section>
-          {!user.isPaying && (
-            <>
-              <GreenBasicButton>가족 그룹 만들기</GreenBasicButton>
-            </>
-          )}
 
-          {user.isPaying && (
-            <>
-              <div className="flex w-full flex-col gap-2">
-                <h2 className="w-full text-lg font-semibold text-black">
-                  받는 분
-                </h2>
-                <PersonInfo>{recieverInfo}</PersonInfo>
+            <div className="flex w-full flex-col gap-2">
+              <div className="text label-2 text-grey-400 w-full">구성원</div>
+              {familyInfo.map((member, index) => (
+                <PersonInfo key={index} isReceiver={false}>
+                  {member}
+                </PersonInfo>
+              ))}
+            </div>
+            <div className="mt-4 flex w-full items-center gap-3">
+              <div className="flex h-[54px] w-[54px] items-center justify-center rounded-full bg-green-100 p-1.5">
+                <Add />
               </div>
-
-              <div className="flex w-full flex-col gap-2">
-                <h2 className="w-full text-lg font-semibold text-black">
-                  구성원
-                </h2>
-                {familyInfo.map((member, index) => (
-                  <PersonInfo key={index}>{member}</PersonInfo>
-                ))}
-              </div>
-            </>
-          )}
-        </div>
-      </main>
+              <div className="text-title-2 text-grey-500">새 멤버 초대하기</div>
+            </div>
+          </>
+        )}
+      </div>
     </>
   );
 };

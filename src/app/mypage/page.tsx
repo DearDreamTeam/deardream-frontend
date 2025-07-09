@@ -12,7 +12,7 @@ const Section = ({
     <div className="text-sm leading-tight font-semibold text-zinc-400">
       {title}
     </div>
-    <div className="py-1 text-lg text-neutral-600">{children}</div>
+    <div className="flex w-full flex-col gap-2">{children}</div>
   </div>
 );
 
@@ -29,7 +29,7 @@ const SectionItem = ({
   const router = useRouter();
   return (
     <div
-      className="text-title-3"
+      className="text-title-2 cursor-pointer"
       onClick={() => router.push("/mypage/" + link)}
     >
       {children}
@@ -38,18 +38,24 @@ const SectionItem = ({
 };
 
 const MyPage = () => {
+  const router = useRouter();
   return (
     <>
       <Header>마이페이지</Header>
 
       <div className="flex w-full flex-col gap-10 p-4">
-        <div className="flex cursor-pointer items-center gap-4 rounded-md">
-          <div className="h-14 w-14 rounded-full bg-gray-200" />
+        <div
+          className="flex cursor-pointer items-center gap-4"
+          onClick={() => router.push("/mypage/profile")}
+        >
+          {/* 프로필 이미지 */}
+          <div className="text-grey-200 h-14 w-14 rounded-full" />
           <div className="flex flex-col justify-center space-y-1">
-            <div className="text-headline-1 flex">
+            <div className="text-headline-1 m-0">
               <span>김수진</span>
             </div>
-            <div className="text-body-2 flex gap-1.5 text-gray-500">
+
+            <div className="text-body-2 text-grey-500 flex gap-1.5">
               <span>내 정보 수정</span>
             </div>
           </div>
@@ -61,7 +67,6 @@ const MyPage = () => {
 
         <Section title="정기구독">
           <SectionItem link="">나의 정기구독</SectionItem>
-          <SectionItem link="">결제 내역</SectionItem>
         </Section>
         <Section title="도움말">
           <SectionItem link="">이어드림 가이드</SectionItem>
