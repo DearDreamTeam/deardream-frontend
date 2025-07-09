@@ -6,10 +6,12 @@ const GreenBasicButton = ({
   children,
   handleState,
   state,
+  link,
 }: {
   children: React.ReactNode;
   handleState?: () => boolean | void;
   state?: boolean;
+  link?: string;
 }) => {
   return (
     <div
@@ -19,7 +21,15 @@ const GreenBasicButton = ({
           : "bg-green-300 text-white"
       } cursor-pointer`}
       aria-disabled={state}
-      onClick={handleState}
+      onClick={() => {
+        if (handleState) {
+          const result = handleState();
+          if (result === false) return;
+        }
+        if (link) {
+          window.location.href = link;
+        }
+      }}
     >
       <div className="text-headline-3">{children}</div>
     </div>

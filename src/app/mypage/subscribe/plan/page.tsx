@@ -109,7 +109,7 @@ const PlanPage = () => {
           </div>
         )}
       </div>
-      <div>
+      <div className="mb-4 flex w-full items-center justify-center">
         <GreenBasicButton>변경</GreenBasicButton>
       </div>
     </div>
