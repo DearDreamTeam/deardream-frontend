@@ -17,11 +17,11 @@ const Postcard = ({
     <div className="bg-grey-0 px-4">
       <div className="border-b-grey-200 border-b py-4">
         <PostInfo
+          postId={postId}
           name={name}
           relation={relation}
-          createdAt={createdAt}
-          postId={postId}
           profileImg={profileImg}
+          createdAt={createdAt}
         />
         {!!postImg.length && (
           <PostImages imgUrls={postImg} aspectIndex={aspectIndex} />
