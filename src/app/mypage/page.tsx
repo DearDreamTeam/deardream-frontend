@@ -1,8 +1,6 @@
 // app/page.tsx
 "use client";
 
-import { useState } from "react";
-
 const Section = ({
   title,
   children,
@@ -10,57 +8,68 @@ const Section = ({
   title: string;
   children: React.ReactNode;
 }) => (
-  <div className="flex w-full flex-col gap-3">
-    <div className="text-lg font-semibold text-zinc-900">{title}</div>
-    <div className="flex flex-col gap-2 px-1">{children}</div>
+  <div className="flex w-full flex-col gap-1">
+    <div className="text-sm leading-tight font-semibold text-zinc-400">
+      {title}
+    </div>
+    <div className="py-1 text-lg text-neutral-600">{children}</div>
   </div>
 );
 
-const SectionItem = ({ children }: { children: React.ReactNode }) => (
-  <div className="text-base text-zinc-900">{children}</div>
-);
+import Header from "@/components/common/header";
+import { useRouter } from "next/navigation";
+
+const SectionItem = ({
+  children,
+  link,
+}: {
+  children: React.ReactNode;
+  link: string;
+}) => {
+  const router = useRouter();
+  return (
+    <div
+      className="text-title-3"
+      onClick={() => router.push("/mypage/" + link)}
+    >
+      {children}
+    </div>
+  );
+};
 
 const MyPage = () => {
-  const [isleader] = useState(false);
   return (
     <>
-      <div className="flex items-center p-4 text-2xl font-semibold">
-        마이페이지
-      </div>
+      <Header>마이페이지</Header>
 
-      <div className="flex w-full flex-col gap-10 border-t border-[#EBEBF0] p-4">
-        <div className="flex items-center gap-4">
-          <div className="h-14 w-14 rounded-full bg-neutral-200" />
+      <div className="flex w-full flex-col gap-10 p-4">
+        <div className="flex cursor-pointer items-center gap-4 rounded-md">
+          <div className="h-14 w-14 rounded-full bg-gray-200" />
           <div className="flex flex-col justify-center space-y-1">
-            <div className="flex text-2xl text-zinc-900">
-              <span className="font-semibold">김수진</span>
-              <span className="font-normal">님</span>
+            <div className="text-headline-1 flex">
+              <span>김수진</span>
             </div>
-            <div className="flex gap-1.5 text-xs text-neutral-400">
-              <span>{isleader ? "가족 대표" : "가족 구성원"}</span>
-              <span>딸</span>
+            <div className="text-body-2 flex gap-1.5 text-gray-500">
+              <span>내 정보 수정</span>
             </div>
           </div>
         </div>
 
         <Section title="가족">
-          <SectionItem>나의 가족</SectionItem>
-          <SectionItem>받는 분 정보</SectionItem>
+          <SectionItem link="/myfamily">나의 가족</SectionItem>
         </Section>
 
         <Section title="정기구독">
-          <SectionItem>나의 정기구독</SectionItem>
-          <SectionItem>결제 내역</SectionItem>
+          <SectionItem link="">나의 정기구독</SectionItem>
+          <SectionItem link="">결제 내역</SectionItem>
         </Section>
-      </div>
-
-      <div className="absolute bottom-0 flex w-full items-center justify-center p-4 text-[#72717D]">
-        <button className="max-w-xs rounded-md p-3 text-center text-xs font-normal text-zinc-500">
-          로그아웃
-        </button>
-        <button className="max-w-xs rounded-md p-3 text-center text-xs font-normal text-zinc-500">
-          회원 탈퇴
-        </button>
+        <Section title="도움말">
+          <SectionItem link="">이어드림 가이드</SectionItem>
+        </Section>
+        <Section title="계정">
+          <SectionItem link="">로그아웃</SectionItem>
+          <SectionItem link="">회원 탈퇴</SectionItem>
+        </Section>
       </div>
     </>
   );

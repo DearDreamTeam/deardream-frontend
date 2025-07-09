@@ -1,7 +1,7 @@
 // app/page.tsx
 "use client";
 import GrayBasicButton from "@/components/button/gray-basic-button";
-import RedBasicButton from "@/components/button/red-basic-button";
+import GreenBasicButton from "@/components/button/green-basic-button";
 import Header from "@/components/common/header";
 const Cancel = () => {
   return (
@@ -20,7 +20,7 @@ const Cancel = () => {
         </div>
         <div className="absolute bottom-20 flex w-96 flex-col gap-4 rounded-[5px] bg-white p-4">
           <GrayBasicButton>기관에서 받고 싶어요(무료)</GrayBasicButton>
-          <RedBasicButton>주소를 바꾸고 싶어요</RedBasicButton>
+          <GreenBasicButton>주소를 바꾸고 싶어요</GreenBasicButton>
         </div>
       </div>
     </>

@@ -1,5 +1,5 @@
 "use client";
-import RedBasicButton from "@/components/button/red-basic-button";
+import GreenBasicButton from "@/components/button/green-basic-button";
 import Header from "@/components/common/header";
 // import RedSpan from "@/components/common/red-span";
 import Bell from "@/public/icons/common/bell.svg";
@@ -9,11 +9,14 @@ import Image from "next/image";
 const PersonInfo = ({ children }: { children: UserInfo }) => {
   return (
     <article className="flex h-16 w-full items-center gap-4 rounded bg-white px-4 shadow-[0px_0px_12px_0px_rgba(0,0,0,0.08)]">
-      <Image
-        src="https://placehold.co/50x48"
-        alt="받는 분 이미지"
-        className="h-12 w-12 rounded-full object-cover"
-      />
+      <div className="relative mt-8 h-[98px] w-[98px]">
+        <Image
+          src={"/images/default-img.svg"}
+          alt="프로필 이미지"
+          fill
+          className="rounded-full object-cover"
+        />
+      </div>
       <span className="text-lg font-medium text-black">{children.name}</span>
       {/* <RedSpan>대표자</RedSpan> */}
     </article>
@@ -29,7 +32,7 @@ const curUser: UserInfo = {
   name: "김수진",
   relationship: "딸",
   isLeader: true,
-  isPaying: false, // 기본값은 true로 설정
+  isPaying: true, // 기본값은 true로 설정
 };
 const recieverInfo: UserInfo = {
   name: "김영화",
@@ -54,15 +57,6 @@ const MyFamilyPage = () => {
         <div className="flex w-80 flex-col items-center gap-8">
           {/* 프로필 섹션 */}
           <section className="flex flex-col items-center gap-4">
-            <Image
-              className="h-32 w-32 rounded-full object-cover"
-              src="https://placehold.co/124x124"
-              alt="프로필 이미지"
-            />
-            <div className="flex items-center gap-2">
-              <span className="text-lg font-semibold text-black">김수진</span>
-              <span className="text-lg font-medium text-stone-300">딸</span>
-            </div>
             <div className="flex gap-2 text-sm text-gray-600">
               <Bell />
               {user.isPaying ? (
@@ -80,7 +74,7 @@ const MyFamilyPage = () => {
           </section>
           {!user.isPaying && (
             <>
-              <RedBasicButton>가족 그룹 만들기</RedBasicButton>
+              <GreenBasicButton>가족 그룹 만들기</GreenBasicButton>
             </>
           )}
 

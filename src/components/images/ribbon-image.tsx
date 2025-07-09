@@ -6,7 +6,7 @@ const RibbonImage = () => (
     alt="ribbon-img"
     width={130}
     height={110}
-    className="py-6"
+    className="z-20 py-6"
   />
 );
 

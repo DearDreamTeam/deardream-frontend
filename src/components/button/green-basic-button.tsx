@@ -4,7 +4,7 @@ import axios from "@/lib/axios";
 import { useUserStore } from "@/stores/useUserInfoStore";
 import React from "react";
 
-const RedBasicButton = ({ children }: { children: React.ReactNode }) => {
+const GreenBasicButton = ({ children }: { children: React.ReactNode }) => {
   const { userProfile } = useUserStore();
 
   const isProfileIncomplete =
@@ -49,13 +49,15 @@ const RedBasicButton = ({ children }: { children: React.ReactNode }) => {
   return (
     <div
       className={`px-auto mx-2 inline-flex h-12 w-full items-center justify-center gap-2.5 rounded-lg py-3.5 ${
-        isProfileIncomplete ? "cursor-not-allowed bg-gray-400" : "bg-green-700"
+        isProfileIncomplete
+          ? "cursor-not-allowed bg-gray-200 text-gray-400"
+          : "bg-green-300 text-white"
       } cursor-pointer`}
       aria-disabled={isProfileIncomplete}
       onClick={handleUpdateProfile}
     >
-      <div className="text-lg font-semibold text-white">{children}</div>
+      <div className="text-headline-3">{children}</div>
     </div>
   );
 };
-export default RedBasicButton;
+export default GreenBasicButton;

@@ -18,7 +18,7 @@ const formatImageUrl = (url?: string): string => {
 
   if (!cleanedUrl || cleanedUrl === kakaoDefaultImage) {
     console.log("default image url");
-    return "/images/defaultImg.svg";
+    return "/images/default-img.svg";
   }
 
   return cleanedUrl;
@@ -51,7 +51,7 @@ const ProfileEdit = ({ isSender, isInvite }: ProfileEditProps) => {
       <div className="flex w-full flex-col items-center gap-10">
         <div className="relative mt-8 h-[98px] w-[98px]">
           <Image
-            src={imageUrl || "/images/defaultImg.svg"}
+            src={imageUrl || "/images/default-img.svg"}
             alt="프로필 이미지"
             fill
             className="rounded-full object-cover"
@@ -65,22 +65,22 @@ const ProfileEdit = ({ isSender, isInvite }: ProfileEditProps) => {
           />
           <div
             onClick={() => inputRef.current?.click()}
-            className="absolute bottom-0 right-0 m-1 flex h-6 w-6 cursor-pointer items-center justify-center rounded-[40px] bg-green-700 p-1"
+            className="absolute right-0 bottom-0 m-1 flex h-6 w-6 cursor-pointer items-center justify-center rounded-[40px] bg-green-300 p-1"
           >
             <Pencil />
           </div>
         </div>
-        <div className="flex-start flex flex-col gap-2 text-sm font-normal text-zinc-900">
+        <div className="flex-start text-label-2 flex flex-col gap-2">
           이름
           <input
             type="text"
-            className="text-medium border-b-1 w-80 border-solid border-[#EBEBF0] px-1 py-2 text-xl font-medium text-gray-700 placeholder:text-gray-400 focus:outline-none focus:ring-0"
+            className="text-headline-3 w-80 border-b-1 border-solid border-[#EBEBF0] px-1 py-2 text-gray-700 placeholder:text-gray-400 focus:ring-0 focus:outline-none"
             placeholder="이름을 입력해주세요"
             value={userProfile?.name}
             onChange={(e) => updateUserProfile({ name: e.target.value })}
           />
         </div>
-        <div className="flex-start flex flex-col gap-2 text-sm font-normal text-zinc-900">
+        <div className="flex-start text-label-2 flex flex-col gap-2">
           생일
           <BirthSelect />
         </div>
