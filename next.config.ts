@@ -10,7 +10,10 @@ const nextConfig: NextConfig = {
 
     return config;
   },
+
+  //이미지 관련
   images: {
+    domains: ["k.kakaocdn.net"],
     remotePatterns: [
       {
         protocol: "https",

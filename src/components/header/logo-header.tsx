@@ -9,7 +9,10 @@ const LogoHeader = () => {
 
   if (
     pathname.startsWith("/letter/") ||
-    ["/invite", "/login", "/profile", "/onboarding"].includes(pathname)
+    pathname.startsWith("/mypage/") ||
+    ["/invite", "/login", "/profile", "/onboarding", "/mypage"].includes(
+      pathname,
+    )
   )
     return null;
 

@@ -52,7 +52,7 @@ const SelectModal = ({
                 {({ selected }) => (
                   <div
                     className={`h-full w-full p-1.5 text-center text-xl ${
-                      selected ? "font-medium text-black" : "text-gray-400"
+                      selected ? "font-medium text-black" : "text-grey-400"
                     }`}
                   >
                     {option}
@@ -65,7 +65,7 @@ const SelectModal = ({
         <div className="flex w-full justify-center gap-2">
           <button
             onClick={() => setIsModalOpen(false)}
-            className="w-36 rounded-lg rounded-md bg-white p-4 text-center text-sm font-normal text-gray-700 shadow-[0px_0px_8px_0px_rgba(0,0,0,0.15)]"
+            className="text-grey-700 w-36 rounded-lg rounded-md bg-white p-4 text-center text-sm font-normal shadow-[0px_0px_8px_0px_rgba(0,0,0,0.15)]"
           >
             취소
           </button>
