@@ -50,7 +50,7 @@ const GreenBasicButton = ({ children }: { children: React.ReactNode }) => {
     <div
       className={`px-auto mx-2 inline-flex h-12 w-full items-center justify-center gap-2.5 rounded-lg py-3.5 ${
         isProfileIncomplete
-          ? "text-grey-400 text-grey-200 cursor-not-allowed"
+          ? "bg-grey-300 text-grey-200 cursor-not-allowed"
           : "bg-green-300 text-white"
       } cursor-pointer`}
       aria-disabled={isProfileIncomplete}

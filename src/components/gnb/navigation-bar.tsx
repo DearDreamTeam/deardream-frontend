@@ -11,6 +11,7 @@ const NavigationBar = () => {
   if (
     pathname.startsWith("/letter/") ||
     pathname.startsWith("/letters/") ||
+    pathname.startsWith("/mypage/") ||
     ["/invite", "/login", "/profile", "/onboarding"].includes(pathname)
   )
     return null;

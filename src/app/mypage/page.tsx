@@ -18,6 +18,7 @@ const Section = ({
 
 import Header from "@/components/common/header";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 const SectionItem = ({
   children,
@@ -45,11 +46,18 @@ const MyPage = () => {
 
       <div className="flex w-full flex-col gap-10 p-4">
         <div
-          className="flex cursor-pointer items-center gap-4"
+          className="flex cursor-pointer items-center gap-3"
           onClick={() => router.push("/mypage/profile")}
         >
-          {/* 프로필 이미지 */}
-          <div className="text-grey-200 h-14 w-14 rounded-full" />
+          <div className="relative h-14 w-14">
+            <Image
+              src={"/images/default-img.svg"}
+              alt="프로필 이미지"
+              fill
+              className="rounded-full object-cover"
+            />
+          </div>
+
           <div className="flex flex-col justify-center space-y-1">
             <div className="text-headline-1 m-0">
               <span>김수진</span>
