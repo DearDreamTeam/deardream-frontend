@@ -20,18 +20,27 @@ import Header from "@/components/common/header";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 
+import { useState } from "react";
+import ConfirmDialog from "@/components/modal/dialog/confirm-dialog";
+
 const SectionItem = ({
   children,
   link,
+  setIsOpen,
 }: {
   children: React.ReactNode;
   link: string;
+  setIsOpen?: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const router = useRouter();
   return (
     <div
       className="text-title-2 cursor-pointer"
-      onClick={() => router.push("/mypage/" + link)}
+      onClick={() =>
+        link === "logout"
+          ? setIsOpen && setIsOpen(true)
+          : router.push("/mypage/" + link)
+      }
     >
       {children}
     </div>
@@ -40,6 +49,7 @@ const SectionItem = ({
 
 const MyPage = () => {
   const router = useRouter();
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <>
       <Header>마이페이지</Header>
@@ -80,10 +90,24 @@ const MyPage = () => {
           <SectionItem link="">이어드림 가이드</SectionItem>
         </Section>
         <Section title="계정">
-          <SectionItem link="">로그아웃</SectionItem>
+          <SectionItem link="logout" setIsOpen={setIsOpen}>
+            로그아웃
+          </SectionItem>
           <SectionItem link="quit">회원 탈퇴</SectionItem>
         </Section>
       </div>
+      {isOpen && (
+        <ConfirmDialog
+          title="로그아웃하시겠습니까?"
+          content=""
+          setIsOpen={setIsOpen}
+          action={() => {
+            localStorage.clear();
+            router.push("/onboarding");
+          }}
+          actionLabel="로그아웃"
+        />
+      )}
     </>
   );
 };
