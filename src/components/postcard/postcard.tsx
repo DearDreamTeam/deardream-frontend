@@ -2,13 +2,12 @@ import { PostcardProps } from "@/types/postcard-props";
 import PostContext from "./post-context";
 import PostImages from "./post-images";
 import PostInfo from "./post-info";
-// import { PostCardType } from "@/types/post-card-type";
 
 const Postcard = ({
-  // postId,
+  postId,
   name,
   relation,
-  // profileImg,
+  profileImg,
   content,
   createdAt,
   postImg,
@@ -21,8 +20,8 @@ const Postcard = ({
           name={name}
           relation={relation}
           createdAt={createdAt}
-          postId={0}
-          profileImg={null}
+          postId={postId}
+          profileImg={profileImg}
         />
         {!!postImg.length && (
           <PostImages imgUrls={postImg} aspectIndex={aspectIndex} />
