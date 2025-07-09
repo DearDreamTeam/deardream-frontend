@@ -1,11 +1,36 @@
 "use client";
-import GreenBasicButton from "@/components/button/green-basic-button";
+import GreenBasicButton from "@/components/button/profile-green-basic-button";
 import Header from "@/components/common/header";
 // import RedSpan from "@/components/common/red-span";
 import Crown from "@/public/icons/common/crown.svg";
 import { useState } from "react";
 import Image from "next/image";
 import Add from "@/public/icons/common/add.svg";
+
+interface UserInfo {
+  name: string;
+  relationship: string;
+  isLeader: boolean;
+  isPaying?: boolean; // 선택적 속성, 기본값은 false
+}
+const curUser: UserInfo = {
+  name: "김수진",
+  relationship: "딸",
+  isLeader: true,
+  isPaying: true, // 기본값은 true로 설정
+};
+const receiverInfo: UserInfo = {
+  name: "김영화",
+  relationship: "어머니",
+  isLeader: false,
+};
+const familyInfo: UserInfo[] = [
+  { name: "김수진", relationship: "딸", isLeader: true },
+  { name: "김영희", relationship: "어머니", isLeader: false },
+  { name: "김철수", relationship: "아버지", isLeader: false },
+  { name: "김민수", relationship: "형제", isLeader: false },
+];
+
 const PersonInfo = ({
   children,
   isReceiver,
@@ -38,29 +63,7 @@ const PersonInfo = ({
     </div>
   );
 };
-interface UserInfo {
-  name: string;
-  relationship: string;
-  isLeader: boolean;
-  isPaying?: boolean; // 선택적 속성, 기본값은 false
-}
-const curUser: UserInfo = {
-  name: "김수진",
-  relationship: "딸",
-  isLeader: true,
-  isPaying: true, // 기본값은 true로 설정
-};
-const receiverInfo: UserInfo = {
-  name: "김영화",
-  relationship: "어머니",
-  isLeader: false,
-};
-const familyInfo: UserInfo[] = [
-  { name: "김수진", relationship: "딸", isLeader: true },
-  { name: "김영희", relationship: "어머니", isLeader: false },
-  { name: "김철수", relationship: "아버지", isLeader: false },
-  { name: "김민수", relationship: "형제", isLeader: false },
-];
+
 const MyFamilyPage = () => {
   //   const [isleader, setIsLeader] = useState(false);
   const [user] = useState<UserInfo>(curUser);

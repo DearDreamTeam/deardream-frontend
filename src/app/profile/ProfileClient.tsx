@@ -6,7 +6,7 @@ import { useUserStore } from "@/stores/useUserInfoStore";
 import axios from "@/lib/axios";
 import Header from "@/components/common/header";
 import ProfileEdit from "@/components/profile/profile-edit";
-import GreenBasicButton from "@/components/button/green-basic-button";
+import GreenBasicButton from "@/components/button/profile-green-basic-button";
 
 const ProfileClient = () => {
   const searchParams = useSearchParams();
