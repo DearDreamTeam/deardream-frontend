@@ -7,10 +7,14 @@ import ProfileEdit from "@/components/profile/profile-edit";
 const Profile = () => {
   return (
     <>
-      <Header>내 정보 수정</Header>
-      <ProfileEdit isSender={true} />
-      <div className="absolute right-0 bottom-5 left-0 mx-auto inline-flex h-14 w-full md:w-[375px]">
-        <GreenBasicButton>저장</GreenBasicButton>
+      <div className="relative flex h-screen w-full flex-col items-center justify-between bg-white p-4">
+        <div>
+          <Header>내 정보 수정</Header>
+          <ProfileEdit isSender={true} />
+        </div>
+        <div className="flex h-14 w-full items-center justify-center">
+          <GreenBasicButton>저장</GreenBasicButton>
+        </div>
       </div>
     </>
   );

@@ -28,6 +28,7 @@ export const useUserStore = create<UserState>((set) => ({
           calendarType: "SOLAR",
           relation: "",
           otherRelation: "",
+          familylink: null,
         },
         ...(state.userProfile ?? {}),
         ...update,

@@ -1,9 +1,10 @@
 export interface UserInfo {
-  accessToken: string;
   email: string;
   name: string;
   profileImage: string;
-  refreshToken: string;
+  tempToken?: string; // 임시 토큰, 카카오 로그인 시 사용
+  registered?: boolean; // 사용자 등록 여부
+  familyRegistered?: boolean; // 가족 등록 여부
 }
 
 export interface UserProfile {
@@ -13,6 +14,8 @@ export interface UserProfile {
   calendarType: "SOLAR" | "LUNAR";
   relation?: string;
   otherRelation?: string;
+  familyId?: string; // 가족 ID, 가족 프로필에서 사용
+  familylink: string | null;
 }
 
 export interface birthInfo {

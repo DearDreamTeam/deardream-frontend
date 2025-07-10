@@ -5,6 +5,7 @@ import CheckItem from "@/components/profile/plan/plan-check";
 import { useState } from "react";
 import Check from "@/public/icons/common/check.svg"; // Assuming you have a green check icon
 import GreenBasicButton from "@/components/button/green-basic-button";
+import { PATH } from "@/constants/path";
 
 const PlanPage = () => {
   const [isActive] = useState(true);
@@ -12,7 +13,7 @@ const PlanPage = () => {
     "PERSONAL",
   ); // "PERSONAL" | "INSTITUTION" | "NONE"
   return (
-    <div className="flex h-full w-full flex-col justify-between">
+    <div className="relative flex h-screen w-full flex-col items-center justify-between bg-white p-4">
       <div>
         <Header>플랜 변경</Header>
         <div className="text-grey-400 border-grey-200 flex w-full flex-col justify-center gap-2 border-b-1 border-solid p-3">
@@ -109,8 +110,10 @@ const PlanPage = () => {
           </div>
         )}
       </div>
-      <div className="mb-4 flex w-full items-center justify-center">
-        <GreenBasicButton>변경</GreenBasicButton>
+      <div className="flex h-14 w-full items-center justify-center">
+        <GreenBasicButton link={PATH.MYPAGE + "/subscribe/plan/complete"}>
+          변경
+        </GreenBasicButton>
       </div>
     </div>
   );

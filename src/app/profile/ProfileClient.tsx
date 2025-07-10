@@ -25,14 +25,34 @@ const ProfileClient = () => {
 
         const data = response.data;
         if (!data || !data.result) throw new Error("잘못된 로그인 응답");
+        console.log("카카오 로그인 응답:", data);
 
-        const { accessToken, refreshToken, email, name, profileImage } =
-          data.result;
+        if (data.result.registered) {
+          // 이미 등록된 사용자라면 프로필 페이지로 리다이렉트
+          window.location.href = "/home";
+          return;
+        }
 
-        localStorage.setItem("accessToken", accessToken);
-        localStorage.setItem("refreshToken", refreshToken);
+        const {
+          tempToken,
+          email,
+          name,
+          profileImage,
+          registered,
+          familyRegistered,
+        } = data.result;
 
-        setUserInfo({ accessToken, refreshToken, email, name, profileImage });
+        localStorage.setItem("tempToken", tempToken);
+
+        setUserInfo({
+          tempToken,
+          registered,
+          familyRegistered,
+          email,
+          name,
+          profileImage,
+        });
+
         setUserProfile({
           name,
           profileImage,
@@ -40,6 +60,7 @@ const ProfileClient = () => {
           calendarType: "SOLAR",
           relation: "",
           otherRelation: "",
+          familylink: null,
         });
       } catch (error) {
         console.error("카카오 로그인 실패:", error);
@@ -53,20 +74,26 @@ const ProfileClient = () => {
 
   return (
     <>
-      <Header>프로필 설정</Header>
-      {userInfo ? (
-        <ProfileEdit isSender={true} isInvite={false} />
-      ) : (
-        <div className="text-grey-800 flex h-screen w-full flex-col items-center justify-center gap-6 bg-green-100 px-4 text-center">
-          <div className="h-12 w-12 animate-spin rounded-full border-t-4 border-green-600"></div>
-          <div className="text-xl font-semibold">정보를 불러오는 중입니다</div>
-          <p className="text-grey-500 animate-pulse text-base">
-            잠시만 기다려 주세요...
-          </p>
+      <div className="relative flex h-screen w-full flex-col items-center justify-between bg-white p-4">
+        <div>
+          <Header>프로필 설정</Header>
+          {userInfo ? (
+            <ProfileEdit isSender={false} isInvite={false} />
+          ) : (
+            <div className="text-grey-800 flex h-screen w-full flex-col items-center justify-center gap-6 bg-green-100 text-center">
+              <div className="h-12 w-12 animate-spin rounded-full border-t-4 border-green-600"></div>
+              <div className="text-xl font-semibold">
+                정보를 불러오는 중입니다
+              </div>
+              <p className="text-grey-500 animate-pulse text-base">
+                잠시만 기다려 주세요...
+              </p>
+            </div>
+          )}
         </div>
-      )}
-      <div className="absolute right-0 bottom-5 left-0 mx-auto flex h-14 w-full items-center justify-center md:w-[375px]">
-        <GreenBasicButton>저장</GreenBasicButton>
+        <div className="flex h-14 w-full items-center justify-center">
+          <GreenBasicButton>저장</GreenBasicButton>
+        </div>
       </div>
     </>
   );

@@ -74,7 +74,7 @@ const ProfileEdit = ({ isSender, isInvite }: ProfileEditProps) => {
           이름
           <input
             type="text"
-            className="text-headline-3 text-grey-700 placeholder:text-grey-300 border-grey-300 w-80 border-b-1 border-solid px-1 py-2 focus:ring-0 focus:outline-none"
+            className="text-headline-3 text-grey-700 placeholder:text-grey-300 border-grey-300 w-80 border-b-1 border-solid py-2 focus:ring-0 focus:outline-none"
             placeholder="이름을 입력해주세요"
             value={userProfile?.name}
             onChange={(e) => updateUserProfile({ name: e.target.value })}
@@ -84,7 +84,7 @@ const ProfileEdit = ({ isSender, isInvite }: ProfileEditProps) => {
           생일
           <BirthSelect />
         </div>
-        {isSender || isInvite ? <SenderProfile /> : <RecieverProfile />}
+        {isSender ? <SenderProfile /> : isInvite ? <RecieverProfile /> : null}
       </div>
     </>
   );
