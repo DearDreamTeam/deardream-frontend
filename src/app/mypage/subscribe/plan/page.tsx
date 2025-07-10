@@ -13,7 +13,7 @@ const PlanPage = () => {
     "PERSONAL",
   ); // "PERSONAL" | "INSTITUTION" | "NONE"
   return (
-    <div className="relative flex h-screen w-full flex-col items-center justify-between bg-white p-4">
+    <div className="relative flex h-screen w-full flex-col items-center justify-between bg-white p-4 pt-0">
       <div>
         <Header>플랜 변경</Header>
         <div className="text-grey-400 border-grey-200 flex w-full flex-col justify-center gap-2 border-b-1 border-solid p-3">

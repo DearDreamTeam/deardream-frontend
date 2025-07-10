@@ -8,7 +8,7 @@ const AddressPage = () => {
   const [planType] = useState<"PERSONAL" | "INSTITUTION" | "NONE">("PERSONAL"); // "PERSONAL" | "INSTITUTION" | "NONE"
   return (
     <>
-      <div className="flex h-screen w-full flex-col items-center justify-between bg-white p-4">
+      <div className="flex h-screen w-full flex-col items-center justify-between bg-white p-4 pt-0">
         <Header>주소 변경</Header>
         <div className="text-title-2 mt-4 flex h-full w-full flex-col">
           <div className="text-grey-500 flex w-full flex-col gap-10">

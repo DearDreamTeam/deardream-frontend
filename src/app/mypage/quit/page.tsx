@@ -36,7 +36,7 @@ const QuitPage = () => {
   const [isChecked, setIsChecked] = useState(false);
   return (
     <>
-      <div className="relative flex h-screen w-full flex-col items-center justify-between bg-white p-4">
+      <div className="relative flex h-screen w-full flex-col items-center justify-between bg-white p-4 pt-0">
         <Header>회원 탈퇴</Header>
         <div className="text-title-2 mt-4 flex h-full w-full flex-col">
           <div className="text-headline-1">
