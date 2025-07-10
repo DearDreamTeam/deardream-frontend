@@ -84,6 +84,12 @@ const SubScribePage = () => {
               >
                 구독 해지
               </div>
+              <div
+                className="text-title-2 cursor-pointer"
+                onClick={() => router.push("/mypage/payhistory")}
+              >
+                결제 내역
+              </div>
             </div>
           </div>
         </div>

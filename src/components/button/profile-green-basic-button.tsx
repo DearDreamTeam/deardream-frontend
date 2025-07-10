@@ -22,17 +22,6 @@ const GreenBasicButton = ({ children }: { children: React.ReactNode }) => {
       return;
     }
 
-    const data = {
-      name: userProfile.name,
-      profileImage: userProfile.profileImage,
-      birth: `${userProfile.birth}`,
-      calendarType: userProfile.calendarType,
-      familyLink: userProfile.familylink,
-      relation: userProfile.relation,
-      otherRelation: userProfile.otherRelation,
-    };
-
-    console.log("Profile data to be sent:", data);
     const response = await axios.post("/v1/users/register", {
       name: userProfile.name,
       profileImage: userProfile.profileImage,
@@ -43,6 +32,7 @@ const GreenBasicButton = ({ children }: { children: React.ReactNode }) => {
     if (response.status === 200) {
       alert("프로필이 성공적으로 업데이트되었습니다.");
       console.log("Profile updated successfully:", response.data);
+      // window.location.href = "/home";
     } else {
       console.error("Failed to update profile:", response.data);
       alert("프로필 업데이트에 실패했습니다. 다시 시도해주세요.");
