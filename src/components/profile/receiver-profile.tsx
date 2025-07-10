@@ -3,6 +3,7 @@
 
 const RecieverProfile = () => {
   return (
+    //toDo: 이 부분 디자인에 안나와 있어서 디자인 나오면 tailwind까지 수정하겠습니다
     <>
       <div className="flex-start flex flex-col gap-2 text-sm font-normal text-zinc-900">
         전화번호
