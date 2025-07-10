@@ -58,7 +58,7 @@ const AddressPage = () => {
 
         <div className="flex h-14 w-full items-center justify-center">
           <GreenBasicButton link={PATH.MYPAGE + "/subscribe/address/complete"}>
-            변경
+            저장
           </GreenBasicButton>
         </div>
       </div>

@@ -34,7 +34,7 @@ const SelectModal = ({
       onClick={() => setIsModalOpen(false)}
     >
       <div
-        className="flex w-full flex-col items-center justify-center gap-4 rounded-t-3xl bg-white p-8 shadow-lg md:max-w-[375px]"
+        className="flex w-full max-w-[768px] flex-col items-center justify-center gap-4 rounded-t-3xl bg-white p-8 shadow-lg"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="text-headline-3 w-full">받는 분과의 관계</div>
