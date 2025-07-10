@@ -1,4 +1,5 @@
 import EllipseImage from "../images/ellipse-image";
+import StateTemplate from "../template/state-template";
 
 interface ResultProps {
   title: string;
@@ -8,14 +9,18 @@ interface ResultProps {
 
 const Result = ({ title, description, description2 }: ResultProps) => {
   return (
-    <div className="flex h-screen w-full flex-col items-center justify-center gap-2">
-      <EllipseImage color="green-100" />
-      <div className="text-headline-3">{title}</div>
-      <div className="text-label-2 text-grey-600">{description}</div>
-      {description2 && (
-        <div className="text-label-2 text-grey-600">{description2}</div>
-      )}
-    </div>
+    <StateTemplate>
+      <StateTemplate.ImageFiled>
+        <EllipseImage color="green-100" isBackground={false} />
+      </StateTemplate.ImageFiled>
+      <StateTemplate.Title> {title}</StateTemplate.Title>
+      <StateTemplate.Content>
+        <p className="text-label-2 text-center">{description}</p>
+        {description2 && (
+          <p className="text-label-2 text-center">{description2}</p>
+        )}
+      </StateTemplate.Content>
+    </StateTemplate>
   );
 };
 export default Result;

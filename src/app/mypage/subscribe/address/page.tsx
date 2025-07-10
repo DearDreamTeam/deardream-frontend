@@ -5,9 +5,7 @@ import Header from "@/components/common/header";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 const AddressPage = () => {
-  const [planType] = useState<"PERSONAL" | "INSTITUTION" | "NONE">(
-    "INSTITUTION",
-  ); // "PERSONAL" | "INSTITUTION" | "NONE"
+  const [planType] = useState<"PERSONAL" | "INSTITUTION" | "NONE">("PERSONAL"); // "PERSONAL" | "INSTITUTION" | "NONE"
   const router = useRouter();
   return (
     <>
