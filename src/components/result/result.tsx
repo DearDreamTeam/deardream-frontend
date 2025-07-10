@@ -5,9 +5,17 @@ interface ResultProps {
   title: string;
   description: string;
   description2?: string;
+  description3?: string;
+  description4?: string;
 }
 
-const Result = ({ title, description, description2 }: ResultProps) => {
+const Result = ({
+  title,
+  description,
+  description2,
+  description3,
+  description4,
+}: ResultProps) => {
   return (
     <StateTemplate>
       <StateTemplate.ImageFiled>
@@ -18,6 +26,12 @@ const Result = ({ title, description, description2 }: ResultProps) => {
         <p className="text-label-2 text-center">{description}</p>
         {description2 && (
           <p className="text-label-2 text-center">{description2}</p>
+        )}
+        {description3 && (
+          <p className="text-label-2 text-center">{description3}</p>
+        )}{" "}
+        {description4 && (
+          <p className="text-label-2 text-center">{description4}</p>
         )}
       </StateTemplate.Content>
     </StateTemplate>
