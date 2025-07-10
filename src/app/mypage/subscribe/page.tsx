@@ -6,7 +6,8 @@ import { useState } from "react";
 type PlanTypeInfo = "PERSONAL" | "INSTITUTION" | "NONE";
 
 import { useRouter } from "next/navigation";
-import CheckItem from "@/components/profile/plan/plan-check";
+import PersonalPlanUse from "@/components/profile/plan/personal-plan-use";
+import InstitutionPlanUse from "@/components/profile/plan/institution-plan-use";
 
 const SubScribePage = () => {
   const [isActive] = useState(true);
@@ -14,7 +15,7 @@ const SubScribePage = () => {
   const router = useRouter();
   return (
     <>
-      <div className="relative flex h-screen w-full flex-col items-center bg-white p-4">
+      <div className="relative flex h-screen w-full flex-col items-center bg-white p-4 pt-0">
         <Header>나의 정기 구독</Header>
         <div className="text-title-2 mt-4 flex h-full w-full flex-col">
           <div className="border-grey-200 relative border-b-1 border-solid pb-2">
@@ -36,20 +37,12 @@ const SubScribePage = () => {
                 <span className="ttext-title-2 text-grey-700">구독 없음</span>
               )}
             </div>
-            <div className="flex flex-col gap-2">
-              <CheckItem isActive={isActive} planType={planType} option="pdf">
-                개인 비용 부담 없음
-              </CheckItem>
-              <CheckItem isActive={isActive} planType={planType}>
-                기관으로 배송
-              </CheckItem>
-              <CheckItem isActive={isActive} planType={planType}>
-                PDF 열람 및 다운로드 지원
-              </CheckItem>
-              <CheckItem isActive={isActive} planType={planType}>
-                소식 n개 작성 가능
-              </CheckItem>
-            </div>
+            {isActive &&
+              (planType === "PERSONAL" ? (
+                <PersonalPlanUse isActive={isActive} planType={planType} />
+              ) : (
+                <InstitutionPlanUse isActive={isActive} planType={planType} />
+              ))}
 
             <div
               className={`text-title-1 ${isActive ? "text-green-300" : "text-grey-700"} w-full text-right`}

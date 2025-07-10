@@ -7,18 +7,20 @@ const GreenBasicButton = ({
   handleState,
   state,
   link,
+  color = "300",
 }: {
   children: React.ReactNode;
   handleState?: () => boolean | void;
   state?: boolean;
   link?: string;
+  color?: string;
 }) => {
   return (
     <div
       className={`px-auto inline-flex h-12 w-full items-center justify-center gap-2.5 rounded-lg py-3.5 ${
         state
           ? "bg-grey-200 text-grey-500 cursor-not-allowed"
-          : "bg-green-300 text-white"
+          : `bg-green-${color} ${color === "100" ? "text-green-300" : "text-white"}`
       } cursor-pointer`}
       aria-disabled={state}
       onClick={() => {

@@ -16,14 +16,18 @@ const useCheckItem = ({
 }) => {
   return (
     <div className="flex items-center gap-2">
-      {!isActive ||
-      (isActive && planType !== "INSTITUTION" && option !== "pdf") ? (
-        <GreyCheck />
-      ) : (
+      {isActive ||
+      (!isActive && planType === "PERSONAL" && option === "pdf") ? (
         <GreenCheck />
+      ) : (
+        <GreyCheck />
       )}
       <span
-        className={`text-label-2 ${!isActive || (isActive && planType !== "INSTITUTION" && option !== "pdf") ? `text-grey-700` : `text-green-300`}`}
+        className={`text-label-2 ${
+          isActive || (!isActive && planType === "PERSONAL" && option === "pdf")
+            ? `text-green-300`
+            : `text-grey-700`
+        }`}
       >
         {children}
       </span>

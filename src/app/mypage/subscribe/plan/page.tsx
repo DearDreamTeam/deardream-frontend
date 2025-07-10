@@ -1,11 +1,12 @@
 "use client";
 
 import Header from "@/components/common/header";
-import CheckItem from "@/components/profile/plan/plan-check";
 import { useState } from "react";
 import Check from "@/public/icons/common/check.svg"; // Assuming you have a green check icon
 import GreenBasicButton from "@/components/button/green-basic-button";
 import { PATH } from "@/constants/path";
+import PersonalPlanUse from "@/components/profile/plan/personal-plan-use";
+import InstitutionPlanUse from "@/components/profile/plan/institution-plan-use";
 
 const PlanPage = () => {
   const [isActive] = useState(true);
@@ -30,20 +31,12 @@ const PlanPage = () => {
               <span className="text-title-2 text-grey-700">기관 플랜</span>
             )}
           </div>
-          <div className="flex flex-col gap-2">
-            <CheckItem isActive={isActive} planType={planType} option="pdf">
-              개인 비용 부담 없음
-            </CheckItem>
-            <CheckItem isActive={isActive} planType={planType}>
-              기관으로 배송
-            </CheckItem>
-            <CheckItem isActive={isActive} planType={planType}>
-              PDF 열람 및 다운로드 지원
-            </CheckItem>
-            <CheckItem isActive={isActive} planType={planType}>
-              소식 n개 작성 가능
-            </CheckItem>
-          </div>
+          {isActive &&
+            (planType === "PERSONAL" ? (
+              <PersonalPlanUse isActive={isActive} planType={planType} />
+            ) : (
+              <InstitutionPlanUse isActive={isActive} planType={planType} />
+            ))}
           <div
             className={`text-title-1 ${isActive ? "text-green-300" : "text-grey-700"} w-full text-right`}
           >
@@ -85,20 +78,12 @@ const PlanPage = () => {
               <span className="text-title-2 text-grey-700">기관 플랜</span>
             )}
           </div>
-          <div className="flex flex-col gap-2">
-            <CheckItem isActive={!isActive} planType={planType} option="pdf">
-              개인 비용 부담 없음
-            </CheckItem>
-            <CheckItem isActive={!isActive} planType={planType}>
-              기관으로 배송
-            </CheckItem>
-            <CheckItem isActive={!isActive} planType={planType}>
-              PDF 열람 및 다운로드 지원
-            </CheckItem>
-            <CheckItem isActive={!isActive} planType={planType}>
-              소식 n개 작성 가능
-            </CheckItem>
-          </div>
+          {isActive &&
+            (planType !== "PERSONAL" ? (
+              <PersonalPlanUse isActive={!isActive} planType={planType} />
+            ) : (
+              <InstitutionPlanUse isActive={!isActive} planType={planType} />
+            ))}
           <div className={`text-title-1 tex-grey-700 w-full text-right`}>
             {isActive && planType !== "PERSONAL" ? "월 8,900원" : "월 0원"}
           </div>
