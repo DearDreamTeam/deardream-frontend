@@ -10,12 +10,12 @@ const AddressPage = () => {
   return (
     <>
       <div className="flex h-screen w-full flex-col items-center justify-between bg-white p-4 pt-0">
-        <Header>주소 변경</Header>
+        <Header>주소 입력</Header>
         <div className="text-title-2 mt-4 flex h-full w-full flex-col">
           <AddressEdit planType={planType} />
         </div>
         <div className="flex h-14 w-full items-center justify-center">
-          <GreenBasicButton link={PATH.MYPAGE + "/subscribe/address/complete"}>
+          <GreenBasicButton link={PATH.MYPAGE + "/subscribe/plan/complete"}>
             저장
           </GreenBasicButton>
         </div>

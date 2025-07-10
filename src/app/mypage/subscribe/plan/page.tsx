@@ -96,7 +96,13 @@ const PlanPage = () => {
         )}
       </div>
       <div className="flex h-14 w-full items-center justify-center">
-        <GreenBasicButton link={PATH.MYPAGE + "/subscribe/plan/complete"}>
+        <GreenBasicButton
+          link={
+            planType === "PERSONAL"
+              ? PATH.MYPAGE + "/subscribe/plan/pay"
+              : PATH.MYPAGE + "/subscribe/plan/complete"
+          }
+        >
           변경
         </GreenBasicButton>
       </div>

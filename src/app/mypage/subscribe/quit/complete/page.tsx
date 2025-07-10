@@ -6,6 +6,7 @@ import { useState } from "react";
 
 const CompletePage = () => {
   const [planType] = useState<"PERSONAL" | "INSTITUTION" | "NONE">("PERSONAL"); // "PERSONAL" | "INSTITUTION" | "NONE"
+
   return (
     <div className="flex h-screen w-full flex-col items-center justify-center gap-2 p-4">
       {planType === "PERSONAL" ? (

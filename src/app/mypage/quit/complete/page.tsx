@@ -1,7 +1,18 @@
 "use client";
 import Result from "@/components/result/result";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 const CompletePage = () => {
+  const router = useRouter();
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      router.push("/onboarding");
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, [router]);
   return (
     <Result
       title="회원 탈퇴가 완료되었어요"
