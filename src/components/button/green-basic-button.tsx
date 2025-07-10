@@ -5,6 +5,7 @@ import React from "react";
 const GreenBasicButton = ({
   children,
   handleState,
+  onClick,
   state,
   link,
   color = "300",
@@ -13,6 +14,7 @@ const GreenBasicButton = ({
   handleState?: () => boolean | void;
   state?: boolean;
   link?: string;
+  onClick?: () => void;
   color?: string;
 }) => {
   return (
@@ -24,6 +26,9 @@ const GreenBasicButton = ({
       } cursor-pointer`}
       aria-disabled={state}
       onClick={() => {
+        if (onClick) {
+          onClick();
+        }
         if (handleState) {
           const result = handleState();
           if (result === false) return;

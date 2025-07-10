@@ -32,6 +32,7 @@ const ProfileEdit = ({ isSender, isInvite }: ProfileEditProps) => {
   const [imageUrl, setImageUrl] = useState<string>(
     formatImageUrl(userInfo?.profileImage),
   );
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -46,6 +47,7 @@ const ProfileEdit = ({ isSender, isInvite }: ProfileEditProps) => {
   useEffect(() => {
     console.log("postUser:", userProfile);
   }, [userProfile]);
+
   return (
     <>
       <div className="flex w-full flex-col items-center gap-10">

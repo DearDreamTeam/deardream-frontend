@@ -27,14 +27,10 @@ const ProfileClient = () => {
         if (!data || !data.result) throw new Error("잘못된 로그인 응답");
         console.log("카카오 로그인 응답:", data);
 
-        if (data.result.registered) {
-          // 이미 등록된 사용자라면 프로필 페이지로 리다이렉트
-          window.location.href = "/home";
-          return;
-        }
-
         const {
           tempToken,
+          newAccessToken,
+          newRefreshToken,
           email,
           name,
           profileImage,
@@ -44,8 +40,16 @@ const ProfileClient = () => {
 
         localStorage.setItem("tempToken", tempToken);
 
+        if (newAccessToken && newRefreshToken) {
+          localStorage.setItem("accessToken", newAccessToken);
+          localStorage.setItem("refreshToken", newRefreshToken);
+          console.log("액세스 토큰 저장:", newAccessToken);
+        }
+
         setUserInfo({
           tempToken,
+          accessToken: newAccessToken,
+          refreshToken: newRefreshToken,
           registered,
           familyRegistered,
           email,
@@ -62,6 +66,12 @@ const ProfileClient = () => {
           otherRelation: "",
           familylink: null,
         });
+
+        if (data.result.registered) {
+          // 이미 등록된 사용자라면 프로필 페이지로 리다이렉트
+          window.location.href = "/home";
+          return;
+        }
       } catch (error) {
         console.error("카카오 로그인 실패:", error);
         alert("로그인에 실패했습니다. 다시 시도해주세요.");

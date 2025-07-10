@@ -2,6 +2,7 @@
 
 import GreenBasicButton from "@/components/button/green-basic-button";
 import Header from "@/components/common/header";
+import axios from "@/lib/axios";
 import Check from "@/public/icons/common/check.svg";
 import { useState } from "react";
 
@@ -34,6 +35,22 @@ const QuitItem = ({
 };
 const QuitPage = () => {
   const [isChecked, setIsChecked] = useState(false);
+
+  const handleClick = async () => {
+    if (!isChecked) {
+      alert("회원 탈퇴 약관에 동의해주세요.");
+      return;
+    } else {
+      const res = await axios.delete("/v1/users/me");
+      if (res.status !== 200) {
+        alert("회원 탈퇴에 실패했습니다. 다시 시도해주세요.");
+        return;
+      } else {
+        window.location.href = "/mypage/quit/complete";
+      }
+    }
+  };
+
   return (
     <>
       <div className="relative flex h-screen w-full flex-col items-center justify-between p-4 pt-0">
@@ -88,6 +105,9 @@ const QuitPage = () => {
             </span>
           </div>
           <GreenBasicButton
+            onClick={() => {
+              handleClick();
+            }}
             state={isChecked}
             handleState={() => {
               if (!isChecked) {
