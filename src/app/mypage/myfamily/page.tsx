@@ -72,42 +72,46 @@ const MyFamilyPage = () => {
 
   return (
     <>
-      <Header>나의 가족</Header>
+      <div className="flex h-screen w-full flex-col items-center bg-white p-4">
+        <Header>나의 가족</Header>
 
-      <div className="flex w-full flex-col justify-center p-4">
-        {/* 프로필 섹션 */}
-        {!user.isPaying && (
-          <>
-            <GreenBasicButton>가족 그룹 만들기</GreenBasicButton>
-          </>
-        )}
+        <div className="mt-4 flex w-full flex-col justify-center">
+          {/* 프로필 섹션 */}
+          {!user.isPaying && (
+            <>
+              <GreenBasicButton>가족 그룹 만들기</GreenBasicButton>
+            </>
+          )}
 
-        {user.isPaying && (
-          <>
-            <div className="mb-4 flex w-full flex-col">
-              <div className="text label-2 text-grey-400 w-full">받는 분</div>
-              <PersonInfo isReceiver={true}>{receiverInfo}</PersonInfo>
-            </div>
-
-            <div className="flex w-full flex-col gap-2">
-              <div className="text label-2 text-grey-400 w-full">구성원</div>
-              {familyInfo.map((member, index) => (
-                <PersonInfo key={index} isReceiver={false}>
-                  {member}
-                </PersonInfo>
-              ))}
-            </div>
-            <div
-              className="mt-4 flex w-full cursor-pointer items-center gap-3"
-              onClick={() => setIsOpen(true)}
-            >
-              <div className="flex h-[54px] w-[54px] items-center justify-center rounded-full bg-green-100 p-1.5">
-                <Add />
+          {user.isPaying && (
+            <>
+              <div className="mb-4 flex w-full flex-col">
+                <div className="text label-2 text-grey-400 w-full">받는 분</div>
+                <PersonInfo isReceiver={true}>{receiverInfo}</PersonInfo>
               </div>
-              <div className="text-title-2 text-grey-500">새 멤버 초대하기</div>
-            </div>
-          </>
-        )}
+
+              <div className="flex w-full flex-col gap-2">
+                <div className="text label-2 text-grey-400 w-full">구성원</div>
+                {familyInfo.map((member, index) => (
+                  <PersonInfo key={index} isReceiver={false}>
+                    {member}
+                  </PersonInfo>
+                ))}
+              </div>
+              <div
+                className="mt-4 flex w-full cursor-pointer items-center gap-3"
+                onClick={() => setIsOpen(true)}
+              >
+                <div className="flex h-[54px] w-[54px] items-center justify-center rounded-full bg-green-100 p-1.5">
+                  <Add />
+                </div>
+                <div className="text-title-2 text-grey-500">
+                  새 멤버 초대하기
+                </div>
+              </div>
+            </>
+          )}
+        </div>
       </div>
       {isOpen && <ShareOptions setIsOpen={setIsOpen} />}
     </>
