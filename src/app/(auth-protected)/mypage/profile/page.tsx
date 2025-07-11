@@ -33,7 +33,7 @@ const Profile = () => {
   };
   return (
     <>
-      <div className="relative flex h-screen w-full flex-col items-center justify-between bg-white p-4 pt-0">
+      <div className="bg-grey-0 relative flex h-screen w-full flex-col items-center justify-between p-4 pt-0">
         <div>
           <Header>내 정보 수정</Header>
           <ProfileEdit

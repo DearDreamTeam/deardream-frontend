@@ -2,7 +2,6 @@
 
 import axios from "@/lib/axios";
 import { useUserStore } from "@/stores/useUserInfoStore";
-import React from "react";
 
 const GreenBasicButton = ({ children }: { children: React.ReactNode }) => {
   const { userProfile } = useUserStore();
@@ -32,12 +31,15 @@ const GreenBasicButton = ({ children }: { children: React.ReactNode }) => {
     if (response.status === 200) {
       alert("프로필이 성공적으로 업데이트되었습니다.");
       console.log("Profile updated successfully:", response.data);
-      // window.location.href = "/home";
+      localStorage.setItem("accessToken", response.data.result.accessToken);
+      localStorage.setItem("refreshToken", response.data.result.refreshToken);
+      window.location.href = "/home";
     } else {
       console.error("Failed to update profile:", response.data);
       alert("프로필 업데이트에 실패했습니다. 다시 시도해주세요.");
     }
   };
+
   return (
     <div
       className={`px-auto inline-flex h-12 w-full items-center justify-center gap-2.5 rounded-lg py-3.5 ${

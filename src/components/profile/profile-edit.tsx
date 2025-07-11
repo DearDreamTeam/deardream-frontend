@@ -23,6 +23,29 @@ const formatImageUrl = (url?: string): string => {
 
   return cleanedUrl;
 };
+
+const resizeImage = (file: File, maxSize: number): Promise<string> => {
+  return new Promise((resolve) => {
+    if (typeof window === "undefined") return;
+    const img = new window.Image();
+    const reader = new FileReader();
+
+    reader.onload = (e) => {
+      img.src = e.target?.result as string;
+    };
+    img.onload = () => {
+      const canvas = document.createElement("canvas");
+      const scale = maxSize / Math.max(img.width, img.height);
+      canvas.width = img.width * scale;
+      canvas.height = img.height * scale;
+      const ctx = canvas.getContext("2d");
+      ctx?.drawImage(img, 0, 0, canvas.width, canvas.height);
+      resolve(canvas.toDataURL("image/jpeg", 0.4)); // 압축 품질
+    };
+
+    reader.readAsDataURL(file);
+  });
+};
 interface ProfileEditProps {
   isSender?: boolean; // 프로필 타입을 구분하기 위한 선택적 속성
   isInvite?: boolean; // 초대 프로필 여부
@@ -34,30 +57,34 @@ interface ProfileEditProps {
 const ProfileEdit = ({
   isSender,
   isInvite,
-  setEditUserProfile,
-  editUserProfile,
+  // setEditUserProfile,
+  // editUserProfile,
 }: ProfileEditProps) => {
-  const { userKaKaoInfo, userProfile } = useUserStore();
+  //todo: userProfile을 직접 사용하지 않고, editUserProfile을 사용하도록 변경
+  const { userKaKaoInfo, userProfile, updateUserProfile } = useUserStore();
   // const [editUserProfile, setEditUserProfile] = useState(userProfile);
-  useEffect(() => {
-    if (userProfile) {
-      setEditUserProfile(userProfile);
-    }
-  }, [userProfile, setEditUserProfile]);
+  // useEffect(() => {
+  //   if (userProfile) {
+  //     setEditUserProfile(userProfile);
+  //   }
+  // }, [userProfile, setEditUserProfile]);
   const inputRef = useRef<HTMLInputElement>(null);
   const [imageUrl, setImageUrl] = useState<string>(
     formatImageUrl(userKaKaoInfo?.profileImage),
   );
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImageUrl(reader.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
+    if (!file) return;
+
+    const resizedBase64 = await resizeImage(file, 200);
+    setImageUrl(resizedBase64);
+    console.log("resizedBase64:", resizedBase64);
+    console.log("imagefile:", imageUrl);
+    updateUserProfile({
+      ...(userProfile ?? {}),
+      profileImage: resizedBase64,
+    });
   };
 
   useEffect(() => {
@@ -96,15 +123,18 @@ const ProfileEdit = ({
             placeholder="이름을 입력해주세요"
             value={userProfile?.name}
             onChange={(e) =>
-              setEditUserProfile({ ...editUserProfile, name: e.target.value })
+              updateUserProfile({
+                ...userProfile,
+                name: e.target.value,
+              })
             }
           />
         </div>
         <div className="flex-start text-label-2 flex flex-col gap-2">
           생일
           <BirthSelect
-            birth={editUserProfile.birth}
-            calendarType={editUserProfile.calendarType}
+            birth={userProfile.birth}
+            calendarType={userProfile.calendarType}
           />
         </div>
         {isSender ? <SenderProfile /> : isInvite ? <RecieverProfile /> : null}
