@@ -1,9 +1,16 @@
 "use client";
 
-import axios from "@/lib/axios";
+import { registerUser } from "@/api/profile";
 import { useUserStore } from "@/stores/useUserInfoStore";
+import React from "react";
 
-const GreenBasicButton = ({ children }: { children: React.ReactNode }) => {
+const GreenBasicButton = ({
+  children,
+  type,
+}: {
+  children: React.ReactNode;
+  type: string;
+}) => {
   const { userProfile } = useUserStore();
 
   const isProfileIncomplete =
@@ -14,32 +21,32 @@ const GreenBasicButton = ({ children }: { children: React.ReactNode }) => {
       alert("프로필 정보를 모두 입력해주세요.");
       return;
     }
-    if (!userProfile) {
-      console.error("User profile is not defined.");
-      alert("프로필 정보가 없습니다. 다시 시도해주세요.");
-      window.location.href = "/login";
-      return;
-    }
+    if (type == "register") {
+      try {
+        const response = await registerUser(userProfile!);
 
-    const response = await axios.post("/v1/users/register", {
-      name: userProfile.name,
-      profileImage: userProfile.profileImage,
-      birth: `${userProfile.birth}`,
-      calendarType: userProfile.calendarType,
-      familyLink: userProfile.familylink,
-    });
-    if (response.status === 200) {
-      alert("프로필이 성공적으로 업데이트되었습니다.");
-      console.log("Profile updated successfully:", response.data);
-      localStorage.setItem("accessToken", response.data.result.accessToken);
-      localStorage.setItem("refreshToken", response.data.result.refreshToken);
-      window.location.href = "/home";
-    } else {
-      console.error("Failed to update profile:", response.data);
-      alert("프로필 업데이트에 실패했습니다. 다시 시도해주세요.");
+        if (response.status === 200) {
+          alert("프로필이 성공적으로 업데이트되었습니다.");
+          window.location.href = "/home";
+        }
+      } catch (e) {
+        console.error("프로필 등록 오류:", e);
+        alert("프로필 등록에 실패했습니다.");
+      }
+    } else if (type == "update") {
+      try {
+        const response = await registerUser(userProfile!);
+
+        if (response.status === 200) {
+          alert("프로필이 성공적으로 업데이트되었습니다.");
+          window.location.href = "/mypage";
+        }
+      } catch (e) {
+        console.error("프로필 업데이트 오류:", e);
+        alert("프로필 업데이트에 실패했습니다.");
+      }
     }
   };
-
   return (
     <div
       className={`px-auto inline-flex h-12 w-full items-center justify-center gap-2.5 rounded-lg py-3.5 ${

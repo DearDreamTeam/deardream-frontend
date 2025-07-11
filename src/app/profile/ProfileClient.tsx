@@ -120,7 +120,7 @@ const ProfileClient = () => {
               />
             </div>
             <div className="flex h-14 w-full items-center justify-center">
-              <GreenBasicButton>저장</GreenBasicButton>
+              <GreenBasicButton type="register">저장</GreenBasicButton>
             </div>
           </>
         ) : (

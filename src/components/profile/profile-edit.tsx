@@ -77,7 +77,7 @@ const ProfileEdit = ({
     const file = e.target.files?.[0];
     if (!file) return;
 
-    const resizedBase64 = await resizeImage(file, 200);
+    const resizedBase64 = await resizeImage(file, 250);
     setImageUrl(resizedBase64);
     console.log("resizedBase64:", resizedBase64);
     console.log("imagefile:", imageUrl);
