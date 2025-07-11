@@ -15,7 +15,7 @@ const SubScribePage = () => {
   const router = useRouter();
   return (
     <>
-      <div className="relative flex h-screen w-full flex-col items-center bg-white p-4 pt-0">
+      <div className="bg-grey-0 relative flex h-screen w-full flex-col items-center p-4 pt-0">
         <Header>나의 정기 구독</Header>
         <div className="text-title-2 mt-4 flex h-full w-full flex-col">
           <div className="border-grey-200 relative border-b-1 border-solid pb-2">

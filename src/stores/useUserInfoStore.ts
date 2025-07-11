@@ -1,39 +1,60 @@
-import { UserInfo, UserProfile } from "@/types/user-info";
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
+import { UserInfo, UserProfile } from "@/types/user-info";
+
+const defaultProfile: UserProfile = {
+  id: "",
+  name: "",
+  profileImage: "",
+  birth: "",
+  calendarType: "SOLAR",
+  relation: "",
+  otherRelation: "",
+  familylink: null,
+  familyRegistered: false,
+  role: "LEADER",
+};
 
 interface UserState {
-  userInfo: UserInfo | null;
-  userProfile: UserProfile | null;
-  setUserInfo: (info: UserInfo) => void;
+  userKaKaoInfo: UserInfo | null;
+  userProfile: UserProfile;
+  setUserKaKaoInfo: (info: UserInfo) => void;
   setUserProfile: (profile: UserProfile) => void;
   updateUserProfile: (update: Partial<UserProfile>) => void;
   clearUser: () => void;
 }
 
-export const useUserStore = create<UserState>((set) => ({
-  userInfo: null,
-  userProfile: null,
+export const useUserStore = create<UserState>()(
+  persist(
+    (set) => ({
+      userKaKaoInfo: null,
+      userProfile: defaultProfile,
 
-  setUserInfo: (info) => set({ userInfo: info }),
+      setUserKaKaoInfo: (info) => set({ userKaKaoInfo: info }),
 
-  setUserProfile: (profile) => set({ userProfile: profile }),
+      setUserProfile: (profile) => set({ userProfile: profile }),
 
-  updateUserProfile: (update) =>
-    set((state) => ({
-      userProfile: {
-        ...{
-          name: "",
-          profileImage: "",
-          birth: "",
-          calendarType: "SOLAR",
-          relation: "",
-          otherRelation: "",
-          familylink: null,
-        },
-        ...(state.userProfile ?? {}),
-        ...update,
-      },
-    })),
+      updateUserProfile: (update) =>
+        set((state) => ({
+          userProfile: {
+            ...defaultProfile,
+            ...state.userProfile,
+            ...update,
+          },
+        })),
 
-  clearUser: () => set({ userInfo: null, userProfile: null }),
-}));
+      clearUser: () =>
+        set({
+          userKaKaoInfo: null,
+          userProfile: defaultProfile,
+        }),
+    }),
+    {
+      name: "user-store", // localStorage key
+      partialize: (state) => ({
+        userKaKaoInfo: state.userKaKaoInfo,
+        userProfile: state.userProfile,
+      }),
+    },
+  ),
+);

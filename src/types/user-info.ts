@@ -10,6 +10,7 @@ export interface UserInfo {
 }
 
 export interface UserProfile {
+  id: string; // 사용자 ID, 프로필 식별을 위한 고유 ID
   name: string;
   profileImage: string;
   birth: string;

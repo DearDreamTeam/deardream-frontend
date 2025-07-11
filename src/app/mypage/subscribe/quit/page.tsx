@@ -54,7 +54,7 @@ const QuitPage = () => {
               </>
             )}
           </div>
-          <div className="text-body-2 text-grey-300 whitespace-normal">
+          <div className="text-body-2 text-grey-300 grey-0space-normal">
             {planType === "PERSONAL" ? (
               <>
                 이어드림 서버 최적화를 위해, 소식함 속 PDF는 구독 취소 후 14일

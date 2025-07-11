@@ -34,7 +34,7 @@ const SelectModal = ({
       onClick={() => setIsModalOpen(false)}
     >
       <div
-        className="flex w-full max-w-[768px] flex-col items-center justify-center gap-4 rounded-t-3xl bg-white p-8 shadow-lg"
+        className="bg-grey-0 flex w-full max-w-[768px] flex-col items-center justify-center gap-4 rounded-t-3xl p-8 shadow-lg"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="text-headline-3 w-full">받는 분과의 관계</div>
@@ -63,7 +63,7 @@ const SelectModal = ({
         <div className="flex w-full justify-center gap-2">
           <button
             onClick={() => setIsModalOpen(false)}
-            className="text-grey-700 shadow-default text-label-2 w-36 rounded-lg rounded-md bg-white p-4"
+            className="text-grey-700 shadow-default text-label-2 bg-grey-0 w-36 rounded-lg rounded-md p-4"
           >
             취소
           </button>
@@ -72,7 +72,7 @@ const SelectModal = ({
               handleSelect(select.relationship);
               setIsModalOpen(false);
             }}
-            className="text-label-2 w-36 rounded-md bg-green-300 p-4 text-center text-white"
+            className="text-label-2 text-grey-0 w-36 rounded-md bg-green-300 p-4 text-center"
           >
             선택
           </button>

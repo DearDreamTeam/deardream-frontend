@@ -9,7 +9,7 @@ const AddressPage = () => {
   const [planType] = useState<"PERSONAL" | "INSTITUTION" | "NONE">("PERSONAL"); // "PERSONAL" | "INSTITUTION" | "NONE"
   return (
     <>
-      <div className="flex h-screen w-full flex-col items-center justify-between bg-white p-4 pt-0">
+      <div className="bg-grey-0 flex h-screen w-full flex-col items-center justify-between p-4 pt-0">
         <Header>주소 변경</Header>
         <div className="text-title-2 mt-4 flex h-full w-full flex-col">
           <AddressEdit planType={planType} />

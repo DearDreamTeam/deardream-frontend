@@ -3,11 +3,16 @@ import Check from "@/public/icons/common/check.svg";
 import { UserProfile } from "@/types/user-info";
 import { useUserStore } from "@/stores/useUserInfoStore";
 
-const BirthdayInputs = () => {
-  const [year, setYear] = useState("");
-  const [month, setMonth] = useState("");
-  const [day, setDay] = useState("");
-  const [isLunar, setIsLunar] = useState(false);
+interface BirthdayInputsProps {
+  birth: string;
+  calendarType?: "SOLAR" | "LUNAR";
+}
+
+const BirthdayInputs = ({ birth, calendarType }: BirthdayInputsProps) => {
+  const [year, setYear] = useState(birth ? birth.split("-")[0] : "");
+  const [month, setMonth] = useState(birth ? birth.split("-")[1] : "");
+  const [day, setDay] = useState(birth ? birth.split("-")[2] : "");
+  const [isLunar, setIsLunar] = useState(calendarType === "LUNAR");
 
   const { updateUserProfile } = useUserStore();
 

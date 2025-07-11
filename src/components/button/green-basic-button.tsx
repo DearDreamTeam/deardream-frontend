@@ -22,7 +22,7 @@ const GreenBasicButton = ({
       className={`px-auto inline-flex h-12 w-full items-center justify-center gap-2.5 rounded-lg py-3.5 ${
         state
           ? "bg-grey-200 text-grey-500 cursor-not-allowed"
-          : `bg-green-${color} ${color === "100" ? "text-green-300" : "text-white"}`
+          : `bg-green-${color} ${color === "100" ? "text-green-300" : "text-grey-0"}`
       } cursor-pointer`}
       aria-disabled={state}
       onClick={() => {

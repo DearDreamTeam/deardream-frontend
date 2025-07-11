@@ -52,7 +52,7 @@ const MyPage = () => {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <>
-      <div className="flex h-screen w-full flex-col items-center bg-white p-4 pt-0">
+      <div className="bg-grey-0 flex h-screen w-full flex-col items-center p-4 pt-0">
         <Header>마이페이지</Header>
 
         <div className="mt-4 flex w-full flex-col gap-8">

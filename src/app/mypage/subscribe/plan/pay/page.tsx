@@ -11,7 +11,7 @@ const PayPage = () => {
   const [isCheck, setIsCheck] = useState(false);
   return (
     <>
-      <div className="flex h-screen w-full flex-col items-center justify-between bg-white p-4 pt-0">
+      <div className="bg-grey-0 flex h-screen w-full flex-col items-center justify-between p-4 pt-0">
         <Header>결제 정보 입력</Header>
         <div className="text-title-2 mt-4 flex h-full w-full flex-col">
           이어드림 월 정기 구독
@@ -46,7 +46,7 @@ const PayPage = () => {
               </div>
               전체 약관 동의
             </div>
-            <div className="text-body-2 text-grey-500 mt-4 flex w-full items-center gap-2 whitespace-normal">
+            <div className="text-body-2 text-grey-500 grey-0space-normal mt-4 flex w-full items-center gap-2">
               <div
                 onClick={() => setIsCheck(!isCheck)}
                 className={`${isCheck ? "bg-grey-300" : "bg-green-300"} inline-flex h-[24px] w-[24px] cursor-pointer flex-col items-center justify-center rounded-full`}
@@ -56,7 +56,7 @@ const PayPage = () => {
               [필수] 가격, 내용 등 상품 저옵에 대한 정기구독 안내를
               확인하였으며, 이에 동의합니다.
             </div>
-            <div className="text-body-2 text-grey-500 mt-4 flex w-full items-center gap-2 whitespace-normal">
+            <div className="text-body-2 text-grey-500 grey-0space-normal mt-4 flex w-full items-center gap-2">
               <div
                 onClick={() => setIsCheck(!isCheck)}
                 className={`${isCheck ? "bg-grey-300" : "bg-green-300"} inline-flex h-[24px] w-[24px] cursor-pointer flex-col items-center justify-center rounded-full`}
@@ -65,7 +65,7 @@ const PayPage = () => {
               </div>
               [필수] 개인정보 수집 및 이용에 동의합니다.{" "}
             </div>
-            <div className="text-body-2 text-grey-500 mt-4 flex w-full items-center gap-2 whitespace-normal">
+            <div className="text-body-2 text-grey-500 grey-0space-normal mt-4 flex w-full items-center gap-2">
               <div
                 onClick={() => setIsCheck(!isCheck)}
                 className={`${isCheck ? "bg-grey-300" : "bg-green-300"} inline-flex h-[24px] w-[24px] cursor-pointer flex-col items-center justify-center rounded-full`}

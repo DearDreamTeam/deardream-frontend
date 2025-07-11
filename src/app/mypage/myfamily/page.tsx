@@ -72,7 +72,7 @@ const MyFamilyPage = () => {
 
   return (
     <>
-      <div className="flex h-screen w-full flex-col items-center bg-white p-4 pt-0">
+      <div className="bg-grey-0 flex h-screen w-full flex-col items-center p-4 pt-0">
         <Header>나의 가족</Header>
 
         <div className="mt-4 flex w-full flex-col justify-center">
