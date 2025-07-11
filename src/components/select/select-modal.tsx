@@ -34,12 +34,10 @@ const SelectModal = ({
       onClick={() => setIsModalOpen(false)}
     >
       <div
-        className="flex w-full flex-col items-center justify-center gap-4 rounded-t-3xl bg-white p-8 shadow-lg md:max-w-[375px]"
+        className="bg-grey-0 flex w-full max-w-[768px] flex-col items-center justify-center gap-4 rounded-t-3xl p-8 shadow-lg"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="w-full text-2xl font-semibold text-black">
-          받는 분과의 관계
-        </div>
+        <div className="text-headline-3 w-full">받는 분과의 관계</div>
         <Picker
           value={select}
           onChange={setSelect}
@@ -52,7 +50,7 @@ const SelectModal = ({
                 {({ selected }) => (
                   <div
                     className={`h-full w-full p-1.5 text-center text-xl ${
-                      selected ? "font-medium text-black" : "text-grey-400"
+                      selected ? "text-headline-3" : "text-grey-400"
                     }`}
                   >
                     {option}
@@ -65,7 +63,7 @@ const SelectModal = ({
         <div className="flex w-full justify-center gap-2">
           <button
             onClick={() => setIsModalOpen(false)}
-            className="text-grey-700 w-36 rounded-lg rounded-md bg-white p-4 text-center text-sm font-normal shadow-[0px_0px_8px_0px_rgba(0,0,0,0.15)]"
+            className="text-grey-700 shadow-default text-label-2 bg-grey-0 w-36 rounded-lg rounded-md p-4"
           >
             취소
           </button>
@@ -74,7 +72,7 @@ const SelectModal = ({
               handleSelect(select.relationship);
               setIsModalOpen(false);
             }}
-            className="w-36 rounded-md bg-[#f03f65] p-4 text-center text-sm font-normal text-white"
+            className="text-label-2 text-grey-0 w-36 rounded-md bg-green-300 p-4 text-center"
           >
             선택
           </button>

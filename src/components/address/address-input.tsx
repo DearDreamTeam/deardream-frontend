@@ -18,7 +18,7 @@ const AddressInput = ({ isInstitution }: AddressInputProps) => {
               className="text-medium text-grey-700 placeholder:text-grey-400 w-80 border-b-1 border-solid border-[#EBEBF0] px-1 py-2 text-xl font-medium focus:ring-0 focus:outline-none"
               placeholder="코드를 생성해주세요"
             />
-            <button className="text-grey-500 absolute right-0 bottom-0 m-2 inline-flex h-8 items-center justify-center rounded px-4 text-white">
+            <button className="text-grey-500 text-grey-0 absolute right-0 bottom-0 m-2 inline-flex h-8 items-center justify-center rounded px-4">
               기관 코드 생성
             </button>
           </div>

@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "@/styles/globals.css";
 import LogoHeader from "@/components/header/logo-header";
 import NavigationBar from "@/components/gnb/navigation-bar";
+import Script from "next/script";
 
 const pretendard = localFont({
   src: "../../public/fonts/PretendardVariable.woff2",
@@ -36,8 +37,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
+      <head>
+        <Script
+          src="https://developers.kakao.com/sdk/js/kakao.js"
+          strategy="beforeInteractive"
+        />
+      </head>
       <body
-        className={`${pretendard.className} text-grey-900 mx-auto h-[100dvh] w-screen md:max-w-[375px]`}
+        className={`${pretendard.className} text-grey-900 mx-auto h-[100dvh] w-screen max-w-[768px]`}
       >
         <div className="shadow-default bg-grey-50 flex h-full flex-col justify-between">
           <LogoHeader />

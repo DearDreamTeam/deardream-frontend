@@ -3,11 +3,16 @@ import Check from "@/public/icons/common/check.svg";
 import { UserProfile } from "@/types/user-info";
 import { useUserStore } from "@/stores/useUserInfoStore";
 
-const BirthdayInputs = () => {
-  const [year, setYear] = useState("");
-  const [month, setMonth] = useState("");
-  const [day, setDay] = useState("");
-  const [isLunar, setIsLunar] = useState(false);
+interface BirthdayInputsProps {
+  birth: string;
+  calendarType?: "SOLAR" | "LUNAR";
+}
+
+const BirthdayInputs = ({ birth, calendarType }: BirthdayInputsProps) => {
+  const [year, setYear] = useState(birth ? birth.split("-")[0] : "");
+  const [month, setMonth] = useState(birth ? birth.split("-")[1] : "");
+  const [day, setDay] = useState(birth ? birth.split("-")[2] : "");
+  const [isLunar, setIsLunar] = useState(calendarType === "LUNAR");
 
   const { updateUserProfile } = useUserStore();
 
@@ -111,7 +116,7 @@ const BirthdayInputs = () => {
           <div
             onClick={() => setIsLunar(false)}
             className={`${
-              !isLunar ? "bg-green-700" : "text-grey-300"
+              !isLunar ? "bg-green-700" : "bg-grey-300"
             } inline-flex h-6 w-6 flex-col items-center justify-center gap-2.5 rounded-[40px] p-1`}
           >
             <Check />
@@ -122,7 +127,7 @@ const BirthdayInputs = () => {
           <div
             onClick={() => setIsLunar(true)}
             className={`${
-              isLunar ? "bg-green-700" : "text-grey-300"
+              isLunar ? "bg-green-700" : "bg-grey-300"
             } inline-flex h-6 w-6 flex-col items-center justify-center gap-2.5 rounded-[40px] p-1`}
           >
             <Check />
