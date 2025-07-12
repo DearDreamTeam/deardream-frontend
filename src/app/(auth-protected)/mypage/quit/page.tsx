@@ -4,6 +4,7 @@ import GreenBasicButton from "@/components/button/green-basic-button";
 import Header from "@/components/common/header";
 import axios from "@/lib/axios";
 import Check from "@/public/icons/common/check.svg";
+import { useUserStore } from "@/stores/useUserInfoStore";
 import { useState } from "react";
 
 interface UserPostInfo {
@@ -36,6 +37,8 @@ const QuitItem = ({
 const QuitPage = () => {
   const [isChecked, setIsChecked] = useState(false);
 
+  const { userProfile } = useUserStore();
+
   const handleClick = async () => {
     if (!isChecked) {
       alert("회원 탈퇴 약관에 동의해주세요.");
@@ -53,11 +56,14 @@ const QuitPage = () => {
 
   return (
     <>
-      <div className="relative flex h-screen w-full flex-col items-center justify-between p-4 pt-0">
+      <form
+        className="relative flex h-full w-full flex-col items-center justify-between p-4 pt-0"
+        onSubmit={handleClick}
+      >
         <Header>회원 탈퇴</Header>
         <div className="text-title-2 mt-4 flex h-full w-full flex-col">
           <div className="text-headline-1">
-            {userPostInfo.name}님, <br />
+            {userProfile.name}님, <br />
             탈퇴 하시기 전에 꼭 확인해주세요
             <p className="text-label-2 text-grey-500 mt-2 mb-4">
               탈퇴 후 재가입은 14일이 지나야 할 수 있어요
@@ -95,7 +101,7 @@ const QuitPage = () => {
             <div
               onClick={() => setIsChecked(!isChecked)}
               className={`${
-                isChecked ? "bg-grey-300" : "bg-green-700"
+                !isChecked ? "bg-grey-300" : "bg-green-700"
               } inline-flex h-6 w-6 items-center justify-center rounded-full p-1`}
             >
               <Check />
@@ -104,21 +110,11 @@ const QuitPage = () => {
               [필수] 회원 탈퇴 약관을 확인했으며, 이에 동의합니다.
             </span>
           </div>
-          <GreenBasicButton
-            onClick={() => {
-              handleClick();
-            }}
-            state={isChecked}
-            handleState={() => {
-              if (!isChecked) {
-                window.location.href = "/mypage/quit/complete";
-              }
-            }}
-          >
+          <GreenBasicButton color="300" disabled={!isChecked}>
             회원 탈퇴하기
           </GreenBasicButton>
         </div>
-      </div>
+      </form>
     </>
   );
 };

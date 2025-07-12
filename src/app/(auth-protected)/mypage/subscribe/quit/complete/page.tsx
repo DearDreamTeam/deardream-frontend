@@ -26,7 +26,7 @@ const CompletePage = () => {
           description4="언제든 다시 플랜을 활성화 해주세요!"
         />
       )}
-      <GreenBasicButton link={PATH.LETTER_LIST}>
+      <GreenBasicButton color="300" link={PATH.LETTER_LIST}>
         소식함 보러가기
       </GreenBasicButton>
     </div>

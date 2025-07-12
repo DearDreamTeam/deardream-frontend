@@ -1,45 +1,37 @@
 "use client";
 
-import React from "react";
+import { useRouter } from "next/navigation";
 
 const GreenBasicButton = ({
   children,
-  handleState,
-  onClick,
-  state,
+  disabled = false,
   link,
-  color = "300",
+  color,
 }: {
   children: React.ReactNode;
-  handleState?: () => boolean | void;
-  state?: boolean;
-  link?: string;
-  onClick?: () => void;
-  color?: string;
+  disabled?: boolean; // 버튼 비활성화 여부
+  link?: string; // 링크가 있을 경우 사용
+  color?: string; // 버튼 색상
 }) => {
+  const router = useRouter();
   return (
-    <div
+    <button
+      type="submit"
       className={`px-auto inline-flex h-12 w-full items-center justify-center gap-2.5 rounded-lg py-3.5 ${
-        state
+        disabled
           ? "bg-grey-200 text-grey-500 cursor-not-allowed"
-          : `bg-green-${color} ${color === "100" ? "text-green-300" : "text-grey-0"}`
+          : `${color == "300" ? "text-grey-0" : "text-color-300"} bg-green-${color}`
       } cursor-pointer`}
-      aria-disabled={state}
+      aria-disabled={disabled}
       onClick={() => {
-        if (onClick) {
-          onClick();
-        }
-        if (handleState) {
-          const result = handleState();
-          if (result === false) return;
-        }
         if (link) {
-          window.location.href = link;
+          router.push(link);
         }
       }}
+      disabled={disabled} // 버튼이 비활성화된 경우
     >
       <div className="text-headline-3">{children}</div>
-    </div>
+    </button>
   );
 };
 export default GreenBasicButton;

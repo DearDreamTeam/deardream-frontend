@@ -3,10 +3,12 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { useUserStore } from "@/stores/useUserInfoStore";
-import axios from "@/lib/axios";
+import axiosInstance from "@/lib/axios";
+import axios from "axios";
 import Header from "@/components/common/header";
 import ProfileEdit from "@/components/profile/profile-edit";
 import GreenBasicButton from "@/components/button/profile-green-basic-button";
+import { registerUser } from "@/api/profile";
 
 const ProfileClient = () => {
   const searchParams = useSearchParams();
@@ -17,12 +19,17 @@ const ProfileClient = () => {
 
   const [editUserProfile, setEditUserProfile] = useState(userProfile);
 
+  const isProfileIncomplete =
+    !editUserProfile?.name?.trim() || !editUserProfile?.birth?.trim();
+
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
   useEffect(() => {
     const fetchUserInfo = async () => {
       if (!kakaoCode) return;
-
+      const API_URL = process.env.NEXT_PUBLIC_API_URL;
       try {
-        const response = await axios.get("/users/login/kakao", {
+        const response = await axios.get(API_URL + "/users/login/kakao", {
           params: { code: kakaoCode },
         });
 
@@ -48,7 +55,7 @@ const ProfileClient = () => {
           localStorage.setItem("accessToken", newAccessToken);
           localStorage.setItem("refreshToken", newRefreshToken);
           console.log("액세스 토큰 저장:", newAccessToken);
-          const res = await axios.get("/v1/users/me");
+          const res = await axiosInstance.get("/v1/users/me");
           console.log("사용자 정보:", res.data.result);
           // 사용자 정보가 있다면 상태에 저장
           updateUserProfile({
@@ -86,13 +93,45 @@ const ProfileClient = () => {
         });
       } catch (error) {
         console.error("카카오 로그인 실패:", error);
-        alert("로그인에 실패했습니다. 다시 시도해주세요.");
-        window.location.href = "/login";
+        // alert("로그인에 실패했습니다. 다시 시도해주세요.");
+        // window.location.href = "/login";
       }
     };
 
     fetchUserInfo();
   }, [kakaoCode, setUserKaKaoInfo, updateUserProfile]);
+
+  useEffect(() => {
+    setEditUserProfile(userProfile);
+  }, [userProfile]);
+
+  const handleSubmitProfile = async () => {
+    if (isProfileIncomplete) {
+      alert("이름과 생일을 입력해주세요.");
+      return;
+    }
+
+    try {
+      const response = await registerUser(editUserProfile, selectedFile);
+      console.log("프로필 등록 성공:", response.data);
+
+      if (response.status === 200) {
+        alert("프로필이 성공적으로 등록 되었습니다.");
+        localStorage.setItem(
+          "accessToken",
+          response.data.result.accessToken || "",
+        );
+        localStorage.setItem(
+          "refreshToken",
+          response.data.result.refreshToken || "",
+        );
+        window.location.href = "/home";
+      }
+    } catch (error) {
+      console.error("프로필 등록 실패:", error);
+    }
+  };
+
   useEffect(() => {
     if (!userProfile) {
       console.log("사용자 프로필이 아직 설정되지 않았습니다.");
@@ -107,7 +146,13 @@ const ProfileClient = () => {
 
   return (
     <>
-      <div className="bg-grey-0 relative flex h-screen w-full flex-col items-center justify-between p-4 pt-0">
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSubmitProfile(); // 이 함수 안에서 유효성 검사 + axios 처리
+        }}
+        className="bg-grey-0 relative flex h-full w-full flex-col items-center justify-between p-4 pt-0"
+      >
         {userKaKaoInfo ? (
           <>
             <div>
@@ -117,10 +162,13 @@ const ProfileClient = () => {
                 isInvite={false}
                 setEditUserProfile={setEditUserProfile}
                 editUserProfile={editUserProfile}
+                setSelectedFile={setSelectedFile}
               />
             </div>
             <div className="flex h-14 w-full items-center justify-center">
-              <GreenBasicButton type="register">저장</GreenBasicButton>
+              <GreenBasicButton disabled={isProfileIncomplete}>
+                저장
+              </GreenBasicButton>
             </div>
           </>
         ) : (
@@ -134,7 +182,7 @@ const ProfileClient = () => {
             </p>
           </div>
         )}
-      </div>
+      </form>
     </>
   );
 };

@@ -1,7 +1,7 @@
 export const dynamic = "force-dynamic";
 
 import { Suspense } from "react";
-import ProfileClient from "./ProfileClient";
+import ProfileClient from "@/app/profile/client";
 
 export default function ProfilePage() {
   return (

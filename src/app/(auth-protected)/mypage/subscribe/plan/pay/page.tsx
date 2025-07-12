@@ -78,7 +78,10 @@ const PayPage = () => {
         </div>
 
         <div className="flex h-14 w-full items-center justify-center">
-          <GreenBasicButton link={PATH.MYPAGE + "/subscribe/plan/pay/complete"}>
+          <GreenBasicButton
+            color="300"
+            link={PATH.MYPAGE + "/subscribe/plan/pay/complete"}
+          >
             결제하기
           </GreenBasicButton>
         </div>

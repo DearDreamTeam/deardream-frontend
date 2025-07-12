@@ -14,7 +14,7 @@ const PlanPage = () => {
     "PERSONAL",
   ); // "PERSONAL" | "INSTITUTION" | "NONE"
   return (
-    <div className="bg-grey-0 relative flex h-screen w-full flex-col items-center justify-between p-4 pt-0">
+    <div className="bg-grey-0 relative flex h-full w-full flex-col items-center justify-between p-4 pt-0">
       <div>
         <Header>플랜 변경</Header>
         <div className="text-grey-400 border-grey-200 flex w-full flex-col justify-center gap-2 border-b-1 border-solid p-3">
@@ -97,6 +97,7 @@ const PlanPage = () => {
       </div>
       <div className="flex h-14 w-full items-center justify-center">
         <GreenBasicButton
+          color="300"
           link={
             planType === "PERSONAL"
               ? PATH.MYPAGE + "/subscribe/plan/pay"
