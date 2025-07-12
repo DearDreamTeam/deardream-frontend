@@ -79,7 +79,9 @@ const MyFamilyPage = () => {
           {/* 프로필 섹션 */}
           {!user.isPaying && (
             <>
-              <GreenBasicButton>가족 그룹 만들기</GreenBasicButton>
+              <GreenBasicButton type="register">
+                가족 그룹 만들기
+              </GreenBasicButton>
             </>
           )}
 

@@ -16,17 +16,58 @@ export const metadata: Metadata = {
   title: "이어드림",
   description:
     "사랑하는 가족들의 소식을 받으며 웃음짓는 건강한 세상을 만듭니다.",
-  authors: [{ name: "Yeongseo Kim" }, { name: "Juhee Lee" }],
+  keywords: [
+    "이어드림",
+    "소식지",
+    "소식지 서비스",
+    "요양원",
+    "부모님",
+    "가족",
+    "아기 사진",
+    "포토북",
+    "사진북",
+  ],
+  authors: [{ name: "DearDream", url: "https://www.deardream.site" }],
+  creator: "DearDream",
+  publisher: "DearDream",
+  category: "social",
+  applicationName: "이어드림",
   icons: {
     icon: "/images/ribbon/ribbon-full.svg",
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
   openGraph: {
     title: "이어드림",
     description:
       "사랑하는 가족들의 소식을 받으며 웃음짓는 건강한 세상을 만듭니다.",
-    url: "",
+    url: "https://www.deardream.site",
+    locale: "ko-KR",
     siteName: "이어드림",
     type: "website",
+    countryName: "대한민국",
+    images: [
+      {
+        url: "/logo/logo.svg",
+        width: 529,
+        height: 185,
+        alt: "이어드림, 가족의 소식을 한 권의 책으로 전하는 정서 연결 서비스",
+        type: "image/png",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "이어드림, 가족의 소식을 한 권의 책으로 전하는 정서 연결 서비스",
+    description:
+      "사랑하는 가족들의 소식을 받으며 웃음짓는 건강한 세상을 만듭니다.",
+    images: ["/logo/logo.svg"],
+    creator: "@deardream",
+  },
+  verification: {
+    google: "SyN_nbzMzKSpb3xRaqcug5SaQ1-orTHN3cBTF7vqxpM",
   },
 };
 
