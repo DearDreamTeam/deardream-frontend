@@ -76,9 +76,9 @@ export const editPost = async (
         "Content-Type": "multipart/form-data",
       },
     });
-    console.log(response);
+    console.log("수정", response);
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 
