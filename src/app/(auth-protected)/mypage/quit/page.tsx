@@ -4,6 +4,7 @@ import GreenBasicButton from "@/components/button/green-basic-button";
 import Header from "@/components/common/header";
 import axios from "@/lib/axios";
 import Check from "@/public/icons/common/check.svg";
+import { useUserStore } from "@/stores/useUserInfoStore";
 import { useState } from "react";
 
 interface UserPostInfo {
@@ -36,6 +37,8 @@ const QuitItem = ({
 const QuitPage = () => {
   const [isChecked, setIsChecked] = useState(false);
 
+  const { userProfile } = useUserStore();
+
   const handleClick = async () => {
     if (!isChecked) {
       alert("회원 탈퇴 약관에 동의해주세요.");
@@ -53,11 +56,11 @@ const QuitPage = () => {
 
   return (
     <>
-      <div className="relative flex h-screen w-full flex-col items-center justify-between p-4 pt-0">
+      <div className="relative flex h-full w-full flex-col items-center justify-between p-4 pt-0">
         <Header>회원 탈퇴</Header>
         <div className="text-title-2 mt-4 flex h-full w-full flex-col">
           <div className="text-headline-1">
-            {userPostInfo.name}님, <br />
+            {userProfile.name}님, <br />
             탈퇴 하시기 전에 꼭 확인해주세요
             <p className="text-label-2 text-grey-500 mt-2 mb-4">
               탈퇴 후 재가입은 14일이 지나야 할 수 있어요

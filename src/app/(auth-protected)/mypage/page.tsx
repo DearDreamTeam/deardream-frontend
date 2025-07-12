@@ -22,6 +22,7 @@ import Image from "next/image";
 
 import { useState } from "react";
 import ConfirmDialog from "@/components/modal/dialog/confirm-dialog";
+import { useUserStore } from "@/stores/useUserInfoStore";
 
 const SectionItem = ({
   children,
@@ -50,6 +51,9 @@ const SectionItem = ({
 const MyPage = () => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
+
+  const { userProfile } = useUserStore();
+
   return (
     <>
       <div className="bg-grey-0 flex h-screen w-full flex-col items-center p-4 pt-0">
@@ -71,7 +75,7 @@ const MyPage = () => {
 
             <div className="flex flex-col justify-center space-y-1">
               <div className="text-headline-1 m-0">
-                <span>김수진</span>
+                <span>{userProfile.name}</span>
               </div>
 
               <div className="text-body-2 text-grey-500 flex gap-1.5">

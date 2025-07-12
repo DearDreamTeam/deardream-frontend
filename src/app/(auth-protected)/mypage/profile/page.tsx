@@ -27,7 +27,21 @@ const Profile = () => {
     try {
       const response = await updateProfile(editUserProfile, selectedFile);
       console.log("프로필 업데이트 성공:", response.data);
-      updateUserProfile(editUserProfile); // 상태 업데이트
+      if (response.data.result.profileImage) {
+        console.log(
+          "프로필 이미지 업데이트:",
+          response.data.result.profileImage,
+        );
+        setEditUserProfile((prev) => ({
+          ...prev,
+          profileImage: response.data.result.profileImage,
+        })); // 프로필 이미지 업데이트
+        updateUserProfile(editUserProfile); // 상태 업데이트
+        updateUserProfile({
+          ...editUserProfile,
+          profileImage: response.data.result.profileImage,
+        }); // 상태 업데이트
+      }
       window.location.href = "/mypage";
     } catch (error) {
       console.error("프로필 업데이트 실패:", error);
@@ -42,7 +56,7 @@ const Profile = () => {
           e.preventDefault();
           handleSave(); // 이 함수 안에서 유효성 검사 + axios 처리
         }}
-        className="bg-grey-0 relative flex h-screen w-full flex-col items-center justify-between p-4 pt-0"
+        className="bg-grey-0 relative flex h-full w-full flex-col items-center justify-between p-4 pt-0"
       >
         <div>
           <Header>내 정보 수정</Header>

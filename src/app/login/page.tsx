@@ -21,7 +21,7 @@ const Login = () => {
 
   return (
     <>
-      <div className="flex h-screen flex-col items-center justify-around bg-green-100 py-10">
+      <div className="flex h-full flex-col items-center justify-around bg-green-100 py-10">
         <StateTemplate>
           <StateTemplate.ImageFiled>
             <EllipseImage color="gray-0" isBackground={true} />

@@ -6,7 +6,7 @@ import { PATH } from "@/constants/path";
 const CompletePage = () => {
   return (
     <>
-      <div className="flex h-screen w-full flex-col items-center justify-center gap-2 p-4">
+      <div className="flex h-full w-full flex-col items-center justify-center gap-2 p-4">
         <Result
           title="플랜 변경 완료!"
           description="플랜가 성공적으로 변경되었어요"

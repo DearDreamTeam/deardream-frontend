@@ -78,6 +78,7 @@ const ProfileEdit = ({
             alt="프로필 이미지"
             fill
             className="rounded-full object-cover"
+            onError={() => setImageUrl("/images/default-img.svg")} // 이미지 로드 실패 시 기본 이미지로 설정
           />
           <input
             type="file"

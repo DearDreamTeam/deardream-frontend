@@ -16,6 +16,10 @@ export default function ProtectedLayout({
     if (!accessToken) {
       alert("로그인이 필요합니다.");
       router.replace("/login");
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
+      localStorage.removeItem("user-store");
+      localStorage.removeItem("tempToken");
       return;
     }
 
@@ -26,6 +30,10 @@ export default function ProtectedLayout({
       } catch (err) {
         console.error("사용자 인증 실패", err);
         alert("로그인이 필요합니다.");
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+        localStorage.removeItem("user-store");
+        localStorage.removeItem("tempToken");
         router.replace("/login");
       }
     };
