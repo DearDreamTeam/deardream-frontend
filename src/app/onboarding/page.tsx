@@ -68,7 +68,7 @@ const Onboarding = () => {
 
       <div className="progress-dot-container py-[3.6rem]">
         {isButtonActive ? (
-          <Link href={PATH.HOME} className="button w-full">
+          <Link href={PATH.LOGIN} className="button w-full">
             시작하기
           </Link>
         ) : (
