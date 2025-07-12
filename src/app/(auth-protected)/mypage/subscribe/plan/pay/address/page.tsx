@@ -15,7 +15,10 @@ const AddressPage = () => {
           <AddressEdit planType={planType} />
         </div>
         <div className="flex h-14 w-full items-center justify-center">
-          <GreenBasicButton link={PATH.MYPAGE + "/subscribe/plan/complete"}>
+          <GreenBasicButton
+            color="300"
+            link={PATH.MYPAGE + "/subscribe/plan/complete"}
+          >
             저장
           </GreenBasicButton>
         </div>

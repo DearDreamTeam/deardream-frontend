@@ -69,7 +69,9 @@ const Profile = () => {
           />
         </div>
         <div className="flex h-14 w-full items-center justify-center">
-          <GreenBasicButton>저장</GreenBasicButton>
+          <GreenBasicButton disabled={isProfileIncomplete}>
+            저장
+          </GreenBasicButton>
         </div>
       </form>
     </>

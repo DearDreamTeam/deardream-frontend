@@ -110,7 +110,7 @@ const QuitPage = () => {
               [필수] 회원 탈퇴 약관을 확인했으며, 이에 동의합니다.
             </span>
           </div>
-          <GreenBasicButton disabled={!isChecked}>
+          <GreenBasicButton color="300" disabled={!isChecked}>
             회원 탈퇴하기
           </GreenBasicButton>
         </div>
