@@ -35,6 +35,10 @@ export const metadata: Metadata = {
   icons: {
     icon: "/images/ribbon/ribbon-full.svg",
   },
+  robots: {
+    index: true,
+    follow: true,
+  },
   openGraph: {
     title: "이어드림",
     description:
@@ -46,13 +50,24 @@ export const metadata: Metadata = {
     countryName: "대한민국",
     images: [
       {
-        url: "https://images.unsplash.com/photo-1566125882500-87e10f726cdc?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        width: 620,
-        height: 465,
+        url: "/logo/logo.svg",
+        width: 529,
+        height: 185,
         alt: "이어드림, 가족의 소식을 한 권의 책으로 전하는 정서 연결 서비스",
         type: "image/png",
       },
     ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "이어드림, 가족의 소식을 한 권의 책으로 전하는 정서 연결 서비스",
+    description:
+      "사랑하는 가족들의 소식을 받으며 웃음짓는 건강한 세상을 만듭니다.",
+    images: ["/logo/logo.svg"],
+    creator: "@deardream",
+  },
+  verification: {
+    google: "SyN_nbzMzKSpb3xRaqcug5SaQ1-orTHN3cBTF7vqxpM",
   },
 };
 
