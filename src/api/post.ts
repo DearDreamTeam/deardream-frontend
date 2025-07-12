@@ -2,10 +2,10 @@ import axios from "@/lib/axios";
 import { Post, PostLetter } from "@/types/post-type";
 
 /* GET: 소식 피드 전부 가져오기 */
-export const getFamilyPosts = async (familyId: Post["familyId"]) => {
+export const getFamilyPosts = async (familyId: number) => {
   try {
     const response = await axios.get(`/v1/posts/${familyId}`);
-    console.log(response);
+    return response.data.result;
   } catch (error) {
     console.log(error);
     return [];

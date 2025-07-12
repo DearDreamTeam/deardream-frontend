@@ -13,7 +13,7 @@ interface UserState {
 }
 
 const defaultUser: User = {
-  userId: 777,
+  userId: 13,
   kakaoId: "mmm",
   name: "김영서",
   profileImage: "https://avatars.githubusercontent.com/u/88617509?v=4",
@@ -21,7 +21,7 @@ const defaultUser: User = {
   birth: 964224000000,
   role: FAMILY_ROLE.LEADER,
   relation: FAMILY_RELATION.DAUGHTER,
-  familyId: 22,
+  familyId: 2,
 };
 
 export const useUserStore = create<UserState>()(

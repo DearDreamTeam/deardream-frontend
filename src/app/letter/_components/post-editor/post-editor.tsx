@@ -43,7 +43,7 @@ const PostEditor = ({ postcard }: PostEditorProps) => {
   const [content, setContent] = useState(postcard?.content ?? "");
   const [aspectIndex, setAspectIndex] = useState(postcard?.aspectIndex ?? 0);
   const [imageFiles, setImageFiles] = useState<EditableImage[]>(
-    postcard?.imgUrls.map((url) => ({
+    postcard?.imageUrls.map((url: string) => ({
       fileId: fileIdRef.current++,
       originalFile: null,
       originalUrl: url,
@@ -78,7 +78,7 @@ const PostEditor = ({ postcard }: PostEditorProps) => {
       return;
     }
 
-    const authorId = 0;
+    const authorId = 13;
     if (postcard) {
       editPost(
         postcard.postId,

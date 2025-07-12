@@ -1,5 +1,5 @@
-import { PostFront } from "./post-type";
+import { PostcardProps } from "./postcard-props";
 
 export interface PostEditorProps {
-  postcard?: PostFront;
+  postcard?: PostcardProps;
 }

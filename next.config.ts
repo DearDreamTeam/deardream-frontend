@@ -13,7 +13,7 @@ const nextConfig: NextConfig = {
 
   //이미지 관련
   images: {
-    domains: ["k.kakaocdn.net"],
+    domains: ["k.kakaocdn.net", "d3beofgpsk367b.cloudfront.net"],
     remotePatterns: [
       {
         protocol: "https",

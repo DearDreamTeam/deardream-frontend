@@ -1,4 +1,4 @@
-export const formatDateToDots = (timestamp: number) => {
+export const formatDateToDots = (timestamp: string) => {
   const date = new Date(timestamp);
 
   const year = date.getFullYear();
