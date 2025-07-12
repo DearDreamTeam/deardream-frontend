@@ -1,9 +1,7 @@
-"use client";
-
-import NewPostClient from "../_components/client/new-post-client";
+import PostEditor from "../_components/post-editor/post-editor";
 
 const New = () => {
-  return <NewPostClient />;
+  return <PostEditor />;
 };
 
 export default New;

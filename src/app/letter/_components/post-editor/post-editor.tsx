@@ -9,10 +9,6 @@ import ImagePreviewer from "@/app/letter/_components/image-previewer";
 import TextLimit from "../text-limit";
 import GalleryButton from "../gallery-button";
 
-import { PostState } from "@/stores/usePostStore";
-import { useUserStore } from "@/stores/useUserStore";
-import { Post, PostBack, PostFront } from "@/types/post-type";
-import { PostEditorProps } from "@/types/post-editor-props";
 import { PATH } from "@/constants/path";
 import { isContentValid } from "@/utils/post-content-rules";
 
@@ -27,8 +23,10 @@ import {
   EditableImage,
   EditedProps,
 } from "@/types/editable-image";
+import { editPost, registerPost } from "@/api/post";
+import { PostEditorProps } from "@/types/post-editor-props";
 
-const PostEditor = ({ postcard, submitAction }: PostEditorProps) => {
+const PostEditor = ({ postcard }: PostEditorProps) => {
   const fileIdRef = useRef(0);
   const router = useRouter();
   const [warningMessage, setWarningMessage] = useState({
@@ -80,44 +78,24 @@ const PostEditor = ({ postcard, submitAction }: PostEditorProps) => {
       return;
     }
 
+    const authorId = 0;
     if (postcard) {
-      const letter: Post = {
-        ...postcard,
-        content: content,
-        aspectIndex: aspectIndex,
-      };
-      const letterBack: PostBack = {
-        ...letter,
-        imgFiles: [], // .editedProps ? 생성 : originalFile
-      };
-      console.log(letterBack);
-      const letterFront: PostFront = {
-        ...letter,
-        imgUrls: imageFiles.map((item) => item.previewUrl),
-      };
-      (submitAction as PostState["editPost"])(postcard.postId, letterFront);
+      editPost(
+        postcard.postId,
+        authorId,
+        content,
+        imageFiles
+          .map((item) => item.originalFile)
+          .filter((img): img is File => img !== null),
+      );
     } else {
-      const user = useUserStore.getState().user;
-      const letter: Post = {
-        postId: Date.now(),
-        authorId: user.userId,
-        familyId: user.familyId,
-        content: content,
-        createdAt: Date.now(),
-        aspectIndex: aspectIndex,
-      };
-
-      const letterBack: PostBack = {
-        ...letter,
-        imgFiles: [], // .editedProps ? 생성 : originalFile
-      };
-      console.log(letterBack);
-
-      const letterFront: PostFront = {
-        ...letter,
-        imgUrls: imageFiles.map((item) => item.previewUrl),
-      };
-      (submitAction as PostState["addPost"])(letterFront);
+      registerPost(
+        authorId,
+        content,
+        imageFiles
+          .map((item) => item.originalFile)
+          .filter((img): img is File => img !== null),
+      );
     }
 
     setIsComplete(true);
