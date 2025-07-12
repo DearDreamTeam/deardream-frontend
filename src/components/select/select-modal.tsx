@@ -49,7 +49,7 @@ const SelectModal = ({
               <Picker.Item key={option} value={option} className="border-none">
                 {({ selected }) => (
                   <div
-                    className={`h-full w-full p-1.5 text-center text-xl ${
+                    className={`h-full w-full py-1.5 text-center text-xl ${
                       selected ? "text-headline-3" : "text-grey-400"
                     }`}
                   >

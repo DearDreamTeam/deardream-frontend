@@ -94,7 +94,7 @@ const ProfileEdit = ({
             <Pencil />
           </div>
         </div>
-        <div className="flex-start text-label-2 flex flex-col gap-2">
+        <div className="flex-start text-label-2 text-grey-700 flex flex-col gap-2">
           이름
           <input
             type="text"

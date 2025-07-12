@@ -56,7 +56,10 @@ const QuitPage = () => {
 
   return (
     <>
-      <div className="relative flex h-full w-full flex-col items-center justify-between p-4 pt-0">
+      <form
+        className="relative flex h-full w-full flex-col items-center justify-between p-4 pt-0"
+        onSubmit={handleClick}
+      >
         <Header>회원 탈퇴</Header>
         <div className="text-title-2 mt-4 flex h-full w-full flex-col">
           <div className="text-headline-1">
@@ -98,7 +101,7 @@ const QuitPage = () => {
             <div
               onClick={() => setIsChecked(!isChecked)}
               className={`${
-                isChecked ? "bg-grey-300" : "bg-green-700"
+                !isChecked ? "bg-grey-300" : "bg-green-700"
               } inline-flex h-6 w-6 items-center justify-center rounded-full p-1`}
             >
               <Check />
@@ -107,21 +110,11 @@ const QuitPage = () => {
               [필수] 회원 탈퇴 약관을 확인했으며, 이에 동의합니다.
             </span>
           </div>
-          <GreenBasicButton
-            onClick={() => {
-              handleClick();
-            }}
-            state={isChecked}
-            handleState={() => {
-              if (!isChecked) {
-                window.location.href = "/mypage/quit/complete";
-              }
-            }}
-          >
+          <GreenBasicButton disabled={!isChecked}>
             회원 탈퇴하기
           </GreenBasicButton>
         </div>
-      </div>
+      </form>
     </>
   );
 };

@@ -20,7 +20,7 @@ import Header from "@/components/common/header";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ConfirmDialog from "@/components/modal/dialog/confirm-dialog";
 import { useUserStore } from "@/stores/useUserInfoStore";
 
@@ -54,6 +54,28 @@ const MyPage = () => {
 
   const { userProfile } = useUserStore();
 
+  const formatImageUrl = (url?: string): string => {
+    const kakaoDefaultImage =
+      "http://img1.kakaocdn.net/thumb/R640x640.q70/?fname=http://t1.kakaocdn.net/account_images/default_profile.jpeg";
+
+    const cleanedUrl = url?.trim().replace(/[\u200B-\u200D\uFEFF]/g, "");
+
+    if (!cleanedUrl || cleanedUrl === kakaoDefaultImage) {
+      console.log("default image url");
+      return "/images/default-img.svg";
+    }
+
+    return cleanedUrl;
+  };
+
+  const [imageUrl, setImageUrl] = useState<string>(
+    formatImageUrl(userProfile?.profileImage),
+  );
+
+  useEffect(() => {
+    setImageUrl(formatImageUrl(userProfile?.profileImage));
+  }, [userProfile?.profileImage]);
+
   return (
     <>
       <div className="bg-grey-0 flex h-screen w-full flex-col items-center p-4 pt-0">
@@ -66,7 +88,7 @@ const MyPage = () => {
           >
             <div className="relative h-14 w-14">
               <Image
-                src={"/images/default-img.svg"}
+                src={imageUrl || "/images/default-img.svg"}
                 alt="프로필 이미지"
                 fill
                 className="rounded-full object-cover"

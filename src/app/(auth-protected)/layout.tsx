@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import axios from "@/lib/axios";
+import { useUserStore } from "@/stores/useUserInfoStore";
 
 export default function ProtectedLayout({
   children,
@@ -11,29 +12,37 @@ export default function ProtectedLayout({
 }) {
   const router = useRouter();
 
+  const { updateUserProfile } = useUserStore();
+
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
     if (!accessToken) {
       alert("로그인이 필요합니다.");
+      localStorage.clear();
       router.replace("/login");
-      localStorage.removeItem("accessToken");
-      localStorage.removeItem("refreshToken");
-      localStorage.removeItem("user-store");
-      localStorage.removeItem("tempToken");
-      return;
     }
 
     const checkUser = async () => {
       try {
         const res = await axios.get("/v1/users/me");
         console.log("사용자 정보:", res.data);
+        if (res.status === 200) {
+          const userData = res.data.result;
+          updateUserProfile({
+            name: userData.name,
+            birth: userData.birth,
+            profileImage: userData.profileImage,
+            calendarType: userData.calendarType,
+            relation: userData.relation,
+            otherRelation: userData.otherRelation,
+          });
+        } else {
+          throw new Error("사용자 정보 조회 실패");
+        }
       } catch (err) {
         console.error("사용자 인증 실패", err);
         alert("로그인이 필요합니다.");
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("refreshToken");
-        localStorage.removeItem("user-store");
-        localStorage.removeItem("tempToken");
+        localStorage.clear();
         router.replace("/login");
       }
     };

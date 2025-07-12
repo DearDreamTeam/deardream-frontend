@@ -93,8 +93,8 @@ const ProfileClient = () => {
         });
       } catch (error) {
         console.error("카카오 로그인 실패:", error);
-        alert("로그인에 실패했습니다. 다시 시도해주세요.");
-        window.location.href = "/login";
+        // alert("로그인에 실패했습니다. 다시 시도해주세요.");
+        // window.location.href = "/login";
       }
     };
 
@@ -113,10 +113,19 @@ const ProfileClient = () => {
 
     try {
       const response = await registerUser(editUserProfile, selectedFile);
-      console.log("프로필 업데이트 성공:", response.data);
-      window.location.href = "/home";
+      console.log("프로필 등록 성공:", response.data);
+
       if (response.status === 200) {
-        alert("프로필이 성공적으로 업데이트되었습니다.");
+        alert("프로필이 성공적으로 등록 되었습니다.");
+        localStorage.setItem(
+          "accessToken",
+          response.data.result.accessToken || "",
+        );
+        localStorage.setItem(
+          "refreshToken",
+          response.data.result.refreshToken || "",
+        );
+        window.location.href = "/home";
       }
     } catch (error) {
       console.error("프로필 등록 실패:", error);

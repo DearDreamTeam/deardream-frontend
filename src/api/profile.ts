@@ -11,8 +11,11 @@ export const registerUser = async (
     name: userProfile.name,
     birth: userProfile.birth,
     calendarType: userProfile.calendarType,
-    relation: userProfile.relation,
-    otherRelation: userProfile.otherRelation ?? null,
+    relation:
+      userProfile.relation && userProfile.relation !== ""
+        ? userProfile.relation
+        : null,
+    familylink: "",
   };
 
   const jsonFile = new File(
@@ -20,8 +23,8 @@ export const registerUser = async (
     "userRequestDto.json",
     { type: "application/json" },
   );
-
   formData.append("userRequestDto", jsonFile);
+
   if (imageFile) {
     formData.append("profileImage", imageFile); // File 객체
   }
