@@ -30,19 +30,22 @@ const Home = () => {
     <div className="overflow-auto-hide-scroll h-full">
       <HomeBanner />
       <PeriodNotification />
-      {post.map((letter) => (
-        <Postcard
-          authorId={letter.authorId}
-          key={letter.postId}
-          postId={letter.postId}
-          authorName={letter.authorName}
-          relations={letter.relations}
-          authorProfileImg={letter.authorProfileImg}
-          createdAt={letter.createdAt}
-          content={letter.content}
-          imageUrls={letter.imageUrls}
-        />
-      ))}
+      {post
+        .slice()
+        .reverse()
+        .map((letter) => (
+          <Postcard
+            authorId={letter.authorId}
+            key={letter.postId}
+            postId={letter.postId}
+            authorName={letter.authorName}
+            relations={letter.relations}
+            authorProfileImg={letter.authorProfileImg}
+            createdAt={letter.createdAt}
+            content={letter.content}
+            imageUrls={letter.imageUrls}
+          />
+        ))}
     </div>
   );
 };
