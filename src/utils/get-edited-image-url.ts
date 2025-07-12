@@ -44,7 +44,7 @@ export const getEditedImageUrl = async (
   imageSrc: string,
   pixelCrop: Area,
   rotation: number,
-): Promise<{ editedUrl: string; editedfile: File }> => {
+): Promise<{ editedUrl: string; editedFile: File }> => {
   const image = await createImage(imageSrc);
   const canvas = document.createElement("canvas");
   const ctx = canvas.getContext("2d");
@@ -76,16 +76,16 @@ export const getEditedImageUrl = async (
   // 4. 이미지 그리기
   ctx.drawImage(image, -image.width / 2, -image.height / 2);
 
-  return new Promise<{ editedUrl: string; editedfile: File }>((resolve) => {
+  return new Promise<{ editedUrl: string; editedFile: File }>((resolve) => {
     canvas.toBlob((blob) => {
       if (!blob) throw new Error("Canvas is empty");
 
-      const editedfile = new File([blob], "edited-image.png", {
+      const editedFile = new File([blob], "edited-image.png", {
         type: "image/png",
       });
       const editedUrl = URL.createObjectURL(blob);
 
-      resolve({ editedUrl, editedfile });
+      resolve({ editedUrl, editedFile });
     }, "image/png");
   });
 };

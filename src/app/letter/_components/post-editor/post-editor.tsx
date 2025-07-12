@@ -24,9 +24,9 @@ import {
   EditedProps,
 } from "@/types/editable-image";
 import { editPost, registerPost } from "@/api/post";
-import { PostEditorProps } from "@/types/post-editor-props";
+import { Post } from "@/types/post-type";
 
-const PostEditor = ({ postcard }: PostEditorProps) => {
+const PostEditor = ({ postcard }: { postcard?: Post }) => {
   const fileIdRef = useRef(0);
   const router = useRouter();
   const [warningMessage, setWarningMessage] = useState({
@@ -41,7 +41,9 @@ const PostEditor = ({ postcard }: PostEditorProps) => {
 
   /* inputs */
   const [content, setContent] = useState(postcard?.content ?? "");
-  const [aspectIndex, setAspectIndex] = useState(postcard?.aspectIndex ?? 0);
+  const [aspectIndex, setAspectIndex] = useState(
+    postcard?.imageUrls.length ?? 0,
+  );
   const [imageFiles, setImageFiles] = useState<EditableImage[]>(
     postcard?.imageUrls.map((url: string) => ({
       fileId: fileIdRef.current++,
@@ -51,6 +53,10 @@ const PostEditor = ({ postcard }: PostEditorProps) => {
       editedProps: null,
     })) ?? [],
   );
+
+  useEffect(() => {
+    console.log(imageFiles);
+  }, [imageFiles]);
 
   const [selectedImageId, setSelectedImageId] = useState<null | number>(null);
 
@@ -124,6 +130,7 @@ const PostEditor = ({ postcard }: PostEditorProps) => {
 
   const handleSaveEditedImage = (
     editedUrl: string,
+    editedFile: File,
     editedProps: EditedProps,
   ) => {
     if (selectedImageId === null) return;
@@ -132,6 +139,7 @@ const PostEditor = ({ postcard }: PostEditorProps) => {
         item.fileId === selectedImageId
           ? {
               ...item,
+              originalFile: editedFile,
               previewUrl: editedUrl,
               editedProps,
             }
@@ -209,6 +217,10 @@ const PostEditor = ({ postcard }: PostEditorProps) => {
           imageUrl={
             imageFiles.find((item) => item.fileId === selectedImageId)
               ?.originalUrl as string
+          }
+          editedProps={
+            imageFiles.find((item) => item.fileId === selectedImageId)
+              ?.editedProps ?? null
           }
           aspectRatio={ASPECT_RATIO_ITEMS[aspectIndex].value}
           onSave={handleSaveEditedImage}

@@ -17,5 +17,4 @@ export interface Post {
   imageUrls: string[];
   postId: number;
   relations: string;
-  aspectIndex: number;
 }

@@ -41,7 +41,6 @@ const Home = () => {
           createdAt={letter.createdAt}
           content={letter.content}
           imageUrls={letter.imageUrls}
-          aspectIndex={0}
         />
       ))}
     </div>

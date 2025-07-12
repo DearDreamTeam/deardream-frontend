@@ -1,4 +1,4 @@
-import { PostcardProps } from "@/types/postcard-props";
+import { Post } from "@/types/post-type";
 import PostContext from "./post-context";
 import PostImages from "./post-images";
 import PostInfo from "./post-info";
@@ -12,8 +12,7 @@ const Postcard = ({
   content,
   createdAt,
   imageUrls,
-  aspectIndex,
-}: PostcardProps) => {
+}: Post) => {
   return (
     <div className="bg-grey-0 px-4">
       <div className="border-b-grey-200 border-b py-4">
@@ -25,9 +24,7 @@ const Postcard = ({
           postId={postId}
           authorProfileImg={authorProfileImg}
         />
-        {!!imageUrls.length && (
-          <PostImages imgUrls={imageUrls} aspectIndex={aspectIndex} />
-        )}
+        {!!imageUrls.length && <PostImages imgUrls={imageUrls} />}
         <PostContext content={content} />
       </div>
     </div>

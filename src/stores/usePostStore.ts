@@ -8,7 +8,7 @@ export interface PostState {
   post: Post[];
   setPost: (posts: Post[]) => void;
   // addPost: (letter: PostFront) => void;
-  // deletePost: (postId: PostFront["postId"]) => void;
+  deletePost: (postId: Post["postId"]) => void;
   // editPost: (postId: PostFront["postId"], letter: PostFront) => void;
   getAPostcard: (postId: Post["authorId"]) => Post | undefined;
 }
@@ -19,12 +19,12 @@ export const usePostStore = create<PostState>()(
       post: [],
       setPost: (posts) => set({ post: posts }),
       // addPost: (letter) => set({ post: [letter, ...get().post] }),
-      // deletePost: (postId) => {
-      //   const newPost = get().post.filter(
-      //     (postcard) => postcard.postId !== postId,
-      //   );
-      //   return set({ post: [...newPost] });
-      // },
+      deletePost: (postId) => {
+        const newPost = get().post.filter(
+          (postcard) => postcard.postId !== postId,
+        );
+        return set({ post: [...newPost] });
+      },
       // editPost: (postId, letter) => {
       //   const newPost = get().post.map((postcard) => {
       //     if (postcard.postId !== postId) return postcard;

@@ -1,4 +1,5 @@
 import axios from "@/lib/axios";
+import { usePostStore } from "@/stores/usePostStore";
 import { Post, PostLetter } from "@/types/post-type";
 
 /* GET: 소식 피드 전부 가져오기 */
@@ -90,7 +91,7 @@ export const deletePost = async (
     const response = await axios.delete(`/v1/posts/${postId}`, {
       params: { userId },
     });
-    console.log(response);
+    if (response.status === 200) usePostStore.getState().deletePost(postId);
   } catch (error) {
     console.log(error);
   }

@@ -1,11 +1,11 @@
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
-import { PostcardProps } from "@/types/postcard-props";
 import { formatDateToDots } from "@/utils/format-date";
 import MoreButton from "@/components/button/more-button";
 import Image from "next/image";
 import { useUserStore } from "@/stores/useUserStore";
+import { Post } from "@/types/post-type";
 
 const PostInfo = ({
   authorId,
@@ -15,7 +15,7 @@ const PostInfo = ({
   createdAt,
   authorProfileImg,
 }: Pick<
-  PostcardProps,
+  Post,
   | "authorId"
   | "postId"
   | "authorName"
