@@ -7,6 +7,7 @@ import axios from "@/lib/axios";
 import Header from "@/components/common/header";
 import ProfileEdit from "@/components/profile/profile-edit";
 import GreenBasicButton from "@/components/button/profile-green-basic-button";
+import { registerUser } from "@/api/profile";
 
 const ProfileClient = () => {
   const searchParams = useSearchParams();
@@ -16,6 +17,11 @@ const ProfileClient = () => {
     useUserStore();
 
   const [editUserProfile, setEditUserProfile] = useState(userProfile);
+
+  const isProfileIncomplete =
+    !editUserProfile?.name?.trim() || !editUserProfile?.birth?.trim();
+
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   useEffect(() => {
     const fetchUserInfo = async () => {
@@ -93,6 +99,27 @@ const ProfileClient = () => {
 
     fetchUserInfo();
   }, [kakaoCode, setUserKaKaoInfo, updateUserProfile]);
+
+  useEffect(() => {
+    setEditUserProfile(userProfile);
+  }, [userProfile]);
+
+  const handleSubmitProfile = async () => {
+    if (isProfileIncomplete) {
+      alert("이름과 생일을 입력해주세요.");
+      return;
+    }
+
+    try {
+      const response = await registerUser(editUserProfile, selectedFile);
+      console.log("프로필 업데이트 성공:", response.data);
+      window.location.href = "/home";
+    } catch (error) {
+      console.error("프로필 업데이트 실패:", error);
+      alert("프로필 업데이트에 실패했습니다. 다시 시도해주세요.");
+    }
+  };
+
   useEffect(() => {
     if (!userProfile) {
       console.log("사용자 프로필이 아직 설정되지 않았습니다.");
@@ -107,7 +134,13 @@ const ProfileClient = () => {
 
   return (
     <>
-      <div className="bg-grey-0 relative flex h-screen w-full flex-col items-center justify-between p-4 pt-0">
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSubmitProfile(); // 이 함수 안에서 유효성 검사 + axios 처리
+        }}
+        className="bg-grey-0 relative flex h-screen w-full flex-col items-center justify-between p-4 pt-0"
+      >
         {userKaKaoInfo ? (
           <>
             <div>
@@ -117,10 +150,13 @@ const ProfileClient = () => {
                 isInvite={false}
                 setEditUserProfile={setEditUserProfile}
                 editUserProfile={editUserProfile}
+                setSelectedFile={setSelectedFile}
               />
             </div>
             <div className="flex h-14 w-full items-center justify-center">
-              <GreenBasicButton type="register">저장</GreenBasicButton>
+              <GreenBasicButton disabled={isProfileIncomplete}>
+                저장
+              </GreenBasicButton>
             </div>
           </>
         ) : (
@@ -134,7 +170,7 @@ const ProfileClient = () => {
             </p>
           </div>
         )}
-      </div>
+      </form>
     </>
   );
 };
