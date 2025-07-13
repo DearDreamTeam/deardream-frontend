@@ -1,9 +1,9 @@
 "use client";
 
-import { PostcardProps } from "@/types/postcard-props";
+import { Post } from "@/types/post-type";
 import { useState } from "react";
 
-const PostContext = ({ content }: Pick<PostcardProps, "content">) => {
+const PostContext = ({ content }: Pick<Post, "content">) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const handleToggleContent = () => {
     setIsExpanded((prev) => !prev);
