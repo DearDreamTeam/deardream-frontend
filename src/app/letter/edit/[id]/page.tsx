@@ -10,7 +10,6 @@ const Edit = ({ params }: { params: Promise<{ id: string }> }) => {
 
   const { getAPostcard } = usePostStore();
   const postcard = getAPostcard(postId);
-  console.log(postcard);
 
   return <PostEditor postcard={postcard} />;
 };

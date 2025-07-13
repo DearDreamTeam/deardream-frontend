@@ -4,12 +4,12 @@ import { EditableImage } from "@/types/editable-image";
 
 const ImagePreviewer = ({
   imageFiles,
-  setSelectedImageId,
+  handleImageClick,
   aspectIndex,
   deleteFile,
 }: {
   imageFiles: EditableImage[];
-  setSelectedImageId: (url: number) => void;
+  handleImageClick: (url: number) => void;
   aspectIndex: number;
   deleteFile: (fileId: number) => void;
 }) => {
@@ -17,10 +17,7 @@ const ImagePreviewer = ({
     <div className="flex w-full justify-around gap-1 py-5">
       {imageFiles?.map((item) => (
         <div key={item.fileId} className="relative w-full">
-          <div
-            className="w-full"
-            onClick={() => setSelectedImageId(item.fileId)}
-          >
+          <div className="w-full" onClick={() => handleImageClick(item.fileId)}>
             <ImageFallback
               url={item.previewUrl}
               width={imageFiles.length === 2 ? 170 : 344}

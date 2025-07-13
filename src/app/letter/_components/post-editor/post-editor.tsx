@@ -54,10 +54,6 @@ const PostEditor = ({ postcard }: { postcard?: Post }) => {
     })) ?? [],
   );
 
-  useEffect(() => {
-    console.log(imageFiles);
-  }, [imageFiles]);
-
   const [selectedImageId, setSelectedImageId] = useState<null | number>(null);
 
   /* derived states */
@@ -153,6 +149,17 @@ const PostEditor = ({ postcard }: { postcard?: Post }) => {
     setImageFiles((prev) => prev.filter((item) => item.fileId !== fileId));
   };
 
+  const handleImageClick = async (fileId: number) => {
+    if (
+      // 외부 이미지를 가져온 경우
+      imageFiles[fileId].originalUrl &&
+      imageFiles[fileId].originalFile === null
+    ) {
+      //변환...
+    }
+    setSelectedImageId(fileId);
+  };
+
   return (
     <form
       onSubmit={handleSubmitLetter}
@@ -176,7 +183,7 @@ const PostEditor = ({ postcard }: { postcard?: Post }) => {
         {imageCount > 0 && (
           <ImagePreviewer
             imageFiles={imageFiles}
-            setSelectedImageId={setSelectedImageId}
+            handleImageClick={handleImageClick}
             aspectIndex={aspectIndex}
             deleteFile={deleteFile}
           />

@@ -8,7 +8,7 @@ export const getFamilyPosts = async (familyId: number) => {
     const response = await axios.get(`/v1/posts/${familyId}`);
     return response.data.result;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return [];
   }
 };
@@ -28,22 +28,17 @@ export const registerPost = async (
     }),
   );
 
-  images
-    .filter((file): file is File => file !== null)
-    .forEach((file) => {
-      formData.append("images", file);
-    });
+  images.forEach((file) => {
+    formData.append("images", file);
+  });
 
   try {
-    const response = await axios.post(`/v1/posts`, formData, {
+    await axios.post(`/v1/posts`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
     });
-    console.log(response);
-    // postId를 리턴해주는 듯
   } catch (error) {
-    console.log(error);
     console.error(error);
   }
 };
@@ -64,19 +59,12 @@ export const editPost = async (
     }),
   );
 
-  images
-    .filter((file): file is File => file !== null)
-    .forEach((file) => {
-      formData.append("images", file);
-    });
+  images.forEach((file) => {
+    formData.append("images", file);
+  });
 
   try {
-    const response = await axios.put(`/v1/posts/${postId}`, formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
-    console.log("수정", response);
+    await axios.put(`/v1/posts/${postId}`, formData);
   } catch (error) {
     console.error(error);
   }
@@ -93,6 +81,6 @@ export const deletePost = async (
     });
     if (response.status === 200) usePostStore.getState().deletePost(postId);
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
