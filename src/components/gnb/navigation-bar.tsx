@@ -12,7 +12,10 @@ const NavigationBar = () => {
     pathname.startsWith("/letter/") ||
     pathname.startsWith("/letters/") ||
     pathname.startsWith("/mypage/") ||
-    ["/invite", "/login", "/profile", "/onboarding"].includes(pathname)
+    pathname.startsWith("/subscribe/") ||
+    ["/invite", "/login", "/profile", "/onboarding", "/subscribe"].includes(
+      pathname,
+    )
   )
     return null;
   return (

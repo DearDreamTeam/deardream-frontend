@@ -1,17 +1,22 @@
 import { useEffect, useState } from "react";
 import Check from "@/public/icons/common/check.svg";
 import { UserProfile } from "@/types/user-info";
+import { ReceiverProfileInfo } from "@/stores/useReceiverStore";
 
 interface BirthdayInputsProps {
   birth: string;
   calendarType?: "SOLAR" | "LUNAR";
-  setEditUserProfile: React.Dispatch<React.SetStateAction<UserProfile>>;
+  setEditUserProfile?: React.Dispatch<React.SetStateAction<UserProfile>>;
+  setEditReceiverProfile?: React.Dispatch<
+    React.SetStateAction<ReceiverProfileInfo>
+  >;
 }
 
 const BirthdayInputs = ({
   birth,
   calendarType,
   setEditUserProfile,
+  setEditReceiverProfile,
 }: BirthdayInputsProps) => {
   const [year, setYear] = useState(birth ? birth.split("-")[0] : "");
   const [month, setMonth] = useState(birth ? birth.split("-")[1] : "");
@@ -60,11 +65,20 @@ const BirthdayInputs = ({
   // 날짜가 바뀌면 setPostUser에 업데이트
   useEffect(() => {
     if (year && month && day) {
-      setEditUserProfile((prev: UserProfile) => ({
-        ...prev,
-        birth: `${year}-${month}-${day}`,
-        calendarType: isLunar ? "LUNAR" : "SOLAR",
-      }));
+      if (setEditUserProfile) {
+        setEditUserProfile((prev) => ({
+          ...prev,
+          birth: `${year}-${month}-${day}`,
+          calendarType: isLunar ? "LUNAR" : "SOLAR",
+        }));
+      }
+      if (setEditReceiverProfile) {
+        setEditReceiverProfile((prev) => ({
+          ...prev,
+          birth: `${year}-${month}-${day}`,
+          calendarType: isLunar ? "LUNAR" : "SOLAR",
+        }));
+      }
     }
   }, [year, month, day, isLunar, setEditUserProfile]);
 

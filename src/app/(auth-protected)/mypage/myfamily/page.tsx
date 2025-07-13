@@ -1,5 +1,4 @@
 "use client";
-import GreenBasicButton from "@/components/button/profile-green-basic-button";
 import Header from "@/components/common/header";
 // import RedSpan from "@/components/common/red-span";
 import Crown from "@/public/icons/common/crown.svg";
@@ -39,6 +38,18 @@ const PersonInfo = ({
   children: UserInfo;
   isReceiver: boolean;
 }) => {
+  // useEffect(() => {
+  //   const fetchFamilyData = async () => {
+  //     const response = await axios.get("/v1/family");
+  //     if (response.status !== 200) {
+  //       throw new Error("Failed to fetch family data");
+  //     } else if (response.data) {
+  //       // Handle the family data as needed
+  //       console.log("Family data fetched successfully:", response.data);
+  //     }
+  //   };
+  //   fetchFamilyData();
+  // }, []);
   return (
     <div className="flex h-16 w-full items-center gap-3">
       <div className="relative h-[54px] min-w-[54px]">
@@ -77,13 +88,7 @@ const MyFamilyPage = () => {
 
         <div className="mt-4 flex w-full flex-col justify-center">
           {/* 프로필 섹션 */}
-          {!user.isPaying && (
-            <>
-              <GreenBasicButton type="register">
-                가족 그룹 만들기
-              </GreenBasicButton>
-            </>
-          )}
+          {!user.isPaying && <></>}
 
           {user.isPaying && (
             <>
