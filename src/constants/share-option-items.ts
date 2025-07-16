@@ -7,7 +7,7 @@ import { useUserStore } from "@/stores/useUserStore";
 export const SHARE_DATA = {
   title: "이어드림 가족 초대",
   text: `${useUserStore.getState().user.name}님과 함께 소식지 만들기에 동참해보세요!`,
-  url: "https://deardream-frontend.vercel.app/",
+  url: "https://www.deardream.site/",
 };
 
 const SHARE_ACTIONS = {
@@ -40,7 +40,7 @@ const SHARE_ACTIONS = {
     }
 
     window.Kakao.Share.sendCustom({
-      templateId: 121620,
+      templateId: 122390,
       templateArgs: {
         hostName: `${useUserStore.getState().user.name}`,
         familyCount: `${2}`,
