@@ -4,7 +4,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { formatDateToDots } from "@/utils/format-date";
 import MoreButton from "@/components/button/more-button";
 import Image from "next/image";
-import { useUserStore } from "@/stores/useUserStore";
+import { useUserStore } from "@/stores/useUserInfoStore";
 import { Post } from "@/types/post-type";
 
 const PostInfo = ({
@@ -46,7 +46,7 @@ const PostInfo = ({
             {formatDateToDots(createdAt)}
           </p>
         </div>
-        {useUserStore.getState().user.userId === authorId && (
+        {useUserStore.getState().userProfile.id === authorId && (
           <MoreButton postId={postId} />
         )}
       </div>

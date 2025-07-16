@@ -10,7 +10,7 @@ export interface UserInfo {
 }
 
 export interface UserProfile {
-  id: string; // 사용자 ID, 프로필 식별을 위한 고유 ID
+  id: number; // 사용자 ID, 프로필 식별을 위한 고유 ID
   name: string;
   profileImage: string;
   birth: string;
@@ -18,7 +18,7 @@ export interface UserProfile {
   role?: string; // 프로필 역할 (예: "부모", "자녀" 등)
   relation?: string;
   otherRelation?: string;
-  familyId?: string; // 가족 ID, 가족 프로필에서 사용
+  familyId?: number; // 가족 ID, 가족 프로필에서 사용
   familylink: string | null;
   registered?: boolean; // 프로필 등록 여부
   familyRegistered?: boolean; // 가족 프로필 등록 여부

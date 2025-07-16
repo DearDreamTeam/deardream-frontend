@@ -1,4 +1,4 @@
-import { useUserStore } from "@/stores/useUserStore";
+import { useUserStore } from "@/stores/useUserInfoStore";
 import StateTemplate from "@/components/template/state-template";
 import LetterImage from "@/components/images/letter-image";
 import EllipseImage from "@/components/images/ellipse-image";
@@ -15,8 +15,8 @@ const CompleteLetter = () => {
           </StateTemplate.ImageFiled>
           <StateTemplate.Title>소중한 소식 작성 완료!</StateTemplate.Title>
           <StateTemplate.Content>
-            <strong>{useUserStore.getState().user.name}</strong>님의 마음이 닿길
-            원하는 그곳까지,
+            <strong>{useUserStore.getState().userProfile.name}</strong>님의
+            마음이 닿길 원하는 그곳까지,
             <br />
             이어드림이 정성껏 이어드릴게요.
           </StateTemplate.Content>

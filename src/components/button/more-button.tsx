@@ -8,7 +8,7 @@ import ConfirmDialog from "@/components//modal/dialog/confirm-dialog";
 import { NOTIFICATION_MESSAGES } from "@/constants/messages";
 import { renderMessageWithLineBreaks } from "@/utils/render-message-with-line-breaks";
 import { deletePost } from "@/api/post";
-import { useUserStore } from "@/stores/useUserStore";
+import { useUserStore } from "@/stores/useUserInfoStore";
 
 const MoreButton = ({ postId }: { postId: number }) => {
   const [isEditDeleteModalOpen, setIsEditDeleteModalOpen] = useState(false);
@@ -36,7 +36,9 @@ const MoreButton = ({ postId }: { postId: number }) => {
             NOTIFICATION_MESSAGES.DELETE_POST.content,
           )}
           setIsOpen={setIsConfirmOpen}
-          action={() => deletePost(useUserStore.getState().user.userId, postId)}
+          action={() =>
+            deletePost(useUserStore.getState().userProfile.id, postId)
+          }
         />
       )}
     </div>

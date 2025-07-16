@@ -43,6 +43,7 @@ const Profile = () => {
         }); // 상태 업데이트
       }
       window.location.href = "/mypage";
+      console.log("profile.page userProfile", userProfile);
     } catch (error) {
       console.error("프로필 업데이트 실패:", error);
       alert("프로필 업데이트에 실패했습니다. 다시 시도해주세요.");

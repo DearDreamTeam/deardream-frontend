@@ -91,6 +91,9 @@ const ProfileClient = () => {
           name,
           profileImage,
         });
+
+        console.log("client.tsx userKaKaoInfo", userKaKaoInfo);
+        console.log("client.tsx userProfile", userProfile);
       } catch (error) {
         console.error("카카오 로그인 실패:", error);
         // alert("로그인에 실패했습니다. 다시 시도해주세요.");
@@ -137,7 +140,7 @@ const ProfileClient = () => {
       console.log("사용자 프로필이 아직 설정되지 않았습니다.");
       return;
     }
-    if (userProfile?.id != "") {
+    if (userProfile?.id) {
       console.log(userProfile.id);
       console.log("실제로 반영된 userProfile:", userProfile);
       window.location.href = "/home";

@@ -5,24 +5,24 @@ import { PostListProps } from "../letters-props";
 import PostItem from "./post-item";
 import { useEffect } from "react";
 import { getPostboxList, likeALetters } from "@/api/archive";
-import { useUserStore } from "@/stores/useUserStore";
+import { useUserStore } from "@/stores/useUserInfoStore";
 
 const PostList = ({ showOnlyFavorites, sortOption }: PostListProps) => {
   const { newsletters } = useLettersStore();
-  const { user } = useUserStore();
+  const { userProfile } = useUserStore();
 
   useEffect(() => {
-    if (user.familyId) {
+    if (userProfile.familyId) {
       // 한 달 체크 로직
       const fetchData = async () => {
-        await getPostboxList(user.familyId ?? 2);
+        await getPostboxList(userProfile.familyId!);
       };
       fetchData();
     }
   }, []);
 
   const handleLikeNews = (pdfId: number) => {
-    likeALetters(user.userId, pdfId);
+    likeALetters(userProfile.id, pdfId);
   };
 
   const filteredNewsletters = showOnlyFavorites

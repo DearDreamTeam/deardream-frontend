@@ -2,7 +2,7 @@
 import { usePostStore } from "@/stores/usePostStore";
 import NoPost from "./_components/no-post";
 import Postcard from "@/components/postcard/postcard";
-import { useUserStore } from "@/stores/useUserStore";
+import { useUserStore } from "@/stores/useUserInfoStore";
 import NoFamilyGroup from "./_components/no-family-group";
 import HomeBanner from "./_components/home-banner";
 import PeriodNotification from "./_components/period-notification";
@@ -11,19 +11,19 @@ import { getFamilyPosts } from "@/api/post";
 
 const Home = () => {
   const { post, setPost } = usePostStore();
-  const { user } = useUserStore();
+  const { userProfile } = useUserStore();
 
   useEffect(() => {
-    if (user.familyId) {
+    if (userProfile.familyId) {
       const fetchData = async () => {
-        const posts = await getFamilyPosts(user.familyId ?? 2);
+        const posts = await getFamilyPosts(userProfile.familyId!);
         setPost(posts);
       };
       fetchData();
     }
   }, []);
 
-  if (user.familyId === null) return <NoFamilyGroup />;
+  if (userProfile.familyId === null) return <NoFamilyGroup />;
   if (post.length === 0) return <NoPost />;
 
   return (
