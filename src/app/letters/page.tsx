@@ -1,4 +1,4 @@
-import PostboxViewer from "./_components/postbox-viewer";
+import PostboxViewer from "./_components/postbox-viewer/postbox-viewer";
 
 const page = () => {
   return (

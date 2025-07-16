@@ -3,9 +3,27 @@
 import { useLettersStore } from "@/stores/useLettersStore";
 import { PostListProps } from "../letters-props";
 import PostItem from "./post-item";
+import { useEffect } from "react";
+import { getPostboxList, likeALetters } from "@/api/archive";
+import { useUserStore } from "@/stores/useUserStore";
 
 const PostList = ({ showOnlyFavorites, sortOption }: PostListProps) => {
-  const { newsletters, setLikedNews } = useLettersStore();
+  const { newsletters } = useLettersStore();
+  const { user } = useUserStore();
+
+  useEffect(() => {
+    if (user.familyId) {
+      // 한 달 체크 로직
+      const fetchData = async () => {
+        await getPostboxList(user.familyId ?? 2);
+      };
+      fetchData();
+    }
+  }, []);
+
+  const handleLikeNews = (pdfId: number) => {
+    likeALetters(user.userId, pdfId);
+  };
 
   const filteredNewsletters = showOnlyFavorites
     ? newsletters.filter((news) => news.liked === true)
@@ -18,7 +36,7 @@ const PostList = ({ showOnlyFavorites, sortOption }: PostListProps) => {
   return (
     <div className="flex flex-wrap gap-x-3 gap-y-[2.12rem] py-7">
       {sortedNewsletters.map((news) => (
-        <PostItem key={news.pdfId} {...news} setLikedNews={setLikedNews} />
+        <PostItem key={news.pdfId} {...news} setLikedToggle={handleLikeNews} />
       ))}
     </div>
   );

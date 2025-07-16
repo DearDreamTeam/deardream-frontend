@@ -12,8 +12,8 @@ const PostItem = ({
   timestamp,
   liked,
   status,
-  setLikedNews,
-}: Newsletter & { setLikedNews: (pdfId: number) => void }) => {
+  setLikedToggle,
+}: Newsletter & { setLikedToggle: (pdfId: number) => void }) => {
   return (
     <div className="relative flex flex-col items-center gap-1 select-none">
       <Link
@@ -41,7 +41,7 @@ const PostItem = ({
       </Link>
       <button
         className="text-grey-0 absolute top-2 right-2"
-        onClick={() => setLikedNews(pdfId)}
+        onClick={() => setLikedToggle(pdfId)}
       >
         {liked ? <FavoriteFull /> : <Favorite />}
       </button>
