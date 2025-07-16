@@ -1,14 +1,16 @@
-// app/page.tsx
 "use client";
-import axios from "@/lib/axios";
+
 import { useReceiverStore } from "@/stores/useReceiverStore";
 import { useState } from "react";
+import dynamic from "next/dynamic";
+import { Address } from "react-daum-postcode";
 
-// interface AddressInputProps {
-//   isInstitution?: boolean;
-// }
+// SSR 방지
+const DaumPostcodeEmbed = dynamic(() => import("react-daum-postcode"), {
+  ssr: false,
+});
 
-interface InstitutionAddressInputProps {
+interface HomeAddressInputProps {
   code: string;
   name: string;
   address: string;
@@ -16,10 +18,8 @@ interface InstitutionAddressInputProps {
   postalCode: string;
 }
 
-const InstitutionAddressInput = () => {
-  const [message, setMessage] = useState<number>(-1);
-  const [code, setCode] = useState("");
-  const [institution, setInstitution] = useState<InstitutionAddressInputProps>({
+const HomeAddressInput = () => {
+  const [institution, setInstitution] = useState<HomeAddressInputProps>({
     code: "",
     name: "",
     address: "",
@@ -28,46 +28,8 @@ const InstitutionAddressInput = () => {
   });
   const { receiver, setReceiver } = useReceiverStore();
   const [detailAddress, setDetailAddress] = useState("");
+  const [showPostcode, setShowPostcode] = useState(false);
 
-  const handleCodeCheck = async () => {
-    try {
-      const response = await axios.get("/v1/institutions", {
-        params: { code },
-      });
-      setInstitution(response.data.result);
-      setMessage(1); // 성공 메시지
-      setReceiver({
-        address: {
-          ...receiver.address, // 기존 값 보존 (필요시)
-          code: response.data.result.code,
-          address: response.data.result.address,
-          postalCode: response.data.result.postalCode,
-          institutionName: response.data.result.name,
-          institutionPhone: response.data.result.phone,
-        },
-      });
-    } catch (error) {
-      setMessage(0); // 실패 메시지
-      console.error("기관 코드가 유효하지 않습니다.", error);
-      setInstitution({
-        code: "",
-        name: "",
-        address: "",
-        phone: "",
-        postalCode: "",
-      }); // 실패 시 초기화
-      setReceiver({
-        address: {
-          ...receiver.address,
-          code: "",
-          address: "",
-          postalCode: "",
-          institutionName: "",
-          institutionPhone: "",
-        },
-      });
-    }
-  };
   const handleDetailAddressChange = (
     e: React.ChangeEvent<HTMLInputElement>,
   ) => {
@@ -76,52 +38,62 @@ const InstitutionAddressInput = () => {
       address: {
         ...receiver.address,
         addressDetail: e.target.value,
-        deliveryType: "INSTITUTION",
+        deliveryType: "HOME",
       },
     });
+  };
+
+  const handleAddressComplete = (data: Address) => {
+    const { address, zonecode } = data;
+
+    const updatedInstitution = {
+      ...institution,
+      address,
+      postalCode: zonecode,
+    };
+
+    setInstitution(updatedInstitution);
+
+    setReceiver({
+      address: {
+        ...receiver.address,
+        address,
+        postalCode: zonecode,
+        deliveryType: "HOME",
+      },
+    });
+
+    setShowPostcode(false);
   };
 
   return (
     <>
       <div className="flex w-full flex-col items-center gap-10">
         <div className="flex-start text-grey-700 text-label-2 relative flex flex-col gap-2">
-          기관 코드
+          우편 번호
           <div className="relative w-80">
             <input
               type="text"
               className="text-medium text-grey-700 placeholder:text-grey-400 border-grey-300 w-80 border-b-1 border-solid px-1 py-2 text-xl font-medium focus:ring-0 focus:outline-none"
               placeholder="코드를 입력해주세요"
-              value={code || receiver?.address.code}
-              onChange={(e) => setCode(e.target.value)}
+              value={institution.postalCode || receiver?.address.postalCode}
+              readOnly
             />
             <button
-              onClick={handleCodeCheck}
               className="absolute right-0 bottom-0 m-2 inline-flex h-8 items-center justify-center rounded bg-green-100 px-4 text-green-300"
+              onClick={() => setShowPostcode(true)}
             >
-              기관 코드 확인
+              우편 번호 찾기
             </button>
           </div>
-          {(message == 1 && (
-            <div className="text-sm text-green-300">
-              유효한 기관 코드입니다.
-            </div>
-          )) ||
-            (message == 0 && (
-              <div className="text-sm text-red-500">
-                기관 코드가 유효하지 않습니다.
-              </div>
-            ))}
         </div>
 
-        <div className="flex-start text-grey-700 text-label-2 flex flex-col gap-2">
-          우편 번호
-          <input
-            type="text"
-            className="text-grey-700 placeholder:text-grey-400 border-grey-300 text-headline-3 w-80 border-b-1 border-solid px-1 py-2 focus:ring-0 focus:outline-none"
-            value={institution.postalCode || receiver?.address.postalCode}
-            readOnly
-          />
-        </div>
+        {showPostcode && (
+          <div className="z-10 w-80 border">
+            <DaumPostcodeEmbed onComplete={handleAddressComplete} />
+          </div>
+        )}
+
         <div className="flex-start text-grey-700 text-label-2 flex flex-col gap-2">
           주소
           <input
@@ -165,4 +137,4 @@ const InstitutionAddressInput = () => {
     </>
   );
 };
-export default InstitutionAddressInput;
+export default HomeAddressInput;

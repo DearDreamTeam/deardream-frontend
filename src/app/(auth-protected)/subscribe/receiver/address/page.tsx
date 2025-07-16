@@ -6,6 +6,7 @@ import InstitutionAddressEdit from "@/components/address/institution-address-inp
 // import { PATH } from "@/constants/path";
 import { useReceiverStore } from "@/stores/useReceiverStore";
 import { createReceiver } from "@/api/profile";
+import HomeAddressInput from "@/components/address/home-address-input";
 const AddressPage = () => {
   const { receiver } = useReceiverStore();
 
@@ -23,7 +24,11 @@ const AddressPage = () => {
       >
         <Header>주소 변경</Header>
         <div className="text-title-2 mt-4 flex h-full w-full flex-col">
-          <InstitutionAddressEdit />
+          {receiver.address.deliveryType === "INSTITUTION" ? (
+            <InstitutionAddressEdit />
+          ) : (
+            <HomeAddressInput />
+          )}
         </div>
         <div className="flex h-14 w-full items-center justify-center">
           <GreenBasicButton

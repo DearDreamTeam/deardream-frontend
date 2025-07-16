@@ -39,17 +39,24 @@ const QuitPage = () => {
 
   const { userProfile } = useUserStore();
 
-  const handleClick = async () => {
+  const handleClick = async (e: React.FormEvent) => {
+    e.preventDefault();
     if (!isChecked) {
       alert("회원 탈퇴 약관에 동의해주세요.");
       return;
     } else {
-      const res = await axios.delete("/v1/users/me");
-      if (res.status !== 200) {
+      console.log("탈퇴 시작");
+      try {
+        const res = await axios.delete("/v1/users/me");
+        if (res.status !== 200) {
+          alert("회원 탈퇴에 실패했습니다. 다시 시도해주세요.");
+          return;
+        } else {
+          window.location.href = "/mypage/quit/complete";
+        }
+      } catch (error) {
+        console.error(error);
         alert("회원 탈퇴에 실패했습니다. 다시 시도해주세요.");
-        return;
-      } else {
-        window.location.href = "/mypage/quit/complete";
       }
     }
   };
