@@ -35,6 +35,7 @@ export default function ProtectedLayout({
             calendarType: userData.calendarType,
             relation: userData.relation,
             otherRelation: userData.otherRelation,
+            familyId: userData.familyId,
           });
         } else {
           throw new Error("사용자 정보 조회 실패");
