@@ -3,7 +3,7 @@ import { persist } from "zustand/middleware";
 import { UserInfo, UserProfile } from "@/types/user-info";
 
 const defaultProfile: UserProfile = {
-  id: "",
+  id: 0,
   name: "",
   profileImage: "",
   birth: "",
