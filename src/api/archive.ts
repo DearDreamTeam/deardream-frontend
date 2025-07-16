@@ -1,4 +1,5 @@
 import axios from "@/lib/axios";
+import { useLettersStore } from "@/stores/useLettersStore";
 import { User } from "@/types/user-type";
 
 /* POST: 즐겨찾기 하기 */
@@ -12,7 +13,10 @@ export const likeALetters = async (
         userId,
       },
     });
-    console.log(response); // 북마크 성공했다고 오는 듯
+
+    if (response.data.isSuccess) {
+      useLettersStore.getState().setLikedToggle(archiveId);
+    }
   } catch (error) {
     console.log(error);
   }
@@ -22,7 +26,11 @@ export const likeALetters = async (
 export const getPostboxList = async (familyId: User["familyId"]) => {
   try {
     const response = await axios.get(`/v1/archives/${familyId}`);
-    return response.data.result; // 객체가 온다고 되어 있는데, 객체 배열이 와야할 것으로 보임.
+    console.log(response.data.result);
+    return response.data.result;
+    if (response.data.isSuccess) {
+      useLettersStore.getState().setNewsletters(response.data.result); // 배열 스토어에 저장
+    }
   } catch (error) {
     console.log(error);
   }
@@ -34,7 +42,11 @@ export const getLikedPostId = async (userId: User["userId"]) => {
     const response = await axios.get(`/v1/archives/bookmark`, {
       params: { userId },
     });
-    return response.data.result; // postId가 담긴 배열
+
+    if (response.data.isSuccess) {
+      const pdfIds = response.data.result;
+      useLettersStore.getState().setLikedStatus(pdfIds);
+    }
   } catch (error) {
     console.log(error);
     return [];
