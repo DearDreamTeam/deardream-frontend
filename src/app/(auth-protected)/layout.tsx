@@ -29,6 +29,7 @@ export default function ProtectedLayout({
         if (res.status === 200) {
           const userData = res.data.result;
           updateUserProfile({
+            id: userData.id,
             name: userData.name,
             birth: userData.birth,
             profileImage: userData.profileImage,

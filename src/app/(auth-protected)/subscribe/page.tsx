@@ -9,20 +9,31 @@ import InstitutionPlanUse from "@/components/profile/plan/institution-plan-use";
 
 import type { FC } from "react";
 import { useReceiverStore } from "@/stores/useReceiverStore";
+import { useUserStore } from "@/stores/useUserInfoStore";
 
 const PlanPage: FC = () => {
   const [isActive] = useState(true);
-  const [planType, setPlanType] = useState<"PERSONAL" | "INSTITUTION" | "NONE">(
-    "PERSONAL",
+  const [planType, setPlanType] = useState<"HOME" | "INSTITUTION" | "NONE">(
+    "HOME",
   ); // "PERSONAL" | "INSTITUTION" | "NONE"
   const { receiver, setReceiver } = useReceiverStore();
+  const { userProfile } = useUserStore();
 
   useEffect(() => {
     setReceiver({
-      deliveryType: planType,
+      address: {
+        ...receiver.address,
+        deliveryType: planType,
+      },
     });
     console.log("receiver updated:", receiver);
   }, [planType]);
+
+  useEffect(() => {
+    setReceiver({
+      leaderId: userProfile.id,
+    });
+  }, [userProfile]);
 
   return (
     <div className="bg-grey-0 relative flex h-full w-full flex-col items-center justify-between p-4 pt-0">
@@ -35,16 +46,16 @@ const PlanPage: FC = () => {
             >
               <Check />
             </div>
-            {planType === "PERSONAL" ? (
+            {planType === "HOME" ? (
               <span className="text-title-2 text-grey-700">개인 플랜</span>
             ) : (
               <span className="text-title-2 text-grey-700">기관 플랜</span>
             )}
           </div>
           {isActive &&
-            (planType === "PERSONAL" ? (
+            (planType === "HOME" ? (
               <PersonalPlanUse
-                isActive={planType == "PERSONAL"}
+                isActive={planType == "HOME"}
                 planType={planType}
               />
             ) : (
@@ -57,12 +68,12 @@ const PlanPage: FC = () => {
             className={`text-title-1 ${isActive ? "text-green-300" : "text-grey-700"} w-full text-right`}
           >
             {isActive
-              ? planType === "PERSONAL"
+              ? planType === "HOME"
                 ? "월 8,900원"
                 : planType === "INSTITUTION"
                   ? "월 0원"
                   : "구독 없음"
-              : planType === "PERSONAL"
+              : planType === "HOME"
                 ? "월 8,900원"
                 : planType === "INSTITUTION"
                   ? "월 0원"
@@ -79,31 +90,29 @@ const PlanPage: FC = () => {
           <div className="text-headline-3 text-grey-400 flex items-center gap-2">
             <div
               onClick={() =>
-                setPlanType(
-                  planType === "PERSONAL" ? "INSTITUTION" : "PERSONAL",
-                )
+                setPlanType(planType === "HOME" ? "INSTITUTION" : "HOME")
               }
               className={`bg-grey-500 inline-flex h-[24px] w-[24px] cursor-pointer flex-col items-center justify-center rounded-full`}
             >
               <Check />
             </div>
-            {planType !== "PERSONAL" ? (
+            {planType !== "HOME" ? (
               <span className="text-title-2 text-grey-700">개인 플랜</span>
             ) : (
               <span className="text-title-2 text-grey-700">기관 플랜</span>
             )}
           </div>
           {isActive &&
-            (planType !== "PERSONAL" ? (
+            (planType !== "HOME" ? (
               <PersonalPlanUse isActive={!isActive} planType={planType} />
             ) : (
               <InstitutionPlanUse isActive={!isActive} planType={planType} />
             ))}
           <div className={`text-title-1 tex-grey-700 w-full text-right`}>
-            {isActive && planType !== "PERSONAL" ? "월 8,900원" : "월 0원"}
+            {isActive && planType !== "HOME" ? "월 8,900원" : "월 0원"}
           </div>
         </div>
-        {isActive && planType === "PERSONAL" && (
+        {isActive && planType === "HOME" && (
           <div className="text-grey-500 text-label-2 p-3">
             이어드림과 제휴한 기관 (요양시설 등) 의 구성원 분들만 이용할 수 있는
             플랜이에요
@@ -113,9 +122,7 @@ const PlanPage: FC = () => {
       <div className="flex h-14 w-full items-center justify-center">
         <GreenBasicButton
           color="300"
-          link={
-            planType === "PERSONAL" ? "/subscribe/pay" : "/subscribe/receiver"
-          }
+          link={planType === "HOME" ? "/subscribe/pay" : "/subscribe/receiver"}
         >
           변경
         </GreenBasicButton>

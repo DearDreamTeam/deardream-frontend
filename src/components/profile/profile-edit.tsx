@@ -107,7 +107,7 @@ const ProfileEdit = ({
             type="text"
             className="text-headline-3 text-grey-700 placeholder:text-grey-300 border-grey-300 w-80 border-b-1 border-solid py-2 focus:ring-0 focus:outline-none"
             placeholder="이름을 입력해주세요"
-            value={editUserProfile?.name}
+            value={editUserProfile?.name || editReceiverProfile?.name}
             onChange={(e) => {
               if (setEditUserProfile) {
                 setEditUserProfile((prev) => ({
@@ -140,10 +140,13 @@ const ProfileEdit = ({
             setEditReceiverProfile={setEditReceiverProfile}
           />
         </div>
-        {isSender ? (
+        {isInvite ? (
           <SenderProfile />
-        ) : isInvite ? null : (
-          <RecieverProfile setEditReceiverProfile={setEditReceiverProfile} />
+        ) : isSender ? null : (
+          <RecieverProfile
+            setEditReceiverProfile={setEditReceiverProfile}
+            editReceiverProfile={editReceiverProfile}
+          />
         )}
       </div>
     </>

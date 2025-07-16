@@ -62,7 +62,7 @@ const Profile = () => {
           <Header>내 정보 수정</Header>
           <ProfileEdit
             isSender={true}
-            isInvite={false}
+            isInvite={userProfile.registered}
             setEditUserProfile={setEditUserProfile}
             editUserProfile={editUserProfile}
             setSelectedFile={setSelectedFile}

@@ -1,4 +1,5 @@
 import axios from "@/lib/axios";
+import { ReceiverProfileInfo } from "@/stores/useReceiverStore";
 import { UserProfile } from "@/types/user-info";
 
 export const registerUser = async (
@@ -15,7 +16,7 @@ export const registerUser = async (
       userProfile.relation && userProfile.relation !== ""
         ? userProfile.relation
         : null,
-    familylink: "",
+    familylink: userProfile.familylink || null,
   };
 
   const jsonFile = new File(
@@ -47,7 +48,7 @@ export const updateProfile = async (
     name: userProfile.name,
     birth: userProfile.birth,
     calendarType: userProfile.calendarType,
-    relation: userProfile.relation,
+    relation: userProfile.relation || null,
     otherRelation: userProfile.otherRelation ?? null,
   };
 
@@ -62,5 +63,25 @@ export const updateProfile = async (
 
   const response = await axios.patch("/v1/users/me", formData);
   console.log("프로필 업데이트 응답:", response.data);
+  return response;
+};
+
+export const createReceiver = async (
+  receiver: ReceiverProfileInfo,
+  imageFile?: File | null,
+) => {
+  const formData = new FormData();
+
+  formData.append(
+    "recipientRequestDto",
+    new Blob([JSON.stringify(receiver)], { type: "application/json" }),
+  );
+
+  if (imageFile) {
+    formData.append("profileImage", imageFile);
+  }
+
+  const response = await axios.post("/v1/recipients", formData);
+  console.log("수신자 생성 응답:", response.data);
   return response;
 };

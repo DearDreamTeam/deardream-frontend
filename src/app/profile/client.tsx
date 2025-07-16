@@ -158,7 +158,7 @@ const ProfileClient = () => {
             <div>
               <Header>프로필 설정</Header>
               <ProfileEdit
-                isSender={false}
+                isSender={true}
                 isInvite={false}
                 setEditUserProfile={setEditUserProfile}
                 editUserProfile={editUserProfile}
