@@ -62,12 +62,14 @@ const SelectModal = ({
         </Picker>
         <div className="flex w-full justify-center gap-2">
           <button
+            type="button"
             onClick={() => setIsModalOpen(false)}
             className="text-grey-700 shadow-default text-label-2 bg-grey-0 w-36 rounded-lg rounded-md p-4"
           >
             취소
           </button>
           <button
+            type="button"
             onClick={() => {
               handleSelect(select.relationship);
               setIsModalOpen(false);

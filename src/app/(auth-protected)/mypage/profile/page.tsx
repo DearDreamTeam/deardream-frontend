@@ -5,6 +5,7 @@ import GreenBasicButton from "@/components/button/profile-green-basic-button";
 import Header from "@/components/common/header";
 import ProfileEdit from "@/components/profile/profile-edit";
 import { useUserStore } from "@/stores/useUserInfoStore";
+import { UserProfileInfo } from "@/types/user-info";
 import { useState } from "react";
 
 const Profile = () => {
@@ -32,7 +33,7 @@ const Profile = () => {
           "프로필 이미지 업데이트:",
           response.data.result.profileImage,
         );
-        setEditUserProfile((prev) => ({
+        setEditUserProfile((prev: UserProfileInfo) => ({
           ...prev,
           profileImage: response.data.result.profileImage,
         })); // 프로필 이미지 업데이트
@@ -62,7 +63,7 @@ const Profile = () => {
           <Header>내 정보 수정</Header>
           <ProfileEdit
             isSender={true}
-            isInvite={userProfile.registered}
+            isInvite={userProfile.familyRegistered}
             setEditUserProfile={setEditUserProfile}
             editUserProfile={editUserProfile}
             setSelectedFile={setSelectedFile}

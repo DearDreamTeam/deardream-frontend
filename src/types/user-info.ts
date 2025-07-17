@@ -9,7 +9,7 @@ export interface UserInfo {
   familyRegistered?: boolean; // 가족 등록 여부
 }
 
-export interface UserProfile {
+export interface UserProfileInfo {
   id: number; // 사용자 ID, 프로필 식별을 위한 고유 ID
   name: string;
   profileImage: string;

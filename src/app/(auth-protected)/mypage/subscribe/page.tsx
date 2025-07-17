@@ -1,17 +1,36 @@
 "use client";
 
 import Header from "@/components/common/header";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-type PlanTypeInfo = "PERSONAL" | "INSTITUTION" | "NONE";
+type PlanTypeInfo = "HOME" | "INSTITUTION" | "NONE";
 
 import { useRouter } from "next/navigation";
 import PersonalPlanUse from "@/components/profile/plan/personal-plan-use";
 import InstitutionPlanUse from "@/components/profile/plan/institution-plan-use";
+import axios from "@/lib/axios";
+import { useReceiverStore } from "@/stores/useReceiverStore";
 
 const SubScribePage = () => {
   const [isActive] = useState(true);
-  const [planType] = useState<PlanTypeInfo>("PERSONAL"); // "PERSONAL" | "INSTITUTION" | "NONE"
+  const { receiver, setReceiver } = useReceiverStore();
+  const [planType, setPlanType] = useState<PlanTypeInfo>(
+    receiver.address.deliveryType,
+  );
+
+  useEffect(() => {
+    const fetchReceiver = async () => {
+      try {
+        const response = await axios.get("/v1/recipient");
+        setPlanType(response.data.result.address.deliveryType);
+        setReceiver(response.data.result);
+      } catch (error) {
+        console.error("Error fetching receiver data:", error);
+      }
+    };
+    fetchReceiver();
+  }, []);
+
   const router = useRouter();
   return (
     <>
@@ -29,7 +48,7 @@ const SubScribePage = () => {
                   비활성화
                 </label>
               )}
-              {planType === "PERSONAL" ? (
+              {planType === "HOME" ? (
                 <span className="text-title-2 text-grey-700">개인 플랜</span>
               ) : planType === "INSTITUTION" ? (
                 <span className="text-title-2 text-grey-700">기관 플랜</span>
@@ -38,7 +57,7 @@ const SubScribePage = () => {
               )}
             </div>
             {isActive &&
-              (planType === "PERSONAL" ? (
+              (planType === "HOME" ? (
                 <PersonalPlanUse isActive={isActive} planType={planType} />
               ) : (
                 <InstitutionPlanUse isActive={isActive} planType={planType} />
@@ -48,19 +67,19 @@ const SubScribePage = () => {
               className={`text-title-1 ${isActive ? "text-green-300" : "text-grey-700"} w-full text-right`}
             >
               {isActive
-                ? planType === "PERSONAL"
+                ? planType === "HOME"
                   ? "월 8,900원"
                   : planType === "INSTITUTION"
                     ? "월 0원"
                     : "구독 없음"
-                : planType === "PERSONAL"
+                : planType === "HOME"
                   ? "월 8,900원"
                   : planType === "INSTITUTION"
                     ? "월 0원"
                     : "구독 없음"}
             </div>
           </div>
-          {planType === "PERSONAL" && (
+          {planType === "HOME" && (
             <div className="text-label-1 p-2">2025.09.01 결제 예정</div>
           )}
           <div className="mt-3 flex flex-col gap-2 py-2">

@@ -7,8 +7,11 @@ import SenderProfile from "./sender-profile";
 import RecieverProfile from "./receiver-profile";
 import { useUserStore } from "@/stores/useUserInfoStore";
 import Image from "next/image";
-import { UserProfile } from "@/types/user-info";
-import { ReceiverProfileInfo } from "@/stores/useReceiverStore";
+import { UserProfileInfo } from "@/types/user-info";
+import {
+  ReceiverProfileInfo,
+  useReceiverStore,
+} from "@/stores/useReceiverStore";
 
 // 이미지 URL을 포맷팅하는 함수
 const formatImageUrl = (url?: string): string => {
@@ -28,8 +31,8 @@ const formatImageUrl = (url?: string): string => {
 interface ProfileEditProps {
   isSender?: boolean; // 프로필 타입을 구분하기 위한 선택적 속성
   isInvite?: boolean; // 초대 프로필 여부
-  setEditUserProfile?: React.Dispatch<React.SetStateAction<UserProfile>>;
-  editUserProfile?: UserProfile; // 현재 편집 중인 프로필
+  setEditUserProfile?: React.Dispatch<React.SetStateAction<UserProfileInfo>>;
+  editUserProfile?: UserProfileInfo; // 현재 편집 중인 프로필
   setEditReceiverProfile?: React.Dispatch<
     React.SetStateAction<ReceiverProfileInfo>
   >;
@@ -50,11 +53,16 @@ const ProfileEdit = ({
   //todo: userProfile을 직접 사용하지 않고, editUserProfile을 사용하도록 변경
   const { userProfile } = useUserStore();
 
+  const { receiver } = useReceiverStore();
+
   const inputRef = useRef<HTMLInputElement>(null);
 
   // 이미지 URL 상태
+  // useState의 초기값에 인자를 2개 넘기는 오류 수정
   const [imageUrl, setImageUrl] = useState<string>(
-    formatImageUrl(editUserProfile && userProfile?.profileImage),
+    formatImageUrl(
+      editUserProfile ? editUserProfile.profileImage : receiver?.profileImage,
+    ),
   );
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -107,7 +115,11 @@ const ProfileEdit = ({
             type="text"
             className="text-headline-3 text-grey-700 placeholder:text-grey-300 border-grey-300 w-80 border-b-1 border-solid py-2 focus:ring-0 focus:outline-none"
             placeholder="이름을 입력해주세요"
-            value={editUserProfile?.name || editReceiverProfile?.name}
+            value={
+              editUserProfile
+                ? editUserProfile.name
+                : editReceiverProfile?.name || ""
+            }
             onChange={(e) => {
               if (setEditUserProfile) {
                 setEditUserProfile((prev) => ({
@@ -141,7 +153,10 @@ const ProfileEdit = ({
           />
         </div>
         {isInvite ? (
-          <SenderProfile />
+          <SenderProfile
+            editUserProfile={editUserProfile}
+            setEditUserProfile={setEditUserProfile}
+          />
         ) : isSender ? null : (
           <RecieverProfile
             setEditReceiverProfile={setEditReceiverProfile}

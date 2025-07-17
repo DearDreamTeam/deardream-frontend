@@ -7,11 +7,13 @@ import GreenBasicButton from "@/components/button/green-basic-button";
 import { PATH } from "@/constants/path";
 import PersonalPlanUse from "@/components/profile/plan/personal-plan-use";
 import InstitutionPlanUse from "@/components/profile/plan/institution-plan-use";
+import { useReceiverStore } from "@/stores/useReceiverStore";
 
 const PlanPage = () => {
   const [isActive] = useState(true);
+  const { receiver } = useReceiverStore();
   const [planType, setPlanType] = useState<"HOME" | "INSTITUTION" | "NONE">(
-    "HOME",
+    receiver.address.deliveryType,
   ); // "HOME" | "INSTITUTION" | "NONE"
   return (
     <div className="bg-grey-0 relative flex h-full w-full flex-col items-center justify-between p-4 pt-0">

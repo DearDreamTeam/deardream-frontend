@@ -1,11 +1,14 @@
 import { create } from "zustand";
 
 export interface ReceiverProfileInfo {
+  id?: number;
   leaderId: number;
   name: string;
   birth: string;
   phone: string;
   calendarType: "SOLAR" | "LUNAR";
+  profileImage?: string;
+  profileImageKey?: string;
   address: {
     deliveryType: "HOME" | "INSTITUTION" | "NONE";
     recipientName: string;
@@ -26,6 +29,7 @@ interface ReceiverState {
 
 export const useReceiverStore = create<ReceiverState>((set) => ({
   receiver: {
+    id: 0,
     leaderId: 0,
     name: "",
     birth: "",
@@ -53,6 +57,7 @@ export const useReceiverStore = create<ReceiverState>((set) => ({
   resetReceiver: () =>
     set({
       receiver: {
+        id: 0,
         leaderId: 0,
         name: "",
         birth: "",
