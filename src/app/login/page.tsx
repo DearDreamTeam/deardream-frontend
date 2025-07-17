@@ -4,8 +4,21 @@ import EllipseImage from "@/components/images/ellipse-image";
 import RibbonImage from "@/components/images/ribbon-image";
 import StateTemplate from "@/components/template/state-template";
 import KaKao from "@/public/images/kakao.svg";
-
+import { useSearchParams } from "next/navigation";
+import { useEffect } from "react";
+import { useInvitationStore } from "@/stores/useInvitationStore";
 const Login = () => {
+  //초대 코드 파라미터 추출
+  const searchParams = useSearchParams();
+  const inviteCode = searchParams.get("familylink");
+  const { setFamilyLink } = useInvitationStore();
+
+  useEffect(() => {
+    if (inviteCode) {
+      setFamilyLink(inviteCode);
+    }
+  }, [inviteCode]);
+
   const REST_API_KEY = process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY;
   const REDIRECT_URI = process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI;
 

@@ -1,20 +1,9 @@
 "use client";
 import Result from "@/components/result/result";
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
 import GreenBasicButton from "@/components/button/green-basic-button";
 import { PATH } from "@/constants/path";
 
 const CompletePage = () => {
-  const router = useRouter();
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      router.push("/home");
-    }, 3000);
-
-    return () => clearTimeout(timer);
-  }, [router]);
   return (
     <div className="flex h-full w-full flex-col items-center justify-center gap-2 p-4">
       <Result

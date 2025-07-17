@@ -159,7 +159,7 @@ const ProfileClient = () => {
               <Header>프로필 설정</Header>
               <ProfileEdit
                 isSender={true}
-                isInvite={false}
+                isInvite={userProfile.familyId ? true : false}
                 setEditUserProfile={setEditUserProfile}
                 editUserProfile={editUserProfile}
                 setSelectedFile={setSelectedFile}

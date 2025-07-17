@@ -7,6 +7,7 @@ import "swiper/css";
 import { renderMessageWithLineBreaks } from "@/utils/render-message-with-line-breaks";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+
 import { PATH } from "@/constants/path";
 
 const ONBOARDING_ITEM = [
