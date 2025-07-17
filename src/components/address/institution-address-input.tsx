@@ -85,18 +85,19 @@ const InstitutionAddressInput = () => {
     <>
       <div className="flex w-full flex-col items-center gap-10">
         <div className="flex-start text-grey-700 text-label-2 relative flex flex-col gap-2">
-          기관 코드
-          <div className="relative w-80">
+          주소
+          <div className="flex w-80 flex-row items-center justify-between">
             <input
               type="text"
-              className="text-medium text-grey-700 placeholder:text-grey-400 border-grey-300 w-80 border-b-1 border-solid px-1 py-2 text-xl font-medium focus:ring-0 focus:outline-none"
+              className="text-headline-3 text-grey-700 placeholder:text-grey-400 border-grey-300 w-45 border-b-1 border-solid px-1 py-2 focus:ring-0 focus:outline-none"
               placeholder="코드를 입력해주세요"
               value={code || receiver?.address.code}
               onChange={(e) => setCode(e.target.value)}
             />
             <button
+              type="button"
               onClick={handleCodeCheck}
-              className="absolute right-0 bottom-0 m-2 inline-flex h-8 items-center justify-center rounded bg-green-100 px-4 text-green-300"
+              className="inline-flex items-center justify-center rounded bg-green-100 px-4 py-2 whitespace-nowrap text-green-300"
             >
               기관 코드 확인
             </button>

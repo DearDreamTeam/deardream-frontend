@@ -7,6 +7,7 @@ const ConfirmDialog = ({
   setIsOpen,
   action,
   actionLabel = "삭제",
+  cancelAction,
 }: ConfirmDialogProps) => {
   return (
     <Dialog>
@@ -24,7 +25,7 @@ const ConfirmDialog = ({
         </button>
         <button
           type="button"
-          onClick={() => setIsOpen(false)}
+          onClick={cancelAction ? cancelAction : () => setIsOpen(false)}
           className="modal-btn text-grey-700"
         >
           취소

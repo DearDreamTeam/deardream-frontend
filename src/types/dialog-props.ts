@@ -9,4 +9,5 @@ export interface DialogProps {
 export interface ConfirmDialogProps extends DialogProps {
   action: () => void;
   actionLabel?: string;
+  cancelAction?: () => void;
 }

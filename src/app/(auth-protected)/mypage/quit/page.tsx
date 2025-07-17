@@ -2,6 +2,7 @@
 
 import GreenBasicButton from "@/components/button/green-basic-button";
 import Header from "@/components/common/header";
+import AlertDialog from "@/components/modal/dialog/alert-dialog";
 import axios from "@/lib/axios";
 import Check from "@/public/icons/common/check.svg";
 import { useUserStore } from "@/stores/useUserInfoStore";
@@ -36,6 +37,7 @@ const QuitItem = ({
 };
 const QuitPage = () => {
   const [isChecked, setIsChecked] = useState(false);
+  const [isNotPermitted, setIsNotPermitted] = useState(false);
 
   const { userProfile } = useUserStore();
 
@@ -56,7 +58,7 @@ const QuitPage = () => {
         }
       } catch (error) {
         console.error(error);
-        alert("회원 탈퇴에 실패했습니다. 다시 시도해주세요.");
+        setIsNotPermitted(true);
       }
     }
   };
@@ -122,6 +124,13 @@ const QuitPage = () => {
           </GreenBasicButton>
         </div>
       </form>
+      {isNotPermitted && (
+        <AlertDialog
+          title="회원 탈퇴 불가"
+          content="플랜을 취소하고 탈퇴해 주세요."
+          setIsOpen={() => setIsNotPermitted(false)}
+        />
+      )}
     </>
   );
 };

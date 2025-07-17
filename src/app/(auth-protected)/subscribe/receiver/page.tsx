@@ -11,10 +11,11 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const ReceiverProfilePage = () => {
-  const { receiver, setReceiver } = useReceiverStore();
+  const { receiver, setReceiver, setReceiverImage } = useReceiverStore();
   const [editUserProfile, setEditUserProfile] =
     useState<ReceiverProfileInfo>(receiver);
-  const [, setSelectedFile] = useState<File | null>(null);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
   const router = useRouter();
 
   const isProfileIncomplete =
@@ -33,6 +34,9 @@ const ReceiverProfilePage = () => {
           e.preventDefault(); // 이 함수 안에서 유효성 검사 + axios 처리
           if (!isProfileIncomplete) {
             setReceiver(editUserProfile);
+            setReceiverImage({
+              profileImage: selectedFile,
+            });
             console.log("Receiver profile updated:", editUserProfile);
             router.push("/subscribe/receiver/address/");
           } else {

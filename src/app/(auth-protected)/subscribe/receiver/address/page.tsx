@@ -7,14 +7,18 @@ import InstitutionAddressEdit from "@/components/address/institution-address-inp
 import { useReceiverStore } from "@/stores/useReceiverStore";
 import { createReceiver } from "@/api/profile";
 import HomeAddressInput from "@/components/address/home-address-input";
+import { useRouter } from "next/navigation";
+
 const AddressPage = () => {
-  const { receiver } = useReceiverStore();
+  const { receiver, receiverImage } = useReceiverStore();
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("Receiver data submitted:", receiver);
-    const response = await createReceiver(receiver);
+    const response = await createReceiver(receiver, receiverImage.profileImage);
     console.log("Response from server:", response.data);
+    router.push("/subscribe/family");
   };
   return (
     <>
@@ -33,7 +37,6 @@ const AddressPage = () => {
         <div className="flex h-14 w-full items-center justify-center">
           <GreenBasicButton
             color="300"
-            // link={PATH.MYPAGE + "/subscribe/address/complete"}
             disabled={!receiver.name || !receiver.address.address}
           >
             저장

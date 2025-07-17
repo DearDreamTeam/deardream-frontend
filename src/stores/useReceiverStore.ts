@@ -3,6 +3,7 @@ import { create } from "zustand";
 export interface ReceiverProfileInfo {
   id?: number;
   leaderId: number;
+  familyId?: number;
   name: string;
   birth: string;
   phone: string;
@@ -21,16 +22,25 @@ export interface ReceiverProfileInfo {
     code: string;
   };
 }
+export interface ReceiverProfileImage {
+  profileImage: File | null;
+  profileImageKey?: string;
+}
+
 interface ReceiverState {
   receiver: ReceiverProfileInfo;
   setReceiver: (info: Partial<ReceiverProfileInfo>) => void;
   resetReceiver: () => void;
+  receiverImage: ReceiverProfileImage;
+  setReceiverImage: (image: ReceiverProfileImage) => void;
+  resetReceiverImage: () => void;
 }
 
 export const useReceiverStore = create<ReceiverState>((set) => ({
   receiver: {
     id: 0,
     leaderId: 0,
+    familyId: 0,
     name: "",
     birth: "",
     phone: "",
@@ -59,6 +69,7 @@ export const useReceiverStore = create<ReceiverState>((set) => ({
       receiver: {
         id: 0,
         leaderId: 0,
+        familyId: 0,
         name: "",
         birth: "",
         phone: "",
@@ -76,4 +87,9 @@ export const useReceiverStore = create<ReceiverState>((set) => ({
         },
       },
     }),
+  receiverImage: {
+    profileImage: null,
+  },
+  setReceiverImage: (image) => set({ receiverImage: { ...image } }),
+  resetReceiverImage: () => set({ receiverImage: { profileImage: null } }),
 }));

@@ -71,16 +71,16 @@ const HomeAddressInput = () => {
       <div className="flex w-full flex-col items-center gap-10">
         <div className="flex-start text-grey-700 text-label-2 relative flex flex-col gap-2">
           우편 번호
-          <div className="relative w-80">
+          <div className="flex w-80 flex-row items-center justify-between">
             <input
               type="text"
-              className="text-medium text-grey-700 placeholder:text-grey-400 border-grey-300 w-80 border-b-1 border-solid px-1 py-2 text-xl font-medium focus:ring-0 focus:outline-none"
-              placeholder="코드를 입력해주세요"
+              className="text-headline-3 text-grey-700 placeholder:text-grey-400 border-grey-300 w-45 border-b-1 border-solid px-1 py-2 focus:ring-0 focus:outline-none"
+              placeholder="우편 번호를 입력해주세요"
               value={institution.postalCode || receiver?.address.postalCode}
               readOnly
             />
             <button
-              className="absolute right-0 bottom-0 m-2 inline-flex h-8 items-center justify-center rounded bg-green-100 px-4 text-green-300"
+              className="inline-flex items-center justify-center rounded bg-green-100 px-4 py-2 whitespace-nowrap text-green-300"
               onClick={() => setShowPostcode(true)}
             >
               우편 번호 찾기
@@ -115,22 +115,20 @@ const HomeAddressInput = () => {
         </div>
 
         <div className="flex-start text-grey-700 text-label-2 flex flex-col gap-2">
-          기관명
+          수령인
           <input
             type="text"
             className="text-grey-700 placeholder:text-grey-400 border-grey-300 text-headline-3 w-80 border-b-1 border-solid px-1 py-2 focus:ring-0 focus:outline-none"
             value={institution.name || receiver?.address.institutionName}
-            readOnly
           />
         </div>
 
         <div className="flex-start text-grey-700 text-label-2 flex flex-col gap-2">
-          기관 전화번호
+          수령인 전화번호
           <input
             type="text"
             className="text-grey-700 placeholder:text-grey-400 border-grey-300 text-headline-3 w-80 border-b-1 border-solid px-1 py-2 focus:ring-0 focus:outline-none"
             value={institution.phone || receiver?.address.institutionPhone}
-            readOnly
           />
         </div>
       </div>

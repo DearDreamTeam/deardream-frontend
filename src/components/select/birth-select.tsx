@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import Check from "@/public/icons/common/check.svg";
-import { UserProfile } from "@/types/user-info";
+import { UserProfileInfo } from "@/types/user-info";
 import { ReceiverProfileInfo } from "@/stores/useReceiverStore";
 
 interface BirthdayInputsProps {
   birth: string;
   calendarType?: "SOLAR" | "LUNAR";
-  setEditUserProfile?: React.Dispatch<React.SetStateAction<UserProfile>>;
+  setEditUserProfile?: React.Dispatch<React.SetStateAction<UserProfileInfo>>;
   setEditReceiverProfile?: React.Dispatch<
     React.SetStateAction<ReceiverProfileInfo>
   >;

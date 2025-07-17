@@ -14,7 +14,7 @@ import { useUserStore } from "@/stores/useUserInfoStore";
 const PlanPage: FC = () => {
   const [isActive] = useState(true);
   const [planType, setPlanType] = useState<"HOME" | "INSTITUTION" | "NONE">(
-    "HOME",
+    "INSTITUTION",
   ); // "PERSONAL" | "INSTITUTION" | "NONE"
   const { receiver, setReceiver } = useReceiverStore();
   const { userProfile } = useUserStore();

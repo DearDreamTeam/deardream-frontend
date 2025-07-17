@@ -137,7 +137,7 @@ const ProfileClient = () => {
       console.log("사용자 프로필이 아직 설정되지 않았습니다.");
       return;
     }
-    if (userProfile?.id != "") {
+    if (userProfile?.id != 0) {
       console.log(userProfile.id);
       console.log("실제로 반영된 userProfile:", userProfile);
       window.location.href = "/home";

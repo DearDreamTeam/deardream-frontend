@@ -1,26 +1,46 @@
 "use client";
 import Result from "@/components/result/result";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import axios from "@/lib/axios";
 
 const FamilyPage = () => {
   const router = useRouter();
+  const hasRunRef = useRef(false); // 추가
+
+  const waitForFamilyRegistered = async (maxAttempts = 5) => {
+    for (let i = 0; i < maxAttempts; i++) {
+      const response = await axios.get("/v1/users/me");
+      if (response.data.result.familyRegistered) return true;
+      await new Promise((res) => setTimeout(res, 500));
+    }
+    return false;
+  };
 
   useEffect(() => {
+    if (hasRunRef.current) return; // 두 번째 실행 방지
+    hasRunRef.current = true;
+
     const createFamily = async () => {
       try {
-        const response = await axios.post("/v1/family");
-        if (response.status === 200) {
-          router.push("/subscribe/family/complete");
+        const postResponse = await axios.post("/v1/family");
+        if (postResponse.status === 200) {
+          const isRegistered = await waitForFamilyRegistered();
+          if (isRegistered) {
+            router.push("/subscribe/family/complete");
+          } else {
+            alert("가족 등록 정보가 서버에 반영되지 않았습니다.");
+          }
         }
       } catch (error) {
-        console.error(error);
+        console.error("가족 생성 실패:", error);
         alert("가족 생성에 실패했습니다. 다시 시도해주세요.");
       }
     };
+
     createFamily();
   }, []);
+
   return (
     <Result
       title="가족 생성이 되는 중이에요"
