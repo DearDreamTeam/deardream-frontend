@@ -6,6 +6,7 @@ import axios from "@/lib/axios";
 import { useUserStore } from "@/stores/useUserInfoStore";
 import LogoHeader from "@/components/header/logo-header";
 import NavigationBar from "@/components/gnb/navigation-bar";
+import { useInvitationStore } from "@/stores/useInvitationStore";
 
 export default function ProtectedLayout({
   children,
@@ -15,6 +16,7 @@ export default function ProtectedLayout({
   const router = useRouter();
 
   const { updateUserProfile } = useUserStore();
+  const { setFamilyLink } = useInvitationStore();
 
   const pathname = usePathname();
 
@@ -47,6 +49,11 @@ export default function ProtectedLayout({
             familyRegistered: userData.familyRegistered,
             familyId: userData.familyId,
           });
+          if (userData.familyRegistered) {
+            const familyLink = await axios.get("/v1/family/link");
+            console.log("가족 링크:", familyLink.data);
+            setFamilyLink(familyLink.data.result);
+          }
         } else {
           throw new Error("사용자 정보 조회 실패");
         }

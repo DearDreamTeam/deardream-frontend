@@ -86,7 +86,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${pretendard.className} text-grey-900 mx-auto h-[100dvh] w-screen`}
+        className={`${pretendard.className} text-grey-900 mx-auto h-[100dvh] w-screen max-w-[768px]`}
       >
         {children}
       </body>
