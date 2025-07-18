@@ -2,6 +2,7 @@
 
 import GreenBasicButton from "@/components/button/green-basic-button";
 import Header from "@/components/common/header";
+import AlertDialog from "@/components/modal/dialog/alert-dialog";
 import axios from "@/lib/axios";
 import Check from "@/public/icons/common/check.svg";
 import { useUserStore } from "@/stores/useUserInfoStore";
@@ -36,20 +37,30 @@ const QuitItem = ({
 };
 const QuitPage = () => {
   const [isChecked, setIsChecked] = useState(false);
+  const [isNotPermitted, setIsNotPermitted] = useState(false);
 
   const { userProfile } = useUserStore();
 
-  const handleClick = async () => {
+  const handleClick = async (e: React.FormEvent) => {
+    e.preventDefault();
     if (!isChecked) {
       alert("회원 탈퇴 약관에 동의해주세요.");
       return;
     } else {
-      const res = await axios.delete("/v1/users/me");
-      if (res.status !== 200) {
-        alert("회원 탈퇴에 실패했습니다. 다시 시도해주세요.");
-        return;
-      } else {
-        window.location.href = "/mypage/quit/complete";
+      console.log("탈퇴 시작");
+      try {
+        const response = await axios.delete("/v1/users/me");
+        if (response.status === 200 || response.status === 204) {
+          // 삭제가 성공적으로 완료되었을 때만 이동
+          window.location.href = "/mypage/quit/complete";
+        } else {
+          // 삭제 실패
+          alert("탈퇴에 실패했습니다. 다시 시도해주세요.");
+          console.error("Unexpected response:", response);
+        }
+      } catch (error) {
+        console.error(error);
+        setIsNotPermitted(true);
       }
     }
   };
@@ -115,6 +126,13 @@ const QuitPage = () => {
           </GreenBasicButton>
         </div>
       </form>
+      {isNotPermitted && (
+        <AlertDialog
+          title="회원 탈퇴 불가"
+          content="플랜을 취소하고 탈퇴해 주세요."
+          setIsOpen={() => setIsNotPermitted(false)}
+        />
+      )}
     </>
   );
 };

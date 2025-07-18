@@ -1,7 +1,7 @@
 // app/(auth-protected)/layout.tsx
 "use client";
 import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import axios from "@/lib/axios";
 import { useUserStore } from "@/stores/useUserInfoStore";
 
@@ -14,7 +14,13 @@ export default function ProtectedLayout({
 
   const { updateUserProfile } = useUserStore();
 
+  const pathname = usePathname();
+
+  const skipAuthCheck = pathname === "/mypage/quit/complete";
+
   useEffect(() => {
+    if (skipAuthCheck) return;
+
     const accessToken = localStorage.getItem("accessToken");
     if (!accessToken) {
       alert("로그인이 필요합니다.");
@@ -29,12 +35,14 @@ export default function ProtectedLayout({
         if (res.status === 200) {
           const userData = res.data.result;
           updateUserProfile({
+            id: userData.id,
             name: userData.name,
             birth: userData.birth,
             profileImage: userData.profileImage,
             calendarType: userData.calendarType,
             relation: userData.relation,
             otherRelation: userData.otherRelation,
+            familyRegistered: userData.familyRegistered,
             familyId: userData.familyId,
           });
         } else {

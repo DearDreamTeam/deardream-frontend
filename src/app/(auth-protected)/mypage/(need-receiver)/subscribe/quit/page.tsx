@@ -45,12 +45,12 @@ const QuitPage = () => {
             {planType === "PERSONAL" ? (
               <>
                 개인 플랜
-                <PersonalPlanUse isActive={true} planType={planType} />
+                <PersonalPlanUse isActive={true} />
               </>
             ) : (
               <>
                 기관 플랜
-                <InstitutionPlanUse isActive={true} planType={planType} />
+                <InstitutionPlanUse isActive={true} />
               </>
             )}
           </div>

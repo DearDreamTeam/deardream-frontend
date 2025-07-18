@@ -1,8 +1,8 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { UserInfo, UserProfile } from "@/types/user-info";
+import { UserInfo, UserProfileInfo } from "@/types/user-info";
 
-const defaultProfile: UserProfile = {
+const defaultProfile: UserProfileInfo = {
   id: 0,
   name: "",
   profileImage: "",
@@ -10,6 +10,7 @@ const defaultProfile: UserProfile = {
   calendarType: "SOLAR",
   relation: "",
   otherRelation: "",
+  familyId: null,
   familylink: null,
   familyRegistered: false,
   role: "LEADER",
@@ -17,10 +18,10 @@ const defaultProfile: UserProfile = {
 
 interface UserState {
   userKaKaoInfo: UserInfo | null;
-  userProfile: UserProfile;
+  userProfile: UserProfileInfo;
   setUserKaKaoInfo: (info: UserInfo) => void;
-  setUserProfile: (profile: UserProfile) => void;
-  updateUserProfile: (update: Partial<UserProfile>) => void;
+  setUserProfile: (profile: UserProfileInfo) => void;
+  updateUserProfile: (update: Partial<UserProfileInfo>) => void;
   clearUser: () => void;
 }
 

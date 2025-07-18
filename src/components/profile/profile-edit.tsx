@@ -7,7 +7,11 @@ import SenderProfile from "./sender-profile";
 import RecieverProfile from "./receiver-profile";
 import { useUserStore } from "@/stores/useUserInfoStore";
 import Image from "next/image";
-import { UserProfile } from "@/types/user-info";
+import { UserProfileInfo } from "@/types/user-info";
+import {
+  ReceiverProfileInfo,
+  useReceiverStore,
+} from "@/stores/useReceiverStore";
 
 // 이미지 URL을 포맷팅하는 함수
 const formatImageUrl = (url?: string): string => {
@@ -27,8 +31,12 @@ const formatImageUrl = (url?: string): string => {
 interface ProfileEditProps {
   isSender?: boolean; // 프로필 타입을 구분하기 위한 선택적 속성
   isInvite?: boolean; // 초대 프로필 여부
-  setEditUserProfile: React.Dispatch<React.SetStateAction<UserProfile>>;
-  editUserProfile: UserProfile; // 현재 편집 중인 프로필
+  setEditUserProfile?: React.Dispatch<React.SetStateAction<UserProfileInfo>>;
+  editUserProfile?: UserProfileInfo; // 현재 편집 중인 프로필
+  setEditReceiverProfile?: React.Dispatch<
+    React.SetStateAction<ReceiverProfileInfo>
+  >;
+  editReceiverProfile?: ReceiverProfileInfo; // 현재 편집 중인 수신자 프로
   setSelectedFile?: (file: File | null) => void; // 이미지 파일 설정 함수
 }
 
@@ -39,15 +47,22 @@ const ProfileEdit = ({
   setSelectedFile, // 이미지 파일 설정 함수
   setEditUserProfile,
   editUserProfile,
+  setEditReceiverProfile,
+  editReceiverProfile,
 }: ProfileEditProps) => {
   //todo: userProfile을 직접 사용하지 않고, editUserProfile을 사용하도록 변경
   const { userProfile } = useUserStore();
 
+  const { receiver } = useReceiverStore();
+
   const inputRef = useRef<HTMLInputElement>(null);
 
   // 이미지 URL 상태
+  // useState의 초기값에 인자를 2개 넘기는 오류 수정
   const [imageUrl, setImageUrl] = useState<string>(
-    formatImageUrl(userProfile?.profileImage),
+    formatImageUrl(
+      editUserProfile ? editUserProfile.profileImage : receiver?.profileImage,
+    ),
   );
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -100,24 +115,54 @@ const ProfileEdit = ({
             type="text"
             className="text-headline-3 text-grey-700 placeholder:text-grey-300 border-grey-300 w-80 border-b-1 border-solid py-2 focus:ring-0 focus:outline-none"
             placeholder="이름을 입력해주세요"
-            value={editUserProfile?.name}
-            onChange={(e) =>
-              setEditUserProfile({
-                ...editUserProfile,
-                name: e.target.value,
-              })
+            value={
+              editUserProfile
+                ? editUserProfile.name
+                : editReceiverProfile?.name || ""
             }
+            onChange={(e) => {
+              if (setEditUserProfile) {
+                setEditUserProfile((prev) => ({
+                  ...prev,
+                  name: e.target.value,
+                }));
+              } else if (setEditReceiverProfile) {
+                setEditReceiverProfile((prev) => ({
+                  ...prev,
+                  name: e.target.value,
+                }));
+              }
+            }}
           />
         </div>
         <div className="flex-start text-label-2 flex flex-col gap-2">
           생일
           <BirthSelect
-            birth={editUserProfile.birth}
-            calendarType={editUserProfile.calendarType}
+            birth={
+              editUserProfile
+                ? editUserProfile.birth
+                : editReceiverProfile?.birth || ""
+            }
+            calendarType={
+              editUserProfile
+                ? editUserProfile.calendarType
+                : editReceiverProfile?.calendarType
+            }
             setEditUserProfile={setEditUserProfile}
+            setEditReceiverProfile={setEditReceiverProfile}
           />
         </div>
-        {isSender ? <SenderProfile /> : isInvite ? <RecieverProfile /> : null}
+        {isInvite ? (
+          <SenderProfile
+            editUserProfile={editUserProfile}
+            setEditUserProfile={setEditUserProfile}
+          />
+        ) : isSender ? null : (
+          <RecieverProfile
+            setEditReceiverProfile={setEditReceiverProfile}
+            editReceiverProfile={editReceiverProfile}
+          />
+        )}
       </div>
     </>
   );

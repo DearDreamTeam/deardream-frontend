@@ -1,10 +1,10 @@
 import { Suspense } from "react";
-import LoginPageClient from "./client";
+import InvitePageClient from "./client";
 
 export default function Page() {
   return (
     <Suspense fallback={<div>로딩 중...</div>}>
-      <LoginPageClient />
+      <InvitePageClient />
     </Suspense>
   );
 }

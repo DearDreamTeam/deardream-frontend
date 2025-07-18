@@ -1,7 +1,7 @@
 import CheckItem from "@/components/profile/plan/plan-check";
 interface PlanTypeInfo {
   isActive?: boolean;
-  planType?: "PERSONAL" | "INSTITUTION" | "NONE"; // "PERSONAL" | "INSTITUTION" | "NONE"
+  planType?: "HOME" | "INSTITUTION" | "NONE"; // "HOME" | "INSTITUTION" | "NONE"
   isNotPdf?: boolean;
 }
 

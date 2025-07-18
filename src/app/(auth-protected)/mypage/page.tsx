@@ -112,6 +112,7 @@ const MyPage = () => {
 
           <Section title="정기구독">
             <SectionItem link="subscribe">나의 정기구독</SectionItem>
+            <SectionItem link="payhistory">결제 내역</SectionItem>
           </Section>
           <Section title="도움말">
             <SectionItem link="">이어드림 가이드</SectionItem>

@@ -1,15 +1,8 @@
 import { useState } from "react";
 import Picker from "react-mobile-picker";
-const relationshipOptions = [
-  "부모님",
-  "형제/자매",
-  "조부모님",
-  "친척",
-  "친구",
-  "배우자",
-  "자녀",
-  "기타",
-];
+import { FAMILY_RELATION } from "@/constants/family-relation";
+
+const relationshipOptions = Object.values(FAMILY_RELATION);
 interface SelectModalProps {
   selected: { relationship: string };
   setSelected: (value: { relationship: string }) => void;
@@ -20,13 +13,23 @@ const SelectModal = ({
   setSelected,
   setIsModalOpen,
 }: SelectModalProps) => {
-  const [select, setSelect] = useState({
-    relationship: selected.relationship || relationshipOptions[0],
+  const [select, setSelect] = useState<{ relationship: string }>({
+    relationship:
+      FAMILY_RELATION[selected.relationship as keyof typeof FAMILY_RELATION] ??
+      relationshipOptions[0],
   });
   const handleSelect = (value: string) => {
-    setSelect({ ...select, relationship: value });
-    setSelected({ relationship: value });
-    setIsModalOpen(false);
+    const formattedValue = Object.keys(FAMILY_RELATION).find(
+      (key) => FAMILY_RELATION[key as keyof typeof FAMILY_RELATION] === value,
+    ) as keyof typeof FAMILY_RELATION;
+
+    if (!formattedValue) {
+      console.warn("Invalid family relationship selected:", value);
+      return;
+    }
+    console.log(value);
+    setSelect({ relationship: value }); // 한국어 유지 (뷰용)
+    setSelected({ relationship: formattedValue }); // 서버용 값으로 변환해서 상위 컴포넌트에 전달
   };
   return (
     <div
@@ -62,12 +65,14 @@ const SelectModal = ({
         </Picker>
         <div className="flex w-full justify-center gap-2">
           <button
+            type="button"
             onClick={() => setIsModalOpen(false)}
             className="text-grey-700 shadow-default text-label-2 bg-grey-0 w-36 rounded-lg rounded-md p-4"
           >
             취소
           </button>
           <button
+            type="button"
             onClick={() => {
               handleSelect(select.relationship);
               setIsModalOpen(false);
