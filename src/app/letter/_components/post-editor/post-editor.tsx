@@ -25,6 +25,8 @@ import {
 } from "@/types/editable-image";
 import { editPost, registerPost } from "@/api/post";
 import { Post } from "@/types/post-type";
+import { useUserStore } from "@/stores/useUserInfoStore";
+// import { convertImageUrlToFile } from "@/utils/get-edited-image-url";
 
 const PostEditor = ({ postcard }: { postcard?: Post }) => {
   const fileIdRef = useRef(0);
@@ -33,6 +35,7 @@ const PostEditor = ({ postcard }: { postcard?: Post }) => {
     title: "",
     content: "",
   });
+  const { userProfile } = useUserStore();
 
   /* modal open state */
   const [isAlertOpen, setIsAlertOpen] = useState(false);
@@ -67,6 +70,7 @@ const PostEditor = ({ postcard }: { postcard?: Post }) => {
   }, [imageFiles]);
 
   const handleSubmitLetter = (e: React.FormEvent<HTMLFormElement>) => {
+    console.log(userProfile);
     e.preventDefault();
     if (!isActive) {
       if (imageCount > 0) {
@@ -80,19 +84,23 @@ const PostEditor = ({ postcard }: { postcard?: Post }) => {
       return;
     }
 
-    const authorId = 13;
     if (postcard) {
       editPost(
         postcard.postId,
-        authorId,
+        userProfile.id,
         content,
+        imageFiles
+          .filter((item) =>
+            item.previewUrl?.startsWith(process.env.NEXT_PUBLIC_S3_URL!),
+          )
+          .map((item) => item.previewUrl as string),
         imageFiles
           .map((item) => item.originalFile)
           .filter((img): img is File => img !== null),
       );
     } else {
       registerPost(
-        authorId,
+        userProfile.id,
         content,
         imageFiles
           .map((item) => item.originalFile)
@@ -150,15 +158,31 @@ const PostEditor = ({ postcard }: { postcard?: Post }) => {
   };
 
   const handleImageClick = async (fileId: number) => {
-    if (
-      // 외부 이미지를 가져온 경우
-      imageFiles[fileId].originalUrl &&
-      imageFiles[fileId].originalFile === null
-    ) {
-      //변환...
-    }
+    // if (
+    //   // 외부 이미지를 가져온 경우
+    //   imageFiles[fileId].originalUrl &&
+    //   imageFiles[fileId].originalFile === null
+    // ) {
+    //   const file = await convertImageUrlToFile(imageFiles[fileId].originalUrl);
+    //   setImageFiles((prev) =>
+    //     prev.map((item) =>
+    //       item.fileId === selectedImageId
+    //         ? {
+    //             ...item,
+    //             originalFile: file,
+    //             originalUrl: URL.createObjectURL(file),
+    //             previewUrl: URL.createObjectURL(file),
+    //           }
+    //         : item,
+    //     ),
+    //   );
+    // }
     setSelectedImageId(fileId);
   };
+
+  useEffect(() => {
+    console.log("imageFiles", imageFiles);
+  }, [imageFiles]);
 
   return (
     <form
