@@ -8,10 +8,30 @@ import { useReceiverStore } from "@/stores/useReceiverStore";
 import { createReceiver } from "@/api/profile";
 import HomeAddressInput from "@/components/address/home-address-input";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const AddressPage = () => {
   const { receiver, receiverImage } = useReceiverStore();
   const router = useRouter();
+
+  const [isDirty, setIsDirty] = useState(false);
+
+  useEffect(() => {
+    setIsDirty(true);
+  }, [receiver]);
+
+  useEffect(() => {
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      if (!isDirty) return;
+      e.preventDefault();
+      e.returnValue = "";
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, [isDirty]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

@@ -3,11 +3,20 @@
 import GreenBasicButton from "@/components/button/green-basic-button";
 import Header from "@/components/common/header";
 import GreenBox from "@/components/mypage/green-box";
+import axios from "axios";
 import Check from "@/public/icons/common/check.svg"; // Assuming you have a green check icon
 import { useState } from "react";
+import { useUserStore } from "@/stores/useUserInfoStore";
 
 const PayPage = () => {
-  const [isCheck, setIsCheck] = useState(false);
+  const { userProfile } = useUserStore();
+  const [isPaymentCheck] = useState(true);
+  const [isAllCheck, setIsAllCheck] = useState(false);
+  const [isCheck2, setIsCheck2] = useState(false);
+  const [isCheck3, setIsCheck3] = useState(false);
+  const [isCheck4, setIsCheck4] = useState(false);
+
+  const isAbleSubmit = isPaymentCheck && isCheck2 && isCheck3;
 
   const today = new Date();
 
@@ -29,9 +38,62 @@ const PayPage = () => {
     today.getDate() + 1,
   );
   const formattedNextSubscribe = `${nextSubscribe.getFullYear()}. ${nextSubscribe.getMonth() + 1}. ${nextSubscribe.getDate()}`;
+  const handleAllCheck = () => {
+    setIsAllCheck(!isAllCheck);
+    setIsCheck2(true);
+    setIsCheck3(true);
+    setIsCheck4(true);
+  };
+
+  const handleCheck2 = () => {
+    setIsCheck2(!isCheck2);
+    setIsAllCheck(false);
+  };
+
+  const handleCheck3 = () => {
+    setIsCheck3(!isCheck3);
+    setIsAllCheck(false);
+  };
+
+  const handleCheck4 = () => {
+    setIsCheck4(!isCheck4);
+    setIsAllCheck(false);
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!isAbleSubmit) return;
+    try {
+      console.log(userProfile?.id);
+      const API_URL = process.env.NEXT_PUBLIC_API_URL;
+      const SECRET_KEY = process.env.NEXT_PUBLIC_KAKAO_PAY_KEY;
+      console.log(SECRET_KEY);
+      const response = await axios.post(
+        API_URL + "/v1/test/payment/ready", // POST body는 없음
+        null,
+        {
+          params: {
+            userId: userProfile?.id, // 쿼리스트링 ?userId=123
+          },
+          headers: {
+            Host: "open-api.kakaopay.com",
+            Authorization: `SecretKey ${SECRET_KEY}`,
+            "Content-Type": "application/json",
+          },
+        },
+      );
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
-      <div className="bg-grey-0 flex h-screen w-full flex-col items-center justify-between p-4 pt-0">
+      <form
+        className="bg-grey-0 flex h-screen w-full flex-col items-center justify-between p-4 pt-0"
+        onSubmit={handleSubmit}
+      >
         <Header>결제 정보 입력</Header>
         <div className="text-title-2 mt-4 flex h-full w-full flex-col">
           이어드림 월 정기 구독
@@ -50,8 +112,8 @@ const PayPage = () => {
             결제 수단
             <div className="text-title-3 text-grey-800 mt-2 flex w-full items-center gap-2">
               <div
-                onClick={() => setIsCheck(!isCheck)}
-                className={`${isCheck ? "bg-grey-300" : "bg-green-300"} inline-flex h-[24px] w-[24px] cursor-pointer flex-col items-center justify-center rounded-full`}
+                // onClick={() => setIsPaymentCheck(!isPaymentCheck)}
+                className={`${!isPaymentCheck ? "bg-grey-300" : "bg-green-300"} inline-flex h-[24px] w-[24px] cursor-pointer flex-col items-center justify-center rounded-full`}
               >
                 <Check />
               </div>
@@ -62,8 +124,8 @@ const PayPage = () => {
             </span>
             <div className="text-title-2 text-grey-800 mt-4 flex w-full items-center gap-2">
               <div
-                onClick={() => setIsCheck(!isCheck)}
-                className={`${isCheck ? "bg-grey-300" : "bg-green-300"} inline-flex h-[24px] w-[24px] cursor-pointer flex-col items-center justify-center rounded-full`}
+                onClick={handleAllCheck}
+                className={`${!isAllCheck ? "bg-grey-300" : "bg-green-300"} inline-flex min-h-[24px] min-w-[24px] cursor-pointer flex-col items-center justify-center rounded-full`}
               >
                 <Check />
               </div>
@@ -71,8 +133,8 @@ const PayPage = () => {
             </div>
             <div className="text-body-2 text-grey-500 grey-0space-normal mt-4 flex w-full items-center gap-2">
               <div
-                onClick={() => setIsCheck(!isCheck)}
-                className={`${isCheck ? "bg-grey-300" : "bg-green-300"} inline-flex h-[24px] w-[24px] cursor-pointer flex-col items-center justify-center rounded-full`}
+                onClick={handleCheck2}
+                className={`${!isCheck2 ? "bg-grey-300" : "bg-green-300"} inline-flex min-h-[24px] min-w-[24px] cursor-pointer flex-col items-center justify-center rounded-full`}
               >
                 <Check />
               </div>
@@ -81,8 +143,8 @@ const PayPage = () => {
             </div>
             <div className="text-body-2 text-grey-500 grey-0space-normal mt-4 flex w-full items-center gap-2">
               <div
-                onClick={() => setIsCheck(!isCheck)}
-                className={`${isCheck ? "bg-grey-300" : "bg-green-300"} inline-flex h-[24px] w-[24px] cursor-pointer flex-col items-center justify-center rounded-full`}
+                onClick={handleCheck3}
+                className={`${!isCheck3 ? "bg-grey-300" : "bg-green-300"} inline-flex min-h-[24px] min-w-[24px] cursor-pointer flex-col items-center justify-center rounded-full`}
               >
                 <Check />
               </div>
@@ -90,8 +152,8 @@ const PayPage = () => {
             </div>
             <div className="text-body-2 text-grey-500 grey-0space-normal mt-4 flex w-full items-center gap-2">
               <div
-                onClick={() => setIsCheck(!isCheck)}
-                className={`${isCheck ? "bg-grey-300" : "bg-green-300"} inline-flex h-[24px] w-[24px] cursor-pointer flex-col items-center justify-center rounded-full`}
+                onClick={handleCheck4}
+                className={`${!isCheck4 ? "bg-grey-300" : "bg-green-300"} inline-flex min-h-[24px] min-w-[24px] cursor-pointer flex-col items-center justify-center rounded-full`}
               >
                 <Check />
               </div>
@@ -101,11 +163,11 @@ const PayPage = () => {
         </div>
 
         <div className="flex h-14 w-full items-center justify-center">
-          <GreenBasicButton color="300" link={"/subscribe/pay/complete"}>
+          <GreenBasicButton color="300" disabled={!isAbleSubmit}>
             결제하기
           </GreenBasicButton>
         </div>
-      </div>
+      </form>
     </>
   );
 };

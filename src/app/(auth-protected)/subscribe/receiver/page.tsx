@@ -18,6 +18,25 @@ const ReceiverProfilePage = () => {
 
   const router = useRouter();
 
+  const [isDirty, setIsDirty] = useState(false);
+
+  useEffect(() => {
+    setIsDirty(true);
+  }, [editUserProfile]);
+
+  useEffect(() => {
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      if (!isDirty) return;
+      e.preventDefault();
+      e.returnValue = "";
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, [isDirty]);
+
   const isProfileIncomplete =
     !editUserProfile?.name?.trim() ||
     !editUserProfile?.birth?.trim() ||
