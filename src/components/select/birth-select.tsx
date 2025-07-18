@@ -134,7 +134,7 @@ const BirthdayInputs = ({
             onClick={() => setIsLunar(false)}
             className={`${
               !isLunar ? "bg-green-700" : "bg-grey-300"
-            } inline-flex h-6 w-6 flex-col items-center justify-center gap-2.5 rounded-[40px] p-1`}
+            } inline-flex h-6 w-6 flex-col items-center justify-center gap-2.5 rounded-full p-1`}
           >
             <Check />
           </div>
@@ -145,7 +145,7 @@ const BirthdayInputs = ({
             onClick={() => setIsLunar(true)}
             className={`${
               isLunar ? "bg-green-700" : "bg-grey-300"
-            } inline-flex h-6 w-6 flex-col items-center justify-center gap-2.5 rounded-[40px] p-1`}
+            } inline-flex h-6 w-6 flex-col items-center justify-center gap-2.5 rounded-full p-1`}
           >
             <Check />
           </div>

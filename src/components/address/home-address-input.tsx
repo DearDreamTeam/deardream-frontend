@@ -80,7 +80,7 @@ const HomeAddressInput = () => {
               readOnly
             />
             <button
-              className="inline-flex items-center justify-center rounded bg-green-100 px-4 py-2 whitespace-nowrap text-green-300"
+              className="inline-flex items-center justify-center rounded-sm bg-green-100 px-4 py-2 whitespace-nowrap text-green-300"
               onClick={() => setShowPostcode(true)}
             >
               우편 번호 찾기

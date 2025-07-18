@@ -149,15 +149,15 @@ const ProfileClient = () => {
 
   return (
     <>
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          handleSubmitProfile(); // 이 함수 안에서 유효성 검사 + axios 처리
-        }}
-        className="bg-grey-0 relative flex h-full w-full flex-col items-center justify-between p-4 pt-0"
-      >
-        {userKaKaoInfo ? (
-          <>
+      {userKaKaoInfo ? (
+        <>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleSubmitProfile(); // 이 함수 안에서 유효성 검사 + axios 처리
+            }}
+            className="bg-grey-0 relative flex h-full w-full flex-col items-center justify-between p-4 pt-0"
+          >
             <div>
               <Header>프로필 설정</Header>
               <ProfileEdit
@@ -173,19 +173,17 @@ const ProfileClient = () => {
                 저장
               </GreenBasicButton>
             </div>
-          </>
-        ) : (
-          <div className="text-grey-800 flex h-screen w-screen flex-col items-center justify-center gap-6 bg-green-100 text-center">
-            <div className="h-12 w-12 animate-spin rounded-full border-t-4 border-green-600"></div>
-            <div className="text-xl font-semibold">
-              정보를 불러오는 중입니다
-            </div>
-            <p className="text-grey-500 animate-pulse text-base">
-              잠시만 기다려 주세요...
-            </p>
-          </div>
-        )}
-      </form>
+          </form>
+        </>
+      ) : (
+        <div className="text-grey-800 flex h-full w-screen flex-col items-center justify-center gap-6 bg-green-100 text-center">
+          <div className="h-12 w-12 animate-spin rounded-full border-t-4 border-green-600" />
+          <div className="text-xl font-semibold">정보를 불러오는 중입니다</div>
+          <p className="text-grey-500 animate-pulse text-base">
+            잠시만 기다려 주세요...
+          </p>
+        </div>
+      )}
     </>
   );
 };

@@ -52,7 +52,7 @@ const LoginPageClient = () => {
 
         <div
           onClick={handleLogin}
-          className="relative flex h-12 w-[80%] cursor-pointer items-center justify-center rounded-md bg-[#FEE500]"
+          className="relative flex h-12 w-[80%] cursor-pointer items-center justify-center rounded-lg bg-[#FEE500]"
         >
           <KaKao
             alt="카카오 로그인"

@@ -67,7 +67,7 @@ const SelectModal = ({
           <button
             type="button"
             onClick={() => setIsModalOpen(false)}
-            className="text-grey-700 shadow-default text-label-2 bg-grey-0 w-36 rounded-lg rounded-md p-4"
+            className="text-grey-700 shadow-default text-label-2 bg-grey-0 w-36 rounded-lg p-4"
           >
             취소
           </button>
@@ -77,7 +77,7 @@ const SelectModal = ({
               handleSelect(select.relationship);
               setIsModalOpen(false);
             }}
-            className="text-label-2 text-grey-0 w-36 rounded-md bg-green-300 p-4 text-center"
+            className="text-label-2 text-grey-0 w-36 rounded-lg bg-green-300 p-4 text-center"
           >
             선택
           </button>

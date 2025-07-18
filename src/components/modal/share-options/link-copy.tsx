@@ -8,7 +8,7 @@ const LinkCopy = () => {
 
   const handleCopy = async () => {
     try {
-      await navigator.clipboard.writeText(SHARE_DATA.url);
+      await navigator.clipboard.writeText(SHARE_DATA.url || "");
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch (err) {

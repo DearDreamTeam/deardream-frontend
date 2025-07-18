@@ -1,6 +1,5 @@
 "use client";
 import Header from "@/components/common/header";
-// import RedSpan from "@/components/common/red-span";
 import Crown from "@/public/icons/common/crown.svg";
 import { useEffect, useState } from "react";
 import Image from "next/image";
