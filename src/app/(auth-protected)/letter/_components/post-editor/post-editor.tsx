@@ -3,11 +3,10 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import ActionHeader from "@/components/header/action-header";
-import TextField from "@/app/letter/_components/text-field";
-import TypeBar from "@/app/letter/_components/type-bar";
-import ImagePreviewer from "@/app/letter/_components/image-previewer";
-import TextLimit from "../text-limit";
-import GalleryButton from "../gallery-button";
+import TextField from "@/app/(auth-protected)/letter/_components/center/text-field";
+import ImagePreviewer from "@/app/(auth-protected)/letter/_components/center/image-previewer";
+import TextLimit from "../type-bar/text-limit";
+import GalleryButton from "../type-bar/gallery-button";
 
 import { PATH } from "@/constants/path";
 import { isContentValid } from "@/utils/post-content-rules";
@@ -16,7 +15,7 @@ import AlertDialog from "@/components/modal/dialog/alert-dialog";
 import ConfirmDialog from "@/components/modal/dialog/confirm-dialog";
 import { NOTIFICATION_MESSAGES } from "@/constants/messages";
 import { renderMessageWithLineBreaks } from "@/utils/render-message-with-line-breaks";
-import CompleteLetter from "../complete-letter";
+import CompleteLetter from "../complete/complete-letter";
 import PhotoEditor from "@/components/photo-editor/photo-editor";
 import {
   ASPECT_RATIO_ITEMS,
@@ -203,7 +202,7 @@ const PostEditor = ({ postcard }: { postcard?: Post }) => {
       </ActionHeader>
 
       {/* 중앙 image-preview, textarea */}
-      <div className="overflow-auto-hide-scroll flex flex-1 flex-col">
+      <section className="overflow-auto-hide-scroll flex flex-1 flex-col">
         {imageCount > 0 && (
           <ImagePreviewer
             imageFiles={imageFiles}
@@ -213,17 +212,17 @@ const PostEditor = ({ postcard }: { postcard?: Post }) => {
           />
         )}
         <TextField content={content} setContent={setContent} />
-      </div>
+      </section>
 
       {/* 하단 type-bar */}
-      <TypeBar>
+      <section className="type-bar">
         <GalleryButton
           imageCount={imageCount}
           setImageFiles={setImageFiles}
           fileIdRef={fileIdRef}
         />
         <TextLimit imageCount={imageCount} typedLength={content.length} />
-      </TypeBar>
+      </section>
 
       {/* modal */}
       {isAlertOpen && (

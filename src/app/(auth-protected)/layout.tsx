@@ -4,6 +4,8 @@ import { useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import axios from "@/lib/axios";
 import { useUserStore } from "@/stores/useUserInfoStore";
+import LogoHeader from "@/components/header/logo-header";
+import NavigationBar from "@/components/gnb/navigation-bar";
 
 export default function ProtectedLayout({
   children,
@@ -59,5 +61,11 @@ export default function ProtectedLayout({
     checkUser();
   }, []);
 
-  return <>{children}</>;
+  return (
+    <div className="shadow-default bg-grey-50 mx-auto flex h-full max-w-[768px] flex-col justify-between">
+      <LogoHeader />
+      <main className="flex-1 overflow-hidden">{children}</main>
+      <NavigationBar />
+    </div>
+  );
 }

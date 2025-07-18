@@ -56,4 +56,8 @@
   .post-status {
     @apply text-label-1 bg-inactive-bg text-grey-0 absolute inset-0 flex h-[9.25rem] w-[6.5rem] items-center justify-center gap-1 rounded-sm;
   }
+
+  .type-bar {
+    @apply bg-grey-0 border-y-grey-200 flex items-center justify-between border-y px-5 py-4;
+  }
 }

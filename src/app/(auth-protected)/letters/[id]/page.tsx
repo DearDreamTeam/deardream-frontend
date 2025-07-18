@@ -2,7 +2,7 @@ import { PATH } from "@/constants/path";
 import ArrowBack from "@/public/icons/letters/arrow-back.svg";
 import Download from "@/public/icons/letters/download.svg";
 import Link from "next/link";
-import PdfViewer from "./_components/pdf-viewer";
+import PdfViewer from "@/components/pdf-viewer/pdf-viewer";
 
 const PdfPage = () => {
   const pdfSrc = "/mock/1.pdf";

@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "@/styles/globals.css";
-import LogoHeader from "@/components/header/logo-header";
-import NavigationBar from "@/components/gnb/navigation-bar";
 import Script from "next/script";
 
 const pretendard = localFont({
@@ -88,13 +86,9 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${pretendard.className} text-grey-900 mx-auto h-[100dvh] w-screen max-w-[768px]`}
+        className={`${pretendard.className} text-grey-900 mx-auto h-[100dvh] w-screen`}
       >
-        <div className="shadow-default bg-grey-50 flex h-full flex-col justify-between">
-          <LogoHeader />
-          <main className="flex-1 overflow-hidden">{children}</main>
-          <NavigationBar />
-        </div>
+        {children}
       </body>
     </html>
   );
