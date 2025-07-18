@@ -43,6 +43,7 @@ export default function ProtectedLayout({
             relation: userData.relation,
             otherRelation: userData.otherRelation,
             familyRegistered: userData.familyRegistered,
+            familyId: userData.familyId,
           });
         } else {
           throw new Error("사용자 정보 조회 실패");

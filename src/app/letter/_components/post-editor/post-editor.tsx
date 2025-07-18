@@ -25,6 +25,7 @@ import {
 } from "@/types/editable-image";
 import { editPost, registerPost } from "@/api/post";
 import { Post } from "@/types/post-type";
+import { useUserStore } from "@/stores/useUserInfoStore";
 // import { convertImageUrlToFile } from "@/utils/get-edited-image-url";
 
 const PostEditor = ({ postcard }: { postcard?: Post }) => {
@@ -34,6 +35,7 @@ const PostEditor = ({ postcard }: { postcard?: Post }) => {
     title: "",
     content: "",
   });
+  const { userProfile } = useUserStore();
 
   /* modal open state */
   const [isAlertOpen, setIsAlertOpen] = useState(false);
@@ -68,6 +70,7 @@ const PostEditor = ({ postcard }: { postcard?: Post }) => {
   }, [imageFiles]);
 
   const handleSubmitLetter = (e: React.FormEvent<HTMLFormElement>) => {
+    console.log(userProfile);
     e.preventDefault();
     if (!isActive) {
       if (imageCount > 0) {
@@ -81,11 +84,10 @@ const PostEditor = ({ postcard }: { postcard?: Post }) => {
       return;
     }
 
-    const authorId = 13;
     if (postcard) {
       editPost(
         postcard.postId,
-        authorId,
+        userProfile.id,
         content,
         imageFiles
           .filter((item) =>
@@ -98,7 +100,7 @@ const PostEditor = ({ postcard }: { postcard?: Post }) => {
       );
     } else {
       registerPost(
-        authorId,
+        userProfile.id,
         content,
         imageFiles
           .map((item) => item.originalFile)
