@@ -43,18 +43,21 @@ export const registerPost = async (
   }
 };
 
-/* PUT: 소식 수정하기 */
+/* PATCH: 소식 수정하기 */
 export const editPost = async (
   postId: Post["postId"],
   authorId: Post["authorId"],
   content: Post["content"],
+  existingImageUrls: Post["imageUrls"],
   images: PostLetter["images"],
 ) => {
   const formData = new FormData();
+  console.log("보내는 데이터 existingImageUrls", existingImageUrls);
+  console.log("보내는 데이터 images", images);
 
   formData.append(
     "request",
-    new Blob([JSON.stringify({ authorId, content })], {
+    new Blob([JSON.stringify({ authorId, content, existingImageUrls })], {
       type: "application/json",
     }),
   );
@@ -64,7 +67,7 @@ export const editPost = async (
   });
 
   try {
-    await axios.put(`/v1/posts/${postId}`, formData);
+    await axios.patch(`/v1/posts/${postId}`, formData);
   } catch (error) {
     console.error(error);
   }
