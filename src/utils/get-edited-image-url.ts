@@ -94,3 +94,11 @@ export const getEditedImageUrl = async (
     }, "image/png");
   });
 };
+
+export const convertImageUrlToFile = async (url: string): Promise<File> => {
+  const filename = getResourceFilename(url);
+  const res = await fetch(url);
+  const blob = await res.blob();
+  const contentType = blob.type || "image/png";
+  return new File([blob], filename, { type: contentType });
+};

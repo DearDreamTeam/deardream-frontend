@@ -25,6 +25,7 @@ import {
 } from "@/types/editable-image";
 import { editPost, registerPost } from "@/api/post";
 import { Post } from "@/types/post-type";
+// import { convertImageUrlToFile } from "@/utils/get-edited-image-url";
 
 const PostEditor = ({ postcard }: { postcard?: Post }) => {
   const fileIdRef = useRef(0);
@@ -86,6 +87,11 @@ const PostEditor = ({ postcard }: { postcard?: Post }) => {
         postcard.postId,
         authorId,
         content,
+        imageFiles
+          .filter((item) =>
+            item.previewUrl?.startsWith(process.env.NEXT_PUBLIC_S3_URL!),
+          )
+          .map((item) => item.previewUrl as string),
         imageFiles
           .map((item) => item.originalFile)
           .filter((img): img is File => img !== null),
@@ -150,15 +156,31 @@ const PostEditor = ({ postcard }: { postcard?: Post }) => {
   };
 
   const handleImageClick = async (fileId: number) => {
-    if (
-      // 외부 이미지를 가져온 경우
-      imageFiles[fileId].originalUrl &&
-      imageFiles[fileId].originalFile === null
-    ) {
-      //변환...
-    }
+    // if (
+    //   // 외부 이미지를 가져온 경우
+    //   imageFiles[fileId].originalUrl &&
+    //   imageFiles[fileId].originalFile === null
+    // ) {
+    //   const file = await convertImageUrlToFile(imageFiles[fileId].originalUrl);
+    //   setImageFiles((prev) =>
+    //     prev.map((item) =>
+    //       item.fileId === selectedImageId
+    //         ? {
+    //             ...item,
+    //             originalFile: file,
+    //             originalUrl: URL.createObjectURL(file),
+    //             previewUrl: URL.createObjectURL(file),
+    //           }
+    //         : item,
+    //     ),
+    //   );
+    // }
     setSelectedImageId(fileId);
   };
+
+  useEffect(() => {
+    console.log("imageFiles", imageFiles);
+  }, [imageFiles]);
 
   return (
     <form
