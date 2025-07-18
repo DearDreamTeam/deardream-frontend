@@ -10,6 +10,7 @@ const defaultProfile: UserProfileInfo = {
   calendarType: "SOLAR",
   relation: "",
   otherRelation: "",
+  familyId: null,
   familylink: null,
   familyRegistered: false,
   role: "LEADER",

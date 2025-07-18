@@ -18,7 +18,7 @@ export interface UserProfileInfo {
   role?: string; // 프로필 역할 (예: "부모", "자녀" 등)
   relation?: string;
   otherRelation?: string;
-  familyId?: number; // 가족 ID, 가족 프로필에서 사용
+  familyId: number | null; // 가족 ID, 가족 프로필에서 사용
   familylink: string | null;
   registered?: boolean; // 프로필 등록 여부
   familyRegistered?: boolean; // 가족 프로필 등록 여부
