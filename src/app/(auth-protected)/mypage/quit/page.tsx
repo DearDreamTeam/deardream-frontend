@@ -49,12 +49,14 @@ const QuitPage = () => {
     } else {
       console.log("탈퇴 시작");
       try {
-        const res = await axios.delete("/v1/users/me");
-        if (res.status !== 200) {
-          alert("회원 탈퇴에 실패했습니다. 다시 시도해주세요.");
-          return;
-        } else {
+        const response = await axios.delete("/v1/users/me");
+        if (response.status === 200 || response.status === 204) {
+          // 삭제가 성공적으로 완료되었을 때만 이동
           window.location.href = "/mypage/quit/complete";
+        } else {
+          // 삭제 실패
+          alert("탈퇴에 실패했습니다. 다시 시도해주세요.");
+          console.error("Unexpected response:", response);
         }
       } catch (error) {
         console.error(error);

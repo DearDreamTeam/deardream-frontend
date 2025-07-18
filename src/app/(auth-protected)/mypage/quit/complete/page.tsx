@@ -7,6 +7,7 @@ const CompletePage = () => {
   const router = useRouter();
 
   useEffect(() => {
+    localStorage.clear();
     const timer = setTimeout(() => {
       router.push("/onboarding");
     }, 3000);
