@@ -14,17 +14,7 @@ import {
 } from "@/stores/useReceiverStore";
 import { useUserStore } from "@/stores/useUserInfoStore";
 import { useRouter } from "next/navigation";
-
-const formatRelation = (relation?: string) => {
-  if (relation === "SON") return "아들";
-  if (relation === "DAUGHTER") return "딸";
-  if (relation === "GRANDSON") return "손자";
-  if (relation === "GRANDDAUGHTER") return "손녀";
-  if (relation === "SPOUSE") return "배우자";
-  if (relation === "BROTHER") return "형제";
-  if (relation === "SISTER") return "자매";
-  if (relation === "OTHER") return "기타";
-};
+import { FAMILY_RELATION, FamilyRelation } from "@/constants/family-relation";
 
 const SenderInfo = ({ children }: { children: UserProfileInfo }) => {
   return (
@@ -48,7 +38,8 @@ const SenderInfo = ({ children }: { children: UserProfileInfo }) => {
         <span className="text-label-2 text-grey-400">
           {children.relation === "OTHER"
             ? children.otherRelation
-            : formatRelation(children.relation)}
+            : children.relation &&
+              FAMILY_RELATION[children.relation as FamilyRelation]}
         </span>
       </div>
     </div>
