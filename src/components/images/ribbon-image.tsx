@@ -4,8 +4,8 @@ const RibbonImage = () => (
   <Image
     src="/images/ribbon/ribbon-full.svg"
     alt="ribbon-img"
-    width={130}
-    height={110}
+    width={129.43}
+    height={109.49}
     className="z-20 py-6"
   />
 );

@@ -5,15 +5,14 @@ import { useState } from "react";
 import More from "@/public/icons/post-card/more.svg";
 import EditDeleteModal from "@/components/modal/edit-delete/edit-delete-modal";
 import ConfirmDialog from "@/components//modal/dialog/confirm-dialog";
-import { usePostStore } from "@/stores/usePostStore";
 import { NOTIFICATION_MESSAGES } from "@/constants/messages";
 import { renderMessageWithLineBreaks } from "@/utils/render-message-with-line-breaks";
+import { deletePost } from "@/api/post";
+import { useUserStore } from "@/stores/useUserInfoStore";
 
 const MoreButton = ({ postId }: { postId: number }) => {
   const [isEditDeleteModalOpen, setIsEditDeleteModalOpen] = useState(false);
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
-  const { deletePost } = usePostStore();
-
   return (
     <div className="flex">
       <button
@@ -37,7 +36,9 @@ const MoreButton = ({ postId }: { postId: number }) => {
             NOTIFICATION_MESSAGES.DELETE_POST.content,
           )}
           setIsOpen={setIsConfirmOpen}
-          action={() => deletePost(postId)}
+          action={() =>
+            deletePost(useUserStore.getState().userProfile.id, postId)
+          }
         />
       )}
     </div>

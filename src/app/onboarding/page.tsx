@@ -52,9 +52,10 @@ const Onboarding = () => {
               <Image
                 src={`/images/onboarding/onboarding-${index + 1}.svg`}
                 alt={`onboarding-${index + 1}`}
-                width={130}
-                height={110}
-                className="mx-auto py-[5.87rem] pt-64"
+                width={129.43}
+                height={109.49}
+                className="mx-auto h-auto py-[5.87rem] pt-64"
+                priority
               />
               <div className="flex flex-col items-center gap-2">
                 <h1 className="text-headline-1">{title}</h1>

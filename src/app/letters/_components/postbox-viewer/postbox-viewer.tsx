@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import PostList from "./post-list/post-list";
-import FilterBar from "./filter-bar/filter-bar";
-import { SortKey } from "./letters-props";
+import PostList from "../post-list/post-list";
+import FilterBar from "../filter-bar/filter-bar";
+import { SortKey } from "../letters-props";
 import { useLettersStore } from "@/stores/useLettersStore";
 
 const PostboxViewer = () => {

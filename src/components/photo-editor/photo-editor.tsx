@@ -16,33 +16,47 @@ const PhotoEditor = ({
   onClose,
   aspectRatio,
   isProfile = false,
+  editedProps,
 }: {
   imageUrl: string;
   aspectRatio: number;
-  onSave: (editedUrl: string, editedProps: EditedProps) => void;
+  onSave: (
+    editedUrl: string,
+    edtiedFile: File,
+    editedProps: EditedProps,
+  ) => void;
   onClose: () => void;
   isProfile?: boolean;
+  editedProps?: EditedProps | null;
 }) => {
   const [imageSrc, setImageSrc] = useState(imageUrl);
-  const [crop, setCrop] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
-  const [zoom, setZoom] = useState(1);
-  const [rotation, setRotation] = useState(0);
-  const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null);
+  const [crop, setCrop] = useState<{ x: number; y: number }>(
+    editedProps?.crop ?? { x: 0, y: 0 },
+  );
+  const [zoom, setZoom] = useState(editedProps?.zoom ?? 1);
+  const [rotation, setRotation] = useState(editedProps?.rotation ?? 0);
+  const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(
+    editedProps?.croppedAreaPixels ?? null,
+  );
 
   const onCropComplete = useCallback((_: Area, croppedAreaPixels: Area) => {
     setCroppedAreaPixels(croppedAreaPixels);
-    console.log("complete 실행, croppedAreaPixels", croppedAreaPixels);
   }, []);
 
   const handleSave = async () => {
     if (!croppedAreaPixels) return;
     try {
-      const { editedUrl } = await getEditedImageUrl(
+      const { editedUrl, editedFile } = await getEditedImageUrl(
         imageSrc,
         croppedAreaPixels,
         rotation,
       );
-      onSave(editedUrl, { crop, zoom, rotation });
+      onSave(editedUrl, editedFile, {
+        crop,
+        zoom,
+        rotation,
+        croppedAreaPixels,
+      });
       onClose();
     } catch (e) {
       console.error(e);

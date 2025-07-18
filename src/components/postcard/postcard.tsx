@@ -1,31 +1,30 @@
-import { PostcardProps } from "@/types/postcard-props";
+import { Post } from "@/types/post-type";
 import PostContext from "./post-context";
 import PostImages from "./post-images";
 import PostInfo from "./post-info";
 
 const Postcard = ({
+  authorId,
   postId,
-  name,
-  relation,
-  profileImg,
+  authorName,
+  relations,
+  authorProfileImg,
   content,
   createdAt,
-  postImg,
-  aspectIndex,
-}: PostcardProps) => {
+  imageUrls,
+}: Post) => {
   return (
     <div className="bg-grey-0 px-4">
       <div className="border-b-grey-200 border-b py-4">
         <PostInfo
-          name={name}
-          relation={relation}
+          authorId={authorId}
+          authorName={authorName}
+          relations={relations}
           createdAt={createdAt}
           postId={postId}
-          profileImg={profileImg}
+          authorProfileImg={authorProfileImg}
         />
-        {!!postImg.length && (
-          <PostImages imgUrls={postImg} aspectIndex={aspectIndex} />
-        )}
+        {!!imageUrls.length && <PostImages imgUrls={imageUrls} />}
         <PostContext content={content} />
       </div>
     </div>

@@ -2,12 +2,12 @@ import TextMessage from "@/public/icons/share-options/chat_bubble.svg";
 import KakaoTalk from "@/public/icons/share-options/kakao_logo.svg";
 import Mail from "@/public/icons/share-options/email.svg";
 import Share from "@/public/icons/share-options/share.svg";
-import { useUserStore } from "@/stores/useUserStore";
+import { useUserStore } from "@/stores/useUserInfoStore";
 
 export const SHARE_DATA = {
   title: "이어드림 가족 초대",
-  text: `${useUserStore.getState().user.name}님과 함께 소식지 만들기에 동참해보세요!`,
-  url: "https://deardream-frontend.vercel.app/",
+  text: `${useUserStore.getState().userProfile.name}님과 함께 소식지 만들기에 동참해보세요!`,
+  url: "https://www.deardream.site/",
 };
 
 const SHARE_ACTIONS = {
@@ -40,9 +40,9 @@ const SHARE_ACTIONS = {
     }
 
     window.Kakao.Share.sendCustom({
-      templateId: 121620,
+      templateId: 122390,
       templateArgs: {
-        hostName: `${useUserStore.getState().user.name}`,
+        hostName: `${useUserStore.getState().userProfile.name}`,
         familyCount: `${2}`,
       },
     });

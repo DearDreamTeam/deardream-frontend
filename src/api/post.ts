@@ -1,13 +1,14 @@
 import axios from "@/lib/axios";
-import { Post, PostBack } from "@/types/post-type";
+import { usePostStore } from "@/stores/usePostStore";
+import { Post, PostLetter } from "@/types/post-type";
 
 /* GET: 소식 피드 전부 가져오기 */
-export const getFamilyPosts = async (familyId: Post["familyId"]) => {
+export const getFamilyPosts = async (familyId: number) => {
   try {
     const response = await axios.get(`/v1/posts/${familyId}`);
-    console.log(response);
+    return response.data.result;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return [];
   }
 };
@@ -16,28 +17,29 @@ export const getFamilyPosts = async (familyId: Post["familyId"]) => {
 export const registerPost = async (
   authorId: Post["authorId"],
   content: Post["content"],
-  images: PostBack["imgFiles"],
+  images: PostLetter["images"],
 ) => {
+  const formData = new FormData();
+
+  formData.append(
+    "request",
+    new Blob([JSON.stringify({ authorId, content })], {
+      type: "application/json",
+    }),
+  );
+
+  images.forEach((file) => {
+    formData.append("images", file);
+  });
+
   try {
-    const response = await axios.post(
-      `/v1/posts`,
-      {
-        request: {
-          authorId,
-          content,
-        },
-        images: images,
+    await axios.post(`/v1/posts`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
       },
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      },
-    );
-    console.log(response);
-    // postId를 리턴해주는 듯
+    });
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 
@@ -46,27 +48,25 @@ export const editPost = async (
   postId: Post["postId"],
   authorId: Post["authorId"],
   content: Post["content"],
-  images: PostBack["imgFiles"],
+  images: PostLetter["images"],
 ) => {
+  const formData = new FormData();
+
+  formData.append(
+    "request",
+    new Blob([JSON.stringify({ authorId, content })], {
+      type: "application/json",
+    }),
+  );
+
+  images.forEach((file) => {
+    formData.append("images", file);
+  });
+
   try {
-    const response = await axios.put(
-      `/v1/posts/${postId}`,
-      {
-        request: {
-          authorId,
-          content,
-        },
-        images: images,
-      },
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      },
-    );
-    console.log(response);
+    await axios.put(`/v1/posts/${postId}`, formData);
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 
@@ -79,8 +79,8 @@ export const deletePost = async (
     const response = await axios.delete(`/v1/posts/${postId}`, {
       params: { userId },
     });
-    console.log(response);
+    if (response.status === 200) usePostStore.getState().deletePost(postId);
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };

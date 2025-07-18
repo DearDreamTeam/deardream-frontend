@@ -1,11 +1,17 @@
+"use client";
+
 import { use } from "react";
-import EditPostClient from "../../_components/client/edit-post-client";
+import PostEditor from "../../_components/post-editor/post-editor";
+import { usePostStore } from "@/stores/usePostStore";
 
 const Edit = ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = use(params);
   const postId = parseInt(id);
 
-  return <EditPostClient postId={postId} />;
+  const { getAPostcard } = usePostStore();
+  const postcard = getAPostcard(postId);
+
+  return <PostEditor postcard={postcard} />;
 };
 
 export default Edit;

@@ -91,6 +91,9 @@ const ProfileClient = () => {
           name,
           profileImage,
         });
+
+        console.log("client.tsx userKaKaoInfo", userKaKaoInfo);
+        console.log("client.tsx userProfile", userProfile);
       } catch (error) {
         console.error("카카오 로그인 실패:", error);
         // alert("로그인에 실패했습니다. 다시 시도해주세요.");

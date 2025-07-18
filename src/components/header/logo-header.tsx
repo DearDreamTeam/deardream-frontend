@@ -8,7 +8,7 @@ const LogoHeader = () => {
   const pathname = usePathname();
 
   if (
-    pathname.startsWith("/letter/") ||
+    pathname.startsWith("/letter") ||
     pathname.startsWith("/mypage/") ||
     pathname.startsWith("/subscribe/") ||
     [

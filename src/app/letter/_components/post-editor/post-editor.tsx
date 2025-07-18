@@ -9,10 +9,6 @@ import ImagePreviewer from "@/app/letter/_components/image-previewer";
 import TextLimit from "../text-limit";
 import GalleryButton from "../gallery-button";
 
-import { PostState } from "@/stores/usePostStore";
-import { useUserStore } from "@/stores/useUserStore";
-import { Post, PostBack, PostFront } from "@/types/post-type";
-import { PostEditorProps } from "@/types/post-editor-props";
 import { PATH } from "@/constants/path";
 import { isContentValid } from "@/utils/post-content-rules";
 
@@ -27,8 +23,10 @@ import {
   EditableImage,
   EditedProps,
 } from "@/types/editable-image";
+import { editPost, registerPost } from "@/api/post";
+import { Post } from "@/types/post-type";
 
-const PostEditor = ({ postcard, submitAction }: PostEditorProps) => {
+const PostEditor = ({ postcard }: { postcard?: Post }) => {
   const fileIdRef = useRef(0);
   const router = useRouter();
   const [warningMessage, setWarningMessage] = useState({
@@ -43,9 +41,11 @@ const PostEditor = ({ postcard, submitAction }: PostEditorProps) => {
 
   /* inputs */
   const [content, setContent] = useState(postcard?.content ?? "");
-  const [aspectIndex, setAspectIndex] = useState(postcard?.aspectIndex ?? 0);
+  const [aspectIndex, setAspectIndex] = useState(
+    postcard?.imageUrls.length ?? 0,
+  );
   const [imageFiles, setImageFiles] = useState<EditableImage[]>(
-    postcard?.imgUrls.map((url) => ({
+    postcard?.imageUrls.map((url: string) => ({
       fileId: fileIdRef.current++,
       originalFile: null,
       originalUrl: url,
@@ -80,44 +80,24 @@ const PostEditor = ({ postcard, submitAction }: PostEditorProps) => {
       return;
     }
 
+    const authorId = 13;
     if (postcard) {
-      const letter: Post = {
-        ...postcard,
-        content: content,
-        aspectIndex: aspectIndex,
-      };
-      const letterBack: PostBack = {
-        ...letter,
-        imgFiles: [], // .editedProps ? 생성 : originalFile
-      };
-      console.log(letterBack);
-      const letterFront: PostFront = {
-        ...letter,
-        imgUrls: imageFiles.map((item) => item.previewUrl),
-      };
-      (submitAction as PostState["editPost"])(postcard.postId, letterFront);
+      editPost(
+        postcard.postId,
+        authorId,
+        content,
+        imageFiles
+          .map((item) => item.originalFile)
+          .filter((img): img is File => img !== null),
+      );
     } else {
-      const user = useUserStore.getState().user;
-      const letter: Post = {
-        postId: Date.now(),
-        authorId: user.userId,
-        familyId: user.familyId,
-        content: content,
-        createdAt: Date.now(),
-        aspectIndex: aspectIndex,
-      };
-
-      const letterBack: PostBack = {
-        ...letter,
-        imgFiles: [], // .editedProps ? 생성 : originalFile
-      };
-      console.log(letterBack);
-
-      const letterFront: PostFront = {
-        ...letter,
-        imgUrls: imageFiles.map((item) => item.previewUrl),
-      };
-      (submitAction as PostState["addPost"])(letterFront);
+      registerPost(
+        authorId,
+        content,
+        imageFiles
+          .map((item) => item.originalFile)
+          .filter((img): img is File => img !== null),
+      );
     }
 
     setIsComplete(true);
@@ -146,6 +126,7 @@ const PostEditor = ({ postcard, submitAction }: PostEditorProps) => {
 
   const handleSaveEditedImage = (
     editedUrl: string,
+    editedFile: File,
     editedProps: EditedProps,
   ) => {
     if (selectedImageId === null) return;
@@ -154,6 +135,7 @@ const PostEditor = ({ postcard, submitAction }: PostEditorProps) => {
         item.fileId === selectedImageId
           ? {
               ...item,
+              originalFile: editedFile,
               previewUrl: editedUrl,
               editedProps,
             }
@@ -165,6 +147,17 @@ const PostEditor = ({ postcard, submitAction }: PostEditorProps) => {
 
   const deleteFile = (fileId: number) => {
     setImageFiles((prev) => prev.filter((item) => item.fileId !== fileId));
+  };
+
+  const handleImageClick = async (fileId: number) => {
+    if (
+      // 외부 이미지를 가져온 경우
+      imageFiles[fileId].originalUrl &&
+      imageFiles[fileId].originalFile === null
+    ) {
+      //변환...
+    }
+    setSelectedImageId(fileId);
   };
 
   return (
@@ -190,7 +183,7 @@ const PostEditor = ({ postcard, submitAction }: PostEditorProps) => {
         {imageCount > 0 && (
           <ImagePreviewer
             imageFiles={imageFiles}
-            setSelectedImageId={setSelectedImageId}
+            handleImageClick={handleImageClick}
             aspectIndex={aspectIndex}
             deleteFile={deleteFile}
           />
@@ -231,6 +224,10 @@ const PostEditor = ({ postcard, submitAction }: PostEditorProps) => {
           imageUrl={
             imageFiles.find((item) => item.fileId === selectedImageId)
               ?.originalUrl as string
+          }
+          editedProps={
+            imageFiles.find((item) => item.fileId === selectedImageId)
+              ?.editedProps ?? null
           }
           aspectRatio={ASPECT_RATIO_ITEMS[aspectIndex].value}
           onSave={handleSaveEditedImage}
