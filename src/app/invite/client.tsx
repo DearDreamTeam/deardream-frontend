@@ -7,8 +7,10 @@ import EllipseImage from "@/components/images/ellipse-image";
 import GreenBasicButton from "@/components/button/green-basic-button";
 
 import { useSearchParams } from "next/navigation";
-import { useInvitationStore } from "@/stores/useInvitationStore";
 import { useEffect } from "react";
+
+import { useInvitationStore } from "@/stores/useInvitationStore";
+import { PATH } from "@/constants/path";
 
 const InvitePageClient = () => {
   //유저 정보와 가족 정보가 일치하는 지 확인하기 위한 정보
@@ -38,12 +40,14 @@ const InvitePageClient = () => {
               </StateTemplate.ImageFiled>
               <StateTemplate.Title>초대장이 도착했어요</StateTemplate.Title>
               <StateTemplate.Content>
-                이미 <strong>이쭈히</strong>님의 가족그룹에 속해있어요.
+                이미 가족 그룹에 속해있어요.
                 <br />
                 최신 소식을 확인하러 가볼까요?
               </StateTemplate.Content>
             </StateTemplate>
-            <GreenBasicButton color="300">소식 남기러 가기</GreenBasicButton>
+            <GreenBasicButton color="300" link={PATH.HOME}>
+              소식 남기러 가기
+            </GreenBasicButton>
           </div>
         </>
       ) : (
@@ -56,7 +60,7 @@ const InvitePageClient = () => {
               </StateTemplate.ImageFiled>
               <StateTemplate.Title>초대장이 도착했어요</StateTemplate.Title>
               <StateTemplate.Content>
-                <strong>이쭈히</strong>님께서 당신을 초대했어요.
+                <strong>누군가</strong>님께서 당신을 초대했어요.
                 <br />
                 모두의 소식을 담은 이음레터로
                 <br />

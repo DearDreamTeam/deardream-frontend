@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useUserStore } from "@/stores/useUserInfoStore";
 import axiosInstance from "@/lib/axios";
 import axios from "axios";
@@ -9,20 +9,33 @@ import Header from "@/components/common/header";
 import ProfileEdit from "@/components/profile/profile-edit";
 import GreenBasicButton from "@/components/button/profile-green-basic-button";
 import { registerUser } from "@/api/profile";
+import { useInvitationStore } from "@/stores/useInvitationStore";
+import { PATH } from "@/constants/path";
 
 const ProfileClient = () => {
   const searchParams = useSearchParams();
   const kakaoCode = searchParams.get("code");
+  const familylink = searchParams.get("state");
 
   const { setUserKaKaoInfo, updateUserProfile, userKaKaoInfo, userProfile } =
     useUserStore();
 
+  const { familyLink, setFamilyLink } = useInvitationStore();
+
   const [editUserProfile, setEditUserProfile] = useState(userProfile);
 
+  const router = useRouter();
+
   const isProfileIncomplete =
-    !editUserProfile?.name?.trim() || !editUserProfile?.birth?.trim();
+    !editUserProfile?.name?.trim() ||
+    !editUserProfile?.birth?.trim() ||
+    (familylink ? !editUserProfile?.relation?.trim() : false);
 
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
+  useEffect(() => {
+    setFamilyLink(familylink);
+  }, []);
 
   useEffect(() => {
     const fetchUserInfo = async () => {
@@ -115,7 +128,11 @@ const ProfileClient = () => {
     }
 
     try {
-      const response = await registerUser(editUserProfile, selectedFile);
+      const response = await registerUser(
+        editUserProfile,
+        selectedFile,
+        familylink,
+      );
       console.log("프로필 등록 성공:", response.data);
 
       if (response.status === 200) {
@@ -128,7 +145,7 @@ const ProfileClient = () => {
           "refreshToken",
           response.data.result.refreshToken || "",
         );
-        window.location.href = "/home";
+        router.push(PATH.HOME);
       }
     } catch (error) {
       console.error("프로필 등록 실패:", error);
@@ -162,7 +179,7 @@ const ProfileClient = () => {
               <Header>프로필 설정</Header>
               <ProfileEdit
                 isSender={true}
-                isInvite={userProfile.familyId ? true : false}
+                isInvite={userProfile.familyId || familyLink ? true : false}
                 setEditUserProfile={setEditUserProfile}
                 editUserProfile={editUserProfile}
                 setSelectedFile={setSelectedFile}

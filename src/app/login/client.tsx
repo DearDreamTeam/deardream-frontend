@@ -11,13 +11,14 @@ const LoginPageClient = () => {
   //초대 코드 파라미터 추출
   const searchParams = useSearchParams();
   const inviteCode = searchParams.get("familylink");
+
   const { setFamilyLink } = useInvitationStore();
 
   useEffect(() => {
     if (inviteCode) {
       setFamilyLink(inviteCode);
     }
-  }, [inviteCode]);
+  }, []);
 
   const REST_API_KEY = process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY;
   const REDIRECT_URI = process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI;
@@ -28,6 +29,10 @@ const LoginPageClient = () => {
     kakaoURL.searchParams.append("client_id", REST_API_KEY);
     kakaoURL.searchParams.append("redirect_uri", REDIRECT_URI);
     kakaoURL.searchParams.append("response_type", "code");
+
+    if (inviteCode) {
+      kakaoURL.searchParams.append("state", inviteCode);
+    }
 
     window.location.href = kakaoURL.toString();
   };
