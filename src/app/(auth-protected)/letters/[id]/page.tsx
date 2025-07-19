@@ -1,5 +1,5 @@
 import { PATH } from "@/constants/path";
-import ArrowBack from "@/public/icons/letters/arrow-back.svg";
+import ArrowBack from "@/public/icons/common/arrow-back.svg";
 import Download from "@/public/icons/letters/download.svg";
 import Link from "next/link";
 import PdfViewer from "@/components/pdf-viewer/pdf-viewer";

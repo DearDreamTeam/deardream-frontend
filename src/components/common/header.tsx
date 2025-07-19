@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import Arrow from "@/public/icons/letters/arrow-back.svg";
+import Arrow from "@/public/icons/common/arrow-back.svg";
 
 const Header = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
