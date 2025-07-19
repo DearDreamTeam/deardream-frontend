@@ -10,3 +10,5 @@ export const PATH = {
   PROFILE: "/mypage/profile", //프로필
   MY_FAMILY: "/mypage/myfamily", //나의 가족
 };
+
+export const DEFAULT_IMAGE_PATH = `/images/default-img.svg`;
