@@ -8,7 +8,7 @@ export interface Newsletter {
   pdfId: number;
   coverImgUrl: string;
   timestamp: number;
-  status: number; // 배송 상태
+  status: string; // 배송 상태
   liked: boolean; // 즐겨찾기 여부
 }
 
