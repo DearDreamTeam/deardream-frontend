@@ -12,7 +12,10 @@ const MoreView = ({
   if (count === 0 || viewLevel === Math.ceil(count / VIEW_ITEM_UNIT))
     return null;
   return (
-    <button className="text-title-2 border-grey-200 flex w-full items-center justify-center border p-4">
+    <button
+      type="button"
+      className="text-title-2 border-grey-200 flex w-full items-center justify-center border p-4"
+    >
       <span className="flex items-center px-1">
         <ArrowDown />
         <span>더 보기</span>

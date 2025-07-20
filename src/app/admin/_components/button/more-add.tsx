@@ -3,6 +3,7 @@ import React from "react";
 const MoreAdd = ({ onClick }: { onClick: () => void }) => {
   return (
     <button
+      type="button"
       onClick={onClick}
       className="text-title-2 border-grey-200 flex w-full items-center justify-center border p-4"
     >
