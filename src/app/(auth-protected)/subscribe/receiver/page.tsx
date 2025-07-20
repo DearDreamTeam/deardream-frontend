@@ -2,7 +2,7 @@
 
 import GreenBasicButton from "@/components/button/profile-green-basic-button";
 import Header from "@/components/common/header";
-import ProfileEdit from "@/components/profile/profile-edit";
+import ReceiverProfileEdit from "@/components/profile/receiver-profile-edit";
 import {
   ReceiverProfileInfo,
   useReceiverStore,
@@ -66,9 +66,7 @@ const ReceiverProfilePage = () => {
       >
         <div>
           <Header>받는 분 정보</Header>
-          <ProfileEdit
-            isSender={false}
-            isInvite={false}
+          <ReceiverProfileEdit
             setEditReceiverProfile={setEditUserProfile}
             editReceiverProfile={editUserProfile}
             setSelectedFile={setSelectedFile}

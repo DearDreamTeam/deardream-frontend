@@ -12,14 +12,16 @@ import { registerUser } from "@/api/profile";
 
 //컴포넌트
 import Header from "@/components/common/header";
-import ProfileEdit from "@/components/profile/profile-edit";
 import GreenBasicButton from "@/components/button/profile-green-basic-button";
+import AlertDialog from "@/components/modal/dialog/alert-dialog";
+import SenderProfileEdit from "@/components/profile/sender-profile-edit";
+import Loading from "@/components/loading-fallback/loading";
 
 //경로 상수
 import { PATH } from "@/constants/path";
-import Loading from "@/components/loading-fallback/loading";
+
+//카카오 로그인
 import { kakaoLogin } from "@/lib/kakao-login";
-import AlertDialog from "@/components/modal/dialog/alert-dialog";
 
 const ProfileClient = () => {
   //카카오 로그인 코드 추출
@@ -144,9 +146,8 @@ const ProfileClient = () => {
           >
             <div>
               <Header>프로필 설정</Header>
-              <ProfileEdit
-                isSender={true}
-                isInvite={userProfile.familyId || familyLink ? true : false}
+              <SenderProfileEdit
+                isInvite={Boolean(familyLink)}
                 setEditUserProfile={setEditUserProfile}
                 editUserProfile={editUserProfile}
                 setSelectedFile={setSelectedFile}

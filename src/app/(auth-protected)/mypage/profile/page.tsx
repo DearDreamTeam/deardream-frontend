@@ -19,7 +19,7 @@ const Profile = () => {
 
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   // 저장 완료 상태
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
   // 저장 로딩 상태
   const [isLoading, setIsLoading] = useState(false);
 
@@ -38,7 +38,7 @@ const Profile = () => {
       const response = await updateProfile(editUserProfile, selectedFile);
       console.log("프로필 업데이트 성공:", response.data);
       if (response.data.isSuccess) {
-        setIsSubmitting(true);
+        setShowAlert(true);
       }
       if (response.data.result.profileImage) {
         const updatedProfile = {
@@ -81,11 +81,11 @@ const Profile = () => {
           </GreenBasicButton>
         </div>
       </form>
-      {isSubmitting && (
+      {showAlert && (
         <AlertDialog
           title="프로필 수정"
           content="프로필 수정이 완료되었습니다."
-          setIsOpen={setIsSubmitting}
+          setIsOpen={setShowAlert}
           onAction={() => {
             window.location.href = "/mypage";
           }}
