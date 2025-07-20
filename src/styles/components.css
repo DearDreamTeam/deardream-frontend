@@ -60,4 +60,32 @@
   .type-bar {
     @apply bg-grey-0 border-y-grey-200 flex items-center justify-between border-y px-5 py-4;
   }
+
+  .admin-delivery-status {
+    @apply text-body-1 flex w-[5.6rem] items-center justify-center gap-1 rounded-sm border border-green-300 px-1 py-[0.2rem] whitespace-nowrap text-green-300;
+  }
+
+  .admin-table-header {
+    @apply text-title-1 border-grey-200 flex justify-between border px-5 py-4 text-center text-green-300;
+  }
+
+  .admin-table-item {
+    @apply text-title-2 border-x-grey-200 border-b-grey-200 flex w-full justify-between border-x border-b px-5 py-4 text-center hover:bg-green-100;
+  }
+
+  .admin-checkbox {
+    @apply h-[28px] w-[28px];
+  }
+
+  .admin-fill-button {
+    @apply text-body-1 flex w-fit items-center rounded-sm px-1 py-[0.2rem];
+  }
+
+  .flex-center {
+    @apply flex items-center justify-center;
+  }
+
+  .input-center {
+    @apply w-full text-center;
+  }
 }

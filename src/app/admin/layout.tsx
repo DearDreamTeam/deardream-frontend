@@ -6,9 +6,9 @@ const Layout = ({
   children: React.ReactNode;
 }>) => {
   return (
-    <div className="w-screen">
+    <div className="w-dvw">
       <AdminHeader />
-      {children}
+      <div className="px-36 py-20">{children}</div>
     </div>
   );
 };
