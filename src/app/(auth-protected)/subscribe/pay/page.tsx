@@ -7,14 +7,20 @@ import axios from "axios";
 import Check from "@/public/icons/common/check.svg"; // Assuming you have a green check icon
 import { useState } from "react";
 import { useUserStore } from "@/stores/useUserInfoStore";
+import { useRouter } from "next/navigation";
+import { usePaymentStore } from "@/stores/usePaymentStore";
 
 const PayPage = () => {
   const { userProfile } = useUserStore();
+  const { setTid } = usePaymentStore();
+
   const [isPaymentCheck] = useState(true);
   const [isAllCheck, setIsAllCheck] = useState(false);
   const [isCheck2, setIsCheck2] = useState(false);
   const [isCheck3, setIsCheck3] = useState(false);
   const [isCheck4, setIsCheck4] = useState(false);
+
+  const router = useRouter();
 
   const isAbleSubmit = isPaymentCheck && isCheck2 && isCheck3;
 
@@ -83,6 +89,10 @@ const PayPage = () => {
         },
       );
       console.log(response);
+      if (response.status === 200) {
+        setTid(response.data.result.tid);
+        router.push(response.data.result.next_redirect_pc_url);
+      }
     } catch (error) {
       console.log(error);
     }

@@ -3,7 +3,7 @@ import { create } from "zustand";
 
 interface InvitationState {
   familyLink: string | null;
-  setFamilyLink: (link: string) => void;
+  setFamilyLink: (link: string | null) => void;
   clearFamilyLink: () => void;
 }
 

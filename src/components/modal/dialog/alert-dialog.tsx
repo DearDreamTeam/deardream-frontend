@@ -1,7 +1,7 @@
 import Dialog from "./dialog";
 import { DialogProps } from "@/types/dialog-props";
 
-const AlertDialog = ({ title, content, setIsOpen }: DialogProps) => {
+const AlertDialog = ({ title, content, setIsOpen, onAction }: DialogProps) => {
   return (
     <Dialog>
       <Dialog.Message>
@@ -11,7 +11,10 @@ const AlertDialog = ({ title, content, setIsOpen }: DialogProps) => {
       <Dialog.Actions>
         <button
           type="button"
-          onClick={() => setIsOpen(false)}
+          onClick={() => {
+            setIsOpen(false);
+            onAction?.();
+          }}
           className="modal-btn text-green-300"
         >
           확인

@@ -4,10 +4,12 @@ import Mail from "@/public/icons/share-options/email.svg";
 import Share from "@/public/icons/share-options/share.svg";
 import { useUserStore } from "@/stores/useUserInfoStore";
 
+const CLIENT_URL = process.env.NEXT_PUBLIC_CLIENT_URL;
+
 export const SHARE_DATA = {
   title: "이어드림 가족 초대",
   text: `${useUserStore.getState().userProfile.name}님과 함께 소식지 만들기에 동참해보세요!`,
-  url: "https://www.deardream.site/",
+  url: CLIENT_URL,
 };
 
 const SHARE_ACTIONS = {

@@ -5,6 +5,7 @@ import { UserProfileInfo } from "@/types/user-info";
 export const registerUser = async (
   userProfile: UserProfileInfo,
   imageFile?: File | null,
+  familylink?: string | null,
 ) => {
   const formData = new FormData();
 
@@ -16,7 +17,7 @@ export const registerUser = async (
       userProfile.relation && userProfile.relation !== ""
         ? userProfile.relation
         : null,
-    familylink: userProfile.familylink || null,
+    otherRelation: userProfile.otherRelation ?? null,
   };
 
   const jsonFile = new File(
@@ -31,7 +32,11 @@ export const registerUser = async (
   }
   console.log("등록할 프로필 정보:", formData);
 
-  const response = await axios.post("/v1/users/register", formData);
+  const response = await axios.post("/v1/users/register", formData, {
+    params: {
+      code: familylink,
+    },
+  });
 
   return response;
 };

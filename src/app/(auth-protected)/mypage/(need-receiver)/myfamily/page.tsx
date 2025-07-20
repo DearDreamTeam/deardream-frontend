@@ -1,6 +1,5 @@
 "use client";
 import Header from "@/components/common/header";
-// import RedSpan from "@/components/common/red-span";
 import Crown from "@/public/icons/common/crown.svg";
 import { useEffect, useState } from "react";
 import Image from "next/image";
@@ -113,6 +112,13 @@ const MyFamilyPage = () => {
         const response = await axios.get("/v1/family");
         setFamily(response.data.result.members);
         console.log("Family data fetched successfully:", response.data);
+        if (userProfile.role !== "LEADER") {
+          setReceiver({
+            ...receiver,
+            name: response.data.result.recipientName,
+          });
+          console.log("Receiver data fetched successfully:", receiver);
+        }
       } catch (error) {
         console.error("Error fetching family data:", error);
       } finally {
@@ -120,7 +126,9 @@ const MyFamilyPage = () => {
       }
     };
 
-    fetchReceiver();
+    if (userProfile.role === "LEADER") {
+      fetchReceiver();
+    }
     fetchFamilyData();
   }, []);
 
@@ -169,7 +177,7 @@ const MyFamilyPage = () => {
         </div>
       ) : (
         <>
-          <div className="text-grey-800 flex h-screen w-screen flex-col items-center justify-center gap-6 bg-green-100 text-center">
+          <div className="text-grey-800 flex h-full flex-col items-center justify-center gap-6 bg-green-100 text-center">
             <div className="h-12 w-12 animate-spin rounded-full border-t-4 border-green-600" />
             <div className="text-xl font-semibold">
               정보를 불러오는 중입니다

@@ -97,7 +97,7 @@ const InstitutionAddressInput = () => {
             <button
               type="button"
               onClick={handleCodeCheck}
-              className="inline-flex items-center justify-center rounded bg-green-100 px-4 py-2 whitespace-nowrap text-green-300"
+              className="inline-flex items-center justify-center rounded-sm bg-green-100 px-4 py-2 whitespace-nowrap text-green-300"
             >
               기관 코드 확인
             </button>
