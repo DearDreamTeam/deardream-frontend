@@ -65,6 +65,16 @@ const ProfileEdit = ({
     ),
   );
 
+  const name = editUserProfile?.name ?? editReceiverProfile?.name ?? "";
+
+  const handleChangeName = (newName: string) => {
+    if (setEditUserProfile) {
+      setEditUserProfile((prev) => ({ ...prev, name: newName }));
+    } else if (setEditReceiverProfile) {
+      setEditReceiverProfile((prev) => ({ ...prev, name: newName }));
+    }
+  };
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -115,23 +125,9 @@ const ProfileEdit = ({
             type="text"
             className="text-headline-3 text-grey-700 placeholder:text-grey-300 border-grey-300 w-80 border-b-1 border-solid py-2 focus:ring-0 focus:outline-none"
             placeholder="이름을 입력해주세요"
-            value={
-              editUserProfile
-                ? editUserProfile.name
-                : editReceiverProfile?.name || ""
-            }
+            value={name}
             onChange={(e) => {
-              if (setEditUserProfile) {
-                setEditUserProfile((prev) => ({
-                  ...prev,
-                  name: e.target.value,
-                }));
-              } else if (setEditReceiverProfile) {
-                setEditReceiverProfile((prev) => ({
-                  ...prev,
-                  name: e.target.value,
-                }));
-              }
+              handleChangeName(e.target.value);
             }}
           />
         </div>
