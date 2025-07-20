@@ -13,7 +13,7 @@ const defaultProfile: UserProfileInfo = {
   familyId: null,
   familylink: null,
   familyRegistered: false,
-  role: "USER",
+  role: "DEFAULT",
 };
 
 interface UserState {

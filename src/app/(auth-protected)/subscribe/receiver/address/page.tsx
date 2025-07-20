@@ -15,6 +15,13 @@ const AddressPage = () => {
   const router = useRouter();
 
   const [isDirty, setIsDirty] = useState(false);
+  const inComplete =
+    receiver.name && receiver.address.deliveryType === "INSTITUTION"
+      ? !receiver.address.code
+      : !receiver.address.address ||
+        !receiver.address.recipientName ||
+        !receiver.address.recipientPhone ||
+        !receiver.address.postalCode;
 
   useEffect(() => {
     setIsDirty(true);
@@ -55,10 +62,7 @@ const AddressPage = () => {
           )}
         </div>
         <div className="flex h-14 w-full items-center justify-center">
-          <GreenBasicButton
-            color="300"
-            disabled={!receiver.name || !receiver.address.address}
-          >
+          <GreenBasicButton color="300" disabled={inComplete}>
             저장
           </GreenBasicButton>
         </div>

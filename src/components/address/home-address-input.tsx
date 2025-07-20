@@ -10,49 +10,12 @@ const DaumPostcodeEmbed = dynamic(() => import("react-daum-postcode"), {
   ssr: false,
 });
 
-interface HomeAddressInputProps {
-  code: string;
-  name: string;
-  address: string;
-  phone: string;
-  postalCode: string;
-}
-
 const HomeAddressInput = () => {
-  const [institution, setInstitution] = useState<HomeAddressInputProps>({
-    code: "",
-    name: "",
-    address: "",
-    phone: "",
-    postalCode: "",
-  });
   const { receiver, setReceiver } = useReceiverStore();
-  const [detailAddress, setDetailAddress] = useState("");
   const [showPostcode, setShowPostcode] = useState(false);
-
-  const handleDetailAddressChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    setDetailAddress(e.target.value);
-    setReceiver({
-      address: {
-        ...receiver.address,
-        addressDetail: e.target.value,
-        deliveryType: "HOME",
-      },
-    });
-  };
 
   const handleAddressComplete = (data: Address) => {
     const { address, zonecode } = data;
-
-    const updatedInstitution = {
-      ...institution,
-      address,
-      postalCode: zonecode,
-    };
-
-    setInstitution(updatedInstitution);
 
     setReceiver({
       address: {
@@ -76,10 +39,11 @@ const HomeAddressInput = () => {
               type="text"
               className="text-headline-3 text-grey-700 placeholder:text-grey-400 border-grey-300 w-45 border-b-1 border-solid px-1 py-2 focus:ring-0 focus:outline-none"
               placeholder="우편 번호"
-              value={institution.postalCode || receiver?.address.postalCode}
+              value={receiver?.address.postalCode || ""}
               readOnly
             />
             <button
+              type="button"
               className="inline-flex items-center justify-center rounded-sm bg-green-100 px-4 py-2 whitespace-nowrap text-green-300"
               onClick={() => setShowPostcode(true)}
             >
@@ -99,7 +63,7 @@ const HomeAddressInput = () => {
           <input
             type="text"
             className="text-grey-700 placeholder:text-grey-400 border-grey-300 text-headline-3 w-80 border-b-1 border-solid px-1 py-2 focus:ring-0 focus:outline-none"
-            value={institution.address || receiver?.address.address}
+            value={receiver?.address.address || ""}
             readOnly
           />
         </div>
@@ -109,8 +73,15 @@ const HomeAddressInput = () => {
             type="text"
             className="text-grey-700 placeholder:text-grey-400 border-grey-300 text-headline-3 w-80 border-b-1 border-solid px-1 py-2 focus:ring-0 focus:outline-none"
             placeholder="상세 주소를 입력해주세요(선택)"
-            value={detailAddress || receiver?.address.addressDetail}
-            onChange={handleDetailAddressChange}
+            value={receiver?.address.addressDetail || ""}
+            onChange={(e) => {
+              setReceiver({
+                address: {
+                  ...receiver.address,
+                  addressDetail: e.target.value,
+                },
+              });
+            }}
           />
         </div>
 
@@ -119,7 +90,16 @@ const HomeAddressInput = () => {
           <input
             type="text"
             className="text-grey-700 placeholder:text-grey-400 border-grey-300 text-headline-3 w-80 border-b-1 border-solid px-1 py-2 focus:ring-0 focus:outline-none"
-            value={institution.name || receiver?.address.institutionName}
+            value={receiver?.address.recipientName || ""}
+            onChange={(e) => {
+              setReceiver({
+                address: {
+                  ...receiver.address,
+                  recipientName: e.target.value,
+                },
+              });
+            }}
+            placeholder="수령인 성함을 입력해주세요"
           />
         </div>
 
@@ -128,7 +108,16 @@ const HomeAddressInput = () => {
           <input
             type="text"
             className="text-grey-700 placeholder:text-grey-400 border-grey-300 text-headline-3 w-80 border-b-1 border-solid px-1 py-2 focus:ring-0 focus:outline-none"
-            value={institution.phone || receiver?.address.institutionPhone}
+            value={receiver?.address.recipientPhone || ""}
+            onChange={(e) => {
+              setReceiver({
+                address: {
+                  ...receiver.address,
+                  recipientPhone: e.target.value,
+                },
+              });
+            }}
+            placeholder="수령인 전화번호를 입력해주세요"
           />
         </div>
       </div>

@@ -10,7 +10,7 @@ const CompletePage = () => {
         title="가족 생성이 완료되었어요"
         description="지금 바로 첫 소식을 남기러 가볼까요?"
       />
-      <GreenBasicButton color="300" link={PATH.LETTER_LIST}>
+      <GreenBasicButton color="300" link={PATH.LETTER_LIST} newTab={true}>
         소식 남기러 가기
       </GreenBasicButton>
     </div>

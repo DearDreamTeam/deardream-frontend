@@ -15,7 +15,7 @@ export default function ProtectedLayout({
 }) {
   const router = useRouter();
 
-  const { updateUserProfile, userProfile } = useUserStore();
+  const { updateUserProfile } = useUserStore();
   const { setFamilyLink } = useInvitationStore();
 
   const pathname = usePathname();
@@ -48,6 +48,7 @@ export default function ProtectedLayout({
             otherRelation: userData.otherRelation,
             familyRegistered: userData.familyRegistered,
             familyId: userData.familyId,
+            role: userData.role,
           });
         } else {
           throw new Error("사용자 정보 조회 실패");
@@ -71,9 +72,7 @@ export default function ProtectedLayout({
     };
 
     checkUser();
-    if (userProfile.role === "LEADER") {
-      checkFamilyLink();
-    }
+    checkFamilyLink();
   }, []);
 
   return (

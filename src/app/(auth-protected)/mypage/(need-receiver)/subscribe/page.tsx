@@ -79,9 +79,6 @@ const SubScribePage = () => {
                     : "구독 없음"}
             </div>
           </div>
-          {planType === "HOME" && (
-            <div className="text-label-1 p-2">2025.09.01 결제 예정</div>
-          )}
           <div className="mt-3 flex flex-col gap-2 py-2">
             <div className="text-label-1 text-grey-400">구독</div>
             <div className="flex flex-col gap-3">

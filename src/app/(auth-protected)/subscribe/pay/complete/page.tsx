@@ -1,25 +1,53 @@
 "use client";
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Result from "@/components/result/result";
+import GreenBasicButton from "@/components/button/green-basic-button";
+import axios from "@/lib/axios";
+import { usePaymentStore } from "@/stores/usePaymentStore";
 
 const CompletePage = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const pgToken = searchParams.get("pg_token");
+  const { tid } = usePaymentStore();
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      router.push("/subscribe/receiver/address");
-    }, 3000);
-
-    return () => clearTimeout(timer);
-  }, [router]);
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      console.log(pgToken, tid);
+      const response = await axios.get("/v1/test/payment/success", {
+        params: {
+          pgToken: pgToken,
+          tid: tid,
+        },
+      });
+      if (response.status === 200) {
+        router.push("/subscribe/complete");
+      }
+    } catch (error) {
+      console.error(error);
+      const response = await axios.get("/v1/test/payment/fail", {
+        params: {
+          pgToken: pgToken,
+          tid: tid,
+        },
+      });
+      if (response.status === 200) {
+        alert("결제 실패 다시 결제해주세요");
+        router.push("/subscribe/pay");
+      }
+    }
+  };
 
   return (
     <>
-      <Result
-        title="결제가 완료되었어요"
-        description="소식지를 받을 주소를 등록해주세요"
-      />
+      <form
+        className="flex h-full w-full flex-col items-center justify-center gap-2 p-4"
+        onSubmit={handleSubmit}
+      >
+        <Result title="결제 완료 버튼을 눌러주세요!" description="" />
+        <GreenBasicButton color="300">결제 완료 하기</GreenBasicButton>
+      </form>
     </>
   );
 };

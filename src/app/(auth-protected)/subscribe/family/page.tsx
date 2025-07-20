@@ -17,6 +17,14 @@ const FamilyPage = () => {
     return false;
   };
 
+  const postLink = async () => {
+    const response = await axios.post("/v1/family/link");
+    if (response.status === 200) {
+      return response.data.result.link;
+    }
+    return null;
+  };
+
   useEffect(() => {
     if (hasRunRef.current) return; // 두 번째 실행 방지
     hasRunRef.current = true;
@@ -26,7 +34,8 @@ const FamilyPage = () => {
         const postResponse = await axios.post("/v1/family");
         if (postResponse.status === 200) {
           const isRegistered = await waitForFamilyRegistered();
-          if (isRegistered) {
+          const isLink = await postLink();
+          if (isRegistered && isLink) {
             router.push("/subscribe/family/complete");
           } else {
             alert("가족 등록 정보가 서버에 반영되지 않았습니다.");
