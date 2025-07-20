@@ -22,18 +22,25 @@ import { kakaoLogin } from "@/lib/kakao-login";
 import AlertDialog from "@/components/modal/dialog/alert-dialog";
 
 const ProfileClient = () => {
+  //카카오 로그인 코드 추출
   const searchParams = useSearchParams();
   const kakaoCode = searchParams.get("code");
+
+  //초대 코드 추출
   const familylink = searchParams.get("state");
 
-  const { setUserKaKaoInfo, updateUserProfile, userKaKaoInfo, userProfile } =
-    useUserStore();
-
+  //전역 상태 관리
+  const { setUserKaKaoInfo, updateUserProfile, userProfile } = useUserStore();
   const { familyLink, setFamilyLink } = useInvitationStore();
 
+  //프로필 등록 상태 관리
   const [editUserProfile, setEditUserProfile] = useState(userProfile);
   const [isProfileSubmitted, setIsProfileSubmitted] = useState(false);
 
+  //로딩 상태 관리
+  const [isLoading, setIsLoading] = useState(true);
+
+  //라우터
   const router = useRouter();
 
   //프로필 등록 유효성 검사
@@ -42,32 +49,43 @@ const ProfileClient = () => {
     !editUserProfile?.birth?.trim() ||
     (familylink ? !editUserProfile?.relation?.trim() : false);
 
+  //프로필 이미지 선택 상태 관리
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
+  //초대 코드 저장
   useEffect(() => {
     if (familylink) setFamilyLink(familylink);
   }, [familylink]);
 
+  //카카오 로그인 처리
   useEffect(() => {
     const fetchUserInfo = async () => {
-      if (!kakaoCode) return;
+      if (!kakaoCode) {
+        setIsLoading(false); // 코드 없으면 바로 끝냄
+        return;
+      }
+
       try {
         await kakaoLogin(kakaoCode, setUserKaKaoInfo, updateUserProfile);
       } catch (error) {
         console.error("카카오 로그인 실패:", error);
         alert("로그인에 실패했습니다. 다시 시도해주세요.");
+      } finally {
+        setIsLoading(false); // 로그인 요청 완료 후 로딩 종료
       }
     };
 
     fetchUserInfo();
   }, [kakaoCode, setUserKaKaoInfo, updateUserProfile]);
 
+  //프로필 정보 수정 할 때마다 전역 상태 관리 프로필 정보 업데이트
   useEffect(() => {
     if (userProfile) {
       setEditUserProfile(userProfile);
     }
   }, [userProfile]);
 
+  //프로필 정보 서버에 저장
   const handleSubmitProfile = async () => {
     if (isProfileIncomplete) {
       alert("이름과 생일을 입력해주세요.");
@@ -95,24 +113,27 @@ const ProfileClient = () => {
       }
     } catch (error) {
       console.error("프로필 등록 실패:", error);
+      alert("프로필 등록에 실패했습니다. 다시 시도해주세요.");
     }
   };
 
+  // 등록된 유저는 홈으로
+  const shouldRedirect = !isLoading && userProfile?.id !== 0;
+
   useEffect(() => {
-    if (!userProfile) {
-      console.log("사용자 프로필이 아직 설정되지 않았습니다.");
-      return;
+    if (shouldRedirect) {
+      router.replace(PATH.HOME);
     }
-    if (userProfile?.id != 0) {
-      console.log(userProfile.id);
-      console.log("실제로 반영된 userProfile:", userProfile);
-      window.location.href = "/home";
-    }
-  }, [userProfile]);
+  }, [shouldRedirect, router]);
+
+  // 로딩 조건 체크 ( 로딩 상태 + 사용자 프로필 준비 전 → 렌더링 차단)
+  if (isLoading || !userProfile || shouldRedirect) {
+    return <Loading />;
+  }
 
   return (
     <>
-      {userKaKaoInfo ? (
+      {!isLoading ? (
         <>
           <form
             onSubmit={(e) => {
