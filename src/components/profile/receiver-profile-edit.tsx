@@ -1,8 +1,7 @@
 // app/page.tsx
 "use client";
 import BirthSelect from "@/components/select/birth-select";
-import { useEffect, useState } from "react";
-import { useUserStore } from "@/stores/useUserInfoStore";
+import { useState } from "react";
 
 import { formatImageUrl } from "@/utils/format-image-url";
 import ProfileNameInput from "./ common/profile-name-input";
@@ -26,18 +25,12 @@ const ReceiverProfileEdit = ({
   editReceiverProfile,
 }: ReceiverProfileEditProps) => {
   //todo: userProfile을 직접 사용하지 않고, editUserProfile을 사용하도록 변경
-  const { userProfile } = useUserStore();
 
   // 이미지 URL 상태
   // useState의 초기값에 인자를 2개 넘기는 오류 수정
   const [imageUrl, setImageUrl] = useState<string>(
     formatImageUrl(editReceiverProfile?.profileImage),
   );
-
-  // 프로필 정보가 모두 입력되었는지 확인
-  useEffect(() => {
-    console.log("postUser:", editReceiverProfile, userProfile);
-  }, [editReceiverProfile]);
 
   return (
     <>

@@ -9,7 +9,7 @@ import {
   useReceiverStore,
 } from "@/stores/useReceiverStore";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const ReceiverProfilePage = () => {
   const { receiver, setReceiver } = useReceiverStore();
@@ -25,16 +25,14 @@ const ReceiverProfilePage = () => {
     !editUserProfile?.birth?.trim() ||
     !editUserProfile?.phone?.trim();
 
-  useEffect(() => {
-    console.log("Receiver profile updated:", receiver);
-  }, [editUserProfile, setReceiver]);
-
   const handleSave = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       setIsLoading(true);
       const response = await updateReceiver(editUserProfile, selectedFile);
-      console.log("Response from server:", response.data);
+      if (response.data.isSuccess) {
+        setReceiver(response.data.result);
+      }
     } catch (error) {
       console.error("Error updating receiver profile:", error);
     } finally {

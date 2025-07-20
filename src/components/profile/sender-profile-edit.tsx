@@ -35,7 +35,7 @@ const SenderProfileEdit = ({
   // 프로필 정보가 모두 입력되었는지 확인
   useEffect(() => {
     console.log("postUser:", editUserProfile, userProfile);
-  }, [editUserProfile]);
+  }, [editUserProfile, userProfile]);
 
   return (
     <>

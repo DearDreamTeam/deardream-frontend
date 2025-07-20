@@ -32,7 +32,7 @@ const InvitePageClient = () => {
     if (inviteCode) {
       setFamilyLink(inviteCode);
     }
-  }, [inviteCode]);
+  }, [inviteCode, setFamilyLink]);
 
   useEffect(() => {
     const checkFamilyLink = async () => {
@@ -49,7 +49,7 @@ const InvitePageClient = () => {
       }
     };
     checkFamilyLink();
-  }, []);
+  }, [inviteCode, setFamilyLink, setReceiver, setIsLoading, setIsLeader]);
 
   return (
     <>

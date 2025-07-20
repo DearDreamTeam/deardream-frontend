@@ -55,7 +55,13 @@ export default function ProtectedLayout({
         setShowForbidden(true);
       }
     }
-  }, [userProfile.role, pathname]);
+  }, [
+    userProfile.role,
+    pathname,
+    setReceiver,
+    setShowDialog,
+    setShowForbidden,
+  ]);
 
   const handleMove = () => {
     router.push("/subscribe");

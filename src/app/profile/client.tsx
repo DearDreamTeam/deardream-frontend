@@ -57,7 +57,7 @@ const ProfileClient = () => {
   //초대 코드 저장
   useEffect(() => {
     if (familylink) setFamilyLink(familylink);
-  }, [familylink]);
+  }, [familylink, setFamilyLink]);
 
   //카카오 로그인 처리
   useEffect(() => {

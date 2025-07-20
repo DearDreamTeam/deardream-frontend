@@ -130,7 +130,7 @@ const MyFamilyPage = () => {
       fetchReceiver();
     }
     fetchFamilyData();
-  }, []);
+  }, [userProfile.role, receiver, setReceiver]);
 
   return (
     <>

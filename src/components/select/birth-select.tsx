@@ -62,9 +62,17 @@ const BirthdayInputs = ({
     }
   };
 
+  const isValidDate = (y: string, m: string, d: string): boolean => {
+    const date = new Date(`${y}-${m}-${d}`);
+    return (
+      date.getFullYear() === parseInt(y) &&
+      date.getMonth() + 1 === parseInt(m) &&
+      date.getDate() === parseInt(d)
+    );
+  };
   // 날짜가 바뀌면 setPostUser에 업데이트
   useEffect(() => {
-    if (year && month && day) {
+    if (year && month && day && isValidDate(year, month, day)) {
       if (setEditUserProfile) {
         setEditUserProfile((prev) => ({
           ...prev,
@@ -80,7 +88,7 @@ const BirthdayInputs = ({
         }));
       }
     }
-  }, [year, month, day, isLunar, setEditUserProfile]);
+  }, [year, month, day, isLunar, setEditUserProfile, setEditReceiverProfile]);
 
   return (
     <>

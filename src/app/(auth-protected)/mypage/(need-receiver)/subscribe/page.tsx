@@ -29,7 +29,7 @@ const SubScribePage = () => {
       }
     };
     fetchReceiver();
-  }, []);
+  }, [setReceiver]);
 
   const router = useRouter();
   return (

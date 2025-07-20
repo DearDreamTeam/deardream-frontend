@@ -39,16 +39,7 @@ export default function ProtectedLayout({
         if (res.status === 200) {
           const userData = res.data.result;
           updateUserProfile({
-            id: userData.id,
-            name: userData.name,
-            birth: userData.birth,
-            profileImage: userData.profileImage,
-            calendarType: userData.calendarType,
-            relation: userData.relation,
-            otherRelation: userData.otherRelation,
-            familyRegistered: userData.familyRegistered,
-            familyId: userData.familyId,
-            role: userData.role,
+            ...userData,
           });
         } else {
           throw new Error("사용자 정보 조회 실패");
@@ -73,7 +64,7 @@ export default function ProtectedLayout({
 
     checkUser();
     checkFamilyLink();
-  }, []);
+  }, [router, setFamilyLink, updateUserProfile, skipAuthCheck]);
 
   return (
     <div className="shadow-default bg-grey-50 mx-auto flex h-full max-w-[768px] flex-col justify-between">
