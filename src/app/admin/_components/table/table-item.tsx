@@ -13,6 +13,7 @@ import {
 import PostcodePopup from "@/components/address/postcode-popup";
 import Cancel from "@/public/icons/common/cancel.svg";
 import { Dispatch, SetStateAction } from "react";
+import { formatPhoneNumber } from "@/utils/format-phone-number";
 
 export const IndividualTableItem = (
   props: {
@@ -121,7 +122,9 @@ export const AddInstitutionTableItem = ({
   const handleChangeInput = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
-    const { name, value } = e.target;
+    const { name } = e.target;
+    const value =
+      name === "phone" ? formatPhoneNumber(e.target.value) : e.target.value;
     setInstitutionList((prev) =>
       prev.map((item, idx) =>
         idx === index
@@ -166,13 +169,12 @@ export const AddInstitutionTableItem = ({
       <span className={ADD_INSTITUTIONS_TABLE_ITEMS[2].flex}>
         <input
           value={postalCode}
-          name={ADD_INSTITUTIONS_TABLE_ITEMS[2].value}
-          onChange={handleChangeInput}
-          type="text"
-          readOnly
           placeholder="우편번호"
-          className="input-center"
+          name={ADD_INSTITUTIONS_TABLE_ITEMS[2].value}
+          type="text"
+          onChange={() => {}}
           required
+          className="input-center"
         />
         <PostcodePopup handleAddress={handleAddress} />
       </span>
@@ -181,7 +183,6 @@ export const AddInstitutionTableItem = ({
         <textarea
           value={address}
           name={ADD_INSTITUTIONS_TABLE_ITEMS[3].value}
-          onChange={handleChangeInput}
           readOnly
           placeholder="기관주소는 자동 입력됩니다"
           className="input-center break-keep"
@@ -206,6 +207,7 @@ export const AddInstitutionTableItem = ({
           name={ADD_INSTITUTIONS_TABLE_ITEMS[5].value}
           onChange={handleChangeInput}
           type="tel"
+          pattern="([0-9]{3}-[0-9]{3}-[0-9]{4})|([0-9]{2}-[0-9]{3}-[0-9]{4})|([0-9]{3}-[0-9]{4}-[0-9]{4})"
           placeholder="000-0000-0000"
           className="input-center"
           required
