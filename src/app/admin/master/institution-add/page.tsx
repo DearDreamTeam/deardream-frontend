@@ -15,7 +15,7 @@ const DEFAULT = {
   addressDetail: "",
   phone: "",
   serviceDate: "",
-  members: 0,
+  members: NaN,
 };
 
 const Page = () => {
