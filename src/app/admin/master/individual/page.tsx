@@ -12,7 +12,6 @@ import { DELIVERY_TYPE } from "@/constants/delivery-type";
 
 const Page = () => {
   const [checkedItem, setCheckedItem] = useState<number[]>([]);
-  const mock = Array.from({ length: 30 }, (_, i) => i);
   const { individuals } = useSuperAdminStore();
 
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,22 +27,22 @@ const Page = () => {
     <div className="bg-grey-0 w-full">
       <PageToggle curPage={DELIVERY_TYPE.HOME} />
       <div className="flex justify-between">
-        <ItemCount count={mock.length} />
+        <ItemCount count={individuals.length} />
 
         <div className="flex items-center gap-4">
           <ChangeStatus selectedItemCount={checkedItem.length} />
         </div>
       </div>
       <IndividualTableHeader />
-      {mock.map((item, index) => (
+      {individuals.map((item, index) => (
         <IndividualTableItem
-          key={item}
+          key={index}
           index={index + 1}
-          {...individuals[index % individuals.length]}
+          {...item}
           handleCheckboxChange={handleCheckboxChange}
         />
       ))}
-      <MoreView viewLevel={1} count={mock.length} />
+      <MoreView viewLevel={1} count={individuals.length} />
     </div>
   );
 };

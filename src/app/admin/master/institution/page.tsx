@@ -11,7 +11,6 @@ import PageToggle from "../../_components/button/page-toggle";
 
 const Page = () => {
   const [checkedItem, setCheckedItem] = useState<number[]>([]);
-  const mock = Array.from({ length: 30 }, (_, i) => i);
   const { institutions } = useSuperAdminStore();
 
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,22 +27,22 @@ const Page = () => {
     <div className="bg-grey-0 w-full">
       <PageToggle curPage={DELIVERY_TYPE.INSTITUTION} />
       <div className="flex justify-between">
-        <ItemCount count={mock.length} />
+        <ItemCount count={institutions.length} />
 
         <div className="flex items-center gap-4">
           <ChangeStatus selectedItemCount={checkedItem.length} />
         </div>
       </div>
       <InstitutionTableHeader />
-      {mock.map((item, index) => (
+      {institutions.map((item, index) => (
         <InstitutionTableItem
-          key={item}
+          key={index}
           index={index + 1}
-          {...institutions[index % institutions.length]}
+          {...item}
           handleCheckboxChange={handleCheckboxChange}
         />
       ))}
-      <MoreView viewLevel={1} count={mock.length} />
+      <MoreView viewLevel={1} count={institutions.length} />
     </div>
   );
 };
