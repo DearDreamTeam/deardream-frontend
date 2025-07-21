@@ -13,9 +13,7 @@ const Page = () => {
   const [checkedItem, setCheckedItem] = useState<number[]>([]);
   const { institutions } = useSuperAdminStore();
 
-  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, checked } = e.target; // name: number = archiveId, checked: boolean
-    const institutionId = parseInt(name);
+  const handleCheckboxChange = (institutionId: number, checked: boolean) => {
     if (checked) setCheckedItem((prev) => [...prev, institutionId]);
     else
       setCheckedItem((prev) =>

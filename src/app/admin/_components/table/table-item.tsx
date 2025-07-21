@@ -16,11 +16,13 @@ import Cancel from "@/public/icons/common/cancel.svg";
 import { Dispatch, SetStateAction } from "react";
 import { formatPhoneNumber } from "@/utils/format-phone-number";
 import { Families } from "@/types/admin-organization-dto";
+import Checkbox from "../button/checkbox";
+import { CheckboxProps } from "../button/checkbox-props";
 
 export const IndividualTableItem = (
   props: {
     index: number;
-    handleCheckboxChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    handleCheckboxChange: CheckboxProps;
   } & IndividualsDto,
 ) => {
   return (
@@ -43,11 +45,9 @@ export const IndividualTableItem = (
         if (value === "checkbox")
           return (
             <span key={key} className={flex}>
-              <input
-                type="checkbox"
-                name={props.archiveId.toString()}
-                className="admin-checkbox"
-                onChange={props.handleCheckboxChange}
+              <Checkbox
+                idValue={props.archiveId}
+                callback={props.handleCheckboxChange}
               />
             </span>
           );
@@ -64,7 +64,7 @@ export const IndividualTableItem = (
 export const InstitutionTableItem = (
   props: {
     index: number;
-    handleCheckboxChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    handleCheckboxChange: CheckboxProps;
   } & InstitutionsDto,
 ) => {
   return (
@@ -87,11 +87,9 @@ export const InstitutionTableItem = (
         if (value === "checkbox")
           return (
             <span key={key} className={flex}>
-              <input
-                type="checkbox"
-                className="admin-checkbox"
-                name={props.institutionId.toString()}
-                onChange={props.handleCheckboxChange}
+              <Checkbox
+                idValue={props.institutionId}
+                callback={props.handleCheckboxChange}
               />
             </span>
           );
@@ -182,14 +180,9 @@ export const AddInstitutionTableItem = ({
       </span>
 
       <span className={ADD_INSTITUTIONS_TABLE_ITEMS[3].flex}>
-        <textarea
-          value={address}
-          name={ADD_INSTITUTIONS_TABLE_ITEMS[3].value}
-          readOnly
-          placeholder="기관주소는 자동 입력됩니다"
-          className="input-center break-keep"
-          required
-        ></textarea>
+        <div className={`break-keep ${!address && "text-grey-400"}`}>
+          {address || "기관주소는 자동 입력됩니다"}
+        </div>
       </span>
 
       <span className={ADD_INSTITUTIONS_TABLE_ITEMS[4].flex}>
