@@ -48,7 +48,7 @@ export const ADD_INSTITUTIONS_TABLE_ITEMS = [
 
 export const INSTITUTIONS_DETAIL_TABLE_ITEMS = [
   { value: "index", label: "번호", flex: "flex-[1]" },
-  { value: "name", label: "성함", flex: "flex-[2]" },
+  { value: "receiverName", label: "성함", flex: "flex-[2]" },
   { value: "familyId", label: "가족 ID", flex: "flex-[2]" },
   { value: "addressDetail", label: "상세 주소", flex: "flex-[6]" },
   { value: "phone", label: "받는 분 전화번호", flex: "flex-[3]" },

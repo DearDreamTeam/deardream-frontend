@@ -9,11 +9,16 @@ import MoreView from "../../_components/button/more-view";
 import { DELIVERY_TYPE } from "@/constants/delivery-type";
 import PageToggle from "../../_components/button/page-toggle";
 import { INSTITUTIONS_TABLE_ITEMS } from "../../_components/table/table-items";
+import MonthPicker from "../../_components/month-picker";
+import InstitutionDetail from "../../_components/viewer/institution-detail";
+import { mockFam } from "@/stores/admin/useOrganizationAdminStore";
 
 const Page = () => {
   const [checkedItem, setCheckedItem] = useState<number[]>([]);
   const { institutions } = useSuperAdminStore();
-  // const [selectedInstitution, setSelecedInstitution] = useState();
+  const [selectedInstitution, setSelecedInstitution] = useState<null | number>(
+    null,
+  );
 
   const handleCheckboxChange = (institutionId: number, checked: boolean) => {
     if (checked) setCheckedItem((prev) => [...prev, institutionId]);
@@ -26,6 +31,7 @@ const Page = () => {
   return (
     <div className="bg-grey-0 w-full">
       <PageToggle curPage={DELIVERY_TYPE.INSTITUTION} />
+      <MonthPicker />
       <div className="flex justify-between">
         <ItemCount count={institutions.length} />
 
@@ -44,9 +50,14 @@ const Page = () => {
           index={index + 1}
           {...item}
           handleCheckboxChange={handleCheckboxChange}
+          isSelected={selectedInstitution === item.institutionId}
+          onClick={() => setSelecedInstitution(item.institutionId)}
         />
       ))}
       <MoreView viewLevel={1} count={institutions.length} />
+
+      <ItemCount count={mockFam.length} />
+      {selectedInstitution && <InstitutionDetail families={mockFam} />}
     </div>
   );
 };

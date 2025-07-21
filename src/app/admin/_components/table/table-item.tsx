@@ -9,6 +9,7 @@ import {
   ADD_INSTITUTIONS_TABLE_ITEMS,
   INDIVIDUALS_TABLE_ITEMS,
   INSTITUTION_FAMILY_TABLE_ITEMS,
+  INSTITUTIONS_DETAIL_TABLE_ITEMS,
   INSTITUTIONS_TABLE_ITEMS,
 } from "./table-items";
 import PostcodePopup from "@/components/address/postcode-popup";
@@ -64,11 +65,17 @@ export const IndividualTableItem = (
 export const InstitutionTableItem = (
   props: {
     index: number;
+    isSelected: boolean;
     handleCheckboxChange: CheckboxProps;
+    onClick: () => void;
   } & InstitutionsDto,
 ) => {
   return (
-    <div className="admin-table-item gap-2">
+    <div
+      className="admin-table-item gap-2 data-[status=selected]:bg-green-100"
+      data-status={props.isSelected && "selected"}
+      onClick={props.onClick}
+    >
       {INSTITUTIONS_TABLE_ITEMS.map(({ value, flex }) => {
         const key = value + props.index;
         type Key = keyof InstitutionsDto;
@@ -243,6 +250,32 @@ export const AddInstitutionTableItem = ({
           <Cancel />
         </button>
       </span>
+    </div>
+  );
+};
+
+export const InstitutionDetailTableItem = (
+  props: {
+    index: number;
+  } & Families,
+) => {
+  return (
+    <div className="admin-table-item gap-2">
+      {INSTITUTIONS_DETAIL_TABLE_ITEMS.map(({ value, flex }) => {
+        const key = value + props.index;
+        type Key = keyof Families;
+        if (value === "deliveryStatus")
+          return (
+            <span key={key} className={flex}>
+              {DeliveryStatus(props.deliveryStatus)}
+            </span>
+          );
+        return (
+          <span key={key} className={flex}>
+            {props[value as Key]}
+          </span>
+        );
+      })}
     </div>
   );
 };
