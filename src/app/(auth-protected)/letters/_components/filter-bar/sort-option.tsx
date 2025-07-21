@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import ArrowDown from "@/public/icons/letters/arrow-down.svg";
+import ArrowDown from "@/public/icons/common/arrow-down.svg";
 import { SORT_OPTION_ITEM, SortKey, SortOptionProps } from "../letters-props";
 
 const SortOption = ({ sortOption, setSortOption }: SortOptionProps) => {

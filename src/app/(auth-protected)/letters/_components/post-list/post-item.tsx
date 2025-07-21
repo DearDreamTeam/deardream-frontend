@@ -5,6 +5,7 @@ import FavoriteFull from "@/public/icons/letters/favorite-full.svg";
 import { Newsletter } from "@/stores/useLettersStore";
 import { formatDateForNewsletter } from "@/utils/format-date";
 import { PendingPost, ShippingPost } from "./post-status";
+import { DELIVERY_STATUS } from "@/constants/delivery-status";
 
 const PostItem = ({
   pdfId,
@@ -18,7 +19,11 @@ const PostItem = ({
     <div className="relative flex flex-col items-center gap-1 select-none">
       <Link
         href={`/letters/${pdfId}`}
-        className={status === 0 ? "pointer-events-none" : undefined}
+        className={
+          status === DELIVERY_STATUS.PENDING.value
+            ? "pointer-events-none"
+            : undefined
+        }
       >
         <Image
           src={coverImgUrl}
@@ -27,15 +32,15 @@ const PostItem = ({
           height={148}
           className="shadow-default rounded-sm"
         />
-        {status === 0 ? (
+        {status === DELIVERY_STATUS.PENDING.value ? (
           <PendingPost />
-        ) : status === 1 ? (
+        ) : status === DELIVERY_STATUS.SHIPPING.value ? (
           <ShippingPost />
         ) : null}
       </Link>
       <Link
         href={`/letters/${pdfId}`}
-        className={`text-label-2 text-grey-700 ${status === 0 ? "pointer-events-none" : undefined}`}
+        className={`text-label-2 text-grey-700 ${status === DELIVERY_STATUS.PENDING.value ? "pointer-events-none" : undefined}`}
       >
         {formatDateForNewsletter(timestamp)}
       </Link>
