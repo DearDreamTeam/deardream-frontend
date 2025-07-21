@@ -1,8 +1,10 @@
 "use client";
 
+import { createReceiver } from "@/api/profile";
 import GreenBasicButton from "@/components/button/profile-green-basic-button";
 import Header from "@/components/common/header";
-import ProfileEdit from "@/components/profile/profile-edit";
+import AlertDialog from "@/components/modal/dialog/alert-dialog";
+import ReceiverProfileEdit from "@/components/profile/receiver-profile-edit";
 import {
   ReceiverProfileInfo,
   useReceiverStore,
@@ -11,10 +13,13 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const ReceiverProfilePage = () => {
-  const { receiver, setReceiver, setReceiverImage } = useReceiverStore();
+  const { receiver, setReceiver } = useReceiverStore();
   const [editUserProfile, setEditUserProfile] =
     useState<ReceiverProfileInfo>(receiver);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
 
   const router = useRouter();
 
@@ -24,6 +29,7 @@ const ReceiverProfilePage = () => {
     setIsDirty(true);
   }, [editUserProfile]);
 
+  // 페이지 나가기 전 경고 메시지 추가
   useEffect(() => {
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
       if (!isDirty) return;
@@ -37,49 +43,60 @@ const ReceiverProfilePage = () => {
     };
   }, [isDirty]);
 
+  // 프로필 정보 유효성 검사
   const isProfileIncomplete =
     !editUserProfile?.name?.trim() ||
     !editUserProfile?.birth?.trim() ||
     !editUserProfile?.phone?.trim();
 
-  useEffect(() => {
-    console.log("Receiver profile updated:", editUserProfile);
-  }, [editUserProfile, setReceiver]);
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsLoading(true);
+    try {
+      const response = await createReceiver(editUserProfile, selectedFile);
+      if (response.data.isSuccess) {
+        setReceiver(response.data.result);
+      }
+    } catch (error) {
+      console.error("Receiver profile update failed:", error);
+    } finally {
+      setIsLoading(false);
+      setShowAlert(true);
+    }
+  };
 
   return (
     <>
       <form
         onSubmit={(e) => {
-          e.preventDefault(); // 이 함수 안에서 유효성 검사 + axios 처리
-          if (!isProfileIncomplete) {
-            setReceiver(editUserProfile);
-            setReceiverImage({
-              profileImage: selectedFile,
-            });
-            console.log("Receiver profile updated:", editUserProfile);
-            router.push("/subscribe/receiver/address/");
-          } else {
-            console.error("Profile is incomplete");
-          }
+          handleSubmit(e);
         }}
         className="bg-grey-0 relative flex h-full w-full flex-col items-center justify-between p-4 pt-0"
       >
         <div>
           <Header>받는 분 정보</Header>
-          <ProfileEdit
-            isSender={false}
-            isInvite={false}
+          <ReceiverProfileEdit
             setEditReceiverProfile={setEditUserProfile}
             editReceiverProfile={editUserProfile}
             setSelectedFile={setSelectedFile}
           />
         </div>
         <div className="flex h-14 w-full items-center justify-center">
-          <GreenBasicButton disabled={isProfileIncomplete}>
-            저장
+          <GreenBasicButton disabled={isProfileIncomplete || isLoading}>
+            {isLoading ? "저장 중..." : "저장"}
           </GreenBasicButton>
         </div>
       </form>
+      {showAlert && (
+        <AlertDialog
+          title="받는 분 입력이 완료되었습니다."
+          content="주소를 입력하러 가시죵"
+          setIsOpen={setShowAlert}
+          onAction={() => {
+            router.push("/subscribe/receiver/address/");
+          }}
+        />
+      )}
     </>
   );
 };

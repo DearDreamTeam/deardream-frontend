@@ -14,6 +14,8 @@ import {
 import { useUserStore } from "@/stores/useUserInfoStore";
 import { useRouter } from "next/navigation";
 import { FAMILY_RELATION, FamilyRelation } from "@/constants/family-relation";
+import { PATH } from "@/constants/path";
+import Loading from "@/components/loading-fallback/loading";
 
 const SenderInfo = ({ children }: { children: UserProfileInfo }) => {
   return (
@@ -54,7 +56,7 @@ const ReceiverInfo = ({
 }) => {
   const router = useRouter();
   return (
-    <div className="flex h-16 w-full items-center gap-3">
+    <div className="flex h-16 w-full items-center justify-between gap-3">
       <div className="relative h-[54px] min-w-[54px]">
         <Image
           src={`${children.profileImage || "/images/default-img.svg"}`}
@@ -130,13 +132,13 @@ const MyFamilyPage = () => {
       fetchReceiver();
     }
     fetchFamilyData();
-  }, []);
+  }, [userProfile.role, setReceiver]);
 
   return (
     <>
       {!isLoading ? (
         <div className="bg-grey-0 flex h-screen w-full flex-col items-center p-4 pt-0">
-          <Header>나의 가족</Header>
+          <Header link={PATH.MYPAGE}>나의 가족</Header>
 
           <div className="mt-4 flex w-full flex-col justify-center">
             {/* 프로필 섹션 */}
@@ -177,12 +179,7 @@ const MyFamilyPage = () => {
         </div>
       ) : (
         <>
-          <div className="text-grey-800 flex h-full flex-col items-center justify-center gap-6 bg-green-100 text-center">
-            <div className="h-12 w-12 animate-spin rounded-full border-t-4 border-green-600" />
-            <div className="text-xl font-semibold">
-              정보를 불러오는 중입니다
-            </div>
-          </div>
+          <Loading />
         </>
       )}
     </>

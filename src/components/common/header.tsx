@@ -3,12 +3,27 @@
 import { useRouter } from "next/navigation";
 import Arrow from "@/public/icons/letters/arrow-back.svg";
 
-const Header = ({ children }: { children: React.ReactNode }) => {
+const Header = ({
+  children,
+  link,
+}: {
+  children: React.ReactNode;
+  link?: string;
+}) => {
   const router = useRouter();
   return (
     <div className="text-headline-3 flex w-screen max-w-[768px] items-center border-b border-gray-200 px-5 py-3">
       {children != "마이페이지" && (
-        <Arrow className="cursor-pointer" onClick={() => router.back()} />
+        <Arrow
+          className="cursor-pointer"
+          onClick={() => {
+            if (link) {
+              router.push(link);
+            } else {
+              router.back();
+            }
+          }}
+        />
       )}
       {children}
     </div>

@@ -5,16 +5,16 @@ import Header from "@/components/common/header";
 import InstitutionAddressEdit from "@/components/address/institution-address-input";
 // import { PATH } from "@/constants/path";
 import { useReceiverStore } from "@/stores/useReceiverStore";
-import { createReceiver } from "@/api/profile";
+import { updateReceiverAddress } from "@/api/profile";
 import HomeAddressInput from "@/components/address/home-address-input";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const AddressPage = () => {
-  const { receiver, receiverImage } = useReceiverStore();
+  const { receiver } = useReceiverStore();
   const router = useRouter();
 
-  const [isDirty, setIsDirty] = useState(false);
+  const [isDirty] = useState(true);
   const inComplete =
     receiver.name && receiver.address.deliveryType === "INSTITUTION"
       ? !receiver.address.code
@@ -22,10 +22,6 @@ const AddressPage = () => {
         !receiver.address.recipientName ||
         !receiver.address.recipientPhone ||
         !receiver.address.postalCode;
-
-  useEffect(() => {
-    setIsDirty(true);
-  }, [receiver]);
 
   useEffect(() => {
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
@@ -43,9 +39,14 @@ const AddressPage = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("Receiver data submitted:", receiver);
-    const response = await createReceiver(receiver, receiverImage.profileImage);
-    console.log("Response from server:", response.data);
-    router.push("/subscribe/family");
+    try {
+      const response = await updateReceiverAddress(receiver);
+      if (response.data.isSuccess) {
+        router.push("/subscribe/family");
+      }
+    } catch (error) {
+      console.error("Receiver address update failed:", error);
+    }
   };
   return (
     <>

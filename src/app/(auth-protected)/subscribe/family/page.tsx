@@ -48,7 +48,7 @@ const FamilyPage = () => {
     };
 
     createFamily();
-  }, []);
+  }, [router]);
 
   return (
     <Result

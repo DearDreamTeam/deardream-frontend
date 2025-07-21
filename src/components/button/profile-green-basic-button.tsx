@@ -10,14 +10,12 @@ const GreenBasicButton = ({
   return (
     <button
       type="submit"
-      className={`px-auto inline-flex h-12 w-full items-center justify-center gap-2.5 rounded-lg py-3.5 ${
-        disabled
-          ? "bg-grey-200 text-grey-500 cursor-not-allowed"
-          : "text-grey-0 bg-green-300"
+      className={`px-auto z-10 inline-flex h-12 w-full items-center justify-center gap-2.5 rounded-lg py-3.5 ${
+        disabled ? "bg-grey-200 text-grey-500" : "text-grey-0 bg-green-300"
       } cursor-pointer`}
-      aria-disabled={disabled}
+      disabled={disabled}
     >
-      <div className="text-headline-3">{children}</div>
+      <div className="text-headline-3 cursor-pointer">{children}</div>
     </button>
   );
 };

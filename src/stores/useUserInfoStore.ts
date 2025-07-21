@@ -4,16 +4,18 @@ import { UserInfo, UserProfileInfo } from "@/types/user-info";
 
 const defaultProfile: UserProfileInfo = {
   id: 0,
+  kakaoId: 0,
   name: "",
   profileImage: "",
   birth: "",
   calendarType: "SOLAR",
   relation: "",
   otherRelation: "",
-  familyId: null,
-  familylink: null,
-  familyRegistered: false,
   role: "DEFAULT",
+  createdAt: "",
+  familyId: 0,
+  registered: false,
+  familyRegistered: false,
 };
 
 interface UserState {

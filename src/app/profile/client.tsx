@@ -2,125 +2,92 @@
 
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+
+//전역 상태 관리
 import { useUserStore } from "@/stores/useUserInfoStore";
-import axiosInstance from "@/lib/axios";
-import axios from "axios";
-import Header from "@/components/common/header";
-import ProfileEdit from "@/components/profile/profile-edit";
-import GreenBasicButton from "@/components/button/profile-green-basic-button";
-import { registerUser } from "@/api/profile";
 import { useInvitationStore } from "@/stores/useInvitationStore";
+
+//프로필 등록 api
+import { registerUser } from "@/api/profile";
+
+//컴포넌트
+import Header from "@/components/common/header";
+import GreenBasicButton from "@/components/button/profile-green-basic-button";
+import AlertDialog from "@/components/modal/dialog/alert-dialog";
+import SenderProfileEdit from "@/components/profile/sender-profile-edit";
+import Loading from "@/components/loading-fallback/loading";
+
+//경로 상수
 import { PATH } from "@/constants/path";
 
+//카카오 로그인
+import { kakaoLogin } from "@/lib/kakao-login";
+
 const ProfileClient = () => {
+  //카카오 로그인 코드 추출
   const searchParams = useSearchParams();
   const kakaoCode = searchParams.get("code");
+
+  //초대 코드 추출
   const familylink = searchParams.get("state");
 
-  const { setUserKaKaoInfo, updateUserProfile, userKaKaoInfo, userProfile } =
-    useUserStore();
-
+  //전역 상태 관리
+  const { setUserKaKaoInfo, updateUserProfile, userProfile } = useUserStore();
   const { familyLink, setFamilyLink } = useInvitationStore();
 
+  //프로필 등록 상태 관리
   const [editUserProfile, setEditUserProfile] = useState(userProfile);
+  const [isProfileSubmitted, setIsProfileSubmitted] = useState(false);
 
+  //로딩 상태 관리
+  const [isLoading, setIsLoading] = useState(true);
+
+  //라우터
   const router = useRouter();
 
+  //프로필 등록 유효성 검사
   const isProfileIncomplete =
     !editUserProfile?.name?.trim() ||
     !editUserProfile?.birth?.trim() ||
     (familylink ? !editUserProfile?.relation?.trim() : false);
 
+  //프로필 이미지 선택 상태 관리
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
+  //초대 코드 저장
   useEffect(() => {
-    setFamilyLink(familylink);
-  }, []);
+    if (familylink) setFamilyLink(familylink);
+  }, [familylink, setFamilyLink]);
 
+  //카카오 로그인 처리
   useEffect(() => {
     const fetchUserInfo = async () => {
-      if (!kakaoCode) return;
-      const API_URL = process.env.NEXT_PUBLIC_API_URL;
+      if (!kakaoCode) {
+        setIsLoading(false); // 코드 없으면 바로 끝냄
+        return;
+      }
+
       try {
-        const response = await axios.get(API_URL + "/users/login/kakao", {
-          params: { code: kakaoCode },
-        });
-
-        const data = response.data;
-        if (!data || !data.result) throw new Error("잘못된 로그인 응답");
-        console.log("카카오 로그인 응답:", data);
-
-        const {
-          tempToken,
-          newAccessToken,
-          newRefreshToken,
-          email,
-          name,
-          profileImage,
-          registered,
-          familyRegistered,
-        } = data.result;
-
-        //프로필 저장이 않은 경우
-        localStorage.setItem("tempToken", tempToken);
-        //이미 프로필이 있다면 accessToken, refreshToken 저장
-        if (newAccessToken && newRefreshToken) {
-          localStorage.setItem("accessToken", newAccessToken);
-          localStorage.setItem("refreshToken", newRefreshToken);
-          console.log("액세스 토큰 저장:", newAccessToken);
-          const res = await axiosInstance.get("/v1/users/me");
-          console.log("사용자 정보:", res.data.result);
-          // 사용자 정보가 있다면 상태에 저장
-          updateUserProfile({
-            id: res.data.result.id,
-            name: res.data.result.name,
-            profileImage: res.data.result.profileImage,
-            birth: res.data.result.birth,
-            calendarType: res.data.result.calendarType,
-            relation: res.data.result.relation,
-            otherRelation: res.data.result.otherRelation,
-            familylink: res.data.result.familylink,
-            familyRegistered: res.data.result.familyRegistered,
-            role: res.data.result.role,
-          });
-
-          return;
-        }
-        //카카오에서 받은 사용자 정보를 상태에 저장 처음 로그인시 temp 이미 프로필이 있다면 accessToken, refreshToken 저장
-
-        setUserKaKaoInfo({
-          tempToken,
-          accessToken: newAccessToken,
-          refreshToken: newRefreshToken,
-          registered,
-          familyRegistered,
-          email,
-          name,
-          profileImage,
-        });
-
-        // 사용자 프로필 정보 설정
-        updateUserProfile({
-          name,
-          profileImage,
-        });
-
-        console.log("client.tsx userKaKaoInfo", userKaKaoInfo);
-        console.log("client.tsx userProfile", userProfile);
+        await kakaoLogin(kakaoCode, setUserKaKaoInfo, updateUserProfile);
       } catch (error) {
         console.error("카카오 로그인 실패:", error);
-        // alert("로그인에 실패했습니다. 다시 시도해주세요.");
-        // window.location.href = "/login";
+        alert("로그인에 실패했습니다. 다시 시도해주세요.");
+      } finally {
+        setIsLoading(false); // 로그인 요청 완료 후 로딩 종료
       }
     };
 
     fetchUserInfo();
   }, [kakaoCode, setUserKaKaoInfo, updateUserProfile]);
 
+  //프로필 정보 수정 할 때마다 전역 상태 관리 프로필 정보 업데이트
   useEffect(() => {
-    setEditUserProfile(userProfile);
+    if (userProfile) {
+      setEditUserProfile(userProfile);
+    }
   }, [userProfile]);
 
+  //프로필 정보 서버에 저장
   const handleSubmitProfile = async () => {
     if (isProfileIncomplete) {
       alert("이름과 생일을 입력해주세요.");
@@ -136,7 +103,6 @@ const ProfileClient = () => {
       console.log("프로필 등록 성공:", response.data);
 
       if (response.status === 200) {
-        alert("프로필이 성공적으로 등록 되었습니다.");
         localStorage.setItem(
           "accessToken",
           response.data.result.accessToken || "",
@@ -145,28 +111,35 @@ const ProfileClient = () => {
           "refreshToken",
           response.data.result.refreshToken || "",
         );
-        router.push(PATH.HOME);
+        setIsProfileSubmitted(true);
       }
     } catch (error) {
       console.error("프로필 등록 실패:", error);
+      alert("프로필 등록에 실패했습니다. 다시 시도해주세요.");
     }
   };
 
-  useEffect(() => {
-    if (!userProfile) {
-      console.log("사용자 프로필이 아직 설정되지 않았습니다.");
-      return;
-    }
-    if (userProfile?.id != 0) {
-      console.log(userProfile.id);
-      console.log("실제로 반영된 userProfile:", userProfile);
-      window.location.href = "/home";
-    }
-  }, [userProfile]);
+  const [hasNavigated, setHasNavigated] = useState(false);
 
+  useEffect(() => {
+    if (!isLoading && userProfile && !hasNavigated) {
+      if (userProfile.id !== 0) {
+        setHasNavigated(true); // ✅ 라우팅 플래그 세팅
+        if (familyLink && !userProfile.familyRegistered) {
+          router.replace(PATH.RELATION + "?familyLink=" + familyLink);
+        } else {
+          router.replace(PATH.HOME);
+        }
+      }
+    }
+  }, [isLoading, userProfile, familyLink, hasNavigated, router]);
+
+  if (isLoading || !userProfile || hasNavigated) {
+    return <Loading />;
+  }
   return (
     <>
-      {userKaKaoInfo ? (
+      {!isLoading ? (
         <>
           <form
             onSubmit={(e) => {
@@ -177,9 +150,8 @@ const ProfileClient = () => {
           >
             <div>
               <Header>프로필 설정</Header>
-              <ProfileEdit
-                isSender={true}
-                isInvite={userProfile.familyId || familyLink ? true : false}
+              <SenderProfileEdit
+                isInvite={Boolean(familyLink)}
                 setEditUserProfile={setEditUserProfile}
                 editUserProfile={editUserProfile}
                 setSelectedFile={setSelectedFile}
@@ -193,13 +165,17 @@ const ProfileClient = () => {
           </form>
         </>
       ) : (
-        <div className="text-grey-800 flex h-full flex-col items-center justify-center gap-6 bg-green-100 text-center">
-          <div className="h-12 w-12 animate-spin rounded-full border-t-4 border-green-600" />
-          <div className="text-xl font-semibold">정보를 불러오는 중입니다</div>
-          <p className="text-grey-500 animate-pulse text-base">
-            잠시만 기다려 주세요...
-          </p>
-        </div>
+        <Loading />
+      )}
+      {isProfileSubmitted && (
+        <AlertDialog
+          title="프로필 등록 완료"
+          content="프로필이 성공적으로 등록 되었습니다."
+          setIsOpen={setIsProfileSubmitted}
+          onAction={() => {
+            router.push(PATH.HOME);
+          }}
+        />
       )}
     </>
   );
