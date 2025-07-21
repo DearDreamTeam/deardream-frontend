@@ -8,12 +8,14 @@ import { DownloadPdf } from "../button/download-pdf";
 import {
   ADD_INSTITUTIONS_TABLE_ITEMS,
   INDIVIDUALS_TABLE_ITEMS,
+  INSTITUTION_FAMILY_TABLE_ITEMS,
   INSTITUTIONS_TABLE_ITEMS,
 } from "./table-items";
 import PostcodePopup from "@/components/address/postcode-popup";
 import Cancel from "@/public/icons/common/cancel.svg";
 import { Dispatch, SetStateAction } from "react";
 import { formatPhoneNumber } from "@/utils/format-phone-number";
+import { Families } from "@/types/admin-organization-dto";
 
 export const IndividualTableItem = (
   props: {
@@ -248,6 +250,45 @@ export const AddInstitutionTableItem = ({
           <Cancel />
         </button>
       </span>
+    </div>
+  );
+};
+
+export const InstitutionFamilyTableItem = (
+  props: {
+    index: number;
+    handleDeleteMember: (familyId: number) => void;
+  } & Families,
+) => {
+  return (
+    <div className="admin-table-item gap-2">
+      {INSTITUTION_FAMILY_TABLE_ITEMS.map(({ value, flex }) => {
+        const key = value + props.index;
+        type Key = keyof Families;
+        if (value === "deliveryStatus")
+          return (
+            <span key={key} className={flex}>
+              {DeliveryStatus(props.deliveryStatus)}
+            </span>
+          );
+        if (value === "delete")
+          return (
+            <span key={key} className={flex}>
+              <button
+                type="button"
+                className="bg-grey-200 text-grey-0 w-fit rounded-full"
+                onClick={() => props.handleDeleteMember(props.familyId)}
+              >
+                <Cancel />
+              </button>
+            </span>
+          );
+        return (
+          <span key={key} className={flex}>
+            {props[value as Key]}
+          </span>
+        );
+      })}
     </div>
   );
 };
