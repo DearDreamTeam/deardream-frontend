@@ -5,10 +5,12 @@ import { useState } from "react";
 import PageToggle from "../../_components/button/page-toggle";
 import ItemCount from "../../_components/table/item-count";
 import ChangeStatus from "../../_components/button/change-status";
-import { IndividualTableHeader } from "../../_components/table/table-header";
+import { TableHeader } from "../../_components/table/table-header";
 import { IndividualTableItem } from "../../_components/table/table-item";
 import MoreView from "../../_components/button/more-view";
 import { DELIVERY_TYPE } from "@/constants/delivery-type";
+import { INDIVIDUALS_TABLE_ITEMS } from "../../_components/table/table-items";
+import MonthPicker from "../../_components/month-picker";
 
 const Page = () => {
   const [checkedItem, setCheckedItem] = useState<number[]>([]);
@@ -24,6 +26,7 @@ const Page = () => {
   return (
     <div className="bg-grey-0 w-full">
       <PageToggle curPage={DELIVERY_TYPE.HOME} />
+      <MonthPicker />
       <div className="flex justify-between">
         <ItemCount count={individuals.length} />
 
@@ -31,7 +34,7 @@ const Page = () => {
           <ChangeStatus selectedItemCount={checkedItem.length} />
         </div>
       </div>
-      <IndividualTableHeader />
+      <TableHeader items={INDIVIDUALS_TABLE_ITEMS} keyPrefix={"inv-th"} />
       {individuals.map((item, index) => (
         <IndividualTableItem
           key={index}

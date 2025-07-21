@@ -1,52 +1,22 @@
-import React from "react";
-import {
-  ADD_INSTITUTIONS_TABLE_ITEMS,
-  INDIVIDUALS_TABLE_ITEMS,
-  INSTITUTION_FAMILY_TABLE_ITEMS,
-  INSTITUTIONS_TABLE_ITEMS,
-} from "./table-items";
+import { TableItemsType } from "./table-items";
 
-export const IndividualTableHeader = () => {
-  return (
-    <div className="admin-table-header gap-4">
-      {INDIVIDUALS_TABLE_ITEMS.map(({ label, flex }, index) => (
-        <span key={`inv-th-${index}`} className={flex}>
-          {label}
-        </span>
-      ))}
-    </div>
-  );
+type TableHeaderProps = {
+  items: TableItemsType;
+  keyPrefix: string; // key prefix 중복 방지용
+  gap?: string; // optional로, 기본값 줄 수도 있음
+  className?: string;
 };
 
-export const InstitutionTableHeader = () => {
+export const TableHeader = ({
+  items,
+  gap = "gap-4",
+  keyPrefix,
+  className = "",
+}: TableHeaderProps) => {
   return (
-    <div className="admin-table-header gap-2">
-      {INSTITUTIONS_TABLE_ITEMS.map(({ label, flex }, index) => (
-        <span key={`inst-th-${index}`} className={flex}>
-          {label}
-        </span>
-      ))}
-    </div>
-  );
-};
-
-export const AddInstitutionTableHeader = () => {
-  return (
-    <div className="admin-table-header gap-4 break-keep">
-      {ADD_INSTITUTIONS_TABLE_ITEMS.map(({ label, flex }, index) => (
-        <span key={`inst-th-${index}`} className={flex}>
-          {label}
-        </span>
-      ))}
-    </div>
-  );
-};
-
-export const InstitutionFamilyTableHeader = () => {
-  return (
-    <div className="admin-table-header gap-4 break-keep">
-      {INSTITUTION_FAMILY_TABLE_ITEMS.map(({ label, flex }, index) => (
-        <span key={`inst-f-th-${index}`} className={flex}>
+    <div className={`admin-table-header ${gap} ${className}`}>
+      {items.map(({ label, flex }, index) => (
+        <span key={`${keyPrefix}-th-${index}`} className={flex}>
           {label}
         </span>
       ))}

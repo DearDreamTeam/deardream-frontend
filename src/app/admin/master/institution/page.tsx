@@ -3,15 +3,17 @@ import { useSuperAdminStore } from "@/stores/admin/useSuperAdminStroe";
 import { useState } from "react";
 import ItemCount from "../../_components/table/item-count";
 import ChangeStatus from "../../_components/button/change-status";
-import { InstitutionTableHeader } from "../../_components/table/table-header";
+import { TableHeader } from "../../_components/table/table-header";
 import { InstitutionTableItem } from "../../_components/table/table-item";
 import MoreView from "../../_components/button/more-view";
 import { DELIVERY_TYPE } from "@/constants/delivery-type";
 import PageToggle from "../../_components/button/page-toggle";
+import { INSTITUTIONS_TABLE_ITEMS } from "../../_components/table/table-items";
 
 const Page = () => {
   const [checkedItem, setCheckedItem] = useState<number[]>([]);
   const { institutions } = useSuperAdminStore();
+  // const [selectedInstitution, setSelecedInstitution] = useState();
 
   const handleCheckboxChange = (institutionId: number, checked: boolean) => {
     if (checked) setCheckedItem((prev) => [...prev, institutionId]);
@@ -31,7 +33,11 @@ const Page = () => {
           <ChangeStatus selectedItemCount={checkedItem.length} />
         </div>
       </div>
-      <InstitutionTableHeader />
+      <TableHeader
+        items={INSTITUTIONS_TABLE_ITEMS}
+        keyPrefix={"inst-th"}
+        gap="gap-2"
+      />
       {institutions.map((item, index) => (
         <InstitutionTableItem
           key={index}

@@ -3,10 +3,11 @@ import { ADD_INSTITUTION } from "@/constants/delivery-type";
 import PageToggle from "../../_components/button/page-toggle";
 import { useEffect, useState } from "react";
 import ItemCount from "../../_components/table/item-count";
-import { AddInstitutionTableHeader } from "../../_components/table/table-header";
+import { TableHeader } from "../../_components/table/table-header";
 import { AddInstitutionTableItem } from "../../_components/table/table-item";
 import MoreAdd from "../../_components/button/more-add";
 import { AddInstitutionProps } from "@/types/admin-dto";
+import { ADD_INSTITUTIONS_TABLE_ITEMS } from "../../_components/table/table-items";
 
 const DEFAULT = {
   name: "",
@@ -47,7 +48,11 @@ const Page = () => {
             </button>
           </div>
         </div>
-        <AddInstitutionTableHeader />
+        <TableHeader
+          items={ADD_INSTITUTIONS_TABLE_ITEMS}
+          keyPrefix={"add-inst-th"}
+          className="break-keep"
+        />
         {institutionList.map((value, index) => (
           <AddInstitutionTableItem
             key={"i-a-" + index}

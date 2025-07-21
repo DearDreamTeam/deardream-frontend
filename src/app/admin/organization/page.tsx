@@ -1,13 +1,14 @@
 "use client";
 
 import { useOrganAdminStore } from "@/stores/admin/useOrganizationAdminStore";
-import { InstitutionFamilyTableHeader } from "../_components/table/table-header";
+import { TableHeader } from "../_components/table/table-header";
 import { InstitutionFamilyTableItem } from "../_components/table/table-item";
 import ItemCount from "../_components/table/item-count";
 import { useRef, useState } from "react";
 import ArrowBack from "@/public/icons/common/arrow_back_ios.svg";
 import ArrowFront from "@/public/icons/common/arrow_front_ios.svg";
 import { DeliveryStatus } from "../_components/deliveryStatus/delivery-status";
+import { INSTITUTION_FAMILY_TABLE_ITEMS } from "../_components/table/table-items";
 
 const Page = () => {
   const { organizationInfo, families } = useOrganAdminStore();
@@ -66,7 +67,11 @@ const Page = () => {
         />
       </section>
       <ItemCount count={families.length} />
-      <InstitutionFamilyTableHeader />
+      <TableHeader
+        items={INSTITUTION_FAMILY_TABLE_ITEMS}
+        keyPrefix={"inst-f"}
+        className="break-keep"
+      />
       {families.map((item, index) => (
         <InstitutionFamilyTableItem
           key={"inst-td" + index}

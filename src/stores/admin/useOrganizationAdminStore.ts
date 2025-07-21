@@ -21,7 +21,7 @@ const mockOrg: OrganizationInfo = {
   phone: "02-123-3456",
   deliveryStatus: "PENDING",
 };
-const mockFam: Families[] = [
+export const mockFam: Families[] = [
   {
     familyId: 1,
     archiveId: 123,

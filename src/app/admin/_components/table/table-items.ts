@@ -1,3 +1,9 @@
+export type TableItemsType = {
+  value: string;
+  label: string;
+  flex: string;
+}[];
+
 export const INDIVIDUALS_TABLE_ITEMS = [
   { value: "index", label: "번호", flex: "flex-[1]" },
   { value: "name", label: "성함", flex: "flex-[2]" },
