@@ -24,8 +24,6 @@ const ReceiverProfileEdit = ({
   setEditReceiverProfile,
   editReceiverProfile,
 }: ReceiverProfileEditProps) => {
-  //todo: userProfile을 직접 사용하지 않고, editUserProfile을 사용하도록 변경
-
   // 이미지 URL 상태
   // useState의 초기값에 인자를 2개 넘기는 오류 수정
   const [imageUrl, setImageUrl] = useState<string>(

@@ -93,7 +93,7 @@ export const createReceiver = async (
 
 export const createReceiverAddress = async (receiver: ReceiverProfileInfo) => {
   const response = await axios.post(
-    "/v1/recipients/${receiver.id}",
+    `/v1/recipients/${receiver.id}`,
     receiver.address,
   );
   console.log("수신자 주소 생성 응답:", response.data);

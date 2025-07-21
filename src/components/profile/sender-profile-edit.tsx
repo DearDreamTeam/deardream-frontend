@@ -23,7 +23,6 @@ const SenderProfileEdit = ({
   setEditUserProfile,
   editUserProfile,
 }: SenderProfileEditProps) => {
-  //todo: userProfile을 직접 사용하지 않고, editUserProfile을 사용하도록 변경
   const { userProfile } = useUserStore();
 
   // 이미지 URL 상태
