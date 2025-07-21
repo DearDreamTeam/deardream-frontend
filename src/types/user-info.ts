@@ -4,8 +4,8 @@ export interface UserInfo {
   profileImage: string;
   tempToken: string;
   kakaoId: number;
-  newAccessToken: string;
-  newRefreshToken: string;
+  newAccessToken?: string;
+  newRefreshToken?: string;
   registered: boolean;
   familyRegistered: boolean;
 }
@@ -17,11 +17,11 @@ export interface UserProfileInfo {
   profileImage: string;
   birth: string;
   calendarType: "SOLAR" | "LUNAR";
-  relation: string;
-  otherRelation: string;
+  relation: string | null;
+  otherRelation: string | null;
   role: "LEADER" | "USER" | "DEFAULT";
   createdAt: string;
-  familyId: number;
+  familyId: number | null;
   registered: boolean;
   familyRegistered: boolean;
 }
