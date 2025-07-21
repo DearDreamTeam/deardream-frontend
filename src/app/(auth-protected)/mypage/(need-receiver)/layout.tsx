@@ -34,7 +34,7 @@ export default function ProtectedLayout({
 
         if (!res.data.result) {
           console.log("구독 정보 없음. 현재 role:", userProfile.role);
-          if (userProfile.role === "LEADER" || "DEFAULT") {
+          if (userProfile.role === "LEADER" || userProfile.role === "DEFAULT") {
             setShowDialog(true);
           }
         } else {
@@ -42,13 +42,13 @@ export default function ProtectedLayout({
         }
       } catch (err) {
         console.error("수신자 정보 조회 실패", err);
-        if (userProfile.role === "LEADER" || "DEFAULT") {
+        if (userProfile.role === "LEADER" || userProfile.role === "DEFAULT") {
           setShowDialog(true);
         }
       }
     };
 
-    if (userProfile.role === "LEADER" || "DEFAULT") {
+    if (userProfile.role === "LEADER" || userProfile.role === "DEFAULT") {
       checkReceiver();
     } else {
       if (pathname !== "/mypage/myfamily") {

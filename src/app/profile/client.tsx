@@ -119,25 +119,24 @@ const ProfileClient = () => {
     }
   };
 
+  const [hasNavigated, setHasNavigated] = useState(false);
+
   useEffect(() => {
-    if (!isLoading && userProfile) {
+    if (!isLoading && userProfile && !hasNavigated) {
       if (userProfile.id !== 0) {
+        setHasNavigated(true); // ✅ 라우팅 플래그 세팅
         if (familyLink && !userProfile.familyRegistered) {
-          // 🔁 relation 페이지로
           router.replace(PATH.RELATION + "?familyLink=" + familyLink);
         } else {
-          // 🔁 홈으로
           router.replace(PATH.HOME);
         }
       }
     }
-  }, [isLoading, userProfile, familyLink, router]);
+  }, [isLoading, userProfile, familyLink, hasNavigated, router]);
 
-  // 로딩 중 or 사용자 정보 없음일 때만 로딩 화면
-  if (isLoading || !userProfile) {
+  if (isLoading || !userProfile || hasNavigated) {
     return <Loading />;
   }
-
   return (
     <>
       {!isLoading ? (
