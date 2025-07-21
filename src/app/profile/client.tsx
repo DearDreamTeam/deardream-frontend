@@ -119,17 +119,22 @@ const ProfileClient = () => {
     }
   };
 
-  // 등록된 유저는 홈으로
-  const shouldRedirect = !isLoading && userProfile?.id !== 0;
-
   useEffect(() => {
-    if (shouldRedirect) {
-      router.replace(PATH.HOME);
+    if (!isLoading && userProfile) {
+      if (userProfile.id !== 0) {
+        if (familyLink && !userProfile.familyRegistered) {
+          // 🔁 relation 페이지로
+          router.replace(PATH.RELATION + "?familyLink=" + familyLink);
+        } else {
+          // 🔁 홈으로
+          router.replace(PATH.HOME);
+        }
+      }
     }
-  }, [shouldRedirect, router]);
+  }, [isLoading, userProfile, familyLink, router]);
 
-  // 로딩 조건 체크 ( 로딩 상태 + 사용자 프로필 준비 전 → 렌더링 차단)
-  if (isLoading || !userProfile || shouldRedirect) {
+  // 로딩 중 or 사용자 정보 없음일 때만 로딩 화면
+  if (isLoading || !userProfile) {
     return <Loading />;
   }
 

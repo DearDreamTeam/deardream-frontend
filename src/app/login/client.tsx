@@ -40,7 +40,7 @@ const LoginPageClient = () => {
 
   return (
     <>
-      <div className="flex h-full flex-col items-center justify-around bg-green-100 py-10">
+      <div className="flex h-full flex-col items-center justify-between bg-green-100 p-4">
         <StateTemplate>
           <StateTemplate.ImageFiled>
             <EllipseImage color="gray-0" isBackground={true} />
@@ -58,11 +58,11 @@ const LoginPageClient = () => {
 
         <div
           onClick={handleLogin}
-          className="relative flex h-12 w-[80%] cursor-pointer items-center justify-center rounded-lg bg-[#FEE500]"
+          className="relative z-100 flex h-14 w-full cursor-pointer items-center justify-center rounded-lg bg-[#FEE500]"
         >
           <KaKao
             alt="카카오 로그인"
-            className="absolute top-1/2 left-7 -translate-x-1/2 -translate-y-1/2"
+            className="pointer-events-none absolute top-1/2 left-7 -translate-x-1/2 -translate-y-1/2"
           />
           <div className="text-title-1 leading-tight font-normal">
             카카오톡으로 10초만에 로그인
