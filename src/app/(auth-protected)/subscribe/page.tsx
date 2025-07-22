@@ -27,13 +27,13 @@ const PlanPage: FC = () => {
       },
     });
     console.log("receiver updated:", receiver);
-  }, [planType, receiver, setReceiver]);
+  }, [planType, setReceiver]);
 
   useEffect(() => {
     setReceiver({
       leaderId: userProfile.id,
     });
-  }, [userProfile, receiver, setReceiver]);
+  }, [userProfile, setReceiver]);
 
   return (
     <div className="bg-grey-0 relative flex h-full w-full flex-col items-center justify-between p-4 pt-0">
