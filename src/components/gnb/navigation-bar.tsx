@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { NAV_ITEMS } from "@/constants/nav-items";
+import { NAV_ITEMS } from "@/components/gnb/nav-items";
 
 const NavigationBar = () => {
   const pathname = usePathname();
