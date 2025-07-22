@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import FileCopy from "@/public/icons/share-options/file_copy.svg";
-import { SHARE_DATA } from "@/constants/share-option-items";
+import { SHARE_DATA } from "@/components/modal/share-options/share-option-items";
 import { useInvitationStore } from "@/stores/useInvitationStore";
 
 const LinkCopy = () => {

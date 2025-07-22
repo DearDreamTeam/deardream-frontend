@@ -3,6 +3,7 @@ import KakaoTalk from "@/public/icons/share-options/kakao_logo.svg";
 import Mail from "@/public/icons/share-options/email.svg";
 import Share from "@/public/icons/share-options/share.svg";
 import { useUserStore } from "@/stores/useUserInfoStore";
+import { useReceiverStore } from "@/stores/useReceiverStore";
 
 const CLIENT_URL = process.env.NEXT_PUBLIC_CLIENT_URL;
 
@@ -45,7 +46,7 @@ const SHARE_ACTIONS = {
       templateId: 122390,
       templateArgs: {
         hostName: `${useUserStore.getState().userProfile.name}`,
-        familyCount: `${2}`,
+        receiverName: `${useReceiverStore.getState().receiver.name}`,
       },
     });
   },
