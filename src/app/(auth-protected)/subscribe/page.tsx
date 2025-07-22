@@ -10,6 +10,7 @@ import InstitutionPlanUse from "@/components/profile/plan/institution-plan-use";
 import type { FC } from "react";
 import { useReceiverStore } from "@/stores/useReceiverStore";
 import { useUserStore } from "@/stores/useUserInfoStore";
+import { PATH } from "@/constants/path";
 
 const PlanPage: FC = () => {
   const [isActive] = useState(true);
@@ -122,9 +123,13 @@ const PlanPage: FC = () => {
       <div className="flex h-14 w-full items-center justify-center">
         <GreenBasicButton
           color="300"
-          link={planType === "HOME" ? "/subscribe/pay" : "/subscribe/receiver"}
+          link={
+            planType === "HOME"
+              ? PATH.SUBSCRIBE + "/pay"
+              : PATH.SUBSCRIBE + "/receiver"
+          }
         >
-          변경
+          저장
         </GreenBasicButton>
       </div>
     </div>

@@ -9,6 +9,7 @@ import { updateReceiverAddress } from "@/api/profile";
 import HomeAddressInput from "@/components/address/home-address-input";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { PATH } from "@/constants/path";
 
 const AddressPage = () => {
   const { receiver } = useReceiverStore();
@@ -42,7 +43,7 @@ const AddressPage = () => {
     try {
       const response = await updateReceiverAddress(receiver);
       if (response.data.isSuccess) {
-        router.push("/subscribe/family");
+        router.push(PATH.SUBSCRIBE + "/family");
       }
     } catch (error) {
       console.error("Receiver address update failed:", error);
