@@ -13,7 +13,6 @@ import { useUserStore } from "@/stores/useUserInfoStore";
 import { PATH } from "@/constants/path";
 
 const PlanPage: FC = () => {
-  const [isActive] = useState(true);
   const [planType, setPlanType] = useState<"HOME" | "INSTITUTION" | "NONE">(
     "INSTITUTION",
   ); // "PERSONAL" | "INSTITUTION" | "NONE"
@@ -47,86 +46,44 @@ const PlanPage: FC = () => {
             >
               <Check />
             </div>
-            {planType === "HOME" ? (
-              <span className="text-title-2 text-grey-700">개인 플랜</span>
-            ) : (
-              <span className="text-title-2 text-grey-700">기관 플랜</span>
-            )}
+            <span className="text-title-2 text-grey-700">개인 플랜</span>
           </div>
-          {isActive &&
-            (planType === "HOME" ? (
-              <PersonalPlanUse
-                isActive={planType == "HOME"}
-                planType={planType}
-              />
-            ) : (
-              <InstitutionPlanUse
-                isActive={planType == "INSTITUTION"}
-                planType={planType}
-              />
-            ))}
+
+          <PersonalPlanUse isActive={planType == "HOME"} planType={planType} />
+
           <div
-            className={`text-title-1 ${isActive ? "text-green-300" : "text-grey-700"} w-full text-right`}
+            className={`text-title-1 ${planType == "HOME" ? "text-green-300" : "text-grey-700"} w-full text-right`}
           >
-            {isActive
-              ? planType === "HOME"
-                ? "월 8,900원"
-                : planType === "INSTITUTION"
-                  ? "월 0원"
-                  : "구독 없음"
-              : planType === "HOME"
-                ? "월 8,900원"
-                : planType === "INSTITUTION"
-                  ? "월 0원"
-                  : "구독 없음"}
+            {planType == "HOME" && "월 8,900원"}
           </div>
         </div>
-        {isActive && planType === "INSTITUTION" && (
-          <div className="text-grey-500 text-label-2 p-3">
-            이어드림과 제휴한 기관 (요양시설 등) 의 구성원 분들만 이용할 수 있는
-            플랜이에요
-          </div>
-        )}
+
         <div className="border-grey-200 mt-3 flex w-full flex-col justify-center gap-2 border-b-1 border-solid p-3">
           <div className="text-headline-3 text-grey-400 flex items-center gap-2">
             <div
-              onClick={() =>
-                setPlanType(planType === "HOME" ? "INSTITUTION" : "HOME")
-              }
+              onClick={() => setPlanType("INSTITUTION")}
               className={`bg-grey-500 inline-flex h-[24px] w-[24px] cursor-pointer flex-col items-center justify-center rounded-full`}
             >
               <Check />
             </div>
-            {planType !== "HOME" ? (
-              <span className="text-title-2 text-grey-700">개인 플랜</span>
-            ) : (
-              <span className="text-title-2 text-grey-700">기관 플랜</span>
-            )}
+            <span className="text-title-2 text-grey-700">기관 플랜</span>
           </div>
-          {isActive &&
-            (planType !== "HOME" ? (
-              <PersonalPlanUse isActive={!isActive} planType={planType} />
-            ) : (
-              <InstitutionPlanUse isActive={!isActive} planType={planType} />
-            ))}
+          <InstitutionPlanUse
+            isActive={planType == "INSTITUTION"}
+            planType={planType}
+          />
           <div className={`text-title-1 tex-grey-700 w-full text-right`}>
-            {isActive && planType !== "HOME" ? "월 8,900원" : "월 0원"}
+            {planType == "INSTITUTION" && "월 0원"}
           </div>
         </div>
-        {isActive && planType === "HOME" && (
-          <div className="text-grey-500 text-label-2 p-3">
-            이어드림과 제휴한 기관 (요양시설 등) 의 구성원 분들만 이용할 수 있는
-            플랜이에요
-          </div>
-        )}
       </div>
       <div className="flex h-14 w-full items-center justify-center">
         <GreenBasicButton
           color="300"
           link={
-            planType === "HOME"
-              ? PATH.SUBSCRIBE + "/pay"
-              : PATH.SUBSCRIBE + "/receiver"
+            planType === "INSTITUTION"
+              ? PATH.SUBSCRIBE + "/receiver"
+              : PATH.SUBSCRIBE + "/pay"
           }
         >
           저장

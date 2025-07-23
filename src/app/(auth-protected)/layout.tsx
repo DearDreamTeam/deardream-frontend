@@ -15,7 +15,7 @@ export default function ProtectedLayout({
 }) {
   const router = useRouter();
 
-  const { updateUserProfile } = useUserStore();
+  const { updateUserProfile, userProfile } = useUserStore();
   const { setFamilyLink } = useInvitationStore();
 
   const pathname = usePathname();
@@ -63,7 +63,9 @@ export default function ProtectedLayout({
     };
 
     checkUser();
-    checkFamilyLink();
+    if (userProfile.familyRegistered) {
+      checkFamilyLink();
+    }
   }, [router, setFamilyLink, updateUserProfile, skipAuthCheck]);
 
   return (
