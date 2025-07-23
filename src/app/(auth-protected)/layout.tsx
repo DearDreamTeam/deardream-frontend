@@ -57,8 +57,8 @@ export default function ProtectedLayout({
         if (res.status === 200) {
           setFamilyLink(res.data.result);
         }
-      } catch (err) {
-        console.error("가족 링크 조회 실패", err);
+      } catch {
+        console.log("가족 링크 조회 실패");
       }
     };
 

@@ -5,6 +5,7 @@ import GreenBasicButton from "@/components/button/profile-green-basic-button";
 import Header from "@/components/common/header";
 import AlertDialog from "@/components/modal/dialog/alert-dialog";
 import ReceiverProfileEdit from "@/components/profile/receiver-profile-edit";
+import { PATH } from "@/constants/path";
 import {
   ReceiverProfileInfo,
   useReceiverStore,
@@ -90,10 +91,10 @@ const ReceiverProfilePage = () => {
       {showAlert && (
         <AlertDialog
           title="받는 분 입력이 완료되었습니다."
-          content="주소를 입력하러 가시죵"
+          content="관계를 입력하러 가시죵"
           setIsOpen={setShowAlert}
           onAction={() => {
-            router.push("/subscribe/receiver/address/");
+            router.push(PATH.RELATION);
           }}
         />
       )}

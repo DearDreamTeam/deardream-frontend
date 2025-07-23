@@ -1,10 +1,11 @@
 import { Suspense } from "react";
+import CompleteClient from "./client";
+import Loading from "@/components/loading-fallback/loading";
 
 const CompletePage = () => {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      {" "}
-      <div>CompletePage</div>
+    <Suspense fallback={<Loading />}>
+      <CompleteClient />
     </Suspense>
   );
 };

@@ -3,19 +3,26 @@
 import GreenBasicButton from "@/components/button/green-basic-button";
 import Header from "@/components/common/header";
 import InstitutionAddressEdit from "@/components/address/institution-address-input";
-// import { PATH } from "@/constants/path";
 import { useReceiverStore } from "@/stores/useReceiverStore";
-import { createReceiver } from "@/api/profile";
+import { updateReceiverAddress } from "@/api/profile";
 import HomeAddressInput from "@/components/address/home-address-input";
 import { PATH } from "@/constants/path";
+import { useRouter } from "next/navigation";
 const AddressPage = () => {
   const { receiver } = useReceiverStore();
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("Receiver data submitted:", receiver);
-    const response = await createReceiver(receiver);
-    console.log("Response from server:", response.data);
+    try {
+      const response = await updateReceiverAddress(receiver);
+      if (response.data.isSuccess) {
+        router.push(PATH.MYPAGE + "/subscribe/address/complete");
+      }
+    } catch (error) {
+      console.error("Receiver address update failed:", error);
+    }
   };
   return (
     <>

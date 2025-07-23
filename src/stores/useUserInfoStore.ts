@@ -3,7 +3,7 @@ import { persist } from "zustand/middleware";
 import { UserInfo, UserProfileInfo } from "@/types/user-info";
 
 const defaultProfile: UserProfileInfo = {
-  id: 0,
+  id: -1,
   kakaoId: 0,
   name: "",
   profileImage: "",
