@@ -17,12 +17,13 @@ const AddressPage = () => {
 
   const [isDirty] = useState(true);
   const inComplete =
-    receiver.name && receiver.address.deliveryType === "INSTITUTION"
-      ? !receiver.address.code
+    receiver.address.deliveryType === "INSTITUTION"
+      ? !receiver.address.code || !receiver.name
       : !receiver.address.address ||
         !receiver.address.recipientName ||
         !receiver.address.recipientPhone ||
-        !receiver.address.postalCode;
+        !receiver.address.postalCode ||
+        !receiver.name;
 
   useEffect(() => {
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
