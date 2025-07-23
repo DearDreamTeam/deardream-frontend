@@ -67,10 +67,12 @@ export default function ProtectedLayout({
   }, [router, setFamilyLink, updateUserProfile, skipAuthCheck]);
 
   return (
-    <div className="shadow-default bg-grey-50 mx-auto flex h-full max-w-[768px] flex-col justify-between">
-      <LogoHeader />
-      <main className="flex-1 overflow-hidden">{children}</main>
-      <NavigationBar />
-    </div>
+    <>
+      <div className="shadow-default bg-grey-50 mx-auto flex h-full max-w-[768px] flex-col justify-between">
+        <LogoHeader />
+        <main className="flex-1 overflow-hidden">{children}</main>
+        <NavigationBar />
+      </div>
+    </>
   );
 }

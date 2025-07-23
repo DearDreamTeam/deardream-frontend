@@ -16,14 +16,16 @@ const AddressPage = () => {
   const router = useRouter();
 
   const [isDirty] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+
+  console.log(receiver);
   const inComplete =
     receiver.address.deliveryType === "INSTITUTION"
-      ? !receiver.address.code || !receiver.name
+      ? !receiver.address.code
       : !receiver.address.address ||
         !receiver.address.recipientName ||
         !receiver.address.recipientPhone ||
-        !receiver.address.postalCode ||
-        !receiver.name;
+        !receiver.address.postalCode;
 
   useEffect(() => {
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
@@ -40,6 +42,7 @@ const AddressPage = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsLoading(true);
     console.log("Receiver data submitted:", receiver);
     try {
       const response = await updateReceiverAddress(receiver);
@@ -48,6 +51,8 @@ const AddressPage = () => {
       }
     } catch (error) {
       console.error("Receiver address update failed:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
   return (
@@ -65,8 +70,8 @@ const AddressPage = () => {
           )}
         </div>
         <div className="flex h-14 w-full items-center justify-center">
-          <GreenBasicButton color="300" disabled={inComplete}>
-            저장
+          <GreenBasicButton color="300" disabled={inComplete || isLoading}>
+            {isLoading ? "저장 중..." : "저장"}
           </GreenBasicButton>
         </div>
       </form>

@@ -18,6 +18,7 @@ export default function ProtectedLayout({
   const { userProfile } = useUserStore();
   const [showDialog, setShowDialog] = useState(false);
   const [showForbidden, setShowForbidden] = useState(false);
+  const [showFamilyDialog, setShowFamilyDialog] = useState(false);
 
   const pathname = usePathname();
 
@@ -64,6 +65,21 @@ export default function ProtectedLayout({
     setShowForbidden,
   ]);
 
+  useEffect(() => {
+    if (userProfile.role === "LEADER" && !userProfile.familyRegistered) {
+      const complementFamily = async () => {
+        try {
+          const res = await axios.get("/v1/recipient");
+          setReceiver(res.data.result);
+          setShowFamilyDialog(true);
+        } catch (err) {
+          console.error("가족 완성 실패", err);
+        }
+      };
+      complementFamily();
+    }
+  }, [setReceiver, userProfile.role, userProfile.familyRegistered]);
+
   const handleMove = () => {
     router.push("/subscribe");
     setShowDialog(false); // 모달 닫기 (안 닫아도 라우팅되면 사라지긴 함)
@@ -98,6 +114,14 @@ export default function ProtectedLayout({
           content="리더만 접근할 수 있어요!"
           setIsOpen={setShowForbidden}
           onAction={handleForbidden}
+        />
+      )}
+      {showFamilyDialog && (
+        <AlertDialog
+          title="완료하지 못한 가족 정보가 있어요"
+          content="가족 정보를 완료해주세요"
+          setIsOpen={setShowDialog}
+          onAction={handleMove}
         />
       )}
     </>

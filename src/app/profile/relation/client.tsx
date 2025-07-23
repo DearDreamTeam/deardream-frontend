@@ -52,6 +52,7 @@ const RelationClient = () => {
 
   useEffect(() => {
     const checkFamilyLink = async () => {
+      setIsLoading(true);
       try {
         const response = await axios.get(`/v1/family/invitation`, {
           params: {
