@@ -128,7 +128,7 @@ const PostEditor = ({ postcard }: { postcard?: Post }) => {
         return;
       }
     }
-    router.back();
+    router.push(PATH.HOME);
   };
 
   const handleSaveEditedImage = (
@@ -237,7 +237,7 @@ const PostEditor = ({ postcard }: { postcard?: Post }) => {
           title={warningMessage.title}
           content={renderMessageWithLineBreaks(warningMessage.content)}
           setIsOpen={setIsConfirmOpen}
-          action={router.back}
+          action={() => router.push(PATH.HOME)}
           actionLabel={"확인"}
         />
       )}
