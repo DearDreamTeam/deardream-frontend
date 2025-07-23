@@ -36,7 +36,7 @@ const RelationClient = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await updateProfile(userProfile);
+      const response = await updateProfile(userProfile, null, true);
       if (response.status === 200) {
         console.log(response.data);
         if (familyLink) {
@@ -52,6 +52,10 @@ const RelationClient = () => {
 
   useEffect(() => {
     const checkFamilyLink = async () => {
+      if (!familyLink) {
+        setIsLoading(false);
+        return;
+      }
       setIsLoading(true);
       try {
         const response = await axios.get(`/v1/family/invitation`, {
@@ -67,6 +71,8 @@ const RelationClient = () => {
         }
       } catch (error) {
         console.error(error);
+      } finally {
+        setIsLoading(false);
       }
     };
     checkFamilyLink();
@@ -87,7 +93,8 @@ const RelationClient = () => {
               <RibbonImage />
             </StateTemplate.ImageFiled>
             <StateTemplate.Content>
-              <strong>{receiver.name}</strong>님과 어떤 관계이신가요?
+              <strong>{receiver.name ?? "수신자"}</strong>님과 어떤
+              관계이신가요?
               <br />
               관계를 선택해주세요.
             </StateTemplate.Content>
@@ -136,7 +143,9 @@ const RelationClient = () => {
             )}
           </StateTemplate>
 
-          <GreenBasicButton color="300">저장</GreenBasicButton>
+          <GreenBasicButton color="300" disabled={!relationship}>
+            저장
+          </GreenBasicButton>
         </form>
       )}
     </>
