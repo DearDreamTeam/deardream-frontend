@@ -72,6 +72,8 @@ const ProfileClient = () => {
       } catch (error) {
         console.error("카카오 로그인 실패:", error);
         alert("로그인에 실패했습니다. 다시 시도해주세요.");
+        localStorage.clear();
+        window.location.href = PATH.LOGIN;
       } finally {
         setIsLoading(false); // 로그인 요청 완료 후 로딩 종료
       }
@@ -121,64 +123,65 @@ const ProfileClient = () => {
 
   const [hasNavigated, setHasNavigated] = useState(false);
 
+  // 리다이렉션 처리 (가입된 유저만)
   useEffect(() => {
-    if (!isLoading && userProfile && !hasNavigated) {
-      if (userProfile.id !== 0) {
-        setHasNavigated(true); // ✅ 라우팅 플래그 세팅
-        if (familyLink && !userProfile.familyRegistered) {
-          router.replace(PATH.RELATION + "?familyLink=" + familyLink);
-        } else {
-          router.replace(PATH.HOME);
-        }
+    if (!isLoading && userProfile && !hasNavigated && userProfile.id > 0) {
+      setHasNavigated(true);
+      if (familyLink && !userProfile.familyRegistered) {
+        router.replace(PATH.RELATION + "?familyLink=" + familyLink);
+      } else {
+        router.replace(PATH.HOME);
       }
     }
   }, [isLoading, userProfile, familyLink, hasNavigated, router]);
 
+  // 아직 로딩 중이거나, userProfile이 없거나, 리다이렉트 중이면 <Loading />
   if (isLoading || !userProfile || hasNavigated) {
     return <Loading />;
   }
-  return (
-    <>
-      {!isLoading ? (
-        <>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              handleSubmitProfile(); // 이 함수 안에서 유효성 검사 + axios 처리
-            }}
-            className="bg-grey-0 relative flex h-full w-full flex-col items-center justify-between p-4 pt-0"
-          >
-            <div>
-              <Header>프로필 설정</Header>
-              <SenderProfileEdit
-                isInvite={Boolean(familyLink)}
-                setEditUserProfile={setEditUserProfile}
-                editUserProfile={editUserProfile}
-                setSelectedFile={setSelectedFile}
-              />
-            </div>
-            <div className="flex h-14 w-full items-center justify-center">
-              <GreenBasicButton disabled={isProfileIncomplete}>
-                저장
-              </GreenBasicButton>
-            </div>
-          </form>
-        </>
-      ) : (
-        <Loading />
-      )}
-      {isProfileSubmitted && (
-        <AlertDialog
-          title="프로필 등록 완료"
-          content="프로필이 성공적으로 등록 되었습니다."
-          setIsOpen={setIsProfileSubmitted}
-          onAction={() => {
-            router.push(PATH.HOME);
+
+  // 아직 프로필 등록 전인 상태 (id === 0)이면 폼 보여줌
+  if (userProfile.id === 0) {
+    return (
+      <>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleSubmitProfile();
           }}
-        />
-      )}
-    </>
-  );
+          className="bg-grey-0 relative flex h-full w-full flex-col items-center justify-between p-4 pt-0"
+        >
+          <div>
+            <Header>프로필 설정</Header>
+            <SenderProfileEdit
+              isInvite={Boolean(familylink)}
+              setEditUserProfile={setEditUserProfile}
+              editUserProfile={editUserProfile}
+              setSelectedFile={setSelectedFile}
+            />
+          </div>
+          <div className="flex h-14 w-full items-center justify-center">
+            <GreenBasicButton disabled={isProfileIncomplete}>
+              저장
+            </GreenBasicButton>
+          </div>
+        </form>
+        {isProfileSubmitted && (
+          <AlertDialog
+            title="프로필 등록 완료"
+            content="프로필이 성공적으로 등록 되었습니다."
+            setIsOpen={setIsProfileSubmitted}
+            onAction={() => {
+              window.location.href = PATH.HOME;
+            }}
+          />
+        )}
+      </>
+    );
+  }
+
+  // 혹시나 잘못된 상태면 fallback 처리
+  return <Loading />;
 };
 
 export default ProfileClient;

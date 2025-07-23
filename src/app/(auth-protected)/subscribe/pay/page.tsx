@@ -15,13 +15,18 @@ const PayPage = () => {
   const { setTid } = usePaymentStore();
 
   const [isPaymentCheck] = useState(true);
+  // 전체 약관 동의
   const [isAllCheck, setIsAllCheck] = useState(false);
+  // 가격, 내용 등 상품 저옵에 대한 정기구독 안내를 확인하였으며, 이에 동의합니다.
   const [isCheck2, setIsCheck2] = useState(false);
+  // 개인정보 수집 및 이용에 동의합니다.
   const [isCheck3, setIsCheck3] = useState(false);
+  // SMS 광고성 정보 수신에 동의합니다
   const [isCheck4, setIsCheck4] = useState(false);
 
   const router = useRouter();
 
+  // 결제 가능 여부
   const isAbleSubmit = isPaymentCheck && isCheck2 && isCheck3;
 
   const today = new Date();
@@ -44,6 +49,8 @@ const PayPage = () => {
     today.getDate() + 1,
   );
   const formattedNextSubscribe = `${nextSubscribe.getFullYear()}. ${nextSubscribe.getMonth() + 1}. ${nextSubscribe.getDate()}`;
+
+  // 전체 약관 동의
   const handleAllCheck = () => {
     setIsAllCheck(!isAllCheck);
     setIsCheck2(true);

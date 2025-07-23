@@ -39,7 +39,11 @@ const RelationClient = () => {
       const response = await updateProfile(userProfile);
       if (response.status === 200) {
         console.log(response.data);
-        router.push(`${PATH.FAMILY_INVITE}/family?familyLink=${familyLink}`);
+        if (familyLink) {
+          router.push(`${PATH.FAMILY_INVITE}/family?familyLink=${familyLink}`);
+        } else {
+          router.push(PATH.SUBSCRIBE + "/receiver/address");
+        }
       }
     } catch (error) {
       console.error(error);
@@ -81,7 +85,6 @@ const RelationClient = () => {
               <EllipseImage color="green-100" isBackground={true} />
               <RibbonImage />
             </StateTemplate.ImageFiled>
-            <StateTemplate.Title>초대장이 도착했어요</StateTemplate.Title>
             <StateTemplate.Content>
               <strong>{receiver.name}</strong>님과 어떤 관계이신가요?
               <br />
