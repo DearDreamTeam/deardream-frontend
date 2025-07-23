@@ -36,7 +36,7 @@ const RelationClient = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await updateProfile(userProfile, null, true);
+      const response = await updateProfile(userProfile);
       if (response.status === 200) {
         console.log(response.data);
         if (familyLink) {
