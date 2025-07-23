@@ -72,6 +72,8 @@ const ProfileClient = () => {
       } catch (error) {
         console.error("카카오 로그인 실패:", error);
         alert("로그인에 실패했습니다. 다시 시도해주세요.");
+        localStorage.clear();
+        window.location.href = PATH.LOGIN;
       } finally {
         setIsLoading(false); // 로그인 요청 완료 후 로딩 종료
       }
@@ -170,7 +172,7 @@ const ProfileClient = () => {
             content="프로필이 성공적으로 등록 되었습니다."
             setIsOpen={setIsProfileSubmitted}
             onAction={() => {
-              router.push(PATH.HOME);
+              window.location.href = PATH.HOME;
             }}
           />
         )}
