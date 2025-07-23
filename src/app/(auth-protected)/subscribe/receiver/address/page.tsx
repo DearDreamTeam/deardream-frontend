@@ -55,7 +55,7 @@ const AddressPage = () => {
         className="bg-grey-0 flex h-full w-full flex-col items-center justify-between p-4 pt-0"
         onSubmit={handleSubmit}
       >
-        <Header>주소 변경</Header>
+        <Header>주소 입력</Header>
         <div className="text-title-2 mt-4 flex h-full w-full flex-col">
           {receiver.address.deliveryType === "INSTITUTION" ? (
             <InstitutionAddressEdit />

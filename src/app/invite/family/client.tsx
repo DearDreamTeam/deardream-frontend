@@ -1,47 +1,72 @@
 "use client";
-import Result from "@/components/result/result";
-import { useEffect, useRef } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+
+import { useEffect, useRef, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import axios from "@/lib/axios";
+import Result from "@/components/result/result";
+import GreenBasicButton from "@/components/button/green-basic-button";
 import { PATH } from "@/constants/path";
 
-const FamilyInviteClient = () => {
-  const router = useRouter();
-  const hasRunRef = useRef(false); // 추가
+const FamilyJoinPage = () => {
   const searchParams = useSearchParams();
   const familyLink = searchParams.get("familyLink");
+  const hasRunRef = useRef(false);
+  const [isComplete, setIsComplete] = useState(false);
+  const [isError, setIsError] = useState(false);
 
   useEffect(() => {
-    if (hasRunRef.current) return; // 두 번째 실행 방지
+    if (hasRunRef.current) return;
+    hasRunRef.current = true;
 
     const postLink = async () => {
-      hasRunRef.current = true;
       try {
         const response = await axios.post("/v1/family/join", null, {
-          params: {
-            code: familyLink,
-          },
+          params: { code: familyLink },
         });
+
         if (response.data.isSuccess) {
-          router.push(PATH.FAMILY_COMPLETE);
+          setIsComplete(true);
         } else {
-          alert("가족 가입에 실패했습니다. 다시 시도해주세요.");
+          setIsError(true);
         }
       } catch (error) {
         console.error("가족 가입 실패:", error);
-        alert("가족 가입에 실패했습니다. 다시 시도해주세요.");
+        setIsError(true);
       }
-      return null;
     };
 
     postLink();
-  }, [router, familyLink]);
+  }, [familyLink]);
+
+  if (isError) {
+    return (
+      <Result
+        title="가족 구성원 등록에 실패했어요"
+        description="다시 시도해주세요."
+      />
+    );
+  }
+
+  if (!isComplete) {
+    return (
+      <Result
+        title="가족 구성원 등록이 진행 중이에요"
+        description="잠시만 기다려주세요"
+      />
+    );
+  }
 
   return (
-    <Result
-      title="가족 가입이 진행 되는 중이에요"
-      description="잠시만 기다려주세요"
-    />
+    <div className="flex h-full w-full flex-col items-center justify-center gap-2 p-4">
+      <Result
+        title="가족 등록이 완료되었어요"
+        description="지금 바로 첫 소식을 남기러 가볼까요?"
+      />
+      <GreenBasicButton color="300" link={PATH.HOME} newTab={true}>
+        소식 남기러 가기
+      </GreenBasicButton>
+    </div>
   );
 };
-export default FamilyInviteClient;
+
+export default FamilyJoinPage;

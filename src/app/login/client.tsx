@@ -4,15 +4,20 @@ import EllipseImage from "@/components/images/ellipse-image";
 import RibbonImage from "@/components/images/ribbon-image";
 import StateTemplate from "@/components/template/state-template";
 import KaKao from "@/public/images/kakao.svg";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import { useInvitationStore } from "@/stores/useInvitationStore";
+import { useUserStore } from "@/stores/useUserInfoStore";
+import { PATH } from "@/constants/path";
 const LoginPageClient = () => {
   //초대 코드 파라미터 추출
   const searchParams = useSearchParams();
   const inviteCode = searchParams.get("familylink");
 
   const { setFamilyLink } = useInvitationStore();
+  const { userProfile } = useUserStore();
+
+  const router = useRouter();
 
   //초대 코드 파라미터 추출
   useEffect(() => {
@@ -20,6 +25,17 @@ const LoginPageClient = () => {
       setFamilyLink(inviteCode);
     }
   }, [inviteCode, setFamilyLink]);
+
+  useEffect(() => {
+    if (userProfile && userProfile.id > 0) {
+      if (inviteCode) {
+        setFamilyLink(inviteCode); // 전역 저장
+        router.replace(PATH.RELATION + "?familyLink=" + inviteCode);
+      } else {
+        router.replace(PATH.HOME);
+      }
+    }
+  }, [userProfile, inviteCode, router, setFamilyLink]);
 
   const REST_API_KEY = process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY;
   const REDIRECT_URI = process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI;
