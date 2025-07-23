@@ -18,10 +18,10 @@ export default function ProtectedLayout({
   const [showForbidden, setShowForbidden] = useState(false);
 
   useEffect(() => {
-    if (userProfile.familyRegistered) {
+    if (userProfile.familyRegistered || userProfile.role == "USER") {
       setShowForbidden(true);
     }
-  }, [userProfile.familyRegistered]);
+  }, [userProfile.familyRegistered, userProfile.role]);
 
   const handleForbidden = () => {
     router.push(PATH.HOME);
