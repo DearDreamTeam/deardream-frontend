@@ -67,7 +67,7 @@ const PostEditor = ({ postcard }: { postcard?: Post }) => {
     setAspectIndex(imgCount - 1);
   }, [imageFiles]);
 
-  const handleSubmitLetter = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmitLetter = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!isActive) {
       if (imageCount > 0) {
@@ -96,13 +96,19 @@ const PostEditor = ({ postcard }: { postcard?: Post }) => {
           .filter((img): img is File => img !== null),
       );
     } else {
-      registerPost(
-        userProfile.id,
-        content,
-        imageFiles
-          .map((item) => item.originalFile)
-          .filter((img): img is File => img !== null),
-      );
+      try {
+        await registerPost(
+          userProfile.id,
+          content,
+          imageFiles
+            .map((item) => item.originalFile)
+            .filter((img): img is File => img !== null),
+        );
+      } catch (error) {
+        console.error(error);
+        setWarningMessage(NOTIFICATION_MESSAGES.REJECT_POST.BACK);
+        setIsConfirmOpen(true);
+      }
     }
 
     setIsComplete(true);
