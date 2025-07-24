@@ -15,7 +15,7 @@ export default function ProtectedLayout({
 }) {
   const router = useRouter();
 
-  const { updateUserProfile } = useUserStore();
+  const { updateUserProfile, userProfile } = useUserStore();
   const { setFamilyLink } = useInvitationStore();
 
   const pathname = usePathname();
@@ -63,14 +63,18 @@ export default function ProtectedLayout({
     };
 
     checkUser();
-    checkFamilyLink();
+    if (userProfile.familyRegistered) {
+      checkFamilyLink();
+    }
   }, [router, setFamilyLink, updateUserProfile, skipAuthCheck]);
 
   return (
-    <div className="shadow-default bg-grey-50 mx-auto flex h-full max-w-[768px] flex-col justify-between">
-      <LogoHeader />
-      <main className="flex-1 overflow-hidden">{children}</main>
-      <NavigationBar />
-    </div>
+    <>
+      <div className="shadow-default bg-grey-50 mx-auto flex h-full max-w-[768px] flex-col justify-between">
+        <LogoHeader />
+        <main className="flex-1 overflow-hidden">{children}</main>
+        <NavigationBar />
+      </div>
+    </>
   );
 }
