@@ -21,6 +21,7 @@
     "react-loading-skeleton": "^3.5.0",
     "react-mobile-picker": "^1.1.2",
     "react-pdf": "^10.0.1",
+    "react-pull-to-refresh": "^2.0.1",
     "swiper": "^11.2.10",
     "zustand": "^5.0.5"
   },
