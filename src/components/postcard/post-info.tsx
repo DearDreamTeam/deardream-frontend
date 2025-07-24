@@ -22,7 +22,7 @@ const PostInfo = ({
   | "authorProfileImg"
 >) => {
   return (
-    <div className="flex items-center gap-1 px-[0.13rem] py-1">
+    <div className="postcard-info-container">
       <Image
         src={authorProfileImg || DEFAULT_IMAGE_PATH}
         alt={"프로필 이미지"}
