@@ -25,7 +25,6 @@ import {
 import { editPost, registerPost } from "@/api/post";
 import { Post } from "@/types/post-type";
 import { useUserStore } from "@/stores/useUserInfoStore";
-// import { convertImageUrlToFile } from "@/utils/get-edited-image-url";
 
 const PostEditor = ({ postcard }: { postcard?: Post }) => {
   const fileIdRef = useRef(0);
@@ -44,7 +43,7 @@ const PostEditor = ({ postcard }: { postcard?: Post }) => {
   /* inputs */
   const [content, setContent] = useState(postcard?.content ?? "");
   const [aspectIndex, setAspectIndex] = useState(
-    postcard?.imageUrls.length ?? 0,
+    postcard?.imageUrls.length ? postcard?.imageUrls.length - 1 : 0,
   );
   const [imageFiles, setImageFiles] = useState<EditableImage[]>(
     postcard?.imageUrls.map((url: string) => ({
@@ -69,7 +68,6 @@ const PostEditor = ({ postcard }: { postcard?: Post }) => {
   }, [imageFiles]);
 
   const handleSubmitLetter = (e: React.FormEvent<HTMLFormElement>) => {
-    console.log(userProfile);
     e.preventDefault();
     if (!isActive) {
       if (imageCount > 0) {
