@@ -161,25 +161,13 @@ const PostEditor = ({ postcard }: { postcard?: Post }) => {
   };
 
   const handleImageClick = async (fileId: number) => {
-    // if (
-    //   // 외부 이미지를 가져온 경우
-    //   imageFiles[fileId].originalUrl &&
-    //   imageFiles[fileId].originalFile === null
-    // ) {
-    //   const file = await convertImageUrlToFile(imageFiles[fileId].originalUrl);
-    //   setImageFiles((prev) =>
-    //     prev.map((item) =>
-    //       item.fileId === selectedImageId
-    //         ? {
-    //             ...item,
-    //             originalFile: file,
-    //             originalUrl: URL.createObjectURL(file),
-    //             previewUrl: URL.createObjectURL(file),
-    //           }
-    //         : item,
-    //     ),
-    //   );
-    // }
+    if (
+      // 외부 이미지를 가져온 경우
+      imageFiles[fileId].originalUrl &&
+      imageFiles[fileId].originalFile === null
+    ) {
+      return; // 수정 불가
+    }
     setSelectedImageId(fileId);
   };
 
