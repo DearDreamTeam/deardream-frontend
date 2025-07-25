@@ -1,12 +1,14 @@
 "use client";
-import Result from "@/components/result/result";
-import { useEffect, useRef } from "react";
-import { useRouter } from "next/navigation";
-import axios from "@/lib/axios";
 
-const FamilyPage = () => {
-  const router = useRouter();
-  const hasRunRef = useRef(false); // 추가
+import { useEffect, useRef, useState } from "react";
+import Result from "@/components/result/result";
+import GreenBasicButton from "@/components/button/green-basic-button";
+import axios from "@/lib/axios";
+import { PATH } from "@/constants/path";
+
+const FamilyCreationPage = () => {
+  const hasRunRef = useRef(false);
+  const [isComplete, setIsComplete] = useState(false);
 
   const waitForFamilyRegistered = async (maxAttempts = 5) => {
     for (let i = 0; i < maxAttempts; i++) {
@@ -26,7 +28,7 @@ const FamilyPage = () => {
   };
 
   useEffect(() => {
-    if (hasRunRef.current) return; // 두 번째 실행 방지
+    if (hasRunRef.current) return;
     hasRunRef.current = true;
 
     const createFamily = async () => {
@@ -36,7 +38,7 @@ const FamilyPage = () => {
           const isRegistered = await waitForFamilyRegistered();
           const isLink = await postLink();
           if (isRegistered && isLink) {
-            router.push("/subscribe/family/complete");
+            setIsComplete(true); // ✅ 완료 상태 표시
           } else {
             alert("가족 등록 정보가 서버에 반영되지 않았습니다.");
           }
@@ -48,13 +50,28 @@ const FamilyPage = () => {
     };
 
     createFamily();
-  }, [router]);
+  }, []);
 
   return (
-    <Result
-      title="가족 생성이 되는 중이에요"
-      description="잠시만 기다려주세요"
-    />
+    <div className="flex h-full w-full flex-col items-center justify-center gap-2 p-4">
+      {isComplete ? (
+        <>
+          <Result
+            title="가족 생성이 완료되었어요"
+            description="지금 바로 첫 소식을 남기러 가볼까요?"
+          />
+          <GreenBasicButton color="300" link={PATH.HOME} newTab={true}>
+            소식 남기러 가기
+          </GreenBasicButton>
+        </>
+      ) : (
+        <Result
+          title="가족 생성이 되는 중이에요"
+          description="잠시만 기다려주세요"
+        />
+      )}
+    </div>
   );
 };
-export default FamilyPage;
+
+export default FamilyCreationPage;

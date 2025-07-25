@@ -1,12 +1,18 @@
 import InviteFamilyButton from "@/components/button/invite-family-button";
-import RibbonImage from "@/components/images/ribbon-image";
 import KakaoShareScript from "@/components/scripts/kakao-share-script";
 import StateTemplate from "@/components/template/state-template";
+import Image from "next/image";
 
 const NoPost = () => {
   return (
     <StateTemplate>
-      <RibbonImage />
+      <Image
+        src={`/images/mailbox.svg`}
+        alt="mailbox img"
+        width={96.67}
+        height={131.19}
+        className="py-3 pr-5"
+      />
       <StateTemplate.Title>소식함이 비어있어요</StateTemplate.Title>
 
       <StateTemplate.Content>

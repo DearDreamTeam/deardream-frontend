@@ -4,15 +4,25 @@ import EllipseImage from "@/components/images/ellipse-image";
 import RibbonImage from "@/components/images/ribbon-image";
 import StateTemplate from "@/components/template/state-template";
 import KaKao from "@/public/images/kakao.svg";
-import { useSearchParams } from "next/navigation";
-import { useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import { useInvitationStore } from "@/stores/useInvitationStore";
+import { useUserStore } from "@/stores/useUserInfoStore";
+import { PATH } from "@/constants/path";
+import { getAccessToken } from "@/lib/token";
+import axios from "@/lib/axios";
+import Loading from "@/components/loading-fallback/loading";
 const LoginPageClient = () => {
   //초대 코드 파라미터 추출
   const searchParams = useSearchParams();
   const inviteCode = searchParams.get("familylink");
 
   const { setFamilyLink } = useInvitationStore();
+  const { updateUserProfile } = useUserStore();
+
+  const [isLoading, setIsLoading] = useState(true);
+
+  const router = useRouter();
 
   //초대 코드 파라미터 추출
   useEffect(() => {
@@ -20,6 +30,40 @@ const LoginPageClient = () => {
       setFamilyLink(inviteCode);
     }
   }, [inviteCode, setFamilyLink]);
+
+  //사용자 정보 조회
+  useEffect(() => {
+    const token = getAccessToken();
+    if (!token) {
+      setIsLoading(false);
+      return;
+    }
+    const checkUser = async () => {
+      try {
+        if (token) {
+          const res = await axios.get("/v1/users/me");
+          if (res.status === 200) {
+            const userData = res.data.result;
+            updateUserProfile({
+              ...userData,
+            });
+            if (inviteCode) {
+              router.replace(PATH.RELATION + "?familyLink=" + inviteCode);
+            } else {
+              router.replace(PATH.HOME);
+            }
+            return;
+          }
+        }
+      } catch {
+        localStorage.clear();
+        router.replace(PATH.LOGIN);
+      }
+    };
+    checkUser();
+  }, [updateUserProfile, router, inviteCode]);
+
+  if (isLoading) return <Loading />;
 
   const REST_API_KEY = process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY;
   const REDIRECT_URI = process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI;

@@ -83,7 +83,7 @@ const InstitutionAddressInput = () => {
 
   return (
     <>
-      <div className="flex w-full flex-col items-center gap-10">
+      <div className="flex w-full flex-col items-center gap-4">
         <div className="flex-start text-grey-700 text-label-2 relative flex flex-col gap-2">
           주소
           <div className="flex w-80 flex-row items-center justify-between">

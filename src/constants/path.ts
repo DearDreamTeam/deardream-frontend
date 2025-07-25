@@ -11,7 +11,7 @@ export const PATH = {
   MY_FAMILY: "/mypage/myfamily", //나의 가족
   RELATION: "/profile/relation", //관계 페이지
   FAMILY_INVITE: "/invite", //가족 초대 페이지
-  FAMILY_COMPLETE: "/subscribe/family/complete", //가족 가입 완료 페이지
+  SUBSCRIBE: "/subscribe", //구독 페이지
 };
 
 export const DEFAULT_IMAGE_PATH = `/images/default-img.svg`;

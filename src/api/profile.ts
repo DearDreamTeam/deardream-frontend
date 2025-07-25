@@ -1,6 +1,7 @@
 import axios from "@/lib/axios";
 import { ReceiverProfileInfo } from "@/stores/useReceiverStore";
 import { UserProfileInfo } from "@/types/user-info";
+import { formatImageUrl } from "@/utils/format-image-url";
 
 export const registerUser = async (
   userProfile: UserProfileInfo,
@@ -8,10 +9,13 @@ export const registerUser = async (
   familylink?: string | null,
 ) => {
   const formData = new FormData();
-
   const userRequestDto = {
     name: userProfile.name,
     birth: userProfile.birth,
+    profileImage:
+      formatImageUrl(userProfile.profileImage) === "/images/default-img.svg"
+        ? null
+        : userProfile.profileImage,
     calendarType: userProfile.calendarType,
     relation:
       userProfile.relation && userProfile.relation !== ""
@@ -44,18 +48,25 @@ export const registerUser = async (
 export const updateProfile = async (
   userProfile: UserProfileInfo,
   imageFile?: File | null,
+  relation: boolean = false,
 ) => {
   const formData = new FormData();
-
+  let userRequestDto;
   console.log("업데이트할 프로필 정보:", userProfile, imageFile);
-
-  const userRequestDto = {
-    name: userProfile.name,
-    birth: userProfile.birth,
-    calendarType: userProfile.calendarType,
-    relation: userProfile.relation || null,
-    otherRelation: userProfile.otherRelation ?? null,
-  };
+  if (relation) {
+    userRequestDto = {
+      relation: userProfile.relation || null,
+      otherRelation: userProfile.otherRelation ?? null,
+    };
+  } else {
+    userRequestDto = {
+      name: userProfile.name,
+      birth: userProfile.birth,
+      calendarType: userProfile.calendarType,
+      relation: userProfile.relation || null,
+      otherRelation: userProfile.otherRelation ?? null,
+    };
+  }
 
   formData.append(
     "userRequestDto",

@@ -8,7 +8,7 @@ import WriteInactive from "@/public/icons/gnb/edit-inactive.svg";
 import PostboxInactive from "@/public/icons/gnb/mail-inactive.svg";
 import MyInactive from "@/public/icons/gnb/person-inactive.svg";
 
-import { PATH } from "./path";
+import { PATH } from "../../constants/path";
 
 export const NAV_ITEMS = [
   {
