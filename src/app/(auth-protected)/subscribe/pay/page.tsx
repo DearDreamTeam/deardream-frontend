@@ -101,7 +101,17 @@ const PayPage = () => {
         router.push(response.data.result.next_redirect_pc_url);
       }
     } catch (error) {
-      console.log(error);
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === 400) {
+          alert("이미 구독 중인 상품이 있어요");
+        } else if (error.response?.status === 401) {
+          alert("로그인 후 이용해주세요");
+        } else if (error.response?.status === 403) {
+          alert("권한이 없어요");
+        } else if (error.response?.status === 404) {
+          alert("존재하지 않는 상품이에요");
+        }
+      }
     }
   };
 
