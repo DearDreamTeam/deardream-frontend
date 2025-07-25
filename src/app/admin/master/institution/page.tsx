@@ -56,7 +56,7 @@ const Page = () => {
       ))}
       <MoreView viewLevel={1} count={institutions.length} />
 
-      <ItemCount count={mockFam.length} />
+      {selectedInstitution && <ItemCount count={mockFam.length} />}
       {selectedInstitution && <InstitutionDetail families={mockFam} />}
     </div>
   );
