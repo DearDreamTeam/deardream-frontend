@@ -4,11 +4,16 @@ import { DEFAULT_IMAGE_PATH, PATH } from "@/constants/path";
 import { useUserStore } from "@/stores/useUserInfoStore";
 import Image from "next/image";
 import Link from "next/link";
+// import Link from "next/link";
 
 const AdminProfile = () => {
   const { userProfile } = useUserStore();
-  console.log(userProfile);
-  if (!userProfile.id)
+
+  // const handleLogin = () => {
+  //   window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY}&redirect_uri=${process.env.NEXT_PUBLIC_KAKAO_ADMIN_REDIRECT_URI}&response_type=code`;
+  // };
+
+  if (userProfile.id === -1)
     return (
       <Link href={PATH.LOGIN}>
         <button className="button" type="button">

@@ -84,6 +84,18 @@
   .flex-center {
     @apply flex items-center justify-center;
   }
+  .flex-row-gap-1 {
+    @apply flex gap-1;
+  }
+  .organization-info {
+    @apply text-grey-600;
+  }
+  .organization-info :nth-child(1) {
+    @apply text-label-1;
+  }
+  .organization-info :nth-child(n + 2) {
+    @apply text-label-2;
+  }
 
   .input-center {
     @apply w-full text-center;
