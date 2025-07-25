@@ -20,17 +20,26 @@ const Page = () => {
   return (
     <div>
       <section className="text-body-1">
-        <span className="text-title-1">
+        <span className="text-headline-3 text-grey-500">
           안녕하세요. 이어드림의 기관 어드민 페이지에 오신 것을 환영합니다.
         </span>
-        <h1 className="text-headline-0">
-          {organizationInfo.institutionName} 관계자님
+        <h1 className="text-headline-0 flex-row-gap-1 pt-1 pb-4">
+          <span>{organizationInfo.institutionName}</span>
+          <span className="text-grey-700">관계자님</span>
         </h1>
-        <div>기관 코드: {organizationInfo.institutionCode}</div>
-        <div>
-          주소: ({organizationInfo.postalCode}) {organizationInfo.address}
+        <div className="flex-row-gap-1 organization-info">
+          <span>기관코드</span>
+          <span>{organizationInfo.institutionCode}</span>
         </div>
-        <div>전화 번호: {organizationInfo.phone}</div>
+        <div className="flex-row-gap-1 organization-info">
+          <span>주소</span>
+          <span>({organizationInfo.postalCode})</span>
+          <span>{organizationInfo.address}</span>
+        </div>
+        <div className="flex-row-gap-1 organization-info">
+          <span>전화번호</span>
+          <span>{organizationInfo.phone}</span>
+        </div>
       </section>
       <section className="flex w-full flex-col items-center justify-center">
         <div className="text-headline-0 text-grey-700 flex gap-4">
@@ -56,7 +65,6 @@ const Page = () => {
             <ArrowFront />
           </button>
         </div>
-        <span>{DeliveryStatus(organizationInfo.deliveryStatus)}</span>
 
         <input
           ref={monthRef}
@@ -66,7 +74,12 @@ const Page = () => {
           className="opacity-0"
         />
       </section>
-      <ItemCount count={families.length} />
+
+      <div className="flex items-center">
+        <ItemCount count={families.length} />
+        <span>{DeliveryStatus(organizationInfo.deliveryStatus)}</span>
+      </div>
+
       <TableHeader
         items={INSTITUTION_FAMILY_TABLE_ITEMS}
         keyPrefix={"inst-f"}
