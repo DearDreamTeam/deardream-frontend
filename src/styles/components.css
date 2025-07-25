@@ -88,4 +88,14 @@
   .input-center {
     @apply w-full text-center;
   }
+
+  .postcard-wrapper {
+    @apply bg-grey-0 px-4;
+  }
+  .postcard-container {
+    @apply border-b-grey-200 border-b py-4;
+  }
+  .postcard-info-container {
+    @apply flex items-center gap-1 px-[0.13rem] py-1;
+  }
 }

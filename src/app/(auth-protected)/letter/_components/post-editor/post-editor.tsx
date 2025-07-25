@@ -25,7 +25,6 @@ import {
 import { editPost, registerPost } from "@/api/post";
 import { Post } from "@/types/post-type";
 import { useUserStore } from "@/stores/useUserInfoStore";
-// import { convertImageUrlToFile } from "@/utils/get-edited-image-url";
 
 const PostEditor = ({ postcard }: { postcard?: Post }) => {
   const fileIdRef = useRef(0);
@@ -44,7 +43,7 @@ const PostEditor = ({ postcard }: { postcard?: Post }) => {
   /* inputs */
   const [content, setContent] = useState(postcard?.content ?? "");
   const [aspectIndex, setAspectIndex] = useState(
-    postcard?.imageUrls.length ?? 0,
+    postcard?.imageUrls.length ? postcard?.imageUrls.length - 1 : 0,
   );
   const [imageFiles, setImageFiles] = useState<EditableImage[]>(
     postcard?.imageUrls.map((url: string) => ({
@@ -68,8 +67,7 @@ const PostEditor = ({ postcard }: { postcard?: Post }) => {
     setAspectIndex(imgCount - 1);
   }, [imageFiles]);
 
-  const handleSubmitLetter = (e: React.FormEvent<HTMLFormElement>) => {
-    console.log(userProfile);
+  const handleSubmitLetter = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!isActive) {
       if (imageCount > 0) {
@@ -98,13 +96,19 @@ const PostEditor = ({ postcard }: { postcard?: Post }) => {
           .filter((img): img is File => img !== null),
       );
     } else {
-      registerPost(
-        userProfile.id,
-        content,
-        imageFiles
-          .map((item) => item.originalFile)
-          .filter((img): img is File => img !== null),
-      );
+      try {
+        await registerPost(
+          userProfile.id,
+          content,
+          imageFiles
+            .map((item) => item.originalFile)
+            .filter((img): img is File => img !== null),
+        );
+      } catch (error) {
+        console.error(error);
+        setWarningMessage(NOTIFICATION_MESSAGES.REJECT_POST.BACK);
+        setIsConfirmOpen(true);
+      }
     }
 
     setIsComplete(true);
@@ -128,7 +132,7 @@ const PostEditor = ({ postcard }: { postcard?: Post }) => {
         return;
       }
     }
-    router.back();
+    router.push(PATH.HOME);
   };
 
   const handleSaveEditedImage = (
@@ -157,25 +161,13 @@ const PostEditor = ({ postcard }: { postcard?: Post }) => {
   };
 
   const handleImageClick = async (fileId: number) => {
-    // if (
-    //   // 외부 이미지를 가져온 경우
-    //   imageFiles[fileId].originalUrl &&
-    //   imageFiles[fileId].originalFile === null
-    // ) {
-    //   const file = await convertImageUrlToFile(imageFiles[fileId].originalUrl);
-    //   setImageFiles((prev) =>
-    //     prev.map((item) =>
-    //       item.fileId === selectedImageId
-    //         ? {
-    //             ...item,
-    //             originalFile: file,
-    //             originalUrl: URL.createObjectURL(file),
-    //             previewUrl: URL.createObjectURL(file),
-    //           }
-    //         : item,
-    //     ),
-    //   );
-    // }
+    if (
+      // 외부 이미지를 가져온 경우
+      imageFiles[fileId].originalUrl &&
+      imageFiles[fileId].originalFile === null
+    ) {
+      return; // 수정 불가
+    }
     setSelectedImageId(fileId);
   };
 
@@ -237,7 +229,7 @@ const PostEditor = ({ postcard }: { postcard?: Post }) => {
           title={warningMessage.title}
           content={renderMessageWithLineBreaks(warningMessage.content)}
           setIsOpen={setIsConfirmOpen}
-          action={router.back}
+          action={() => router.push(PATH.HOME)}
           actionLabel={"확인"}
         />
       )}
