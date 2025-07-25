@@ -12,6 +12,46 @@ import { Families } from "@/types/admin-organization-dto";
 import Checkbox from "../button/checkbox";
 import { CheckboxProps } from "../button/checkbox-props";
 
+interface TableItemProps {
+  index: number;
+  id: number;
+  item: IndividualsDto | InstitutionsDto;
+  action: (id: number) => void;
+}
+
+export const TableItem = ({ index, id, item, action }: TableItemProps) => {
+  return (
+    <div className="admin-table-item gap-4">
+      {INDIVIDUALS_TABLE_ITEMS.map(({ value, flex }) => {
+        const key = value + index;
+        if (value === "deliveryStatus")
+          return (
+            <span key={key} className={flex}>
+              {DeliveryStatus(item.deliveryStatus)}
+            </span>
+          );
+        if (value === "pdfUrl")
+          return (
+            <span key={key} className={flex}>
+              <DownloadPdf pdfUrl={item.pdfUrl} isDownloaded={false} />
+            </span>
+          );
+        if (value === "checkbox")
+          return (
+            <span key={key} className={flex}>
+              <Checkbox idValue={id} callback={action} />
+            </span>
+          );
+        return (
+          <span key={key} className={flex}>
+            {item[value as keyof typeof item]}
+          </span>
+        );
+      })}
+    </div>
+  );
+};
+
 export const IndividualTableItem = (
   props: {
     index: number;
