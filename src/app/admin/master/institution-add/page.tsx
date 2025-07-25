@@ -4,10 +4,10 @@ import PageToggle from "../../_components/button/page-toggle";
 import { useEffect, useState } from "react";
 import ItemCount from "../../_components/table/item-count";
 import { TableHeader } from "../../_components/table/table-header";
-import { AddInstitutionTableItem } from "../../_components/table/table-item";
 import MoreAdd from "../../_components/button/more-add";
 import { AddInstitutionProps } from "@/types/admin-dto";
 import { ADD_INSTITUTIONS_TABLE_ITEMS } from "../../_components/table/table-items";
+import { AddInstitutionTableItem } from "../../_components/table/add-inst-table-item";
 
 const DEFAULT = {
   name: "",
