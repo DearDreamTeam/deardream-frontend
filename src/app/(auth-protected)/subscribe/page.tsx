@@ -26,7 +26,6 @@ const PlanPage: FC = () => {
         deliveryType: planType,
       },
     });
-    console.log("receiver updated:", receiver);
   }, [planType, setReceiver]);
 
   useEffect(() => {
@@ -38,10 +37,10 @@ const PlanPage: FC = () => {
   return (
     <div className="bg-grey-0 relative flex h-full w-full flex-col items-center justify-between p-4 pt-0">
       <div>
-        <Header>플랜 선택</Header>
+        <Header link={PATH.HOME}>플랜 선택</Header>
         <div className="border-grey-200 mt-3 flex w-full flex-col justify-center gap-2 border-b-1 border-solid p-3">
           <div className="text-headline-3 text-grey-400 flex items-center gap-2">
-          <div
+            <div
               onClick={() => setPlanType("HOME")}
               className={`${planType === "HOME" ? "bg-green-700" : "bg-grey-500"} inline-flex h-[24px] w-[24px] cursor-pointer flex-col items-center justify-center rounded-full`}
             >
@@ -55,7 +54,7 @@ const PlanPage: FC = () => {
           <div
             className={`text-title-1 ${planType == "HOME" ? "text-green-300" : "text-grey-700"} w-full text-right`}
           >
-             월 8,900원
+            월 8,900원
           </div>
         </div>
 
@@ -73,7 +72,9 @@ const PlanPage: FC = () => {
             isActive={planType == "INSTITUTION"}
             planType={planType}
           />
-          <div className={`text-title-1 ${planType == "INSTITUTION" ? "text-green-300" : "text-grey-700"} w-full text-right`}>
+          <div
+            className={`text-title-1 ${planType == "INSTITUTION" ? "text-green-300" : "text-grey-700"} w-full text-right`}
+          >
             월 0원
           </div>
         </div>

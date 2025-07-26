@@ -172,7 +172,7 @@ const ProfileClient = () => {
             content="프로필이 성공적으로 등록 되었습니다."
             setIsOpen={setIsProfileSubmitted}
             onAction={() => {
-              window.location.href = PATH.HOME;
+              router.push(PATH.HOME);
             }}
           />
         )}

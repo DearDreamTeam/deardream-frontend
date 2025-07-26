@@ -5,7 +5,7 @@ interface ProfileNameInputProps {
 
 const ProfileNameInput = ({ name, onChange }: ProfileNameInputProps) => {
   return (
-    <div className="flex-start text-title-2 text-grey-400 flex flex-col gap-2">
+    <div className="flex-start text-body-1 text-grey-400 flex flex-col gap-2">
       이름
       <input
         type="text"

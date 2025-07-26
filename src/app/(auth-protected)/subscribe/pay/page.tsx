@@ -5,7 +5,7 @@ import Header from "@/components/common/header";
 import GreenBox from "@/components/mypage/green-box";
 import axios from "axios";
 import Check from "@/public/icons/common/check.svg"; // Assuming you have a green check icon
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useUserStore } from "@/stores/useUserInfoStore";
 import { useRouter } from "next/navigation";
 import { usePaymentStore } from "@/stores/usePaymentStore";
@@ -72,6 +72,14 @@ const PayPage = () => {
     setIsCheck4(!isCheck4);
     setIsAllCheck(false);
   };
+
+  useEffect(() => {
+    if (isCheck2 && isCheck3 && isCheck4) {
+      setIsAllCheck(true);
+    } else {
+      setIsAllCheck(false);
+    }
+  }, [isCheck2, isCheck3, isCheck4]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

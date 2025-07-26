@@ -25,7 +25,7 @@ const RecieverProfile = ({
   return (
     //toDo: 이 부분 디자인에 안나와 있어서 디자인 나오면 tailwind까지 수정하겠습니다
     <>
-      <div className="flex-start text-grey-700 text-label-2 flex flex-col gap-2">
+      <div className="flex-start text-body-1 text-grey-400 flex flex-col gap-2">
         전화번호
         <input
           type="text"
