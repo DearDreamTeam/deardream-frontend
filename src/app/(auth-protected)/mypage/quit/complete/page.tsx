@@ -17,6 +17,7 @@ const CompletePage = () => {
   return (
     <Result
       title="회원 탈퇴가 완료되었어요"
+      imageType="airplane"
       description="이어드림과 함께 해주셔서 감사합니다"
     />
   );

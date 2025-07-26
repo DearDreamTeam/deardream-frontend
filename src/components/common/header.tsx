@@ -12,7 +12,7 @@ const Header = ({
 }) => {
   const router = useRouter();
   return (
-    <div className="text-headline-3 flex w-screen max-w-[768px] items-center border-b border-gray-200 px-5 py-3">
+    <div className="text-headline-3 flex w-screen max-w-[768px] items-center border-b border-gray-200 px-4 py-3">
       {children != "마이페이지" && (
         <Arrow
           className="cursor-pointer"

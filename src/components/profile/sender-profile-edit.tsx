@@ -54,7 +54,7 @@ const SenderProfileEdit = ({
             setEditUserProfile?.((prev) => ({ ...prev, name: val }))
           }
         />
-        <div className="flex-start text-label-2 flex flex-col gap-2">
+        <div className="flex-start text-title-2 text-grey-400 flex flex-col gap-2">
           생일
           <BirthSelect
             birth={editUserProfile?.birth || ""}

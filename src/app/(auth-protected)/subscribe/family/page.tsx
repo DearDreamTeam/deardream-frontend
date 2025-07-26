@@ -59,6 +59,7 @@ const FamilyCreationPage = () => {
           <Result
             title="가족 생성이 완료되었어요"
             description="지금 바로 첫 소식을 남기러 가볼까요?"
+            imageType="family"
           />
           <GreenBasicButton color="300" link={PATH.HOME} newTab={true}>
             소식 남기러 가기
@@ -68,6 +69,7 @@ const FamilyCreationPage = () => {
         <Result
           title="가족 생성이 되는 중이에요"
           description="잠시만 기다려주세요"
+          imageType="family"
         />
       )}
     </div>

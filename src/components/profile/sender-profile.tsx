@@ -22,7 +22,7 @@ const SenderProfile = ({
         받는 분과의 관계
         <button
           type="button"
-          className="text-grey-700 placeholder:text-grey-400 border-grey-300 text-headline-3 w-80 border-b-1 border-solid px-1 py-2 text-left focus:ring-0 focus:outline-none"
+          className="text-grey-700 placeholder:text-grey-400 border-grey-300 text-title-1 w-80 border-b-1 border-solid px-1 py-2 text-left focus:ring-0 focus:outline-none"
           onClick={() => setIsModalOpen(true)}
         >
           {relationship ? (
@@ -30,7 +30,9 @@ const SenderProfile = ({
               {FAMILY_RELATION[relationship as keyof typeof FAMILY_RELATION]}
             </span>
           ) : (
-            <span className="text-grey-400">관계를 선택해주세요</span>
+            <span className="text-grey-400 text-title-3">
+              관계를 선택해주세요
+            </span>
           )}
         </button>
         {isModalOpen && setEditUserProfile && (
@@ -50,7 +52,7 @@ const SenderProfile = ({
           <input
             type="text"
             placeholder="관계를 직접 입력해주세요"
-            className="text-grey-700 placeholder:text-grey-400 border-grey-300 text-headline-3 w-80 border-b-1 border-solid px-1 py-2 text-left focus:ring-0 focus:outline-none"
+            className="text-grey-700 placeholder:text-grey-400 border-grey-300 text-title-1 w-80 border-b-1 border-solid px-1 py-2 text-left focus:ring-0 focus:outline-none"
             value={editUserProfile?.otherRelation || ""}
             onChange={
               setEditUserProfile

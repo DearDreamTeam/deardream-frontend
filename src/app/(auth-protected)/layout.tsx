@@ -41,6 +41,7 @@ export default function ProtectedLayout({
           updateUserProfile({
             ...userData,
           });
+          console.log("userProfile", userProfile);
         } else {
           throw new Error("사용자 정보 조회 실패");
         }
@@ -51,22 +52,25 @@ export default function ProtectedLayout({
         router.replace("/login");
       }
     };
-    const checkFamilyLink = async () => {
-      try {
-        const res = await axios.get("/v1/family/link");
-        if (res.status === 200) {
-          setFamilyLink(res.data.result);
-        }
-      } catch {
-        console.log("가족 링크 조회 실패");
-      }
-    };
 
     checkUser();
+  }, [router, setFamilyLink, updateUserProfile, skipAuthCheck]);
+
+  useEffect(() => {
     if (userProfile.familyRegistered) {
+      const checkFamilyLink = async () => {
+        try {
+          const res = await axios.get("/v1/family/link");
+          if (res.status === 200) {
+            setFamilyLink(res.data.result);
+          }
+        } catch {
+          console.log("가족 링크 조회 실패");
+        }
+      };
       checkFamilyLink();
     }
-  }, [router, setFamilyLink, updateUserProfile, skipAuthCheck]);
+  }, [userProfile.familyRegistered, setFamilyLink]);
 
   return (
     <>

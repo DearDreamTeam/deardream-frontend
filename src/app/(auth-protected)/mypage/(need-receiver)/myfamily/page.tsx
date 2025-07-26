@@ -109,6 +109,9 @@ const MyFamilyPage = () => {
     };
 
     const fetchFamilyData = async () => {
+      if (!userProfile.familyRegistered) {
+        return;
+      }
       try {
         setIsLoading(true);
         const response = await axios.get("/v1/family");

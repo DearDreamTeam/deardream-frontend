@@ -92,14 +92,14 @@ const BirthdayInputs = ({
 
   return (
     <>
-      <div className="text-grey-800 flex w-80 items-center justify-between gap-2 text-lg">
+      <div className="text-grey-800 flex w-80 items-center justify-between gap-2">
         <div className="flex items-center">
           <input
             type="text"
             inputMode="numeric"
             maxLength={4}
             placeholder="0000"
-            className="text-headline-3 placeholder:text-grey-400 w-20 border-b border-gray-300 bg-transparent text-center focus:outline-none"
+            className="text-title-1 placeholder:text-title-3 w-20 border-b border-gray-300 bg-transparent text-center focus:outline-none"
             value={year}
             onChange={handleYear}
             onBlur={handleYearBlur}
@@ -113,7 +113,7 @@ const BirthdayInputs = ({
             inputMode="numeric"
             maxLength={2}
             placeholder="00"
-            className="text-headline-3 placeholder:text-grey-400 w-12 border-b border-gray-300 bg-transparent text-center focus:outline-none"
+            className="text-title-1 placeholder:text-title-3 w-12 border-b border-gray-300 bg-transparent text-center focus:outline-none"
             value={month}
             onChange={handleMonthChange}
             onBlur={handleMonthBlur}
@@ -127,7 +127,7 @@ const BirthdayInputs = ({
             inputMode="numeric"
             maxLength={2}
             placeholder="00"
-            className="text-headline-3 placeholder:text-grey-400 w-12 border-b border-gray-300 bg-transparent text-center focus:outline-none"
+            className="text-title-1 placeholder:text-title-3 w-12 border-b border-gray-300 bg-transparent text-center focus:outline-none"
             value={day}
             onChange={handleDayChange}
             onBlur={handleDayBlur}
@@ -136,7 +136,7 @@ const BirthdayInputs = ({
         </div>
       </div>
       <div className="flex gap-10">
-        <div className="flex items-center gap-2">
+        <div className="text-label-2 flex items-center gap-2">
           양력
           <div
             onClick={() => setIsLunar(false)}
@@ -147,7 +147,7 @@ const BirthdayInputs = ({
             <Check />
           </div>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="text-label-2 flex items-center gap-2">
           음력
           <div
             onClick={() => setIsLunar(true)}
