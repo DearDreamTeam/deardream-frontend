@@ -12,7 +12,10 @@ export const kakaoLogin = async (
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
   const response = await axios.get(API_URL + "/users/login/kakao", {
-    params: { code, redirectUri: process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI },
+    params: {
+      code: code,
+      redirectUri: process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI,
+    },
   });
 
   const data = response.data;

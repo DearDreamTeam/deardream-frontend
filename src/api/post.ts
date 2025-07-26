@@ -1,4 +1,5 @@
 import axios from "@/lib/axios";
+import { compressImage } from "@/lib/compress-image";
 import { usePostStore } from "@/stores/usePostStore";
 import { Post, PostLetter } from "@/types/post-type";
 
@@ -27,8 +28,11 @@ export const registerPost = async (
       type: "application/json",
     }),
   );
+  const compressedFiles = await Promise.all(
+    images.map((file) => compressImage(file)),
+  );
 
-  images.forEach((file) => {
+  compressedFiles.forEach((file) => {
     formData.append("images", file);
   });
 
@@ -39,7 +43,7 @@ export const registerPost = async (
       },
     });
   } catch (error) {
-    console.error(error);
+    throw error;
   }
 };
 
@@ -52,8 +56,6 @@ export const editPost = async (
   images: PostLetter["images"],
 ) => {
   const formData = new FormData();
-  console.log("보내는 데이터 existingImageUrls", existingImageUrls);
-  console.log("보내는 데이터 images", images);
 
   formData.append(
     "request",
@@ -62,7 +64,11 @@ export const editPost = async (
     }),
   );
 
-  images.forEach((file) => {
+  const compressedFiles = await Promise.all(
+    images.map((file) => compressImage(file)),
+  );
+
+  compressedFiles.forEach((file) => {
     formData.append("images", file);
   });
 

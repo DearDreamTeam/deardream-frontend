@@ -32,4 +32,17 @@ export const NOTIFICATION_MESSAGES = {
     title: "사진 첨부가 제한돼요",
     content: "사진은 최대 2장까지만 선택할 수 있어요",
   },
+
+  REJECT_POST: {
+    FRONT: {
+      title: "이번 달 소식이 가득 찼어요",
+      content:
+        "이번 달엔 소식을 20개 모두 작성하셨어요\n다음 달에 따뜻한 마음을 다시 전해 주세요",
+    },
+    BACK: {
+      title: "이번 달 소식이 마감되었어요",
+      content:
+        "방금 다른 가족이 마지막 소식을 작성했어요\n다음 달에 따뜻한 마음을 다시 전해 주세요\n홈으로 이동합니다",
+    },
+  },
 };

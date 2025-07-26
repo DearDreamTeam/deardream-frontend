@@ -14,8 +14,8 @@ const Postcard = ({
   imageUrls,
 }: Post) => {
   return (
-    <div className="bg-grey-0 px-4">
-      <div className="border-b-grey-200 border-b py-4">
+    <div className="postcard-wrapper">
+      <div className="postcard-container">
         <PostInfo
           authorId={authorId}
           authorName={authorName}

@@ -1,11 +1,17 @@
 import StateTemplate from "@/components/template/state-template";
 import MakeFamilyGroupButton from "@/components/button/make-family-group-button";
-import RibbonImage from "@/components/images/ribbon-image";
+import Image from "next/image";
 
 const NoFamilyGroup = () => {
   return (
     <StateTemplate>
-      <RibbonImage />
+      <Image
+        src={`/images/mail-green.png`}
+        width={167.43}
+        height={109.8}
+        alt="mail img"
+        className="py-[1.38rem]"
+      />
 
       <StateTemplate.Title>아직 그룹이 없어요</StateTemplate.Title>
 

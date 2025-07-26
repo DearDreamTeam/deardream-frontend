@@ -1,6 +1,6 @@
 "use client";
 
-import { SHARE_OPTION_ITEMS } from "@/constants/share-option-items";
+import { SHARE_OPTION_ITEMS } from "@/components/modal/share-options/share-option-items";
 import IconItem from "./icon-item";
 
 const IconsBox = () => {

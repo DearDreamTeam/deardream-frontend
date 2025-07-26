@@ -1,11 +1,9 @@
-import Skeleton from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
-
-import { formatDateToDots } from "@/utils/format-date";
-import MoreButton from "@/components/button/more-button";
 import Image from "next/image";
+import MoreButton from "@/components/button/more-button";
 import { useUserStore } from "@/stores/useUserInfoStore";
 import { Post } from "@/types/post-type";
+import { formatDateToDots } from "@/utils/format-date";
+import { DEFAULT_IMAGE_PATH } from "@/constants/path";
 
 const PostInfo = ({
   authorId,
@@ -24,18 +22,14 @@ const PostInfo = ({
   | "authorProfileImg"
 >) => {
   return (
-    <div className="flex items-center gap-1 px-[0.13rem] py-1">
-      {authorProfileImg ? (
-        <Image
-          src={authorProfileImg}
-          alt={"프로필 이미지"}
-          width={36}
-          height={36}
-          className="rounded-full"
-        />
-      ) : (
-        <Skeleton circle={true} width={36} height={36} />
-      )}
+    <div className="postcard-info-container">
+      <Image
+        src={authorProfileImg || DEFAULT_IMAGE_PATH}
+        alt={"프로필 이미지"}
+        width={36}
+        height={36}
+        className="rounded-full"
+      />
       <div className="flex flex-1">
         <div className="flex-1">
           <p className="text-body-2 flex gap-[0.12rem]">
