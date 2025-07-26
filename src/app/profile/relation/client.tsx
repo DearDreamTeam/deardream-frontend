@@ -100,11 +100,11 @@ const RelationClient = () => {
             </StateTemplate.Content>
             <button
               type="button"
-              className="text-grey-700 placeholder:text-grey-400 border-grey-300 text-headline-3 mt-6 w-80 border-b-1 border-solid px-1 py-2 text-left focus:ring-0 focus:outline-none"
+              className="text-grey-700 placeholder:text-grey-400 border-grey-300 text-title-1 mt-8 w-80 border-b-1 border-solid px-1 py-2 text-left focus:ring-0 focus:outline-none"
               onClick={() => setIsModalOpen(true)}
             >
               {relationship ? (
-                <span className="text-title-2">
+                <span className="text-title-1">
                   {
                     FAMILY_RELATION[
                       relationship as keyof typeof FAMILY_RELATION
@@ -112,7 +112,7 @@ const RelationClient = () => {
                   }
                 </span>
               ) : (
-                <span className="text-grey-400 text-title-2">선택해주세요</span>
+                <span className="text-grey-400 text-title-3">선택해주세요</span>
               )}
             </button>
             {isModalOpen && (
@@ -131,7 +131,7 @@ const RelationClient = () => {
               <input
                 type="text"
                 placeholder="관계를 직접 입력해주세요"
-                className="text-grey-700 placeholder:text-grey-400 border-grey-300 text-title-2 w-80 border-b-1 border-solid px-1 py-2 text-left focus:ring-0 focus:outline-none"
+                className="text-grey-700 placeholder:text-title-3 border-grey-300 text-title-1 w-80 border-b-1 border-solid px-1 py-2 text-left focus:ring-0 focus:outline-none"
                 value={userProfile?.otherRelation || ""}
                 onChange={(e) => {
                   setUserProfile({
