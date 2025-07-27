@@ -58,11 +58,14 @@ const FamilyCreationPage = () => {
         <>
           <Result
             title="가족 생성이 완료되었어요"
-            description="지금 바로 첫 소식을 남기러 가볼까요?"
+            description="추가 정보를 입력해주세요"
             imageType="family"
           />
-          <GreenBasicButton color="300" link={PATH.HOME} newTab={true}>
-            소식 남기러 가기
+          <GreenBasicButton color="300" link={PATH.RELATION} newTab={true}>
+            정보 입력하러 가기
+          </GreenBasicButton>
+          <GreenBasicButton color="100" link={PATH.HOME} newTab={true}>
+            나중에 입력하기
           </GreenBasicButton>
         </>
       ) : (

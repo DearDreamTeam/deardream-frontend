@@ -29,8 +29,6 @@ const SenderInfo = memo(({ user }: { user: UserProfileInfo }) => (
       width={54}
       height={54}
       className="rounded-full object-cover"
-      placeholder="blur"
-      blurDataURL="/images/blur-default.svg" // or base64 tiny image
       loading="eager"
       priority
     />
@@ -59,8 +57,6 @@ const ReceiverInfo = memo(
           width={54}
           height={54}
           className="rounded-full object-cover"
-          placeholder="blur"
-          blurDataURL="/images/blur-default.svg" // or base64 tiny image
           loading="eager"
           priority
         />
@@ -117,11 +113,29 @@ const MyFamilyClient = () => {
   if (isLoading) return <Loading />;
 
   return (
-    <div className="bg-grey-0 flex h-screen w-full flex-col items-center p-4 pt-0">
+    <div className="bg-grey-0 flex h-full w-full flex-1 flex-col items-center p-4 pt-0">
       <Header link={PATH.MYPAGE}>나의 가족</Header>
 
       <div className="mt-4 flex w-full flex-col justify-center">
         {userProfile.familyRegistered && (
+          <div className="flex h-full w-full flex-col items-center justify-center gap-3">
+            <div className="flex w-full flex-col items-center text-center">
+              <div className="text-grey-900 text-lg leading-relaxed font-semibold">
+                구독 내역이 없어요
+              </div>
+              <div className="text-grey-600 text-base leading-normal">
+                이어드림 플랜을 구독하시면
+                <br />
+                전체 서비스를 이용하실 수 있어요
+              </div>
+            </div>
+
+            <button className="rounded bg-green-300 px-4 py-2 text-lg leading-relaxed font-semibold text-neutral-50">
+              구독하러 가기
+            </button>
+          </div>
+        )}
+        {!userProfile.familyRegistered && (
           <>
             <div className="mb-4 flex w-full flex-col">
               <div className="text label-2 text-grey-400 w-full">받는 분</div>

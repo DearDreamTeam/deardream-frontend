@@ -1,6 +1,15 @@
 "use client";
 
 import Header from "@/components/common/header";
+import Loading from "@/components/loading-fallback/loading";
+import axios from "@/lib/axios";
+import { useUserStore } from "@/stores/useUserInfoStore";
+import { useEffect, useState } from "react";
+
+interface PayHistory {
+  paymentDate: string;
+  amount: number;
+}
 
 const PayItem = ({ date }: { date: Date }) => {
   return (
@@ -24,21 +33,58 @@ const PayItem = ({ date }: { date: Date }) => {
 };
 
 const PayHistoryPage = () => {
+  const [payHistory, setPayHistory] = useState<PayHistory[]>([]);
+  const { userProfile } = useUserStore();
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchPayHistory = async () => {
+      setIsLoading(true);
+      try {
+        const response = await axios.get("/v1/test/payment/request", {
+          params: {
+            familyId: userProfile.id,
+          },
+        });
+        setPayHistory(response.data.result);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchPayHistory();
+  }, [userProfile.id]);
   return (
     <>
-      <div className="bg-grey-0 flex h-full w-full flex-col items-center p-3 pt-0">
-        <Header>결제 내역</Header>
+      {isLoading ? (
+        <>
+          <Loading />
+        </>
+      ) : (
+        <div className="bg-grey-0 flex h-full w-full flex-col items-center p-3 pt-0">
+          <Header>결제 내역</Header>
 
-        <div className="mt-4 flex w-full flex-col gap-8">
-          <div className="flex w-full flex-col gap-4">
-            <div className="flex w-full flex-col gap-2">
-              <PayItem date={new Date()} />
-              <PayItem date={new Date()} />
-              <PayItem date={new Date()} />
+          <div className="mt-4 flex w-full flex-col gap-8">
+            <div className="flex w-full flex-col gap-4">
+              <div className="flex w-full flex-col gap-2">
+                {payHistory.length === 0 ? (
+                  <div className="flex min-h-screen w-full items-center justify-center">
+                    결제 내역이 없습니다
+                  </div>
+                ) : (
+                  payHistory.map((item) => (
+                    <PayItem
+                      key={item.paymentDate}
+                      date={new Date(item.paymentDate)}
+                    />
+                  ))
+                )}
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
     </>
   );
 };

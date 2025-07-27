@@ -37,11 +37,15 @@ const SectionItem = ({
   return (
     <div
       className="text-title-2 cursor-pointer"
-      onClick={() =>
-        link === "logout"
-          ? setIsOpen && setIsOpen(true)
-          : router.push("/mypage/" + link)
-      }
+      onClick={() => {
+        if (link === "first-subscribe") {
+          router.push("/subscribe");
+        } else if (link === "logout") {
+          if (setIsOpen) setIsOpen(true);
+        } else {
+          router.push("/mypage/" + link);
+        }
+      }}
     >
       {children}
     </div>
@@ -111,7 +115,13 @@ const MyPage = () => {
           </Section>
 
           <Section title="정기구독">
-            <SectionItem link="subscribe">나의 정기구독</SectionItem>
+            <SectionItem
+              link={
+                userProfile.familyRegistered ? "subscribe" : "first-subscribe"
+              }
+            >
+              나의 정기구독
+            </SectionItem>
             <SectionItem link="payhistory">결제 내역</SectionItem>
           </Section>
           <Section title="도움말">

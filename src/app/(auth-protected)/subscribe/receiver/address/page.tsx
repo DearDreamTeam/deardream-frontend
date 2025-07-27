@@ -22,10 +22,7 @@ const AddressPage = () => {
   const inComplete =
     receiver.address.deliveryType === "INSTITUTION"
       ? !receiver.address.code
-      : !receiver.address.address ||
-        !receiver.address.recipientName ||
-        !receiver.address.recipientPhone ||
-        !receiver.address.postalCode;
+      : !receiver.address.address || !receiver.address.postalCode;
 
   useEffect(() => {
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {

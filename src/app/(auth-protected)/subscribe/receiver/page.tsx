@@ -72,7 +72,7 @@ const ReceiverProfilePage = () => {
           setIsOpen={setShowAlert}
           actionLabel="나가기"
           action={() => {
-            router.push(PATH.SUBSCRIBE);
+            window.location.href = PATH.SUBSCRIBE;
           }}
           cancelAction={() => {
             setShowAlert(false);
