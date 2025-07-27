@@ -5,10 +5,11 @@ import { immer } from "zustand/middleware/immer";
 const POSTBOX_STORAGE_KEY = "deardream-postbox";
 
 export interface Newsletter {
-  pdfId: number;
-  coverImgUrl: string;
-  timestamp: number;
-  status: string; // 배송 상태
+  deliveryStatus: string; // 배송 상태
+  pdfUrl: string;
+  thumbnailUrl: string;
+  yearMonthType: string;
+  archiveId: number;
   liked: boolean; // 즐겨찾기 여부
 }
 
@@ -19,26 +20,16 @@ interface PostboxState {
   setLikedToggle: (pdfId: number) => void;
 }
 
-/*
-const defaultData: Newsletter[] = Array.from({ length: 10 }, (_, i) => ({
-  pdfId: i,
-  coverImgUrl: `/mock/cover-${i + 1}.png`,
-  timestamp: new Date(2025, 7 - i, 1).getTime(),
-  liked: false,
-  status: i > 1 ? 2 : i,
-}));
-*/
-
 export const useLettersStore = create<PostboxState>()(
   persist(
     immer((set) => ({
       newsletters: [],
       setNewsletters: (newsletters) => set({ newsletters: newsletters }),
-      setLikedStatus: (pdfIds) =>
+      setLikedStatus: (archiveIds) =>
         set((state) => {
           if (state.newsletters) {
             const updatedNewsletters = state.newsletters.map((news) =>
-              pdfIds.includes(news.pdfId)
+              archiveIds.includes(news.archiveId)
                 ? {
                     ...news,
                     liked: true,
@@ -51,11 +42,11 @@ export const useLettersStore = create<PostboxState>()(
             };
           }
         }),
-      setLikedToggle: (pdfId) =>
+      setLikedToggle: (archiveId) =>
         set((state) => {
           if (state.newsletters) {
             const updatedNewsletters = state.newsletters.map((news) =>
-              news.pdfId === pdfId
+              news.archiveId === archiveId
                 ? {
                     ...news,
                     liked: !news.liked,

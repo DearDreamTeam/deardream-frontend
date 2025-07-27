@@ -15,11 +15,8 @@ export const formatDateToDots = (timestamp: string) => {
   return `${year}.${month}.${day} ${period} ${hour}:${minutes}`;
 };
 
-export const formatDateForNewsletter = (timestamp: number) => {
-  const date = new Date(timestamp);
+export const formatDateForNewsletter = (yearMonthType: string) => {
+  const [year, month] = yearMonthType.split("년");
 
-  const year = date.getFullYear();
-  const month = date.getMonth() + 1;
-
-  return `${year}년 ${month}월 호`;
+  return `${year}년 ${month} 호`;
 };

@@ -26,10 +26,10 @@ export const likeALetters = async (
 export const getPostboxList = async (familyId: User["familyId"]) => {
   try {
     const response = await axios.get(`/v1/archives/${familyId}`);
-    console.log(response.data.result);
-    return response.data.result;
+    console.log("GET 소식지", response.data.result);
     if (response.data.isSuccess) {
-      useLettersStore.getState().setNewsletters(response.data.result); // 배열 스토어에 저장
+      console.log(response.data.result.dtos);
+      useLettersStore.getState().setNewsletters(response.data.result.dtos); // 배열 스토어에 저장
     }
   } catch (error) {
     console.log(error);
