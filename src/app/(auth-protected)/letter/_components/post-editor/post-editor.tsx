@@ -120,7 +120,13 @@ const PostEditor = ({ postcard }: { postcard?: Post }) => {
 
   const handleCancelLetter = () => {
     if (postcard) {
-      if (postcard.content !== content) {
+      if (
+        postcard.content !== content ||
+        postcard.imageUrls.length !== imageFiles.length ||
+        imageFiles
+          .map((item) => item.originalFile)
+          .filter((img): img is File => img !== null).length !== 0
+      ) {
         setWarningMessage(NOTIFICATION_MESSAGES.WRITE_CANCEL_WARNING.EDIT);
         setIsConfirmOpen(true);
         return;
