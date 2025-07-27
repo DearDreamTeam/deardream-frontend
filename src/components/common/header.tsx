@@ -6,9 +6,11 @@ import Arrow from "@/public/icons/common/arrow-back.svg";
 const Header = ({
   children,
   link,
+  setIsModalOpen,
 }: {
   children: React.ReactNode;
   link?: string;
+  setIsModalOpen?: (isOpen: boolean) => void;
 }) => {
   const router = useRouter();
   return (
@@ -17,6 +19,10 @@ const Header = ({
         <Arrow
           className="cursor-pointer"
           onClick={() => {
+            if (setIsModalOpen) {
+              setIsModalOpen(true);
+              return;
+            }
             if (link) {
               router.push(link);
             } else {

@@ -1,9 +1,8 @@
 "use client";
 
-import { createReceiver } from "@/api/profile";
 import GreenBasicButton from "@/components/button/profile-green-basic-button";
 import Header from "@/components/common/header";
-import AlertDialog from "@/components/modal/dialog/alert-dialog";
+import ConfirmDialog from "@/components/modal/dialog/confirm-dialog";
 import ReceiverProfileEdit from "@/components/profile/receiver-profile-edit";
 import { PATH } from "@/constants/path";
 import {
@@ -11,38 +10,21 @@ import {
   useReceiverStore,
 } from "@/stores/useReceiverStore";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const ReceiverProfilePage = () => {
-  const { receiver, setReceiver } = useReceiverStore();
+  const { receiver, setReceiver, setReceiverImage, receiverImage } =
+    useReceiverStore();
   const [editUserProfile, setEditUserProfile] =
     useState<ReceiverProfileInfo>(receiver);
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [selectedFile, setSelectedFile] = useState<File | null>(
+    receiverImage.profileImage,
+  );
 
   const [isLoading, setIsLoading] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
 
   const router = useRouter();
-
-  const [isDirty, setIsDirty] = useState(false);
-
-  useEffect(() => {
-    setIsDirty(true);
-  }, [editUserProfile]);
-
-  // 페이지 나가기 전 경고 메시지 추가
-  useEffect(() => {
-    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
-      if (!isDirty) return;
-      e.preventDefault();
-      e.returnValue = "";
-    };
-
-    window.addEventListener("beforeunload", handleBeforeUnload);
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-    };
-  }, [isDirty]);
 
   // 프로필 정보 유효성 검사
   const isProfileIncomplete =
@@ -50,20 +32,15 @@ const ReceiverProfilePage = () => {
     !editUserProfile?.birth?.trim() ||
     !editUserProfile?.phone?.trim();
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
-    try {
-      const response = await createReceiver(editUserProfile, selectedFile);
-      if (response.data.isSuccess) {
-        setReceiver(response.data.result);
-      }
-    } catch (error) {
-      console.error("Receiver profile update failed:", error);
-    } finally {
-      setIsLoading(false);
-      setShowAlert(true);
-    }
+    setReceiver(editUserProfile);
+    setReceiverImage({
+      profileImage: selectedFile,
+      profileImageKey: undefined,
+    });
+    router.push(PATH.SUBSCRIBE + "/receiver/address");
   };
 
   return (
@@ -75,7 +52,7 @@ const ReceiverProfilePage = () => {
         className="bg-grey-0 relative flex h-full w-full flex-col items-center justify-between p-4 pt-0"
       >
         <div>
-          <Header>받는 분 정보</Header>
+          <Header setIsModalOpen={setShowAlert}>받는 분 정보</Header>
           <ReceiverProfileEdit
             setEditReceiverProfile={setEditUserProfile}
             editReceiverProfile={editUserProfile}
@@ -89,12 +66,16 @@ const ReceiverProfilePage = () => {
         </div>
       </form>
       {showAlert && (
-        <AlertDialog
-          title="받는 분 입력이 완료되었습니다."
-          content="관계를 입력하러 가시죵"
+        <ConfirmDialog
+          title="정말 나가시겠습니까?"
+          content={`입력하신 정보가 저장되지 않습니다.`}
           setIsOpen={setShowAlert}
-          onAction={() => {
-            router.push(PATH.RELATION);
+          actionLabel="나가기"
+          action={() => {
+            router.push(PATH.SUBSCRIBE);
+          }}
+          cancelAction={() => {
+            setShowAlert(false);
           }}
         />
       )}
