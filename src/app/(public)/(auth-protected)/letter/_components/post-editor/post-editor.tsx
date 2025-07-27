@@ -3,8 +3,8 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import ActionHeader from "@/components/header/action-header";
-import TextField from "@/app/(auth-protected)/letter/_components/center/text-field";
-import ImagePreviewer from "@/app/(auth-protected)/letter/_components/center/image-previewer";
+import TextField from "@/app/(public)/(auth-protected)/letter/_components/center/text-field";
+import ImagePreviewer from "@/app/(public)/(auth-protected)/letter/_components/center/image-previewer";
 import TextLimit from "../type-bar/text-limit";
 import GalleryButton from "../type-bar/gallery-button";
 
