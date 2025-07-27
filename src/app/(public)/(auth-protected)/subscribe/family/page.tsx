@@ -61,7 +61,7 @@ const FamilyCreationPage = () => {
             description="추가 정보를 입력해주세요"
             imageType="family"
           />
-          <GreenBasicButton color="300" link={PATH.RELATION} newTab={true}>
+          <GreenBasicButton color="300" link={PATH.RELATION}>
             정보 입력하러 가기
           </GreenBasicButton>
           <GreenBasicButton color="100" link={PATH.HOME} newTab={true}>
