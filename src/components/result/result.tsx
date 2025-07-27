@@ -1,4 +1,8 @@
-import EllipseImage from "../images/ellipse-image";
+import AirplaneImage from "@/components/images/airplane-image";
+import EllipseImage from "@/components/images/ellipse-image";
+import FamilyImage from "@/components/images/family-image";
+import HouseImage from "@/components/images/house-image";
+import PaymentImage from "../images/payment-image";
 import StateTemplate from "../template/state-template";
 
 interface ResultProps {
@@ -7,6 +11,7 @@ interface ResultProps {
   description2?: string;
   description3?: string;
   description4?: string;
+  imageType?: "airplane" | "payment" | "house" | "family";
 }
 
 const Result = ({
@@ -15,11 +20,16 @@ const Result = ({
   description2,
   description3,
   description4,
+  imageType,
 }: ResultProps) => {
   return (
     <StateTemplate>
       <StateTemplate.ImageFiled>
-        <EllipseImage color="green-100" isBackground={false} />
+        <EllipseImage color="green-100" isBackground={true} />
+        {imageType && imageType === "airplane" && <AirplaneImage />}
+        {imageType && imageType === "payment" && <PaymentImage />}
+        {imageType && imageType === "house" && <HouseImage />}
+        {imageType && imageType === "family" && <FamilyImage />}
       </StateTemplate.ImageFiled>
       <StateTemplate.Title> {title}</StateTemplate.Title>
       <StateTemplate.Content>

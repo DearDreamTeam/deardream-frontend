@@ -7,7 +7,7 @@ interface PlanTypeInfo {
 const PesonalPlanUse = ({ isActive, planType }: PlanTypeInfo) => {
   return (
     <>
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 p-2">
         <CheckItem isActive={isActive} planType={planType}>
           원하는 주소로 배송{" "}
         </CheckItem>

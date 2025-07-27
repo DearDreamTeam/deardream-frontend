@@ -84,13 +84,13 @@ const InstitutionAddressInput = () => {
   return (
     <>
       <div className="flex w-full flex-col items-center gap-4">
-        <div className="flex-start text-grey-700 text-label-2 relative flex flex-col gap-2">
-          주소
-          <div className="flex w-80 flex-row items-center justify-between">
+        <div className="flex-start text-body-1 text-grey-400 relative flex flex-col gap-2">
+          기관 코드
+          <div className="flex w-full max-w-90 min-w-80 flex-row items-center justify-between">
             <input
               type="text"
-              className="text-headline-3 text-grey-700 placeholder:text-grey-400 border-grey-300 w-45 border-b-1 border-solid px-1 py-2 focus:ring-0 focus:outline-none"
-              placeholder="코드를 입력해주세요"
+              className="text-title-1 text-grey-700 placeholder:text-title-3 border-grey-300 w-45 border-b-1 border-solid px-1 py-2 focus:ring-0 focus:outline-none"
+              placeholder="기관 코드를 입력해주세요"
               value={code || receiver?.address.code}
               onChange={(e) => setCode(e.target.value)}
             />
@@ -114,51 +114,55 @@ const InstitutionAddressInput = () => {
             ))}
         </div>
 
-        <div className="flex-start text-grey-700 text-label-2 flex flex-col gap-2">
+        <div className="flex-start text-body-1 text-grey-400 flex flex-col gap-2">
           우편 번호
           <input
             type="text"
-            className="text-grey-700 placeholder:text-grey-400 border-grey-300 text-headline-3 w-80 border-b-1 border-solid px-1 py-2 focus:ring-0 focus:outline-none"
+            className="text-grey-900 placeholder:text-title-3 border-grey-300 text-title-1 w-full max-w-90 min-w-80 border-b-1 border-solid px-1 py-2 focus:ring-0 focus:outline-none"
             value={institution.postalCode || receiver?.address.postalCode}
+            placeholder="우편 번호"
             readOnly
           />
         </div>
-        <div className="flex-start text-grey-700 text-label-2 flex flex-col gap-2">
+        <div className="flex-start text-body-1 text-grey-400 flex flex-col gap-2">
           주소
           <input
             type="text"
-            className="text-grey-700 placeholder:text-grey-400 border-grey-300 text-headline-3 w-80 border-b-1 border-solid px-1 py-2 focus:ring-0 focus:outline-none"
+            className="text-grey-900 placeholder:text-title-3 border-grey-300 text-title-1 w-80 border-b-1 border-solid px-1 py-2 focus:ring-0 focus:outline-none"
             value={institution.address || receiver?.address.address}
+            placeholder="주소"
             readOnly
           />
         </div>
-        <div className="flex-start text-grey-700 text-label-2 flex flex-col gap-2">
+        <div className="flex-start text-body-1 text-grey-400 flex flex-col gap-2">
           상세 주소
           <input
             type="text"
-            className="text-grey-700 placeholder:text-grey-400 border-grey-300 text-headline-3 w-80 border-b-1 border-solid px-1 py-2 focus:ring-0 focus:outline-none"
-            placeholder="상세 주소를 입력해주세요(선택)"
+            className="text-grey-900 placeholder:text-title-3 border-grey-300 text-title-1 w-80 border-b-1 border-solid px-1 py-2 focus:ring-0 focus:outline-none"
+            placeholder="상세 주소를 입력해주세요 (선택)"
             value={detailAddress || receiver?.address.addressDetail}
             onChange={handleDetailAddressChange}
           />
         </div>
 
-        <div className="flex-start text-grey-700 text-label-2 flex flex-col gap-2">
+        <div className="flex-start text-body-1 text-grey-400 flex flex-col gap-2">
           기관명
           <input
             type="text"
-            className="text-grey-700 placeholder:text-grey-400 border-grey-300 text-headline-3 w-80 border-b-1 border-solid px-1 py-2 focus:ring-0 focus:outline-none"
+            className="text-grey-900 placeholder:text-title-3 border-grey-300 text-title-1 w-80 border-b-1 border-solid px-1 py-2 focus:ring-0 focus:outline-none"
             value={institution.name || receiver?.address.institutionName}
+            placeholder="기관명"
             readOnly
           />
         </div>
 
-        <div className="flex-start text-grey-700 text-label-2 flex flex-col gap-2">
+        <div className="flex-start text-body-1 text-grey-400 flex flex-col gap-2">
           기관 전화번호
           <input
             type="text"
-            className="text-grey-700 placeholder:text-grey-400 border-grey-300 text-headline-3 w-80 border-b-1 border-solid px-1 py-2 focus:ring-0 focus:outline-none"
+            className="text-grey-900 placeholder:text-title-3 border-grey-300 text-title-1 w-80 border-b-1 border-solid px-1 py-2 focus:ring-0 focus:outline-none"
             value={institution.phone || receiver?.address.institutionPhone}
+            placeholder="기관 전화번호"
             readOnly
           />
         </div>
