@@ -48,7 +48,7 @@ const ReceiverProfileEdit = ({
             setEditReceiverProfile?.((prev) => ({ ...prev, name: val }))
           }
         />
-        <div className="flex-start text-label-2 flex flex-col gap-2">
+        <div className="flex-start text-body-1 text-grey-400 flex flex-col gap-2">
           생일
           <BirthSelect
             birth={editReceiverProfile?.birth || ""}

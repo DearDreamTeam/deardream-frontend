@@ -89,8 +89,8 @@ const InstitutionAddressInput = () => {
           <div className="flex w-80 flex-row items-center justify-between">
             <input
               type="text"
-              className="text-headline-3 text-grey-700 placeholder:text-grey-400 border-grey-300 w-45 border-b-1 border-solid px-1 py-2 focus:ring-0 focus:outline-none"
-              placeholder="코드를 입력해주세요"
+              className="text-title-1 text-grey-700 placeholder:text-title-3 border-grey-300 w-45 border-b-1 border-solid px-1 py-2 focus:ring-0 focus:outline-none"
+              placeholder="기관 코드를 입력해주세요"
               value={code || receiver?.address.code}
               onChange={(e) => setCode(e.target.value)}
             />
@@ -118,8 +118,9 @@ const InstitutionAddressInput = () => {
           우편 번호
           <input
             type="text"
-            className="text-grey-700 placeholder:text-grey-400 border-grey-300 text-headline-3 w-80 border-b-1 border-solid px-1 py-2 focus:ring-0 focus:outline-none"
+            className="text-grey-700 placeholder:text-title-3 border-grey-300 text-title-1 w-80 border-b-1 border-solid px-1 py-2 focus:ring-0 focus:outline-none"
             value={institution.postalCode || receiver?.address.postalCode}
+            placeholder="우편 번호"
             readOnly
           />
         </div>
@@ -127,8 +128,9 @@ const InstitutionAddressInput = () => {
           주소
           <input
             type="text"
-            className="text-grey-700 placeholder:text-grey-400 border-grey-300 text-headline-3 w-80 border-b-1 border-solid px-1 py-2 focus:ring-0 focus:outline-none"
+            className="text-grey-700 placeholder:text-title-3 border-grey-300 text-title-1 w-80 border-b-1 border-solid px-1 py-2 focus:ring-0 focus:outline-none"
             value={institution.address || receiver?.address.address}
+            placeholder="주소"
             readOnly
           />
         </div>
@@ -136,8 +138,8 @@ const InstitutionAddressInput = () => {
           상세 주소
           <input
             type="text"
-            className="text-grey-700 placeholder:text-grey-400 border-grey-300 text-headline-3 w-80 border-b-1 border-solid px-1 py-2 focus:ring-0 focus:outline-none"
-            placeholder="상세 주소를 입력해주세요(선택)"
+            className="text-grey-700 placeholder:text-title-3 border-grey-300 text-title-1 w-80 border-b-1 border-solid px-1 py-2 focus:ring-0 focus:outline-none"
+            placeholder="상세 주소를 입력해주세요 (선택)"
             value={detailAddress || receiver?.address.addressDetail}
             onChange={handleDetailAddressChange}
           />
@@ -147,8 +149,9 @@ const InstitutionAddressInput = () => {
           기관명
           <input
             type="text"
-            className="text-grey-700 placeholder:text-grey-400 border-grey-300 text-headline-3 w-80 border-b-1 border-solid px-1 py-2 focus:ring-0 focus:outline-none"
+            className="text-grey-700 placeholder:text-title-3 border-grey-300 text-title-1 w-80 border-b-1 border-solid px-1 py-2 focus:ring-0 focus:outline-none"
             value={institution.name || receiver?.address.institutionName}
+            placeholder="기관명"
             readOnly
           />
         </div>
@@ -157,8 +160,9 @@ const InstitutionAddressInput = () => {
           기관 전화번호
           <input
             type="text"
-            className="text-grey-700 placeholder:text-grey-400 border-grey-300 text-headline-3 w-80 border-b-1 border-solid px-1 py-2 focus:ring-0 focus:outline-none"
+            className="text-grey-700 placeholder:text-title-3 border-grey-300 text-title-1 w-80 border-b-1 border-solid px-1 py-2 focus:ring-0 focus:outline-none"
             value={institution.phone || receiver?.address.institutionPhone}
+            placeholder="기관 전화번호"
             readOnly
           />
         </div>

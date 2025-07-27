@@ -14,6 +14,15 @@ const HomeAddressInput = () => {
   const { receiver, setReceiver } = useReceiverStore();
   const [showPostcode, setShowPostcode] = useState(false);
 
+  const formatPhoneNumber = (value: string) => {
+    const onlyNumbers = value.replace(/\D/g, ""); // 숫자만 남김
+
+    if (onlyNumbers.length < 4) return onlyNumbers;
+    if (onlyNumbers.length < 8)
+      return `${onlyNumbers.slice(0, 3)}-${onlyNumbers.slice(3)}`;
+    return `${onlyNumbers.slice(0, 3)}-${onlyNumbers.slice(3, 7)}-${onlyNumbers.slice(7, 11)}`;
+  };
+
   const handleAddressComplete = (data: Address) => {
     const { address, zonecode } = data;
 
@@ -32,12 +41,12 @@ const HomeAddressInput = () => {
   return (
     <>
       <div className="flex w-full flex-col items-center gap-10">
-        <div className="flex-start text-grey-700 text-label-2 relative flex flex-col gap-2">
+        <div className="flex-start text-grey-400 text-body-1 relative flex flex-col gap-2">
           우편 번호
           <div className="flex w-80 flex-row items-center justify-between">
             <input
               type="text"
-              className="text-headline-3 text-grey-700 placeholder:text-grey-400 border-grey-300 w-45 border-b-1 border-solid px-1 py-2 focus:ring-0 focus:outline-none"
+              className="text-grey-700 placeholder:text-title-3 text-title-1 border-grey-300 w-45 border-b-1 border-solid px-1 py-2 focus:ring-0 focus:outline-none"
               placeholder="우편 번호"
               value={receiver?.address.postalCode || ""}
               readOnly
@@ -58,20 +67,21 @@ const HomeAddressInput = () => {
           </div>
         )}
 
-        <div className="flex-start text-grey-700 text-label-2 flex flex-col gap-2">
+        <div className="flex-start text-grey-400 text-body-1 flex flex-col gap-2">
           주소
           <input
             type="text"
-            className="text-grey-700 placeholder:text-grey-400 border-grey-300 text-headline-3 w-80 border-b-1 border-solid px-1 py-2 focus:ring-0 focus:outline-none"
+            className="text-grey-700 placeholder:text-grey-400 border-grey-300 placeholder:text-title-3 text-title-1 w-80 border-b-1 border-solid px-1 py-2 focus:ring-0 focus:outline-none"
             value={receiver?.address.address || ""}
+            placeholder="기관 건물, 지번 또는 도로명을 입력해주세요"
             readOnly
           />
         </div>
-        <div className="flex-start text-grey-700 text-label-2 flex flex-col gap-2">
+        <div className="flex-start text-grey-400 text-body-1 flex flex-col gap-2">
           상세 주소
           <input
             type="text"
-            className="text-grey-700 placeholder:text-grey-400 border-grey-300 text-headline-3 w-80 border-b-1 border-solid px-1 py-2 focus:ring-0 focus:outline-none"
+            className="text-grey-700 placeholder:text-grey-400 border-grey-300 placeholder:text-title-3 text-title-1 w-80 border-b-1 border-solid px-1 py-2 focus:ring-0 focus:outline-none"
             placeholder="상세 주소를 입력해주세요(선택)"
             value={receiver?.address.addressDetail || ""}
             onChange={(e) => {
@@ -85,11 +95,11 @@ const HomeAddressInput = () => {
           />
         </div>
 
-        <div className="flex-start text-grey-700 text-label-2 flex flex-col gap-2">
+        <div className="flex-start text-grey-400 text-body-1 flex flex-col gap-2">
           수령인
           <input
             type="text"
-            className="text-grey-700 placeholder:text-grey-400 border-grey-300 text-headline-3 w-80 border-b-1 border-solid px-1 py-2 focus:ring-0 focus:outline-none"
+            className="text-grey-700 placeholder:text-grey-400 border-grey-300 placeholder:text-title-3 text-title-1 w-80 border-b-1 border-solid px-1 py-2 focus:ring-0 focus:outline-none"
             value={receiver?.address.recipientName || ""}
             onChange={(e) => {
               setReceiver({
@@ -103,17 +113,17 @@ const HomeAddressInput = () => {
           />
         </div>
 
-        <div className="flex-start text-grey-700 text-label-2 flex flex-col gap-2">
+        <div className="flex-start text-grey-400 text-body-1 flex flex-col gap-2">
           수령인 전화번호
           <input
             type="text"
-            className="text-grey-700 placeholder:text-grey-400 border-grey-300 text-headline-3 w-80 border-b-1 border-solid px-1 py-2 focus:ring-0 focus:outline-none"
+            className="text-grey-700 placeholder:text-grey-400 border-grey-300 placeholder:text-title-3 text-title-1 w-80 border-b-1 border-solid px-1 py-2 focus:ring-0 focus:outline-none"
             value={receiver?.address.recipientPhone || ""}
             onChange={(e) => {
               setReceiver({
                 address: {
                   ...receiver.address,
-                  recipientPhone: e.target.value,
+                  recipientPhone: formatPhoneNumber(e.target.value),
                 },
               });
             }}

@@ -72,8 +72,8 @@ const ProfileClient = () => {
       } catch (error) {
         console.error("카카오 로그인 실패:", error);
         alert("로그인에 실패했습니다. 다시 시도해주세요.");
-        localStorage.clear();
-        window.location.href = PATH.LOGIN;
+        // localStorage.clear();
+        // window.location.href = PATH.LOGIN;
       } finally {
         setIsLoading(false); // 로그인 요청 완료 후 로딩 종료
       }
@@ -97,6 +97,7 @@ const ProfileClient = () => {
     }
 
     try {
+      setIsLoading(true);
       const response = await registerUser(
         editUserProfile,
         selectedFile,
@@ -117,7 +118,9 @@ const ProfileClient = () => {
       }
     } catch (error) {
       console.error("프로필 등록 실패:", error);
-      alert("프로필 등록에 실패했습니다. 다시 시도해주세요.");
+      // alert("프로필 등록에 실패했습니다. 다시 시도해주세요.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -161,7 +164,7 @@ const ProfileClient = () => {
             />
           </div>
           <div className="flex h-14 w-full items-center justify-center">
-            <GreenBasicButton disabled={isProfileIncomplete}>
+            <GreenBasicButton disabled={isProfileIncomplete || isLoading}>
               저장
             </GreenBasicButton>
           </div>
@@ -172,7 +175,7 @@ const ProfileClient = () => {
             content="프로필이 성공적으로 등록 되었습니다."
             setIsOpen={setIsProfileSubmitted}
             onAction={() => {
-              window.location.href = PATH.HOME;
+              router.push(PATH.HOME);
             }}
           />
         )}

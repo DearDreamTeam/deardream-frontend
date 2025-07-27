@@ -10,16 +10,22 @@ import PersonalPlanUse from "@/components/profile/plan/personal-plan-use";
 import InstitutionPlanUse from "@/components/profile/plan/institution-plan-use";
 import axios from "@/lib/axios";
 import { useReceiverStore } from "@/stores/useReceiverStore";
+import { useUserStore } from "@/stores/useUserInfoStore";
 
 const SubScribePage = () => {
   const [isActive] = useState(true);
   const { receiver, setReceiver } = useReceiverStore();
+  const { userProfile } = useUserStore();
+
   const [planType, setPlanType] = useState<PlanTypeInfo>(
     receiver.address.deliveryType,
   );
 
   useEffect(() => {
     const fetchReceiver = async () => {
+      if (!userProfile.familyRegistered) {
+        return;
+      }
       try {
         const response = await axios.get("/v1/recipient");
         setPlanType(response.data.result.address.deliveryType);
@@ -29,7 +35,7 @@ const SubScribePage = () => {
       }
     };
     fetchReceiver();
-  }, [setReceiver]);
+  }, [setReceiver, userProfile.familyRegistered]);
 
   const router = useRouter();
   return (

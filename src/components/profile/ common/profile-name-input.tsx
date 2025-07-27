@@ -5,11 +5,11 @@ interface ProfileNameInputProps {
 
 const ProfileNameInput = ({ name, onChange }: ProfileNameInputProps) => {
   return (
-    <div className="flex-start text-label-2 text-grey-700 flex flex-col gap-2">
+    <div className="flex-start text-body-1 text-grey-400 flex flex-col gap-2">
       이름
       <input
         type="text"
-        className="text-headline-3 text-grey-700 placeholder:text-grey-300 border-grey-300 w-80 border-b-1 border-solid py-2 focus:ring-0 focus:outline-none"
+        className="text-title-1 text-grey-700 placeholder:text-title-3 border-grey-300 w-80 border-b-1 border-solid py-2 focus:ring-0 focus:outline-none"
         placeholder="이름을 입력해주세요"
         value={name}
         onChange={(e) => onChange(e.target.value)}

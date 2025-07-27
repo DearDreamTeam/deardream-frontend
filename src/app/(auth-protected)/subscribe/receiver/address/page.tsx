@@ -5,14 +5,14 @@ import Header from "@/components/common/header";
 import InstitutionAddressEdit from "@/components/address/institution-address-input";
 // import { PATH } from "@/constants/path";
 import { useReceiverStore } from "@/stores/useReceiverStore";
-import { updateReceiverAddress } from "@/api/profile";
+import { createReceiver } from "@/api/profile";
 import HomeAddressInput from "@/components/address/home-address-input";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { PATH } from "@/constants/path";
 
 const AddressPage = () => {
-  const { receiver } = useReceiverStore();
+  const { receiver, receiverImage } = useReceiverStore();
   const router = useRouter();
 
   const [isDirty] = useState(true);
@@ -45,7 +45,10 @@ const AddressPage = () => {
     setIsLoading(true);
     console.log("Receiver data submitted:", receiver);
     try {
-      const response = await updateReceiverAddress(receiver);
+      const response = await createReceiver(
+        receiver,
+        receiverImage.profileImage,
+      );
       if (response.data.isSuccess) {
         router.push(PATH.SUBSCRIBE + "/family");
       }

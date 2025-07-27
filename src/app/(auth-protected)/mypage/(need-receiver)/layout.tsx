@@ -72,6 +72,10 @@ export default function ProtectedLayout({
       complementFamily();
     }
   }, [setReceiver, userProfile.role, userProfile.familyRegistered]);
+  const handleComplete = () => {
+    router.push("/subscribe/receiver/address");
+    setShowDialog(false); // 모달 닫기 (안 닫아도 라우팅되면 사라지긴 함)
+  };
 
   const handleMove = () => {
     router.push("/subscribe");
@@ -114,7 +118,7 @@ export default function ProtectedLayout({
           title="완료하지 못한 가족 정보가 있어요"
           content="가족 정보를 완료해주세요"
           setIsOpen={setShowFamilyDialog}
-          onAction={handleMove}
+          onAction={handleComplete}
         />
       )}
     </>
