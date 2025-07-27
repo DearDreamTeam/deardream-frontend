@@ -167,10 +167,11 @@ const PostEditor = ({ postcard }: { postcard?: Post }) => {
   };
 
   const handleImageClick = async (fileId: number) => {
+    const target = imageFiles.find((item) => item.fileId === fileId);
     if (
       // 외부 이미지를 가져온 경우
-      imageFiles[fileId].originalUrl &&
-      imageFiles[fileId].originalFile === null
+      target?.originalUrl &&
+      target?.originalFile === null
     ) {
       return; // 수정 불가
     }

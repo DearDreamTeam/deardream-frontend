@@ -45,28 +45,29 @@ const Home = () => {
   if (isLoading && post.length === 0) return <NoPost />;
 
   return (
-    <div className="overflow-auto-hide-scroll h-full">
+    <PullToRefresh
+      onRefresh={fetchFamilyPosts}
+      className="overflow-auto-hide-scroll h-full"
+    >
       <HomeBanner />
       <PeriodNotification />
-      <PullToRefresh onRefresh={fetchFamilyPosts} className="h-full">
-        {post
-          .slice()
-          .reverse()
-          .map((letter) => (
-            <Postcard
-              authorId={letter.authorId}
-              key={letter.postId}
-              postId={letter.postId}
-              authorName={letter.authorName}
-              relations={letter.relations}
-              authorProfileImg={letter.authorProfileImg}
-              createdAt={letter.createdAt}
-              content={letter.content}
-              imageUrls={letter.imageUrls}
-            />
-          ))}
-      </PullToRefresh>
-    </div>
+      {post
+        .slice()
+        .reverse()
+        .map((letter) => (
+          <Postcard
+            authorId={letter.authorId}
+            key={letter.postId}
+            postId={letter.postId}
+            authorName={letter.authorName}
+            relations={letter.relations}
+            authorProfileImg={letter.authorProfileImg}
+            createdAt={letter.createdAt}
+            content={letter.content}
+            imageUrls={letter.imageUrls}
+          />
+        ))}
+    </PullToRefresh>
   );
 };
 
