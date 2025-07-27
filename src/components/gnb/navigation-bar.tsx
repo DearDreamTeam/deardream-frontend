@@ -5,21 +5,26 @@ import { usePathname, useRouter } from "next/navigation";
 
 import { NAV_ITEMS } from "@/components/gnb/nav-items";
 import { PATH } from "@/constants/path";
-import AlertDialog from "../modal/dialog/alert-dialog";
 import { NOTIFICATION_MESSAGES } from "@/constants/messages";
 import { renderMessageWithLineBreaks } from "@/utils/render-message-with-line-breaks";
 import { useState } from "react";
 import { usePostStore } from "@/stores/usePostStore";
+import { useUserStore } from "@/stores/useUserInfoStore";
+import AlertDialog from "../modal/dialog/alert-dialog";
+import ConfirmDialog from "../modal/dialog/confirm-dialog";
 
 const NavigationBar = () => {
   const pathname = usePathname();
   const { post } = usePostStore();
+  const { userProfile } = useUserStore();
   const router = useRouter();
-  const [isOpen, setIsOpen] = useState(false);
+  const [isAlertOpen, setIsAlertOpen] = useState(false);
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
 
-  const handleWrite = () => {
-    if (post.length >= 20) setIsOpen(true);
-    else router.push(PATH.LETTER_WRITE);
+  const handleWriteClick = () => {
+    if (userProfile.familyId === null) return setIsConfirmOpen(true);
+    if (post.length >= 20) return setIsAlertOpen(true);
+    router.push(PATH.LETTER_WRITE);
   };
 
   if (
@@ -44,7 +49,7 @@ const NavigationBar = () => {
           href === PATH.LETTER_WRITE ? (
             <button
               key={label}
-              onClick={handleWrite}
+              onClick={handleWriteClick}
               className="navigation-item text-grey-400"
             >
               {pathname === href ? <ActiveIcon /> : <InactiveIcon />}
@@ -64,13 +69,25 @@ const NavigationBar = () => {
           ),
       )}
 
-      {isOpen && (
+      {isAlertOpen && (
         <AlertDialog
           title={NOTIFICATION_MESSAGES.REJECT_POST.FRONT.title}
           content={renderMessageWithLineBreaks(
             NOTIFICATION_MESSAGES.REJECT_POST.FRONT.content,
           )}
-          setIsOpen={setIsOpen}
+          setIsOpen={setIsAlertOpen}
+        />
+      )}
+
+      {isConfirmOpen && (
+        <ConfirmDialog
+          title={NOTIFICATION_MESSAGES.NO_FAMILY.WRITE.title}
+          content={renderMessageWithLineBreaks(
+            NOTIFICATION_MESSAGES.NO_FAMILY.WRITE.contnet,
+          )}
+          setIsOpen={setIsConfirmOpen}
+          action={() => router.push(PATH.SUBSCRIBE)}
+          actionLabel="확인"
         />
       )}
     </nav>
