@@ -97,6 +97,10 @@ const MyFamilyClient = () => {
         ]);
 
         setFamily(familyRes.data.result.members);
+        setReceiver({
+          name: familyRes.data.result.recipientName,
+          profileImage: familyRes.data.result.recipientProfileImage,
+        });
 
         if (userProfile.role === "LEADER" && receiverRes) {
           setReceiver(receiverRes.data.result);
