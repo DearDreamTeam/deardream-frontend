@@ -65,7 +65,7 @@ const FamilyCreationPage = () => {
             정보 입력하러 가기
           </GreenBasicButton>
           <GreenBasicButton color="100" link={PATH.HOME} newTab={true}>
-            나중에 입력하기
+            <span className="text-green-300">나중에 입력하기</span>
           </GreenBasicButton>
         </>
       ) : (

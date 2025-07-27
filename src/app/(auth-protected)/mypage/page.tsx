@@ -9,10 +9,10 @@ const Section = ({
   children: React.ReactNode;
 }) => (
   <div className="flex w-full flex-col gap-1">
-    <div className="text-sm leading-tight font-semibold text-zinc-400">
+    <div className="text-grey-400 text-sm leading-tight font-semibold">
       {title}
     </div>
-    <div className="flex w-full flex-col gap-2">{children}</div>
+    <div className="text-grey-700 flex w-full flex-col gap-2">{children}</div>
   </div>
 );
 

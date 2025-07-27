@@ -65,24 +65,22 @@ const PayHistoryPage = () => {
         <div className="bg-grey-0 flex h-full w-full flex-col items-center p-3 pt-0">
           <Header>결제 내역</Header>
 
-          <div className="mt-4 flex w-full flex-col gap-8">
-            <div className="flex w-full flex-col gap-4">
-              <div className="flex w-full flex-col gap-2">
-                {payHistory.length === 0 ? (
-                  <div className="flex min-h-screen w-full items-center justify-center">
-                    결제 내역이 없습니다
-                  </div>
-                ) : (
-                  payHistory.map((item) => (
-                    <PayItem
-                      key={item.paymentDate}
-                      date={new Date(item.paymentDate)}
-                    />
-                  ))
-                )}
-              </div>
+          {payHistory.length === 0 ? (
+            <div className="mt-auto mb-auto flex w-full items-center justify-center">
+              결제 내역이 없습니다
             </div>
-          </div>
+          ) : (
+            payHistory.map((item) => (
+              <div
+                key={item.paymentDate}
+                className="mt-4 flex w-full flex-col gap-8"
+              >
+                <div className="flex w-full flex-col gap-4">
+                  <PayItem date={new Date(item.paymentDate)} />
+                </div>
+              </div>
+            ))
+          )}
         </div>
       )}
     </>

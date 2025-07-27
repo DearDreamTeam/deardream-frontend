@@ -8,12 +8,15 @@ import { updateReceiverAddress } from "@/api/profile";
 import HomeAddressInput from "@/components/address/home-address-input";
 import { PATH } from "@/constants/path";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 const AddressPage = () => {
   const { receiver } = useReceiverStore();
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsLoading(true);
     console.log("Receiver data submitted:", receiver);
     try {
       const response = await updateReceiverAddress(receiver);
@@ -22,6 +25,8 @@ const AddressPage = () => {
       }
     } catch (error) {
       console.error("Receiver address update failed:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
   return (
@@ -42,9 +47,9 @@ const AddressPage = () => {
           <GreenBasicButton
             color="300"
             link={PATH.MYPAGE + "/subscribe/address/complete"}
-            disabled={!receiver.name || !receiver.address.address}
+            disabled={!receiver.name || !receiver.address.address || isLoading}
           >
-            저장
+            {isLoading ? "저장 중..." : "저장"}
           </GreenBasicButton>
         </div>
       </form>

@@ -49,7 +49,7 @@ const ReceiverProfileEdit = ({
           }
         />
         <div className="flex-start text-body-1 text-grey-400 flex flex-col gap-2">
-          생일
+          생년월일
           <BirthSelect
             birth={editReceiverProfile?.birth || ""}
             calendarType={editReceiverProfile?.calendarType}

@@ -42,13 +42,13 @@ const HomeAddressInput = () => {
 
   return (
     <>
-      <div className="flex w-full flex-col items-center gap-10">
+      <div className="flex w-full flex-col items-center gap-6">
         <div className="flex-start text-grey-400 text-body-1 relative flex flex-col gap-2">
           우편 번호
           <div className="flex w-80 flex-row items-center justify-between">
             <input
               type="text"
-              className="text-grey-900 placeholder:text-title-3 text-title-1 border-grey-300 w-45 border-b-1 border-solid px-1 py-2 focus:ring-0 focus:outline-none"
+              className="text-grey-900 placeholder:text-grey-400 border-grey-300 placeholder:text-title-3 text-title-1 w-80 border-b-1 border-solid px-1 py-2 focus:ring-0 focus:outline-none"
               placeholder="우편 번호"
               value={receiver?.address.postalCode || ""}
               readOnly

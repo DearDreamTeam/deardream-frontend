@@ -16,6 +16,7 @@ import axios from "@/lib/axios";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { updateProfile } from "@/api/profile";
+import AlertDialog from "@/components/modal/dialog/alert-dialog";
 
 const RelationClient = () => {
   const searchParams = useSearchParams();
@@ -30,6 +31,7 @@ const RelationClient = () => {
 
   const relationship = userProfile?.relation || "";
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isAlertOpen, setIsAlertOpen] = useState(false);
 
   const router = useRouter();
 
@@ -42,7 +44,7 @@ const RelationClient = () => {
         if (familyLink) {
           router.push(`${PATH.FAMILY_INVITE}/family?familyLink=${familyLink}`);
         } else {
-          router.push(PATH.SUBSCRIBE + "/receiver/address");
+          setIsAlertOpen(true);
         }
       }
     } catch (error) {
@@ -147,6 +149,15 @@ const RelationClient = () => {
             저장
           </GreenBasicButton>
         </form>
+      )}
+
+      {isAlertOpen && (
+        <AlertDialog
+          title="관계 설정이 완료되었어요"
+          content="소식지를 받아보러 가볼까요?"
+          setIsOpen={setIsAlertOpen}
+          onAction={() => router.push(PATH.HOME)}
+        />
       )}
     </>
   );
