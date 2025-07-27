@@ -24,7 +24,7 @@ instance.interceptors.response.use(
     const originalRequest = error.config;
 
     if (
-      error.response?.status === 401 &&
+      (error.response?.status === 401 || error.response?.status === 403) &&
       !originalRequest._retry // 무한 반복 방지
     ) {
       originalRequest._retry = true;

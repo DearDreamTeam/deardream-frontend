@@ -8,7 +8,7 @@ interface PlanTypeInfo {
 const InstitutionPlanUse = ({ isActive, planType, isNotPdf }: PlanTypeInfo) => {
   return (
     <>
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 p-2">
         <CheckItem isActive={isActive} planType={planType}>
           기관으로 배송
         </CheckItem>
