@@ -78,7 +78,7 @@ const QuitPage = () => {
             color="100"
             link={PATH.MYPAGE + "/subscribe/quit/complete"}
           >
-            소식지 그만받기
+            <span className="text-green-300">소식지 그만받기</span>
           </GreenBasicButton>
         </div>
       </div>

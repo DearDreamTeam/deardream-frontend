@@ -2,6 +2,9 @@ import type { NextConfig } from "next";
 import type { Configuration } from "webpack";
 
 const nextConfig: NextConfig = {
+  // ✅ JS 압축 설정
+  swcMinify: true,
+
   webpack(config: Configuration) {
     config.module?.rules?.push({
       test: /\.svg$/,
@@ -11,7 +14,7 @@ const nextConfig: NextConfig = {
     return config;
   },
 
-  //이미지 관련
+  // 이미지 관련
   images: {
     domains: ["k.kakaocdn.net", "d3beofgpsk367b.cloudfront.net"],
     remotePatterns: [
