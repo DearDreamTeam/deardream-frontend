@@ -9,7 +9,7 @@ import { PATH } from "@/constants/path";
 import { useState } from "react";
 
 const QuitPage = () => {
-  const [planType] = useState<"PERSONAL" | "INSTITUTION" | "NONE">("PERSONAL"); // "PERSONAL" | "INSTITUTION" | "NONE"
+  const [planType] = useState<"HOME" | "INSTITUTION" | "NONE">("HOME"); // "PERSONAL" | "INSTITUTION" | "NONE"
   return (
     <>
       <div className="relative flex h-screen w-full flex-col items-center justify-between p-4 pt-0">
@@ -17,8 +17,8 @@ const QuitPage = () => {
         <div className="w-full">
           <div className="text-title-2 flex w-full flex-col items-center justify-center gap-2 py-10">
             <RibbonImage />
-            <div className="text-body-1 text-label-2 text-center">
-              {planType === "PERSONAL" ? (
+            <div className="text-label-2 text-center">
+              {planType === "HOME" ? (
                 <>
                   [개인 플랜] 구독은 소속 기관에서 관리하고 있어요
                   <br />
@@ -42,7 +42,7 @@ const QuitPage = () => {
             </div>
           </div>
           <div className="text-headline-3 flex w-full flex-col justify-center gap-2 border-t border-b border-gray-200 py-4">
-            {planType === "PERSONAL" ? (
+            {planType === "HOME" ? (
               <>
                 개인 플랜
                 <PersonalPlanUse isActive={true} />
@@ -55,7 +55,7 @@ const QuitPage = () => {
             )}
           </div>
           <div className="text-body-2 text-grey-300 grey-0space-normal">
-            {planType === "PERSONAL" ? (
+            {planType === "HOME" ? (
               <>
                 이어드림 서버 최적화를 위해, 소식함 속 PDF는 구독 취소 후 14일
                 간 이용 가능하며, 이후 삭제돼요.
