@@ -3,50 +3,64 @@ import Image from "next/image";
 import Favorite from "@/public/icons/letters/favorite.svg";
 import FavoriteFull from "@/public/icons/letters/favorite-full.svg";
 import { Newsletter } from "@/stores/useLettersStore";
-import { formatDateForNewsletter } from "@/utils/format-date";
 import { PendingPost, ShippingPost } from "./post-status";
 import { DELIVERY_STATUS } from "@/constants/delivery-status";
+import { formatDateForNewsletter } from "@/utils/format-date";
 
 const PostItem = ({
-  pdfId,
-  coverImgUrl,
-  timestamp,
+  archiveId,
+  pdfUrl,
+  thumbnailUrl,
+  yearMonthType,
+  deliveryStatus,
   liked,
-  status,
   setLikedToggle,
-}: Newsletter & { setLikedToggle: (pdfId: number) => void }) => {
+}: Newsletter & { setLikedToggle: (archiveId: number) => void }) => {
+  const date = formatDateForNewsletter(yearMonthType);
+  const href = {
+    pathname: `/letters/${archiveId}`,
+    query: {
+      pdfUrl: pdfUrl,
+      title: date,
+    },
+  };
   return (
     <div className="relative flex flex-col items-center gap-1 select-none">
       <Link
-        href={`/letters/${pdfId}`}
-        className={
-          status === DELIVERY_STATUS.PENDING.value
-            ? "pointer-events-none"
-            : undefined
-        }
+        href={pdfUrl}
+        // className={
+        //   deliveryStatus === DELIVERY_STATUS.PENDING.value
+        //     ? "pointer-events-none"
+        //     : undefined
+        // }
       >
-        <Image
-          src={coverImgUrl}
-          alt="cover"
-          width={104}
-          height={148}
-          className="shadow-default rounded-sm"
-        />
-        {status === DELIVERY_STATUS.PENDING.value ? (
-          <PendingPost />
-        ) : status === DELIVERY_STATUS.SHIPPING.value ? (
-          <ShippingPost />
-        ) : null}
+        <div className="relative h-[148px] w-[104px]">
+          <Image
+            src={thumbnailUrl}
+            alt="cover"
+            fill
+            sizes="104px"
+            className="shadow-default rounded-sm object-cover"
+            priority
+          />
+          {deliveryStatus === DELIVERY_STATUS.PENDING.value ? (
+            <PendingPost />
+          ) : deliveryStatus === DELIVERY_STATUS.SHIPPING.value ? (
+            <ShippingPost />
+          ) : null}
+        </div>
       </Link>
+
       <Link
-        href={`/letters/${pdfId}`}
-        className={`text-label-2 text-grey-700 ${status === DELIVERY_STATUS.PENDING.value ? "pointer-events-none" : undefined}`}
+        href={href}
+        className={`text-label-2 text-grey-700 ${deliveryStatus === DELIVERY_STATUS.PENDING.value ? "pointer-events-none" : undefined}`}
       >
-        {formatDateForNewsletter(timestamp)}
+        {date}
       </Link>
+
       <button
         className="text-grey-0 absolute top-2 right-2"
-        onClick={() => setLikedToggle(pdfId)}
+        onClick={() => setLikedToggle(archiveId)}
       >
         {liked ? <FavoriteFull /> : <Favorite />}
       </button>

@@ -10,6 +10,7 @@ import NoFamilyGroup from "./no-family-group";
 
 const PostboxViewer = () => {
   const { userProfile } = useUserStore();
+  const { newsletters } = useLettersStore();
   const [showOnlyFavorites, setShowOnlyFavorites] = useState(false);
   const [sortOption, setSortOption] = useState<SortKey>(null);
 
@@ -17,7 +18,7 @@ const PostboxViewer = () => {
   return (
     <div className="overflow-auto-hide-scroll px-4">
       <FilterBar
-        postCount={useLettersStore.getState().newsletters.length}
+        postCount={newsletters.length}
         showOnlyFavorites={showOnlyFavorites}
         setShowOnlyFavorites={setShowOnlyFavorites}
         sortOption={sortOption}

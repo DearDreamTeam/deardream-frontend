@@ -8,7 +8,7 @@ export const generatePDFTest = async (familyId: User["familyId"]) => {
       month: new Date().getMonth() + 1,
       familyId: familyId,
     });
-    console.log(response.data.result); // 생성된 pdf url을 보내줬으면 좋겠음.
+    console.error("PDF 생성", response.data.result); // 생성된 pdf url을 보내줬으면 좋겠음.
   } catch (error) {
     console.log(error);
   }
