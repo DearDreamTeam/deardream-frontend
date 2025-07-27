@@ -36,7 +36,7 @@ const SectionItem = ({
   const router = useRouter();
   return (
     <div
-      className="text-title-2 cursor-pointer"
+      className="text-title-2 text-grey-700 cursor-pointer"
       onClick={() => {
         if (link === "first-subscribe") {
           router.push("/subscribe");

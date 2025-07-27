@@ -76,15 +76,15 @@ const Profile = () => {
           />
         </div>
         <div className="flex h-14 w-full items-center justify-center">
-          <GreenBasicButton disabled={isProfileIncomplete}>
+          <GreenBasicButton disabled={isProfileIncomplete || isLoading}>
             {isLoading ? "저장 중..." : "저장"}
           </GreenBasicButton>
         </div>
       </form>
       {showAlert && (
         <AlertDialog
-          title="프로필 수정"
-          content="프로필 수정이 완료되었습니다."
+          title="프로필 수정이 완료되었습니다."
+          content=""
           setIsOpen={setShowAlert}
           onAction={() => {
             window.location.href = "/mypage";
