@@ -57,7 +57,7 @@ const LoginPageClient = () => {
         }
       } catch {
         localStorage.clear();
-        router.replace(PATH.LOGIN);
+        setIsLoading(false);
       }
     };
     checkUser();

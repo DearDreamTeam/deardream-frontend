@@ -97,6 +97,7 @@ const ProfileClient = () => {
     }
 
     try {
+      setIsLoading(true);
       const response = await registerUser(
         editUserProfile,
         selectedFile,
@@ -118,6 +119,8 @@ const ProfileClient = () => {
     } catch (error) {
       console.error("프로필 등록 실패:", error);
       // alert("프로필 등록에 실패했습니다. 다시 시도해주세요.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -161,7 +164,7 @@ const ProfileClient = () => {
             />
           </div>
           <div className="flex h-14 w-full items-center justify-center">
-            <GreenBasicButton disabled={isProfileIncomplete}>
+            <GreenBasicButton disabled={isProfileIncomplete || isLoading}>
               저장
             </GreenBasicButton>
           </div>
