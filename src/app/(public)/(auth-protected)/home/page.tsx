@@ -48,6 +48,10 @@ const Home = () => {
     <PullToRefresh
       onRefresh={fetchFamilyPosts}
       className="overflow-auto-hide-scroll h-full"
+      style={{
+        touchAction: "pan-y",
+        WebkitOverflowScrolling: "touch",
+      }}
     >
       <HomeBanner />
       <PeriodNotification />
