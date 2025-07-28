@@ -40,7 +40,9 @@ const SelectModal = ({
         className="bg-grey-0 flex w-full max-w-[768px] flex-col items-center justify-center gap-4 rounded-t-3xl p-8 shadow-lg"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="text-headline-3 w-full">받는 분과의 관계</div>
+        <div className="text-headline-3 text-grey-900 w-full">
+          받는 분과의 관계
+        </div>
         <Picker
           value={select}
           onChange={setSelect}
@@ -53,7 +55,9 @@ const SelectModal = ({
                 {({ selected }) => (
                   <div
                     className={`h-full w-full py-1.5 text-center text-xl ${
-                      selected ? "text-headline-3" : "text-grey-400"
+                      selected
+                        ? "text-headline-3 text-grey-700"
+                        : "text-grey-400"
                     }`}
                   >
                     {option}
