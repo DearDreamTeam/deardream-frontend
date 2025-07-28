@@ -53,7 +53,9 @@ const SelectModal = ({
                 {({ selected }) => (
                   <div
                     className={`h-full w-full py-1.5 text-center text-xl ${
-                      selected ? "text-headline-3" : "text-grey-400"
+                      selected
+                        ? "text-headline-3 text-grey-700"
+                        : "text-grey-400"
                     }`}
                   >
                     {option}
