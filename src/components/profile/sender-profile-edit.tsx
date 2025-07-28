@@ -55,7 +55,7 @@ const SenderProfileEdit = ({
           }
         />
         <div className="flex-start text-body-1 text-grey-400 flex flex-col gap-2">
-          생일
+          생년월일
           <BirthSelect
             birth={editUserProfile?.birth || ""}
             calendarType={editUserProfile?.calendarType}

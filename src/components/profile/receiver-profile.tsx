@@ -31,7 +31,7 @@ const RecieverProfile = ({
           type="text"
           name="phone"
           id="phone"
-          className="text-grey-700 placeholder:text-title-3 border-grey-300 text-title-1 w-80 border-b-1 border-solid py-2 focus:ring-0 focus:outline-none"
+          className="text-grey-700 placeholder:text-title-3 placeholder:text-grey-400 border-grey-300 text-title-1 w-80 border-b-1 border-solid py-2 focus:ring-0 focus:outline-none"
           placeholder="전화번호를 - 없이 입력해주세요"
           value={editReceiverProfile?.phone}
           onChange={(e) => {

@@ -51,8 +51,6 @@ const AddressPage = () => {
       }
     } catch (error) {
       console.error("Receiver address update failed:", error);
-    } finally {
-      setIsLoading(false);
     }
   };
   return (

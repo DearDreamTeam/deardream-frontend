@@ -89,15 +89,16 @@ const PayPage = () => {
       const API_URL = process.env.NEXT_PUBLIC_API_URL;
       const SECRET_KEY = process.env.NEXT_PUBLIC_KAKAO_PAY_KEY;
       console.log(SECRET_KEY);
+      const CLIENT_URL = process.env.NEXT_PUBLIC_KAKAO_PAY_REDIRECT_URI;
       const response = await axios.post(
         API_URL + "/v1/test/payment/ready", // POST body는 없음
         null,
         {
           params: {
             userId: userProfile?.id, // 쿼리스트링 ?userId=123
+            redirectUri: CLIENT_URL,
           },
           headers: {
-            Host: "open-api.kakaopay.com",
             Authorization: `SecretKey ${SECRET_KEY}`,
             "Content-Type": "application/json",
           },
