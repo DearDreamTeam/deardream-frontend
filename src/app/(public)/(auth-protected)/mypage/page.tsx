@@ -23,6 +23,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import ConfirmDialog from "@/components/modal/dialog/confirm-dialog";
 import { useUserStore } from "@/stores/useUserInfoStore";
+import AlertDialog from "@/components/modal/dialog/alert-dialog";
 
 const SectionItem = ({
   children,
@@ -43,7 +44,11 @@ const SectionItem = ({
         } else if (link === "logout") {
           if (setIsOpen) setIsOpen(true);
         } else {
-          router.push("/mypage/" + link);
+          if (setIsOpen) {
+            setIsOpen(true);
+          } else {
+            router.push("/mypage/" + link);
+          }
         }
       }}
     >
@@ -55,6 +60,7 @@ const SectionItem = ({
 const MyPage = () => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
+  const [isForbidden, setIsForbidden] = useState(false);
 
   const { userProfile } = useUserStore();
 
@@ -116,6 +122,13 @@ const MyPage = () => {
 
           <Section title="정기구독">
             <SectionItem
+              setIsOpen={
+                userProfile.familyRegistered && userProfile.role === "USER"
+                  ? () => setIsForbidden(true)
+                  : () => {
+                      router.push("/mypage/subscribe");
+                    }
+              }
               link={
                 userProfile.familyRegistered ? "subscribe" : "first-subscribe"
               }
@@ -144,6 +157,13 @@ const MyPage = () => {
               router.push("/onboarding");
             }}
             actionLabel="로그아웃"
+          />
+        )}
+        {isForbidden && (
+          <AlertDialog
+            title="접근 할 수 없습니다"
+            content="리더만 접근 할 수 있습니다."
+            setIsOpen={setIsForbidden}
           />
         )}
       </div>
