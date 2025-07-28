@@ -15,7 +15,10 @@ const PostItem = ({
   deliveryStatus,
   liked,
   setLikedToggle,
-}: Newsletter & { setLikedToggle: (archiveId: number) => void }) => {
+}: Newsletter & {
+  liked: boolean;
+  setLikedToggle: (archiveId: number) => void;
+}) => {
   const date = formatDateForNewsletter(yearMonthType);
   const href = {
     pathname: `/letters/${archiveId}`,
