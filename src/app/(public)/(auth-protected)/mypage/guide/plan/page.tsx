@@ -30,7 +30,7 @@ const PLAN_ITEM = [
 const GuidePlanPage = () => {
   const [curActiveIndex, setCurActiveIndex] = useState(0);
   return (
-    <div className="bg-grey-0 flex h-full flex-1 flex-col items-center justify-between">
+    <div className="bg-grey-0 flex h-full flex-1 flex-col items-center">
       <Header>이어드림 가이드</Header>
 
       <div className="w-full overflow-y-auto">
