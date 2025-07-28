@@ -125,7 +125,7 @@ const MyPage = () => {
             <SectionItem link="payhistory">결제 내역</SectionItem>
           </Section>
           <Section title="도움말">
-            <SectionItem link="">이어드림 가이드</SectionItem>
+            <SectionItem link="guide">이어드림 가이드</SectionItem>
           </Section>
           <Section title="계정">
             <SectionItem link="logout" setIsOpen={setIsOpen}>
