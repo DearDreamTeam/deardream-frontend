@@ -41,7 +41,7 @@ const GuideAddressPage = () => {
           이렇게 변경해보세요
         </div>
 
-        <div className="bg-grey-50 flex w-full max-w-[768px] flex-1 flex-col justify-center">
+        <div className="flex w-full max-w-[768px] flex-1 flex-col justify-center">
           <Swiper
             loop={false}
             spaceBetween={3}
@@ -51,7 +51,7 @@ const GuideAddressPage = () => {
           >
             {MYPAGE_ITEM.map(({ title, content }, index) => (
               <SwiperSlide key={`mypage-${index}`}>
-                <div className="flex flex-col items-center justify-center">
+                <div className="bg-grey-50 flex flex-col items-center justify-center p-4">
                   <Image
                     src={`/images/guide/mypage-${index + 1}.png`}
                     alt={`mypage-${index + 1}`}
@@ -68,15 +68,14 @@ const GuideAddressPage = () => {
               </SwiperSlide>
             ))}
           </Swiper>
-
-          <div className="progress-dot-container py-6">
-            {MYPAGE_ITEM.map((_, index) => (
-              <div
-                key={`mypage-${index}`}
-                className={`progress-dot ${index === curActiveIndex ? "bg-green-300" : "bg-grey-300"}`}
-              />
-            ))}
-          </div>
+        </div>
+        <div className="progress-dot-container py-6">
+          {MYPAGE_ITEM.map((_, index) => (
+            <div
+              key={`mypage-${index}`}
+              className={`progress-dot ${index === curActiveIndex ? "bg-green-300" : "bg-grey-300"}`}
+            />
+          ))}
         </div>
       </div>
     </div>
