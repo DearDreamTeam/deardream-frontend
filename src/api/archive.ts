@@ -8,17 +8,19 @@ export const likeALetters = async (
   archiveId: number,
 ) => {
   try {
-    const response = await axios.post(`/v1/archives/${archiveId}/bookmark`, {
-      params: {
-        userId,
+    const response = await axios.post(
+      `/v1/archives/${archiveId}/bookmark`,
+      null,
+      {
+        params: { userId },
       },
-    });
+    );
 
     if (response.data.isSuccess) {
       useLettersStore.getState().setLikedToggle(archiveId);
     }
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 
@@ -28,11 +30,10 @@ export const getPostboxList = async (familyId: User["familyId"]) => {
     const response = await axios.get(`/v1/archives/${familyId}`);
     console.log("GET 소식지", response.data.result);
     if (response.data.isSuccess) {
-      console.log(response.data.result.dtos);
       useLettersStore.getState().setNewsletters(response.data.result.dtos); // 배열 스토어에 저장
     }
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 
@@ -45,10 +46,9 @@ export const getLikedPostId = async (userId: User["userId"]) => {
 
     if (response.data.isSuccess) {
       const pdfIds = response.data.result;
-      useLettersStore.getState().setLikedStatus(pdfIds);
+      useLettersStore.getState().setBookmarks(pdfIds);
     }
   } catch (error) {
     console.log(error);
-    return [];
   }
 };

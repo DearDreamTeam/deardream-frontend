@@ -1,29 +1,12 @@
 "use client";
 
-import { PATH } from "@/constants/path";
 import Link from "next/link";
 import { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import "swiper/css";
-
-const BANNER_ITEM = [
-  {
-    bgColor: "bg-grey-200",
-    title: "이어드림 이용 방법 총정리",
-    content: "글자수, 사진 첨부, 소식지 규격에 대해 궁금하신가요?",
-  },
-  {
-    bgColor: "bg-green-100",
-    title: "주소 이전 가이드 A to Z",
-    content: "기관을 옮기셨나요? 걱정하지 마세요!",
-  },
-  {
-    bgColor: "bg-grey-300",
-    title: "가족 대표 변경 방법",
-    content: "다른 분이 결제를 하시나요?",
-  },
-];
+import Image from "next/image";
+import { BANNER_ITEM } from "@/constants/banner-item";
 
 const HomeBanner = () => {
   const [curActiveIndex, setCurActiveIndex] = useState(0);
@@ -38,20 +21,28 @@ const HomeBanner = () => {
             disableOnInteraction: false,
             pauseOnMouseEnter: true,
           }}
+          spaceBetween={16}
           speed={1800}
           loop={true}
           slidesPerView={1}
           onSlideChange={(swiper) => setCurActiveIndex(swiper.realIndex)}
-          className="shadow-default"
+          className="h-[6.25rem]"
         >
-          {BANNER_ITEM.map(({ bgColor, title, content }, index) => (
+          {BANNER_ITEM.map(({ title, content, href }, index) => (
             <SwiperSlide
               key={`banner-${index}`}
-              className={`w-full ${bgColor} rounded-sm p-5`}
+              className={`shadow-default relative z-20 w-full rounded-sm bg-green-200 pt-[1.36rem] pl-[0.91rem] text-green-300`}
             >
-              <Link href={PATH.MYPAGE}>
-                <p className="text-body-2 text-grey-600">{content}</p>
-                <p className="text-title-1 text-green-300">{title}</p>
+              <Image
+                src={`/images/white-big-ribbon.svg`}
+                alt="ribbon-bg"
+                width={284.23}
+                height={250.49}
+                className="absolute -top-[4.45rem] -left-[0.94rem] z-20 opacity-20"
+              />
+              <Link href={href} className="relative z-30">
+                <p className="text-caption-1">{content}</p>
+                <p className="text-guide-title">{title}</p>
               </Link>
             </SwiperSlide>
           ))}

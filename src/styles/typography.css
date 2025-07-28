@@ -67,4 +67,9 @@
   --text-caption-2--font-weight: 400;
   --text-caption-2--line-height: 1.125rem; /* 150% */
   --text-caption-2--letter-spacing: -0.01125rem;
+
+  --text-guide-title: 1.5rem;
+  --text-guide-title--font-weight: 700;
+  --text-guide-title--line-height: 2.25rem; /* 150% */
+  --text-guide-title--letter-spacing: -0.045rem;
 }

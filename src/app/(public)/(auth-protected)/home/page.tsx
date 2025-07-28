@@ -9,11 +9,6 @@ import NoPost from "./_components/no-post";
 import NoFamilyGroup from "./_components/no-family-group";
 import Postcard from "@/components/postcard/postcard";
 import PostcardSkeleton from "@/components/skeleton/postcard-skeleton";
-import dynamic from "next/dynamic";
-
-const PullToRefresh = dynamic(() => import("react-pull-to-refresh"), {
-  ssr: false,
-});
 
 import { getFamilyPosts } from "@/api/post";
 
@@ -26,17 +21,13 @@ const Home = () => {
     if (userProfile.familyId) {
       const posts = await getFamilyPosts(userProfile.familyId);
       setPost(posts);
+      setIsLoading(true);
     }
   };
 
   useEffect(() => {
     if (userProfile.familyId) {
-      const fetchData = async () => {
-        const posts = await getFamilyPosts(userProfile.familyId!);
-        setPost(posts);
-        setIsLoading(true);
-      };
-      fetchData();
+      fetchFamilyPosts();
     }
   }, [userProfile.familyId]);
 
@@ -45,15 +36,7 @@ const Home = () => {
   if (isLoading && post.length === 0) return <NoPost />;
 
   return (
-    <PullToRefresh
-      onRefresh={fetchFamilyPosts}
-      className="overflow-auto-hide-scroll h-full"
-
-      style={{
-        touchAction: "pan-y",
-        WebkitOverflowScrolling: "touch",
-      }}
-    >
+    <div className="overflow-auto-hide-scroll -z-10 h-full">
       <HomeBanner />
       <PeriodNotification />
       {post
@@ -72,7 +55,7 @@ const Home = () => {
             imageUrls={letter.imageUrls}
           />
         ))}
-    </PullToRefresh>
+    </div>
   );
 };
 

@@ -4,31 +4,40 @@ import { useLettersStore } from "@/stores/useLettersStore";
 import { PostListProps } from "../letters-props";
 import PostItem from "./post-item";
 import { useEffect } from "react";
-import { getPostboxList, likeALetters } from "@/api/archive";
+import { getLikedPostId, getPostboxList, likeALetters } from "@/api/archive";
 import { useUserStore } from "@/stores/useUserInfoStore";
-// import { generatePDFTest } from "@/api/test";
+import { generatePDFTest } from "@/api/test";
 
 const PostList = ({ showOnlyFavorites, sortOption }: PostListProps) => {
-  const { newsletters } = useLettersStore();
+  const { newsletters, bookmarks } = useLettersStore();
   const { userProfile } = useUserStore();
+
+  useEffect(() => {
+    if (userProfile.id) {
+      const fetchData = async () => {
+        await getLikedPostId(userProfile.id);
+      };
+      fetchData();
+    }
+  }, [userProfile.id]);
 
   useEffect(() => {
     if (userProfile.familyId) {
       // 한 달 체크 로직
       const fetchData = async () => {
-        // await generatePDFTest(userProfile.familyId);
+        await generatePDFTest(userProfile.familyId);
         await getPostboxList(userProfile.familyId!);
       };
       fetchData();
     }
   }, [userProfile.familyId]);
 
-  const handleLikeNews = (pdfId: number) => {
-    likeALetters(userProfile.id, pdfId);
+  const handleLikeNews = (archiveId: number) => {
+    likeALetters(userProfile.id, archiveId);
   };
 
   const filteredNewsletters = showOnlyFavorites
-    ? newsletters.filter((news) => news.liked === true)
+    ? newsletters.filter((news) => bookmarks.includes(news.archiveId))
     : newsletters;
   const sortedNewsletters =
     sortOption === "OLDEST"
@@ -42,6 +51,7 @@ const PostList = ({ showOnlyFavorites, sortOption }: PostListProps) => {
           key={news.archiveId ?? index}
           {...news}
           setLikedToggle={handleLikeNews}
+          liked={bookmarks.includes(news.archiveId)}
         />
       ))}
     </div>

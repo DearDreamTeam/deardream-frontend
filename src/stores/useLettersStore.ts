@@ -10,13 +10,13 @@ export interface Newsletter {
   thumbnailUrl: string;
   yearMonthType: string;
   archiveId: number;
-  liked: boolean; // 즐겨찾기 여부
 }
 
 interface PostboxState {
   newsletters: Newsletter[];
+  bookmarks: number[];
   setNewsletters: (newsletters: Newsletter[]) => void;
-  setLikedStatus: (pdfIds: number[]) => void;
+  setBookmarks: (pdfIds: number[]) => void;
   setLikedToggle: (pdfId: number) => void;
 }
 
@@ -24,38 +24,18 @@ export const useLettersStore = create<PostboxState>()(
   persist(
     immer((set) => ({
       newsletters: [],
+      bookmarks: [],
       setNewsletters: (newsletters) => set({ newsletters: newsletters }),
-      setLikedStatus: (archiveIds) =>
-        set((state) => {
-          if (state.newsletters) {
-            const updatedNewsletters = state.newsletters.map((news) =>
-              archiveIds.includes(news.archiveId)
-                ? {
-                    ...news,
-                    liked: true,
-                  }
-                : news,
-            );
-
-            return {
-              newsletters: updatedNewsletters,
-            };
-          }
-        }),
+      setBookmarks: (archiveIds) => set({ bookmarks: archiveIds }),
       setLikedToggle: (archiveId) =>
         set((state) => {
-          if (state.newsletters) {
-            const updatedNewsletters = state.newsletters.map((news) =>
-              news.archiveId === archiveId
-                ? {
-                    ...news,
-                    liked: !news.liked,
-                  }
-                : news,
-            );
+          if (state.bookmarks) {
+            const updatedBookmarks = state.bookmarks.includes(archiveId)
+              ? state.bookmarks.filter((id) => id !== archiveId)
+              : [...state.bookmarks, archiveId];
 
             return {
-              newsletters: updatedNewsletters,
+              bookmarks: updatedBookmarks,
             };
           }
         }),
