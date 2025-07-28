@@ -24,7 +24,7 @@ const GuideLetterPage = () => {
               오늘 먹은 음식, 손주가 그린 그림, 산책 중 찍은 사진처럼 <br />
               소소한 일상도 어르신께는 소중한 소식이 될 수 있어요.
             </div>
-            <div className="text-grey-500 text-caption-2 flex leading-none">
+            <div className="text-grey-500 text-caption-2 flex items-center leading-none">
               <Light />
               &quot;잘 지내고 있어요!&quot; 같은 짧은 한마디도 충분해요.
             </div>
@@ -37,7 +37,7 @@ const GuideLetterPage = () => {
           <div className="text-grey-700 flex w-full flex-col gap-2 text-left">
             <div>사진과 함께 남기는 경우, 최대 200자까지 작성 가능해요.</div>
             <div>사진 없이 글만 남길 경우, 최대 600자까지 작성 가능해요.</div>
-            <div className="text-grey-500 text-caption-2 flex leading-none">
+            <div className="text-grey-500 text-caption-2 flex items-center leading-none">
               <Light />
               사진과 함께 짧게, 긴 글로 자세히 소식을 남겨보세요!
             </div>

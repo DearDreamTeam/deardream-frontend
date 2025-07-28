@@ -62,9 +62,15 @@ const GuidePage = () => {
             </SectionItem>
           </Section>
 
-          <Section title="도움말">
+          <Section title="내 정보">
             <SectionItem link="guide/address">
               주소는 어떻게 변경하나요?
+            </SectionItem>
+            <SectionItem link="guide/plan">
+              플랜은 어떻게 변경하나요? (가정)
+            </SectionItem>
+            <SectionItem link="guide/plan-facility">
+              플랜은 어떻게 변경하나요? (시설)
             </SectionItem>
           </Section>
         </div>
