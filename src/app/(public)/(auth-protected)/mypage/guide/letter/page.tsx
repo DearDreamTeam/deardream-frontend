@@ -3,7 +3,7 @@ import Light from "/public/icons/common/light.svg";
 
 const GuideLetterPage = () => {
   return (
-    <div className="flex h-full w-full flex-col items-center p-4 pt-0">
+    <div className="flex h-full w-full flex-1 flex-col items-center p-4 pt-0">
       <Header>이어드림 가이드</Header>
       <div className="flex w-full flex-col items-center py-6">
         <div className="text-headline-0 text-grey-900 py-2 leading-10">
@@ -14,15 +14,15 @@ const GuideLetterPage = () => {
         </div>
       </div>
       <div className="flex flex-col gap-4">
-        <div>
+        <div className="overflow-auto-hide-scroll w-full">
           <div className="text-title-1 text-grey-800 w-full py-5 text-left leading-normal">
             가볍게, 편하게 일상 이야기를 나누듯 남겨보세요
           </div>
           <div className="text-grey-700 flex w-full flex-col gap-2 text-left">
             <div>꼭 특별한 일이 아니어도 괜찮아요.</div>
             <div className="leading-tight">
-              오늘 먹은 음식, 손주가 그린 그림, 산책 중 찍은 사진처럼 <br />
-              소소한 일상도 어르신께는 소중한 소식이 될 수 있어요.
+              오늘 먹은 음식, 손주가 그린 그림, 산책 중 찍은 사진처럼 소소한
+              일상도 어르신께는 소중한 소식이 될 수 있어요.
             </div>
             <div className="text-grey-500 text-caption-2 flex items-center leading-none">
               <Light />

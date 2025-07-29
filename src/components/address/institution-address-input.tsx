@@ -83,8 +83,8 @@ const InstitutionAddressInput = () => {
 
   return (
     <>
-      <div className="flex w-full flex-col items-center gap-4">
-        <div className="flex-start text-body-1 text-grey-400 relative flex max-w-90 min-w-80 flex-col gap-2">
+      <div className="overflow-auto-hide-scroll flex w-full flex-col items-center gap-4">
+        <div className="flex-start text-body-1 text-grey-400 relative flex w-full flex-col gap-2">
           기관 코드
           <div className="flex w-full flex-row items-center justify-between gap-2">
             <input
@@ -114,7 +114,7 @@ const InstitutionAddressInput = () => {
             ))}
         </div>
 
-        <div className="flex-start text-body-1 text-grey-400 flex max-w-90 min-w-80 flex-col gap-2">
+        <div className="flex-start text-body-1 text-grey-400 flex w-full flex-col gap-2">
           우편 번호
           <input
             type="text"
@@ -124,7 +124,7 @@ const InstitutionAddressInput = () => {
             readOnly
           />
         </div>
-        <div className="flex-start text-body-1 text-grey-400 flex max-w-90 min-w-80 flex-col gap-2">
+        <div className="flex-start text-body-1 text-grey-400 flex w-full flex-col gap-2">
           주소
           <input
             type="text"
@@ -134,7 +134,7 @@ const InstitutionAddressInput = () => {
             readOnly
           />
         </div>
-        <div className="flex-start text-body-1 text-grey-400 flex max-w-90 min-w-80 flex-col gap-2">
+        <div className="flex-start text-body-1 text-grey-400 flex w-full flex-col gap-2">
           상세 주소
           <input
             type="text"
@@ -145,7 +145,7 @@ const InstitutionAddressInput = () => {
           />
         </div>
 
-        <div className="flex-start text-body-1 text-grey-400 flex max-w-90 min-w-80 flex-col gap-2">
+        <div className="flex-start text-body-1 text-grey-400 flex w-full flex-col gap-2">
           기관명
           <input
             type="text"
@@ -156,7 +156,7 @@ const InstitutionAddressInput = () => {
           />
         </div>
 
-        <div className="flex-start text-body-1 text-grey-400 flex max-w-90 min-w-80 flex-col gap-2">
+        <div className="flex-start text-body-1 text-grey-400 flex w-full flex-col gap-2">
           기관 전화번호
           <input
             type="text"

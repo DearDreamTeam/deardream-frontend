@@ -52,7 +52,7 @@ const CompleteClient = () => {
     if (isComplete) {
       const timer = setTimeout(() => {
         router.push(PATH.SUBSCRIBE + "/receiver");
-      }, 3000);
+      }, 2000);
       return () => clearTimeout(timer);
     }
   }, [isComplete, router]);

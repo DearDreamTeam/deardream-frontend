@@ -25,36 +25,32 @@ export default function ProtectedLayout({
   useEffect(() => {
     if (skipAuthCheck) return;
 
-    const accessToken = localStorage.getItem("accessToken");
-    if (!accessToken) {
+    const refreshToken = localStorage.getItem("refreshToken");
+    if (!refreshToken) {
       alert("로그인이 필요합니다.");
       localStorage.clear();
       router.replace("/login");
+      return;
     }
 
     const checkUser = async () => {
       try {
+        console.log("사용자 정보 조회중");
         const res = await axios.get("/v1/users/me");
         console.log("사용자 정보:", res.data);
-        if (res.status === 200) {
-          const userData = res.data.result;
-          updateUserProfile({
-            ...userData,
-          });
-          console.log("userProfile", userProfile);
-        } else {
-          throw new Error("사용자 정보 조회 실패");
-        }
+
+        const userData = res.data.result;
+        updateUserProfile({
+          ...userData,
+        });
+        console.log("userProfile", userProfile);
       } catch (err) {
         console.error("사용자 인증 실패", err);
-        alert("로그인이 필요합니다.");
-        localStorage.clear();
-        router.replace("/login");
       }
     };
 
     checkUser();
-  }, [router, setFamilyLink, updateUserProfile, skipAuthCheck]);
+  }, [updateUserProfile, router, setFamilyLink, skipAuthCheck]);
 
   useEffect(() => {
     if (userProfile.familyRegistered) {
@@ -69,6 +65,8 @@ export default function ProtectedLayout({
         }
       };
       checkFamilyLink();
+    } else {
+      return;
     }
   }, [userProfile.familyRegistered, setFamilyLink]);
 
