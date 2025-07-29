@@ -62,7 +62,7 @@ export const INSTITUTION_FAMILY_TABLE_ITEMS = [
   { value: "receiverName", label: "성함", flex: "flex-[2]" },
   { value: "addressDetail", label: "상세 주소", flex: "flex-[2]" },
   { value: "phone", label: "받는 분 전화번호", flex: "flex-[2]" },
-  { value: "createdAt", label: "등록일", flex: "flex-[2]" },
+  { value: "createdAt", label: "최근 작성일", flex: "flex-[2]" },
   { value: "deliveryStatus", label: "상태", flex: "flex-[2] flex-center" },
-  { value: "delete", label: "추방", flex: "flex-[1]" },
+  { value: "delete", label: "상세보기", flex: "flex-[1]" },
 ];

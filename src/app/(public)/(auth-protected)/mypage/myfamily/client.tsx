@@ -14,6 +14,7 @@ import { useReceiverStore } from "@/stores/useReceiverStore";
 import { UserProfileInfo } from "@/types/user-info";
 import { ReceiverProfileInfo } from "@/stores/useReceiverStore";
 import Crown from "@/public/icons/common/crown.svg";
+import KakaoShareScript from "@/components/scripts/kakao-share-script";
 
 const Add = dynamic(() => import("@/public/icons/common/add.svg"));
 const ShareOptions = dynamic(
@@ -174,6 +175,7 @@ const MyFamilyClient = () => {
       </div>
 
       {isOpen && <ShareOptions setIsOpen={setIsOpen} />}
+      <KakaoShareScript />
     </div>
   );
 };

@@ -30,8 +30,18 @@ export const DeliveredState = () => {
   );
 };
 
+export const ErrorState = () => {
+  return (
+    <button className="admin-delivery-status border-[#A60000] text-[#A60000]">
+      <Print />
+      <span>미발행</span>
+    </button>
+  );
+};
+
 export const DeliveryStatus = (status: string) => {
   if (status === DELIVERY_STATUS.PENDING.value) return <PendingState />;
   if (status === DELIVERY_STATUS.SHIPPING.value) return <ShippingState />;
   if (status === DELIVERY_STATUS.DELIVERED.value) return <DeliveredState />;
+  if (status === "error") return <ErrorState />;
 };

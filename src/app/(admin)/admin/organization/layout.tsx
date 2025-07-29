@@ -1,4 +1,6 @@
-import Image from "next/image";
+import AdminHeader from "../_components/header/admin-header";
+import Navigation from "./_components/side-header/navigation";
+import OrganizationInfo from "./_components/side-header/organization-info";
 
 const Layout = ({
   children,
@@ -6,17 +8,16 @@ const Layout = ({
   children: React.ReactNode;
 }>) => {
   return (
-    <div>
-      <div className="absolute top-0 left-0 -z-10 h-[28rem] w-full bg-gradient-to-b from-green-100/100 via-green-100/80 to-green-100/0">
-        <Image
-          src={`/images/white-big-ribbon.svg`}
-          alt="ribbon"
-          width={284.23}
-          height={250.49}
-          className="absolute top-36 left-4 z-10"
-        />
-      </div>
-      {children}
+    <div className="flex">
+      <section className="shadow-default w-60 bg-green-300">
+        <OrganizationInfo />
+        <Navigation />
+      </section>
+
+      <section className="flex flex-1 flex-col">
+        <AdminHeader />
+        {children}
+      </section>
     </div>
   );
 };

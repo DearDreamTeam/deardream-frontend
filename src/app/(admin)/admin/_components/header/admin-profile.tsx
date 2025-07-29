@@ -34,9 +34,7 @@ const AdminProfile = () => {
         />
         <div className="flex flex-col">
           <span className="text-label-2">{userProfile.name}님</span>
-          <span className="text-body-2 text-grey-500">
-            {userProfile.relation}
-          </span>
+          <span className="text-body-2 text-grey-500">기관관계자</span>
         </div>
       </div>
       <button className="button">로그아웃</button>
