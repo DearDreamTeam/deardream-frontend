@@ -10,9 +10,7 @@ const LinkCopy = () => {
 
   const handleCopy = async () => {
     try {
-      await navigator.clipboard.writeText(
-        (SHARE_DATA.url ?? "") + "invite?familylink=" + (familyLink ?? ""),
-      );
+      await navigator.clipboard.writeText(SHARE_DATA.url + (familyLink ?? ""));
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch (err) {
