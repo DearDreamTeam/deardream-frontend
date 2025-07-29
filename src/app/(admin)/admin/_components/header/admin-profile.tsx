@@ -30,7 +30,7 @@ const AdminProfile = () => {
           width={50}
           height={50}
           alt="profile"
-          className="rounded-full"
+          className="aspect-square rounded-full object-cover"
         />
         <div className="flex flex-col">
           <span className="text-label-2">{userProfile.name}님</span>
