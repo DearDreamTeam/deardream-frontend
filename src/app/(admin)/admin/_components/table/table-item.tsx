@@ -7,7 +7,7 @@ import {
   INSTITUTIONS_DETAIL_TABLE_ITEMS,
   INSTITUTIONS_TABLE_ITEMS,
 } from "./table-items";
-import Cancel from "@/public/icons/common/cancel.svg";
+// import Cancel from "@/public/icons/common/cancel.svg";
 import { Families } from "@/types/admin-organization-dto";
 import Checkbox from "../button/checkbox";
 import { CheckboxProps } from "../button/checkbox-props";
@@ -167,7 +167,7 @@ export const InstitutionDetailTableItem = (
     </div>
   );
 };
-
+import More from "@/public/icons/post-card/more.svg";
 export const InstitutionFamilyTableItem = (
   props: {
     index: number;
@@ -190,10 +190,10 @@ export const InstitutionFamilyTableItem = (
             <span key={key} className={flex}>
               <button
                 type="button"
-                className="bg-grey-200 text-grey-0 w-fit rounded-full"
+                className="text-grey-700 w-fit rotate-90 transform rounded-full"
                 onClick={() => props.handleDeleteMember(props.familyId)}
               >
-                <Cancel />
+                <More />
               </button>
             </span>
           );

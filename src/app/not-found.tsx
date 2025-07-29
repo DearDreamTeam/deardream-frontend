@@ -1,6 +1,5 @@
 "use client";
 
-import Lottie from "@/components/anim/Lottie";
 import { useRouter } from "next/navigation";
 
 const NotFound = () => {
@@ -8,15 +7,9 @@ const NotFound = () => {
 
   return (
     <div className="overflow-auto-hide-scroll flex h-full flex-col items-center gap-4">
-      <div className="w-fit">
-        <Lottie />
-      </div>
-      <p>존재하지 않는 페이지입니다.</p>
-      <button className="button" onClick={() => router.replace("/home")}>
-        홈으로 돌아가기
-      </button>
-      <button className="button" onClick={() => router.replace("/design")}>
-        디자인 시스템 보기
+      <div>서비스 준비 중입니다.</div>
+      <button className="button" onClick={() => router.back()}>
+        되돌아 가기
       </button>
     </div>
   );
