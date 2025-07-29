@@ -23,28 +23,44 @@ instance.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
+    const refreshToken = localStorage.getItem("refreshToken");
+
     if (
       (error.response?.status === 401 || error.response?.status === 403) &&
-      !originalRequest._retry // 무한 반복 방지
+      !originalRequest._retry
     ) {
       originalRequest._retry = true;
       try {
-        // reissue 요청 (Refresh Token은 쿠키로 보내진다고 가정)
+        console.log("리이슈 처리중", refreshToken);
         const res = await axios.post(
-          `${process.env.NEXT_PUBLIC_API_URL}/auth/reissue`,
+          `${process.env.NEXT_PUBLIC_API_URL}/users/reissue`,
           {},
-          { withCredentials: true }, // 쿠키 포함 필요시
+          {
+            headers: {
+              Authorization: `Bearer ${refreshToken}`,
+            },
+          },
         );
 
-        const newAccessToken = res.data.result?.accessToken;
+        const newAccessToken = res.data.result?.newAccessToken;
+        const newRefreshToken = res.data.result?.newRefreshToken;
+
         if (newAccessToken) {
           localStorage.setItem("accessToken", newAccessToken);
-          originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
-          return instance(originalRequest); // 실패했던 요청 재시도
+          localStorage.setItem("refreshToken", newRefreshToken);
+          originalRequest.headers = {
+            ...originalRequest.headers,
+            Authorization: `Bearer ${newAccessToken}`,
+          };
+
+          return instance(originalRequest);
         }
       } catch (reissueErr) {
         console.error("Reissue failed", reissueErr);
-        // 강제 로그아웃 처리도 여기에 가능
+        alert("로그인이 만료되었습니다. 다시 로그인해주세요.");
+        localStorage.clear();
+        window.location.href = "/login";
+        // 로그아웃 처리 등
       }
     }
 

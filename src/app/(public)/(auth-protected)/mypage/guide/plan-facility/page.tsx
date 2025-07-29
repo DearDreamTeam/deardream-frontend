@@ -36,7 +36,7 @@ const GuidePlanPage = () => {
   return (
     <div className="bg-grey-0 flex h-full flex-1 flex-col items-center">
       <Header>이어드림 가이드</Header>
-      <div className="w-full overflow-y-auto">
+      <div className="overflow-auto-hide-scroll w-full">
         <div className="flex w-full flex-col items-center py-6">
           <div className="text-headline-0 text-grey-900 py-2 leading-10">
             플랜 변경 가이드 (시설)
