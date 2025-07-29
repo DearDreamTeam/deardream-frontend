@@ -48,8 +48,9 @@ export default function ProtectedLayout({
         console.error("사용자 인증 실패", err);
       }
     };
-
-    checkUser();
+    if (userProfile.id <= 0) {
+      checkUser();
+    }
   }, [updateUserProfile, router, setFamilyLink, skipAuthCheck]);
 
   useEffect(() => {
