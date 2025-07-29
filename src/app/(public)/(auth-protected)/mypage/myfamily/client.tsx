@@ -29,7 +29,7 @@ const SenderInfo = memo(({ user }: { user: UserProfileInfo }) => (
       alt="프로필 이미지"
       width={54}
       height={54}
-      className="rounded-full object-cover"
+      className="aspect-square rounded-full object-cover"
       loading="eager"
       priority
     />

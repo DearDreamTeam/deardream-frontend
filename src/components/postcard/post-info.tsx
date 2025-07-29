@@ -28,7 +28,7 @@ const PostInfo = ({
         alt={"프로필 이미지"}
         width={36}
         height={36}
-        className="rounded-full"
+        className="aspect-square rounded-full object-cover"
       />
       <div className="flex flex-1">
         <div className="flex-1">
