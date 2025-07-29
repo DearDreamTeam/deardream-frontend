@@ -1,4 +1,4 @@
-import AdminHeader from "./_components/header/admin-header";
+import AdminHeader from "../_components/header/admin-header";
 
 const Layout = ({
   children,
