@@ -23,7 +23,7 @@ const Page = () => {
   const curMem = 28;
   const viewFam = families.slice(0, viewLevel * 8);
   return (
-    <div className="px-10">
+    <div className="px-10 pb-8">
       {/* <section className="text-body-1">
         <div className="flex-row-gap-1 organization-info">
           <span>기관코드</span>
@@ -39,26 +39,26 @@ const Page = () => {
           <span>{organizationInfo.phone}</span>
         </div>
       </section> */}
-      <section className="flex w-full flex-col items-center justify-center">
+      <section className="flex w-full flex-col items-center justify-center pt-4">
         <div className="text-headline-0 text-grey-700 flex gap-4">
           <button
-            onClick={() =>
-              setPivotDate(
-                new Date(pivotDate.getFullYear(), pivotDate.getMonth() - 1, 1),
-              )
-            }
+          // onClick={() =>
+          //   setPivotDate(
+          //     new Date(pivotDate.getFullYear(), pivotDate.getMonth() - 1, 1),
+          //   )
+          // }
           >
             <ArrowBack />
           </button>
           <button onClick={() => monthRef.current?.showPicker()}>
-            {pivotDate.getFullYear()}년 {pivotDate.getMonth() + 1}월
+            {pivotDate.getFullYear()}년 {6}월
           </button>
           <button
-            onClick={() =>
-              setPivotDate(
-                new Date(pivotDate.getFullYear(), pivotDate.getMonth() + 1, 1),
-              )
-            }
+          // onClick={() =>
+          //   setPivotDate(
+          //     new Date(pivotDate.getFullYear(), pivotDate.getMonth() + 1, 1),
+          //   )
+          // }
           >
             <ArrowFront />
           </button>
