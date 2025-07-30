@@ -14,6 +14,7 @@ interface SenderProfileEditProps {
   setEditUserProfile?: React.Dispatch<React.SetStateAction<UserProfileInfo>>;
   editUserProfile?: UserProfileInfo; // 현재 편집 중인 프로필
   setSelectedFile?: (file: File | null) => void; // 이미지 파일 설정 함수
+  selectedFile?: File | null;
 }
 
 // 프로필 편집 컴포넌트
@@ -36,17 +37,18 @@ const SenderProfileEdit = ({
     console.log("postUser:", editUserProfile, userProfile);
   }, [editUserProfile, userProfile]);
 
+  useEffect(() => {
+    console.log("editedProps:", imageUrl);
+  }, [imageUrl]);
+
   return (
     <>
       <div className="flex w-full flex-col items-center gap-10">
         <ProfileImageUploader
+          editUserProfile={editUserProfile}
           imageUrl={imageUrl}
-          onFileSelect={(file) => {
-            setSelectedFile?.(file);
-            const reader = new FileReader();
-            reader.onloadend = () => setImageUrl(reader.result as string);
-            reader.readAsDataURL(file);
-          }}
+          setImageUrl={setImageUrl}
+          setSelectedFile={setSelectedFile}
         />
         <ProfileNameInput
           name={editUserProfile?.name || ""}
