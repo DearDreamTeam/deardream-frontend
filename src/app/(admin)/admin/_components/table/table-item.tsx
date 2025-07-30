@@ -168,6 +168,7 @@ export const InstitutionDetailTableItem = (
   );
 };
 import More from "@/public/icons/post-card/more.svg";
+import Link from "next/link";
 export const InstitutionFamilyTableItem = (
   props: {
     index: number;
@@ -175,7 +176,10 @@ export const InstitutionFamilyTableItem = (
   } & Families,
 ) => {
   return (
-    <div className="admin-table-item gap-2">
+    <Link
+      href={`/admin/organization/${props.familyId}`}
+      className="admin-table-item gap-2"
+    >
       {INSTITUTION_FAMILY_TABLE_ITEMS.map(({ value, flex }) => {
         const key = value + props.index;
         type Key = keyof Families;
@@ -203,6 +207,6 @@ export const InstitutionFamilyTableItem = (
           </span>
         );
       })}
-    </div>
+    </Link>
   );
 };
