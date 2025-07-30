@@ -17,7 +17,10 @@ const ImagePreviewer = ({
     <div className="flex w-full justify-around gap-1 py-5">
       {imageFiles?.map((item) => (
         <div key={item.fileId} className="relative w-full">
-          <div className="w-full" onClick={() => handleImageClick(item.fileId)}>
+          <div
+            className="w-full"
+            onClick={() => handleImageClick(item.fileId!)}
+          >
             <ImageFallback
               url={item.previewUrl}
               width={imageFiles.length === 2 ? 170 : 344}
@@ -25,7 +28,7 @@ const ImagePreviewer = ({
             />
           </div>
           <button
-            onClick={() => deleteFile(item.fileId)}
+            onClick={() => deleteFile(item.fileId!)}
             type="button"
             className="absolute top-1 right-1"
           >
