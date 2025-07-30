@@ -24,6 +24,7 @@ import { useEffect, useState } from "react";
 import ConfirmDialog from "@/components/modal/dialog/confirm-dialog";
 import { useUserStore } from "@/stores/useUserInfoStore";
 import AlertDialog from "@/components/modal/dialog/alert-dialog";
+import axios from "@/lib/axios";
 
 const SectionItem = ({
   children,
@@ -64,6 +65,21 @@ const MyPage = () => {
 
   const { userProfile } = useUserStore();
 
+  useEffect(() => {
+    if (!userProfile.familyId) return;
+    const fetchPlan = async () => {
+      try {
+        const response = await axios.get(
+          `/v1/test/payment/request/status/${userProfile.familyId}`,
+        );
+        console.log("response", response);
+      } catch (error) {
+        console.error("Error fetching plan:", error);
+      }
+    };
+    fetchPlan();
+  }, [userProfile.familyId]);
+
   const formatImageUrl = (url?: string): string => {
     const kakaoDefaultImage =
       "http://img1.kakaocdn.net/thumb/R640x640.q70/?fname=http://t1.kakaocdn.net/account_images/default_profile.jpeg";
@@ -102,7 +118,9 @@ const MyPage = () => {
                 alt="프로필 이미지"
                 width={56}
                 height={56}
-                className="rounded-full object-cover"
+                className="aspect-square rounded-full object-cover"
+                loading="eager"
+                priority
               />
             </div>
 

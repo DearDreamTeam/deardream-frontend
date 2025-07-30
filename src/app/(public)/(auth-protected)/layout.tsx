@@ -7,6 +7,7 @@ import { useUserStore } from "@/stores/useUserInfoStore";
 import LogoHeader from "@/components/header/logo-header";
 import NavigationBar from "@/components/gnb/navigation-bar";
 import { useInvitationStore } from "@/stores/useInvitationStore";
+import { usePlanStore } from "@/stores/usePlanStore";
 
 export default function ProtectedLayout({
   children,
@@ -17,6 +18,7 @@ export default function ProtectedLayout({
 
   const { updateUserProfile, userProfile } = useUserStore();
   const { setFamilyLink } = useInvitationStore();
+  const { setPlan } = usePlanStore();
 
   const pathname = usePathname();
 
@@ -51,26 +53,45 @@ export default function ProtectedLayout({
     if (userProfile.id <= 0) {
       checkUser();
     }
-
   }, [updateUserProfile, router, setFamilyLink, skipAuthCheck]);
 
   useEffect(() => {
-    if (userProfile.familyRegistered) {
-      const checkFamilyLink = async () => {
-        try {
-          const res = await axios.get("/v1/family/link");
-          if (res.status === 200) {
-            setFamilyLink(res.data.result);
-          }
-        } catch {
-          console.log("가족 링크 조회 실패");
+    if (!userProfile.familyRegistered) return;
+
+    const checkFamilyLink = async () => {
+      try {
+        const res = await axios.get("/v1/family/link");
+        if (res.status === 200) {
+          setFamilyLink(res.data.result);
         }
-      };
-      checkFamilyLink();
-    } else {
-      return;
-    }
-  }, [userProfile.familyRegistered, setFamilyLink]);
+      } catch {
+        console.log("가족 링크 조회 실패");
+      }
+    };
+    const checkPlan = async () => {
+      try {
+        const res = await axios.get(
+          `/v1/test/payment/request/status/${userProfile.familyId}`,
+        );
+        if (res.status === 200) {
+          setPlan({
+            isActive: res.data.result.isActive,
+            type: res.data.result.type,
+          });
+        }
+      } catch (error) {
+        console.error("Error checking plan:", error);
+      }
+    };
+    //링크와 플랜상태 체크
+    checkFamilyLink();
+    checkPlan();
+  }, [
+    userProfile.familyRegistered,
+    setFamilyLink,
+    userProfile.familyId,
+    setPlan,
+  ]);
 
   return (
     <>

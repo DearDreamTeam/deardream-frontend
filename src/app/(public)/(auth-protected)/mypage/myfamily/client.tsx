@@ -143,7 +143,7 @@ const MyFamilyClient = () => {
         </div>
       )}
 
-      <div className="mt-4 flex w-full flex-col justify-center">
+      <div className="overflow-auto-hide-scroll mt-4 flex w-full flex-col justify-center">
         {userProfile.familyRegistered && (
           <>
             <div className="mb-4 flex w-full flex-col">
