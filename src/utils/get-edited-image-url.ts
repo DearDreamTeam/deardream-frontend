@@ -95,6 +95,46 @@ export const getEditedImageUrl = async (
   });
 };
 
+export const createRoundedImage = async (
+  imageUrl: string,
+): Promise<{ roundedUrl: string; roundedFile: File }> => {
+  const image = await createImage(imageUrl); // 이미지 로드
+
+  const size = Math.min(image.width, image.height);
+  const canvas = document.createElement("canvas");
+  const ctx = canvas.getContext("2d");
+  if (!ctx) throw new Error("No 2D context");
+
+  canvas.width = size;
+  canvas.height = size;
+
+  // 원형 마스크 영역 설정
+  ctx.beginPath();
+  ctx.arc(size / 2, size / 2, size / 2, 0, Math.PI * 2);
+  ctx.closePath();
+  ctx.clip();
+
+  // 이미지 중앙 정렬
+  const offsetX = (size - image.width) / 2;
+  const offsetY = (size - image.height) / 2;
+
+  ctx.drawImage(image, offsetX, offsetY);
+
+  // Blob 변환
+  return new Promise<{ roundedUrl: string; roundedFile: File }>((resolve) => {
+    canvas.toBlob((blob) => {
+      if (!blob) throw new Error("Canvas is empty");
+
+      const roundedFile = new File([blob], `rounded.png`, {
+        type: "image/png",
+      });
+      const roundedUrl = URL.createObjectURL(blob);
+
+      resolve({ roundedUrl, roundedFile });
+    }, "image/png");
+  });
+};
+
 export const convertImageUrlToFile = async (url: string): Promise<File> => {
   const filename = getResourceFilename(url);
   const res = await fetch(url);
