@@ -39,7 +39,7 @@ const PostItem = ({
       >
         <div className="relative h-[148px] w-[104px]">
           <Image
-            src={thumbnailUrl}
+            src={thumbnailUrl ?? "/icons/letters/cover-default.png"}
             alt="cover"
             fill
             sizes="104px"
