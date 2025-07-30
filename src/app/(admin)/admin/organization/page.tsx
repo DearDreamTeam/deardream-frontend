@@ -39,7 +39,7 @@ const Page = () => {
           <span>{organizationInfo.phone}</span>
         </div>
       </section> */}
-      <section className="flex w-full flex-col items-center justify-center pt-4">
+      <section className="flex w-full flex-col items-center justify-center pt-8">
         <div className="text-headline-0 text-grey-700 flex gap-4">
           <button
           // onClick={() =>

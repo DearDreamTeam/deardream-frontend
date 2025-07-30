@@ -4,7 +4,7 @@ import AdminProfile from "./admin-profile";
 
 const AdminHeader = () => {
   return (
-    <section className="bg-green-100 pb-[3.4rem]">
+    <section>
       <div className="bg-grey-0 border-b-grey-200 border-b">
         <div className="flex items-center justify-between px-12 py-4">
           <Link href={`/admin`}>

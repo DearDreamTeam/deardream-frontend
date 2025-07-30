@@ -110,4 +110,14 @@
   .postcard-info-container {
     @apply flex items-center gap-1 px-[0.13rem] py-1;
   }
+
+  .organization-info-section {
+    @apply flex flex-1 flex-col gap-4;
+  }
+  .organization-info-title {
+    @apply text-title-1 text-grey-700;
+  }
+  .organization-info-content {
+    @apply text-label-2 text-grey-700 flex flex-col gap-2.5;
+  }
 }
