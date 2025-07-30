@@ -34,13 +34,10 @@ const ReceiverProfileEdit = ({
     <>
       <div className="flex w-full flex-col items-center gap-10">
         <ProfileImageUploader
+          editUserProfile={editReceiverProfile}
           imageUrl={imageUrl}
-          onFileSelect={(file) => {
-            setSelectedFile?.(file);
-            const reader = new FileReader();
-            reader.onloadend = () => setImageUrl(reader.result as string);
-            reader.readAsDataURL(file);
-          }}
+          setImageUrl={setImageUrl}
+          setSelectedFile={setSelectedFile}
         />
         <ProfileNameInput
           name={editReceiverProfile?.name || ""}

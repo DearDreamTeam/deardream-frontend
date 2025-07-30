@@ -5,6 +5,7 @@ import Cropper, { Area } from "react-easy-crop";
 import AspectRatioOptions from "./aspect-ratio-options";
 import ActionIconBar from "./action-icon-bar";
 import {
+  createRoundedImage,
   getEditedImageUrl,
   getFlippedImageUrl,
 } from "@/utils/get-edited-image-url";
@@ -46,11 +47,18 @@ const PhotoEditor = ({
   const handleSave = async () => {
     if (!croppedAreaPixels) return;
     try {
-      const { editedUrl, editedFile } = await getEditedImageUrl(
+      let { editedUrl, editedFile } = await getEditedImageUrl(
         imageSrc,
         croppedAreaPixels,
         rotation,
       );
+
+      if (isProfile) {
+        const { roundedUrl, roundedFile } = await createRoundedImage(editedUrl);
+        editedUrl = roundedUrl;
+        editedFile = roundedFile;
+      }
+
       onSave(editedUrl, editedFile, {
         crop,
         zoom,

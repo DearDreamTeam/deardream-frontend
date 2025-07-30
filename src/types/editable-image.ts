@@ -13,7 +13,7 @@ export interface EditedProps {
 }
 
 export interface EditableImage {
-  fileId: number; // 삭제 구현용 아이디
+  fileId?: number; // 삭제 구현용 아이디
   originalFile: File | null; // url로부터 수정 이미지를 생성하므로 그냥 파일 계속 업데이트
   originalUrl: string; // 원본 파일로부터 생성한 url
   previewUrl: string; // textarea 위에 display 용

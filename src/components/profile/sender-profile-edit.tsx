@@ -36,17 +36,18 @@ const SenderProfileEdit = ({
     console.log("postUser:", editUserProfile, userProfile);
   }, [editUserProfile, userProfile]);
 
+  useEffect(() => {
+    console.log("editedProps:", imageUrl);
+  }, [imageUrl]);
+
   return (
     <>
       <div className="flex w-full flex-col items-center gap-10">
         <ProfileImageUploader
+          editUserProfile={editUserProfile}
           imageUrl={imageUrl}
-          onFileSelect={(file) => {
-            setSelectedFile?.(file);
-            const reader = new FileReader();
-            reader.onloadend = () => setImageUrl(reader.result as string);
-            reader.readAsDataURL(file);
-          }}
+          setImageUrl={setImageUrl}
+          setSelectedFile={setSelectedFile}
         />
         <ProfileNameInput
           name={editUserProfile?.name || ""}
