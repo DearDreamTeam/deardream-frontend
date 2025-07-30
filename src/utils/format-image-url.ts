@@ -5,7 +5,6 @@ export const formatImageUrl = (url?: string): string => {
   const cleanedUrl = url?.trim().replace(/[\u200B-\u200D\uFEFF]/g, "");
 
   if (!cleanedUrl || cleanedUrl === kakaoDefaultImage) {
-    console.log("default image url");
     return "/images/default-img.svg";
   }
 

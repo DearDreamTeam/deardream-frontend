@@ -100,7 +100,8 @@ const MyPage = () => {
               <Image
                 src={imageUrl || "/images/default-img.svg"}
                 alt="프로필 이미지"
-                fill
+                width={56}
+                height={56}
                 className="rounded-full object-cover"
               />
             </div>
