@@ -6,7 +6,7 @@ import LetterImage from "@/components/images/letter-image";
 import EllipseImage from "@/components/images/ellipse-image";
 import GreenBasicButton from "@/components/button/green-basic-button";
 
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { useInvitationStore } from "@/stores/useInvitationStore";
@@ -27,6 +27,8 @@ const InvitePageClient = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isLeader, setIsLeader] = useState(null);
 
+  const router = useRouter();
+
   //초대 코드 바뀔 때마다 저장
   useEffect(() => {
     if (inviteCode) {
@@ -35,17 +37,26 @@ const InvitePageClient = () => {
   }, [inviteCode, setFamilyLink]);
 
   useEffect(() => {
+    if (!inviteCode) {
+      router.replace("/");
+      return;
+    }
     const checkFamilyLink = async () => {
-      const response = await axios.get(`/v1/family/invitation`, {
-        params: {
-          code: inviteCode,
-        },
-      });
-      if (response.status === 200) {
-        setFamilyLink(inviteCode);
-        setReceiver({ name: response.data.result.recipientName });
-        setIsLoading(false);
-        setIsLeader(response.data.result.leaderName);
+      try {
+        const response = await axios.get(`/v1/family/invitation`, {
+          params: {
+            code: inviteCode,
+          },
+        });
+        if (response.status === 200) {
+          setFamilyLink(inviteCode);
+          setReceiver({ name: response.data.result.recipientName });
+          setIsLoading(false);
+          setIsLeader(response.data.result.leaderName);
+        }
+      } catch {
+        alert("초대 코드가 유효하지 않습니다.");
+        router.replace("/");
       }
     };
     checkFamilyLink();
