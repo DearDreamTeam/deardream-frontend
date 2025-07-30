@@ -59,10 +59,11 @@ export const INSTITUTIONS_DETAIL_TABLE_ITEMS = [
 
 export const INSTITUTION_FAMILY_TABLE_ITEMS = [
   { value: "index", label: "번호", flex: "flex-[1]" },
-  { value: "receiverName", label: "성함", flex: "flex-[2]" },
-  { value: "addressDetail", label: "상세 주소", flex: "flex-[2]" },
-  { value: "phone", label: "받는 분 전화번호", flex: "flex-[2]" },
-  { value: "createdAt", label: "등록일", flex: "flex-[2]" },
+  { value: "receiverName", label: "이름", flex: "flex-[2]" },
+  // { value: "addressDetail", label: "상세 주소", flex: "flex-[2]" },
+  // { value: "phone", label: "받는 분 전화번호", flex: "flex-[2]" },
+  { value: "createdAt", label: "최근 작성일", flex: "flex-[2]" },
   { value: "deliveryStatus", label: "상태", flex: "flex-[2] flex-center" },
-  { value: "delete", label: "추방", flex: "flex-[1]" },
+  { value: "", label: "", flex: "flex-[5]" },
+  { value: "delete", label: "상세보기", flex: "flex-[1]" },
 ];

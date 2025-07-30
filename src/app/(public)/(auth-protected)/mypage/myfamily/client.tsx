@@ -14,6 +14,7 @@ import { useReceiverStore } from "@/stores/useReceiverStore";
 import { UserProfileInfo } from "@/types/user-info";
 import { ReceiverProfileInfo } from "@/stores/useReceiverStore";
 import Crown from "@/public/icons/common/crown.svg";
+import KakaoShareScript from "@/components/scripts/kakao-share-script";
 
 const Add = dynamic(() => import("@/public/icons/common/add.svg"));
 const ShareOptions = dynamic(
@@ -28,7 +29,7 @@ const SenderInfo = memo(({ user }: { user: UserProfileInfo }) => (
       alt="프로필 이미지"
       width={54}
       height={54}
-      className="rounded-full object-cover"
+      className="aspect-square rounded-full object-cover"
       loading="eager"
       priority
     />
@@ -174,6 +175,7 @@ const MyFamilyClient = () => {
       </div>
 
       {isOpen && <ShareOptions setIsOpen={setIsOpen} />}
+      <KakaoShareScript />
     </div>
   );
 };

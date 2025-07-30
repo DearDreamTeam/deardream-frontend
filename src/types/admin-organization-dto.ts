@@ -1,9 +1,9 @@
 export interface Families {
   familyId: number;
-  archiveId: number; // 허용한 사람만 볼 수 있게..?
+  archiveId: number;
   receiverName: string;
   addressDetail: string;
-  createdAt: string; // 기관 멤버로 등록일
+  createdAt: string;
   deliveryStatus: string;
   phone: string;
 }

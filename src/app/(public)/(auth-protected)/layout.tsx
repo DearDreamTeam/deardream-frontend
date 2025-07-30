@@ -51,6 +51,7 @@ export default function ProtectedLayout({
     if (userProfile.id <= 0) {
       checkUser();
     }
+
   }, [updateUserProfile, router, setFamilyLink, skipAuthCheck]);
 
   useEffect(() => {
