@@ -6,10 +6,14 @@ import RibbonImage from "@/components/images/ribbon-image";
 import InstitutionPlanUse from "@/components/profile/plan/institution-plan-use";
 import PersonalPlanUse from "@/components/profile/plan/personal-plan-use";
 import { PATH } from "@/constants/path";
+import { usePlanStore } from "@/stores/usePlanStore";
 import { useState } from "react";
 
 const QuitPage = () => {
-  const [planType] = useState<"HOME" | "INSTITUTION" | "NONE">("HOME"); // "PERSONAL" | "INSTITUTION" | "NONE"
+  const { plan } = usePlanStore();
+  const [planType] = useState<"HOME" | "INSTITUTION">(plan.type); // "PERSONAL" | "INSTITUTION" | "NONE"
+  const [isActive] = useState(plan.isActive);
+
   return (
     <>
       <div className="relative flex h-screen w-full flex-col items-center justify-between p-4 pt-0">
@@ -45,12 +49,12 @@ const QuitPage = () => {
             {planType === "HOME" ? (
               <>
                 개인 플랜
-                <PersonalPlanUse isActive={true} />
+                <PersonalPlanUse isActive={isActive} />
               </>
             ) : (
               <>
                 기관 플랜
-                <InstitutionPlanUse isActive={true} />
+                <InstitutionPlanUse isActive={isActive} />
               </>
             )}
           </div>

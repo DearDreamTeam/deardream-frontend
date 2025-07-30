@@ -8,37 +8,24 @@ type PlanTypeInfo = "HOME" | "INSTITUTION" | "NONE";
 import { useRouter } from "next/navigation";
 import PersonalPlanUse from "@/components/profile/plan/personal-plan-use";
 import InstitutionPlanUse from "@/components/profile/plan/institution-plan-use";
-import axios from "@/lib/axios";
-import { useReceiverStore } from "@/stores/useReceiverStore";
-import { useUserStore } from "@/stores/useUserInfoStore";
 import { PATH } from "@/constants/path";
+import { usePlanStore } from "@/stores/usePlanStore";
 
 const SubScribePage = () => {
-  const [isActive] = useState(true);
-  const { receiver, setReceiver } = useReceiverStore();
-  const { userProfile } = useUserStore();
+  const { plan } = usePlanStore();
+
+  const [isActive] = useState(plan.isActive);
   const router = useRouter();
 
-  const [planType, setPlanType] = useState<PlanTypeInfo>(
-    receiver.address.deliveryType,
-  );
+  const [planType, setPlanType] = useState<PlanTypeInfo>(plan.type);
 
   useEffect(() => {
-    const fetchReceiver = async () => {
-      if (!userProfile.familyRegistered) {
-        router.push(PATH.SUBSCRIBE);
-        return;
-      }
-      try {
-        const response = await axios.get("/v1/recipient");
-        setPlanType(response.data.result.address.deliveryType);
-        setReceiver(response.data.result);
-      } catch (error) {
-        console.error("Error fetching receiver data:", error);
-      }
-    };
-    fetchReceiver();
-  }, [setReceiver, userProfile.familyRegistered]);
+    if (!plan.isActive) {
+      router.push(PATH.SUBSCRIBE);
+      return;
+    }
+    setPlanType(plan.type);
+  }, [plan.type, router, plan.isActive]);
 
   return (
     <>
