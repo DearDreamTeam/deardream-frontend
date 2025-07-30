@@ -14,7 +14,6 @@ interface SenderProfileEditProps {
   setEditUserProfile?: React.Dispatch<React.SetStateAction<UserProfileInfo>>;
   editUserProfile?: UserProfileInfo; // 현재 편집 중인 프로필
   setSelectedFile?: (file: File | null) => void; // 이미지 파일 설정 함수
-  selectedFile?: File | null;
 }
 
 // 프로필 편집 컴포넌트

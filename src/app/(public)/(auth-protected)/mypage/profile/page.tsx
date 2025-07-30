@@ -73,7 +73,6 @@ const Profile = () => {
             setEditUserProfile={setEditUserProfile}
             editUserProfile={editUserProfile}
             setSelectedFile={setSelectedFile}
-            selectedFile={selectedFile}
           />
         </div>
         <div className="flex h-14 w-full items-center justify-center">
