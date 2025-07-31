@@ -25,6 +25,7 @@ import ConfirmDialog from "@/components/modal/dialog/confirm-dialog";
 import { useUserStore } from "@/stores/useUserInfoStore";
 import AlertDialog from "@/components/modal/dialog/alert-dialog";
 import axios from "@/lib/axios";
+import { usePlanStore } from "@/stores/usePlanStore";
 
 const SectionItem = ({
   children,
@@ -64,6 +65,7 @@ const MyPage = () => {
   const [isForbidden, setIsForbidden] = useState(false);
 
   const { userProfile } = useUserStore();
+  const { plan } = usePlanStore();
 
   useEffect(() => {
     if (!userProfile.familyId) return;
@@ -145,7 +147,11 @@ const MyPage = () => {
                 userProfile.familyRegistered && userProfile.role === "USER"
                   ? () => setIsForbidden(true)
                   : () => {
-                      router.push("/mypage/subscribe");
+                      if (plan.isActive) {
+                        router.push("/mypage/subscribe");
+                      } else {
+                        router.push("/subscribe");
+                      }
                     }
               }
               link={
