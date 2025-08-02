@@ -8,7 +8,6 @@ import { useRef } from "react";
 const MonthPicker = () => {
   const { pivotDate, updatePivotDate, setPivotDate } = useSuperAdminStore();
   const monthRef = useRef<HTMLInputElement>(null);
-  console.log(pivotDate);
   return (
     <section className="flex w-full flex-col items-center justify-center">
       <div className="text-headline-0 text-grey-700 flex gap-4">
