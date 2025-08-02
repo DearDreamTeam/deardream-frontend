@@ -20,7 +20,8 @@ const Page = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      await getHomeArchives(pivotDate.getFullYear(), pivotDate.getMonth());
+      const date = new Date(pivotDate);
+      await getHomeArchives(date.getFullYear(), date.getMonth());
     };
     fetchData();
   }, [pivotDate]);

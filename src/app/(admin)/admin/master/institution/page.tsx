@@ -25,10 +25,8 @@ const Page = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      await getInstitutionArchives(
-        pivotDate.getFullYear(),
-        pivotDate.getMonth(),
-      );
+      const date = new Date(pivotDate);
+      await getInstitutionArchives(date.getFullYear(), date.getMonth());
     };
     fetchData();
   }, [pivotDate]);
