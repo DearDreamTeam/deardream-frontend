@@ -22,6 +22,8 @@ const Page = () => {
     null,
   );
   const [families] = useState<Families[]>([]);
+  const [viewLevel, setViewLevel] = useState(1);
+  const viewInstitutions = institutions.slice(0, viewLevel * 8);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -58,7 +60,7 @@ const Page = () => {
       {institutions.length === 0 ? (
         <EmptyItem />
       ) : (
-        institutions.map((item, index) => (
+        viewInstitutions.map((item, index) => (
           <InstitutionTableItem
             key={index}
             index={index + 1}
@@ -73,7 +75,11 @@ const Page = () => {
           />
         ))
       )}
-      <MoreView viewLevel={1} count={institutions.length} />
+      <MoreView
+        viewLevel={viewLevel}
+        count={institutions.length}
+        onClick={() => setViewLevel((prev) => prev + 1)}
+      />
 
       {selectedInstitution && <ItemCount count={families.length} />}
       {selectedInstitution && <InstitutionDetail families={families} />}

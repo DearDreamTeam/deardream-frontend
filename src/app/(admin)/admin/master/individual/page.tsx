@@ -18,6 +18,9 @@ const Page = () => {
   const [checkedItem, setCheckedItem] = useState<number[]>([]);
   const { individuals, pivotDate } = useSuperAdminStore();
 
+  const [viewLevel, setViewLevel] = useState(1);
+  const viewIndividuals = individuals.slice(0, viewLevel * 8);
+
   useEffect(() => {
     const fetchData = async () => {
       const date = new Date(pivotDate);
@@ -48,7 +51,7 @@ const Page = () => {
       {individuals.length === 0 ? (
         <EmptyItem />
       ) : (
-        individuals.map((item, index) => (
+        viewIndividuals.map((item, index) => (
           <IndividualTableItem
             key={index}
             index={index + 1}
@@ -57,7 +60,11 @@ const Page = () => {
           />
         ))
       )}
-      <MoreView viewLevel={1} count={individuals.length} />
+      <MoreView
+        viewLevel={viewLevel}
+        count={viewIndividuals.length}
+        onClick={() => setViewLevel((prev) => prev + 1)}
+      />
     </div>
   );
 };
