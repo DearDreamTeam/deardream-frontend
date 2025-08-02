@@ -1,7 +1,7 @@
 "use client";
 import { ADD_INSTITUTION } from "@/constants/delivery-type";
 import PageToggle from "../../_components/button/page-toggle";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ItemCount from "../../_components/table/item-count";
 import { TableHeader } from "../../_components/table/table-header";
 import MoreAdd from "../../_components/button/more-add";
@@ -29,10 +29,6 @@ const Page = () => {
   const [institutionList, setInstitutionList] = useState<AddInstitutionProps[]>(
     [DEFAULT],
   );
-
-  useEffect(() => {
-    console.log("institutionList", institutionList);
-  }, [institutionList]);
 
   const handleMoreAdd = () => setInstitutionList((prev) => [...prev, DEFAULT]);
   const handleDeleteAdd = (index: number) => {
