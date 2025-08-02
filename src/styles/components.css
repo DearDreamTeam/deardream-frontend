@@ -8,7 +8,7 @@
 
   /* green btn */
   .button {
-    @apply text-grey-50 text-title-1 flex items-center justify-center gap-1 rounded-sm bg-green-300 px-[0.88rem] py-2;
+    @apply text-grey-50 text-title-1 disabled:text-grey-400 disabled:bg-grey-100 flex items-center justify-center gap-1 rounded-sm bg-green-300 px-[0.88rem] py-2 disabled:cursor-none;
   }
 
   /* modal-dialog */
