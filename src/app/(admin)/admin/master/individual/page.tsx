@@ -1,7 +1,7 @@
 "use client";
 
 import { useSuperAdminStore } from "@/stores/admin/useSuperAdminStroe";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PageToggle from "../../_components/button/page-toggle";
 import ItemCount from "../../_components/table/item-count";
 import ChangeStatus from "../../_components/button/change-status";
@@ -11,10 +11,20 @@ import MoreView from "../../_components/button/more-view";
 import { DELIVERY_TYPE } from "@/constants/delivery-type";
 import { INDIVIDUALS_TABLE_ITEMS } from "../../_components/table/table-items";
 import MonthPicker from "../../_components/month-picker";
+import EmptyItem from "../../_components/table/empty-item";
+import { getHomeArchives } from "@/api/admin";
 
 const Page = () => {
   const [checkedItem, setCheckedItem] = useState<number[]>([]);
-  const { individuals } = useSuperAdminStore();
+  const { individuals, pivotDate } = useSuperAdminStore();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const date = new Date(pivotDate);
+      await getHomeArchives(date.getFullYear(), date.getMonth());
+    };
+    fetchData();
+  }, []);
 
   const handleCheckboxChange = (archiveId: number, checked: boolean) => {
     if (checked) setCheckedItem((prev) => [...prev, archiveId]);
@@ -35,14 +45,18 @@ const Page = () => {
         </div>
       </div>
       <TableHeader items={INDIVIDUALS_TABLE_ITEMS} keyPrefix={"inv-th"} />
-      {individuals.map((item, index) => (
-        <IndividualTableItem
-          key={index}
-          index={index + 1}
-          {...item}
-          handleCheckboxChange={handleCheckboxChange}
-        />
-      ))}
+      {individuals.length === 0 ? (
+        <EmptyItem />
+      ) : (
+        individuals.map((item, index) => (
+          <IndividualTableItem
+            key={index}
+            index={index + 1}
+            {...item}
+            handleCheckboxChange={handleCheckboxChange}
+          />
+        ))
+      )}
       <MoreView viewLevel={1} count={individuals.length} />
     </div>
   );

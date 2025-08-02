@@ -1,6 +1,6 @@
 "use client";
 import { useSuperAdminStore } from "@/stores/admin/useSuperAdminStroe";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ItemCount from "../../_components/table/item-count";
 import ChangeStatus from "../../_components/button/change-status";
 import { TableHeader } from "../../_components/table/table-header";
@@ -11,14 +11,25 @@ import PageToggle from "../../_components/button/page-toggle";
 import { INSTITUTIONS_TABLE_ITEMS } from "../../_components/table/table-items";
 import MonthPicker from "../../_components/month-picker";
 import InstitutionDetail from "../../_components/viewer/institution-detail";
-import { mockFam } from "@/stores/admin/useOrganizationAdminStore";
+import EmptyItem from "../../_components/table/empty-item";
+import { Families } from "@/types/admin-organization-dto";
+import { getInstitutionArchives } from "@/api/admin";
 
 const Page = () => {
   const [checkedItem, setCheckedItem] = useState<number[]>([]);
-  const { institutions } = useSuperAdminStore();
+  const { institutions, pivotDate } = useSuperAdminStore();
+  const date = new Date(pivotDate);
   const [selectedInstitution, setSelecedInstitution] = useState<null | number>(
     null,
   );
+  const [families] = useState<Families[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await getInstitutionArchives(date.getFullYear(), date.getMonth());
+    };
+    fetchData();
+  }, []);
 
   const handleCheckboxChange = (institutionId: number, checked: boolean) => {
     if (checked) setCheckedItem((prev) => [...prev, institutionId]);
@@ -44,20 +55,28 @@ const Page = () => {
         keyPrefix={"inst-th"}
         gap="gap-2"
       />
-      {institutions.map((item, index) => (
-        <InstitutionTableItem
-          key={index}
-          index={index + 1}
-          {...item}
-          handleCheckboxChange={handleCheckboxChange}
-          isSelected={selectedInstitution === item.institutionId}
-          onClick={() => setSelecedInstitution(item.institutionId)}
-        />
-      ))}
+      {institutions.length === 0 ? (
+        <EmptyItem />
+      ) : (
+        institutions.map((item, index) => (
+          <InstitutionTableItem
+            key={index}
+            index={index + 1}
+            {...item}
+            handleCheckboxChange={handleCheckboxChange}
+            isSelected={selectedInstitution === item.institutionId}
+            onClick={() =>
+              setSelecedInstitution((prev) =>
+                prev === item.institutionId ? null : item.institutionId,
+              )
+            }
+          />
+        ))
+      )}
       <MoreView viewLevel={1} count={institutions.length} />
 
-      {selectedInstitution && <ItemCount count={mockFam.length} />}
-      {selectedInstitution && <InstitutionDetail families={mockFam} />}
+      {selectedInstitution && <ItemCount count={families.length} />}
+      {selectedInstitution && <InstitutionDetail families={families} />}
     </div>
   );
 };

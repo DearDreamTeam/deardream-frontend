@@ -11,7 +11,8 @@ interface SuperAdminState {
   setIndividuals: (individuals: IndividualsDto[]) => void;
   setInstitutions: (institutions: InstitutionsDto[]) => void;
   pivotDate: Date;
-  setPivotDate: (newPivotDate: Date) => void;
+  setPivotDate: (newDate: Date | string) => void;
+  updatePivotDate: (value: -1 | 1) => void;
 }
 
 export const useSuperAdminStore = create<SuperAdminState>()(
@@ -20,7 +21,15 @@ export const useSuperAdminStore = create<SuperAdminState>()(
       individuals: [],
       institutions: [],
       pivotDate: new Date(),
-      setPivotDate: (newPivotDate) => set({ pivotDate: newPivotDate }),
+      setPivotDate: (date) => set({ pivotDate: new Date(date) }),
+      updatePivotDate: (value) =>
+        set((state) => ({
+          pivotDate: new Date(
+            state.pivotDate.getFullYear(),
+            state.pivotDate.getMonth() + value,
+            1,
+          ),
+        })),
       setIndividuals: (individuals) => set({ individuals }),
       setInstitutions: (institutions) => set({ institutions }),
     })),

@@ -1,4 +1,7 @@
-import { Families, OrganizationInfo } from "@/types/admin-organization-dto";
+import {
+  OrganizationFamilies,
+  OrganizationInfo,
+} from "@/types/admin-organization-dto";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
@@ -7,9 +10,9 @@ const ADMIN_STORAGE_KEY = "deardream-organization";
 
 interface OrganizationAdminState {
   organizationInfo: OrganizationInfo;
-  families: Families[];
+  families: OrganizationFamilies[];
   setOrganizationInfo: (organizationInfo: OrganizationInfo) => void;
-  setFamilies: (families: Families[]) => void;
+  setFamilies: (families: OrganizationFamilies[]) => void;
 }
 
 const mockOrg: OrganizationInfo = {
@@ -21,7 +24,7 @@ const mockOrg: OrganizationInfo = {
   phone: "02-123-3456",
   deliveryStatus: "PENDING",
 };
-export const mockFam: Families[] = [
+export const mockFam: OrganizationFamilies[] = [
   {
     familyId: 1,
     archiveId: 1,

@@ -1,11 +1,24 @@
 export interface Families {
-  familyId: number;
   archiveId: number;
+  familyId: number;
   receiverName: string;
   addressDetail: string;
-  createdAt: string;
   deliveryStatus: string;
+  pdfUrl: string;
+
   phone: string;
+  createdAt: string;
+}
+
+export interface OrganizationFamilies {
+  archiveId: number;
+  familyId: number;
+  receiverName: string;
+  addressDetail: string;
+  deliveryStatus: string;
+
+  phone: string;
+  createdAt: string;
 }
 
 export interface OrganizationInfo {

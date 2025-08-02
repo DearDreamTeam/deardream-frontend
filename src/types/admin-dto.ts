@@ -1,22 +1,24 @@
 export interface AdminCommonDto {
-  name: string;
   address: string;
   postalCode: string;
   phone: string;
-  deliveryStatus: string;
   pdfUrl: string;
+  deliveryStatus: string;
 }
 
 export interface IndividualsDto extends AdminCommonDto {
+  receiverName: string;
   addressDetail: string;
   archiveId: number;
 }
 
 export interface InstitutionsDto extends AdminCommonDto {
-  code: string; // 기관 코드
+  institutionName: string;
+  institutionId: number;
+  institutionCode: string; // 기관 코드
   currentMembers: number; //당월 인원
   nextMembers: number; //익월 인원
-  institutionId: number;
+  pdfUrl: string;
 }
 
 export interface AddInstitutionDto {

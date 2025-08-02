@@ -8,7 +8,7 @@ import {
   INSTITUTIONS_TABLE_ITEMS,
 } from "./table-items";
 // import Cancel from "@/public/icons/common/cancel.svg";
-import { Families } from "@/types/admin-organization-dto";
+import { Families, OrganizationFamilies } from "@/types/admin-organization-dto";
 import Checkbox from "../button/checkbox";
 import { CheckboxProps } from "../button/checkbox-props";
 
@@ -120,7 +120,7 @@ export const InstitutionTableItem = (
         if (value === "pdfUrl")
           return (
             <span key={key} className={flex}>
-              <DownloadPdf pdfUrl={props.pdfUrl} isDownloaded={false} />
+              <DownloadPdf pdfUrl={props.pdfUrl ?? ""} isDownloaded={false} />
             </span>
           );
         if (value === "checkbox")
@@ -148,7 +148,7 @@ export const InstitutionDetailTableItem = (
   } & Families,
 ) => {
   return (
-    <div className="admin-table-item gap-2">
+    <div className="admin-table-item gap-4">
       {INSTITUTIONS_DETAIL_TABLE_ITEMS.map(({ value, flex }) => {
         const key = value + props.index;
         type Key = keyof Families;
@@ -156,6 +156,12 @@ export const InstitutionDetailTableItem = (
           return (
             <span key={key} className={flex}>
               {DeliveryStatus(props.deliveryStatus)}
+            </span>
+          );
+        if (value === "pdfUrl")
+          return (
+            <span key={key} className={flex}>
+              <DownloadPdf pdfUrl={props.pdfUrl ?? ""} isDownloaded={false} />
             </span>
           );
         return (
@@ -173,7 +179,7 @@ export const InstitutionFamilyTableItem = (
   props: {
     index: number;
     handleDeleteMember: (familyId: number) => void;
-  } & Families,
+  } & OrganizationFamilies,
 ) => {
   return (
     <Link
@@ -182,7 +188,7 @@ export const InstitutionFamilyTableItem = (
     >
       {INSTITUTION_FAMILY_TABLE_ITEMS.map(({ value, flex }) => {
         const key = value + props.index;
-        type Key = keyof Families;
+        type Key = keyof OrganizationFamilies;
         if (value === "deliveryStatus")
           return (
             <span key={key} className={flex}>

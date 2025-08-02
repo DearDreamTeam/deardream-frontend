@@ -6,7 +6,7 @@ export type TableItemsType = {
 
 export const INDIVIDUALS_TABLE_ITEMS = [
   { value: "index", label: "번호", flex: "flex-[1]" },
-  { value: "name", label: "성함", flex: "flex-[2]" },
+  { value: "receiverName", label: "성함", flex: "flex-[2]" },
   { value: "address", label: "주소", flex: "flex-[6]" },
   { value: "addressDetail", label: "상세 주소", flex: "flex-[6]" },
   {
