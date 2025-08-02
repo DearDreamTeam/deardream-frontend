@@ -8,6 +8,8 @@ import MoreAdd from "../../_components/button/more-add";
 import { AddInstitutionProps } from "@/types/admin-dto";
 import { ADD_INSTITUTIONS_TABLE_ITEMS } from "../../_components/table/table-items";
 import { AddInstitutionTableItem } from "../../_components/table/add-inst-table-item";
+import { addInstitutions } from "@/api/admin";
+import { useRouter } from "next/navigation";
 
 const DEFAULT = {
   name: "",
@@ -20,6 +22,10 @@ const DEFAULT = {
 };
 
 const Page = () => {
+  const [loading, setLoading] = useState(false);
+  // const [errorList, setErrorList] = useState([]);
+  const router = useRouter();
+
   const [institutionList, setInstitutionList] = useState<AddInstitutionProps[]>(
     [DEFAULT],
   );
@@ -32,8 +38,41 @@ const Page = () => {
   const handleDeleteAdd = (index: number) => {
     setInstitutionList((prev) => prev.filter((_, i) => i !== index));
   };
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoading(true);
+    // setErrorList([]);
+
+    const results = await Promise.allSettled(
+      institutionList.map(
+        ({
+          name,
+          postalCode,
+          address,
+          addressDetail,
+          phone,
+          serviceDate,
+          members,
+        }) =>
+          addInstitutions(
+            name,
+            address + " " + addressDetail,
+            phone,
+            postalCode,
+            serviceDate,
+            members,
+          ),
+      ),
+    );
+
+    const failures = results.filter((item) => item.status === "rejected");
+
+    if (failures.length === 0) {
+      setInstitutionList([DEFAULT]);
+      router.push(process.env.NEXT_PUBLIC_MASTER_ADMIN_INSTITUTION_PATH!);
+    }
+    setLoading(false);
   };
   return (
     <div className="bg-grey-0 w-full">
@@ -43,8 +82,8 @@ const Page = () => {
           <ItemCount count={institutionList.length} />
 
           <div>
-            <button type="submit" className="button">
-              {institutionList.length}개 기관 추가
+            <button type="submit" className="button" disabled={loading}>
+              {institutionList.length}개 기관 {loading ? "처리 중..." : "추가"}
             </button>
           </div>
         </div>

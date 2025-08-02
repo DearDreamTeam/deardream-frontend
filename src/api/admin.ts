@@ -98,13 +98,16 @@ export const addInstitutions = async (
   membersCount: number,
 ) => {
   try {
-    const response = await axios.post(`/v1/institutions/admin`, null, {
-      params: { name, address, phone, postalCode, startDate, membersCount },
+    const response = await axios.post(`/v1/institutions/admin`, {
+      name,
+      address,
+      phone,
+      postalCode,
+      startDate,
+      membersCount,
     });
 
-    if (response.data.isSuccess) {
-      console.log("institution add complete");
-    }
+    return response.data.isSuccess;
   } catch (error) {
     console.error(error);
   }
