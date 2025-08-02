@@ -7,7 +7,6 @@ import { useRef } from "react";
 
 const MonthPicker = () => {
   const { pivotDate, updatePivotDate, setPivotDate } = useSuperAdminStore();
-  const date = new Date(pivotDate);
   const monthRef = useRef<HTMLInputElement>(null);
   console.log(pivotDate);
   return (
@@ -17,7 +16,7 @@ const MonthPicker = () => {
           <ArrowBack />
         </button>
         <button onClick={() => monthRef.current?.showPicker()}>
-          {date.getFullYear()}년 {date.getMonth()}월
+          {pivotDate.getFullYear()}년 {pivotDate.getMonth()}월
         </button>
         <button onClick={() => updatePivotDate(1)}>
           <ArrowFront />
@@ -27,7 +26,7 @@ const MonthPicker = () => {
       <input
         ref={monthRef}
         type="month"
-        value={`${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`}
+        value={`${pivotDate.getFullYear()}-${String(pivotDate.getMonth() + 1).padStart(2, "0")}`}
         onChange={(e) => setPivotDate(e.target.value)}
         className="opacity-0"
       />

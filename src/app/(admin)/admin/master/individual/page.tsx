@@ -20,11 +20,10 @@ const Page = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const date = new Date(pivotDate);
-      await getHomeArchives(date.getFullYear(), date.getMonth());
+      await getHomeArchives(pivotDate.getFullYear(), pivotDate.getMonth());
     };
     fetchData();
-  }, []);
+  }, [pivotDate]);
 
   const handleCheckboxChange = (archiveId: number, checked: boolean) => {
     if (checked) setCheckedItem((prev) => [...prev, archiveId]);

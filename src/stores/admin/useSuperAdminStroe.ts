@@ -25,8 +25,8 @@ export const useSuperAdminStore = create<SuperAdminState>()(
       updatePivotDate: (value) =>
         set((state) => ({
           pivotDate: new Date(
-            state.pivotDate.getFullYear(),
-            state.pivotDate.getMonth() + value,
+            new Date(state.pivotDate).getFullYear(),
+            new Date(state.pivotDate).getMonth() + value,
             1,
           ),
         })),

@@ -18,7 +18,6 @@ import { getInstitutionArchives } from "@/api/admin";
 const Page = () => {
   const [checkedItem, setCheckedItem] = useState<number[]>([]);
   const { institutions, pivotDate } = useSuperAdminStore();
-  const date = new Date(pivotDate);
   const [selectedInstitution, setSelecedInstitution] = useState<null | number>(
     null,
   );
@@ -26,10 +25,13 @@ const Page = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      await getInstitutionArchives(date.getFullYear(), date.getMonth());
+      await getInstitutionArchives(
+        pivotDate.getFullYear(),
+        pivotDate.getMonth(),
+      );
     };
     fetchData();
-  }, []);
+  }, [pivotDate]);
 
   const handleCheckboxChange = (institutionId: number, checked: boolean) => {
     if (checked) setCheckedItem((prev) => [...prev, institutionId]);
