@@ -2,10 +2,11 @@
 
 import ArrowBack from "@/public/icons/common/arrow_back_ios.svg";
 import ArrowFront from "@/public/icons/common/arrow_front_ios.svg";
-import { useRef, useState } from "react";
+import { useSuperAdminStore } from "@/stores/admin/useSuperAdminStroe";
+import { useRef } from "react";
 
 const MonthPicker = () => {
-  const [pivotDate, setPivotDate] = useState(new Date());
+  const { pivotDate, setPivotDate } = useSuperAdminStore();
   const monthRef = useRef<HTMLInputElement>(null);
   return (
     <section className="flex w-full flex-col items-center justify-center">
@@ -20,7 +21,7 @@ const MonthPicker = () => {
           <ArrowBack />
         </button>
         <button onClick={() => monthRef.current?.showPicker()}>
-          {pivotDate.getFullYear()}년 {pivotDate.getMonth() + 1}월
+          {pivotDate.getFullYear()}년 {pivotDate.getMonth()}월
         </button>
         <button
           onClick={() =>
