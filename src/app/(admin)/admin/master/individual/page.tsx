@@ -6,7 +6,7 @@ import PageToggle from "../../_components/button/page-toggle";
 import ItemCount from "../../_components/table/item-count";
 import ChangeStatus from "../../_components/button/change-status";
 import { TableHeader } from "../../_components/table/table-header";
-import { IndividualTableItem } from "../../_components/table/table-item";
+import { TableItem } from "../../_components/table/table-item";
 import MoreView from "../../_components/button/more-view";
 import { DELIVERY_TYPE } from "@/constants/delivery-type";
 import { INDIVIDUALS_TABLE_ITEMS } from "../../_components/table/table-items";
@@ -16,7 +16,7 @@ import { getHomeArchives } from "@/api/admin";
 
 const Page = () => {
   const [checkedItem, setCheckedItem] = useState<number[]>([]);
-  const { individuals, pivotDate } = useSuperAdminStore();
+  const { individuals, pivotDate } = useSuperAdminStore(); //개별
 
   const [viewLevel, setViewLevel] = useState(1);
   const viewIndividuals = individuals.slice(0, viewLevel * 8);
@@ -24,7 +24,7 @@ const Page = () => {
   useEffect(() => {
     const fetchData = async () => {
       const date = new Date(pivotDate);
-      await getHomeArchives(date.getFullYear(), date.getMonth());
+      await getHomeArchives(date.getFullYear(), date.getMonth()); //함수만 다름
     };
     fetchData();
   }, [pivotDate]);
@@ -52,11 +52,13 @@ const Page = () => {
         <EmptyItem />
       ) : (
         viewIndividuals.map((item, index) => (
-          <IndividualTableItem
+          <TableItem
             key={index}
             index={index + 1}
-            {...item}
-            handleCheckboxChange={handleCheckboxChange}
+            id={item.archiveId}
+            item={item}
+            TABLE_COLUMNS={INDIVIDUALS_TABLE_ITEMS}
+            action={handleCheckboxChange}
           />
         ))
       )}

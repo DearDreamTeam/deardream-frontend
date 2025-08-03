@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import ItemCount from "../../_components/table/item-count";
 import ChangeStatus from "../../_components/button/change-status";
 import { TableHeader } from "../../_components/table/table-header";
-import { InstitutionTableItem } from "../../_components/table/table-item";
+import { TableItem } from "../../_components/table/table-item";
 import MoreView from "../../_components/button/more-view";
 import { DELIVERY_TYPE } from "@/constants/delivery-type";
 import PageToggle from "../../_components/button/page-toggle";
@@ -17,18 +17,19 @@ import { getInstitutionArchives } from "@/api/admin";
 
 const Page = () => {
   const [checkedItem, setCheckedItem] = useState<number[]>([]);
-  const { institutions, pivotDate } = useSuperAdminStore();
+  const { institutions, pivotDate } = useSuperAdminStore(); //개별
   const [selectedInstitution, setSelecedInstitution] = useState<null | number>(
     null,
-  );
-  const [families] = useState<Families[]>([]);
+  ); //개별
+  const [families] = useState<Families[]>([]); //개별
+
   const [viewLevel, setViewLevel] = useState(1);
   const viewInstitutions = institutions.slice(0, viewLevel * 8);
 
   useEffect(() => {
     const fetchData = async () => {
       const date = new Date(pivotDate);
-      await getInstitutionArchives(date.getFullYear(), date.getMonth());
+      await getInstitutionArchives(date.getFullYear(), date.getMonth()); //함수만 다름
     };
     fetchData();
   }, [pivotDate]);
@@ -61,11 +62,14 @@ const Page = () => {
         <EmptyItem />
       ) : (
         viewInstitutions.map((item, index) => (
-          <InstitutionTableItem
+          <TableItem
             key={index}
             index={index + 1}
-            {...item}
-            handleCheckboxChange={handleCheckboxChange}
+            id={item.institutionId}
+            item={item}
+            TABLE_COLUMNS={INSTITUTIONS_TABLE_ITEMS}
+            action={handleCheckboxChange}
+            gap="gap-2"
             isSelected={selectedInstitution === item.institutionId}
             onClick={() =>
               setSelecedInstitution((prev) =>
