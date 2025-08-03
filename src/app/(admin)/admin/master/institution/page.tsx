@@ -85,7 +85,6 @@ const Page = () => {
         onClick={() => setViewLevel((prev) => prev + 1)}
       />
 
-      {selectedInstitution && <ItemCount count={families.length} />}
       {selectedInstitution && <InstitutionDetail families={families} />}
     </div>
   );
