@@ -84,7 +84,7 @@ const Page = () => {
           </div>
         </div>
         <TableHeader
-          items={ADD_INSTITUTIONS_TABLE_ITEMS}
+          TABLE_COLUMNS={ADD_INSTITUTIONS_TABLE_ITEMS}
           keyPrefix={"add-inst-th"}
           className="break-keep"
         />

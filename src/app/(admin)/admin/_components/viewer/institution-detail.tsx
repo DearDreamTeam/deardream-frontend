@@ -10,7 +10,7 @@ const InstitutionDetail = ({ families }: { families: Families[] }) => {
     <div>
       <ItemCount count={families.length} />
       <TableHeader
-        items={INSTITUTIONS_DETAIL_TABLE_ITEMS}
+        TABLE_COLUMNS={INSTITUTIONS_DETAIL_TABLE_ITEMS}
         keyPrefix={"inst-detail"}
       />
       {families.map((item, index) => (
