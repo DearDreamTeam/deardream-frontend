@@ -3,7 +3,10 @@
 import GreenBasicButton from "@/components/button/green-basic-button";
 import Header from "@/components/common/header";
 import AlertDialog from "@/components/modal/dialog/alert-dialog";
-import axios from "@/lib/axios";
+
+import instance from "@/lib/axios";
+import { AxiosError } from "axios";
+
 import Check from "@/public/icons/common/check.svg";
 import { useUserStore } from "@/stores/useUserInfoStore";
 import { useState } from "react";
@@ -38,6 +41,7 @@ const QuitItem = ({
 const QuitPage = () => {
   const [isChecked, setIsChecked] = useState(false);
   const [isNotPermitted, setIsNotPermitted] = useState(false);
+  const [message, setMessage] = useState("");
 
   const { userProfile } = useUserStore();
 
@@ -49,7 +53,7 @@ const QuitPage = () => {
     } else {
       console.log("탈퇴 시작");
       try {
-        const response = await axios.delete("/v1/users/me");
+        const response = await instance.delete("/v1/users/me");
         if (response.status === 200 || response.status === 204) {
           // 삭제가 성공적으로 완료되었을 때만 이동
           window.location.href = "/mypage/quit/complete";
@@ -58,8 +62,13 @@ const QuitPage = () => {
           alert("탈퇴에 실패했습니다. 다시 시도해주세요.");
           console.error("Unexpected response:", response);
         }
-      } catch (error) {
+      } catch (error: unknown) {
         console.error(error);
+        if (error instanceof AxiosError && error.response) {
+          setMessage(error.response.data.message);
+        } else {
+          setMessage("관리자에게 문의해주세요.");
+        }
         setIsNotPermitted(true);
       }
     }
@@ -129,7 +138,7 @@ const QuitPage = () => {
       {isNotPermitted && (
         <AlertDialog
           title="회원 탈퇴 불가"
-          content="플랜을 취소하고 탈퇴해 주세요."
+          content={message}
           setIsOpen={() => setIsNotPermitted(false)}
         />
       )}

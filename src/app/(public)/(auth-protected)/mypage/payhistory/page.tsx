@@ -70,16 +70,15 @@ const PayHistoryPage = () => {
               결제 내역이 없습니다
             </div>
           ) : (
-            payHistory.map((item) => (
-              <div
-                key={item.paymentDate}
-                className="mt-4 flex w-full flex-col gap-8"
-              >
-                <div className="flex w-full flex-col gap-4">
-                  <PayItem date={new Date(item.paymentDate)} />
+            <div className="overflow-auto-hide-scroll w-full">
+              {payHistory.map((item, index) => (
+                <div key={index} className="mt-4 flex w-full flex-col gap-8">
+                  <div className="flex w-full flex-col gap-4">
+                    <PayItem date={new Date(item.paymentDate)} />
+                  </div>
                 </div>
-              </div>
-            ))
+              ))}
+            </div>
           )}
         </div>
       )}

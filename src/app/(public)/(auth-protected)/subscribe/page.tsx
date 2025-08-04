@@ -80,14 +80,7 @@ const PlanPage: FC = () => {
         </div>
       </div>
       <div className="flex h-14 w-full items-center justify-center">
-        <GreenBasicButton
-          color="300"
-          link={
-            planType === "INSTITUTION"
-              ? PATH.SUBSCRIBE + "/receiver"
-              : PATH.SUBSCRIBE + "/pay"
-          }
-        >
+        <GreenBasicButton color="300" link={PATH.SUBSCRIBE + "/receiver"}>
           저장
         </GreenBasicButton>
       </div>

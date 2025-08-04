@@ -10,9 +10,12 @@ import HomeAddressInput from "@/components/address/home-address-input";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { PATH } from "@/constants/path";
+import axios from "@/lib/axios";
+import { useUserStore } from "@/stores/useUserInfoStore";
 
 const AddressPage = () => {
   const { receiver, receiverImage } = useReceiverStore();
+  const { updateUserProfile } = useUserStore();
   const router = useRouter();
 
   const [isDirty] = useState(true);
@@ -47,7 +50,21 @@ const AddressPage = () => {
         receiverImage.profileImage,
       );
       if (response.data.isSuccess) {
-        router.push(PATH.SUBSCRIBE + "/family");
+        if (receiver.address.deliveryType === "HOME") {
+          try {
+            const res = await axios.post("/v1/family");
+            if (res.status === 200) {
+              updateUserProfile({
+                familyId: res.data.result.id,
+              });
+              router.push(PATH.SUBSCRIBE + "/pay");
+            }
+          } catch {
+            console.log("가족 생성 실패");
+          }
+        } else {
+          router.push(PATH.SUBSCRIBE + "/family");
+        }
       }
     } catch (error) {
       console.error("Receiver address update failed:", error);
