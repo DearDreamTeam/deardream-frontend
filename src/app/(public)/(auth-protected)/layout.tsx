@@ -78,13 +78,16 @@ export default function ProtectedLayout({
             isActive: res.data.result.isActive,
             type: res.data.result.type,
           });
+          console.log("plan", res.data.result);
+          if (res.data.result.isActive) {
+            checkFamilyLink();
+          }
         }
       } catch (error) {
         console.error("Error checking plan:", error);
       }
     };
     //링크와 플랜상태 체크
-    checkFamilyLink();
     checkPlan();
   }, [
     userProfile.familyRegistered,

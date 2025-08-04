@@ -29,30 +29,15 @@ import { usePlanStore } from "@/stores/usePlanStore";
 
 const SectionItem = ({
   children,
-  link,
-  setIsOpen,
+  onClick,
 }: {
   children: React.ReactNode;
-  link: string;
-  setIsOpen?: React.Dispatch<React.SetStateAction<boolean>>;
+  onClick: () => void;
 }) => {
-  const router = useRouter();
   return (
     <div
       className="text-title-2 text-grey-700 cursor-pointer"
-      onClick={() => {
-        if (link === "first-subscribe") {
-          router.push("/subscribe");
-        } else if (link === "logout") {
-          if (setIsOpen) setIsOpen(true);
-        } else {
-          if (setIsOpen) {
-            setIsOpen(true);
-          } else {
-            router.push("/mypage/" + link);
-          }
-        }
-      }}
+      onClick={onClick}
     >
       {children}
     </div>
@@ -61,6 +46,7 @@ const SectionItem = ({
 
 const MyPage = () => {
   const router = useRouter();
+
   const [isOpen, setIsOpen] = useState(false);
   const [isForbidden, setIsForbidden] = useState(false);
 
@@ -138,38 +124,41 @@ const MyPage = () => {
           </div>
 
           <Section title="가족">
-            <SectionItem link="myfamily">나의 가족</SectionItem>
+            <SectionItem onClick={() => router.push("/mypage/myfamily")}>
+              나의 가족
+            </SectionItem>
           </Section>
 
           <Section title="정기구독">
             <SectionItem
-              setIsOpen={
-                userProfile.familyRegistered && userProfile.role === "USER"
-                  ? () => setIsForbidden(true)
-                  : () => {
-                      if (plan.isActive) {
-                        router.push("/mypage/subscribe");
-                      } else {
-                        router.push("/subscribe");
-                      }
-                    }
-              }
-              link={
-                userProfile.familyRegistered ? "subscribe" : "first-subscribe"
-              }
+              onClick={() => {
+                if (userProfile.role === "USER") {
+                  setIsForbidden(true);
+                } else if (plan.isActive) {
+                  router.push("/mypage/subscribe");
+                } else if (userProfile.role === "LEADER") {
+                  router.push("/mypage/subscribe/plan");
+                } else {
+                  router.push("/subscribe");
+                }
+              }}
             >
               나의 정기구독
             </SectionItem>
-            <SectionItem link="payhistory">결제 내역</SectionItem>
+            <SectionItem onClick={() => router.push("/mypage/payhistory")}>
+              결제 내역
+            </SectionItem>
           </Section>
           <Section title="도움말">
-            <SectionItem link="guide">이어드림 가이드</SectionItem>
+            <SectionItem onClick={() => router.push("/mypage/guide")}>
+              이어드림 가이드
+            </SectionItem>
           </Section>
           <Section title="계정">
-            <SectionItem link="logout" setIsOpen={setIsOpen}>
-              로그아웃
+            <SectionItem onClick={() => setIsOpen(true)}>로그아웃</SectionItem>
+            <SectionItem onClick={() => router.push("/mypage/quit")}>
+              회원 탈퇴
             </SectionItem>
-            <SectionItem link="quit">회원 탈퇴</SectionItem>
           </Section>
         </div>
         {isOpen && (
