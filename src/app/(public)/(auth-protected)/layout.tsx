@@ -28,6 +28,7 @@ export default function ProtectedLayout({
     if (skipAuthCheck) return;
 
     const refreshToken = localStorage.getItem("refreshToken");
+
     if (!refreshToken) {
       alert("로그인이 필요합니다.");
       localStorage.clear();
@@ -35,64 +36,44 @@ export default function ProtectedLayout({
       return;
     }
 
-    const checkUser = async () => {
+    (async () => {
       try {
-        console.log("사용자 정보 조회중");
         const res = await axios.get("/v1/users/me");
-        console.log("사용자 정보:", res.data);
-
         const userData = res.data.result;
-        updateUserProfile({
-          ...userData,
-        });
-        console.log("userProfile", userProfile);
+        updateUserProfile(userData);
       } catch (err) {
         console.error("사용자 인증 실패", err);
+        localStorage.clear();
+        router.replace("/login");
       }
-    };
-    if (userProfile.id <= 0) {
-      checkUser();
-    }
-  }, [updateUserProfile, router, setFamilyLink, skipAuthCheck]);
+    })();
+  }, [router, updateUserProfile, skipAuthCheck]);
 
   useEffect(() => {
     if (!userProfile.familyRegistered) return;
 
-    const checkFamilyLink = async () => {
-      try {
-        const res = await axios.get("/v1/family/link");
-        if (res.status === 200) {
-          setFamilyLink(res.data.result);
-        }
-      } catch {
-        console.log("가족 링크 조회 실패");
-      }
-    };
-    const checkPlan = async () => {
+    const fetchPlanAndLink = async () => {
       try {
         const res = await axios.get(
           `/v1/test/payment/request/status/${userProfile.familyId}`,
         );
-        if (res.status === 200) {
-          setPlan({
-            isActive: res.data.result.isActive,
-            type: res.data.result.type,
-          });
-          console.log("plan", res.data.result);
-          if (res.data.result.isActive) {
-            checkFamilyLink();
-          }
+        const result = res.data.result;
+        setPlan({ isActive: result.isActive, type: result.type });
+
+        if (result.isActive) {
+          const linkRes = await axios.get("/v1/family/link");
+          setFamilyLink(linkRes.data.result);
         }
       } catch (error) {
-        console.error("Error checking plan:", error);
+        console.error("플랜/링크 로딩 실패", error);
       }
     };
-    //링크와 플랜상태 체크
-    checkPlan();
+
+    fetchPlanAndLink();
   }, [
+    userProfile.familyId,
     userProfile.familyRegistered,
     setFamilyLink,
-    userProfile.familyId,
     setPlan,
   ]);
 

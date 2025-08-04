@@ -4,18 +4,22 @@ import Result from "@/components/result/result";
 import { PATH } from "@/constants/path";
 import { useUserStore } from "@/stores/useUserInfoStore";
 import axios from "@/lib/axios";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { usePlanStore } from "@/stores/usePlanStore";
 import { clearReceiverAddress } from "@/api/profile";
 import { useReceiverStore } from "@/stores/useReceiverStore";
 
 const CompletePage = () => {
+  const hasRun = useRef(false); // 실행 여부 저장
+
   const [isLoading, setIsLoading] = useState(true);
   const { userProfile } = useUserStore();
   const { clearPlan, plan } = usePlanStore();
-  const { receiver } = useReceiverStore();
+  const { receiver, resetReceiverAddress } = useReceiverStore();
 
   useEffect(() => {
+    if (hasRun.current) return;
+    hasRun.current = true;
     const QuitPlan = async () => {
       try {
         const response = await axios.patch(
@@ -24,7 +28,9 @@ const CompletePage = () => {
         console.log(response);
         if (response.status === 200) {
           clearPlan();
+          console.log(receiver);
           await clearReceiverAddress(receiver);
+          resetReceiverAddress();
         }
       } catch (error) {
         console.error(error);
@@ -42,12 +48,17 @@ const CompletePage = () => {
             orderUserId: userProfile.id,
           },
         );
+        console.log("response", response);
         if (response.status === 200) {
           clearPlan();
+          console.log(receiver);
           await clearReceiverAddress(receiver);
+          resetReceiverAddress();
         }
       } catch (error) {
         console.error(error);
+      } finally {
+        setIsLoading(false);
       }
     };
     // 기관 플랜인 경우 기관 플랜 해지 요청, 아닌 경우 정기 구독 해지 요청
@@ -56,7 +67,7 @@ const CompletePage = () => {
     } else {
       CancelPayment();
     }
-  }, [userProfile.id, clearPlan]);
+  }, []);
 
   return (
     <div className="flex h-screen w-full flex-col items-center justify-center gap-2 p-4">
@@ -74,7 +85,7 @@ const CompletePage = () => {
             imageType="airplane"
           />
           <GreenBasicButton color="300" link={PATH.SUBSCRIBE_PLAN}>
-            플랜 재구독 하러가기
+            다른 플랜 구독 하러가기
           </GreenBasicButton>
           <GreenBasicButton color="100" link={PATH.LETTER_LIST}>
             소식함 보러가기

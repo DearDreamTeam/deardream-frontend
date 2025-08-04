@@ -43,9 +43,10 @@ const PayHistoryPage = () => {
       try {
         const response = await axios.get("/v1/test/payment/request", {
           params: {
-            familyId: userProfile.id,
+            familyId: userProfile.familyId,
           },
         });
+        console.log("response", response);
         setPayHistory(response.data.result);
       } catch (error) {
         console.error(error);
@@ -53,8 +54,10 @@ const PayHistoryPage = () => {
         setIsLoading(false);
       }
     };
-    fetchPayHistory();
-  }, [userProfile.id]);
+    if (userProfile.familyId) {
+      fetchPayHistory();
+    }
+  }, [userProfile.familyId]);
   return (
     <>
       {isLoading ? (
@@ -65,7 +68,7 @@ const PayHistoryPage = () => {
         <div className="bg-grey-0 flex h-full w-full flex-col items-center p-3 pt-0">
           <Header>결제 내역</Header>
 
-          {payHistory.length === 0 ? (
+          {payHistory.length === 0 || !userProfile.familyId ? (
             <div className="mt-auto mb-auto flex w-full items-center justify-center">
               결제 내역이 없습니다
             </div>

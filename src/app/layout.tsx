@@ -11,6 +11,7 @@ const pretendard = localFont({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.deardream.site"),
   title: "이어드림",
   description:
     "사랑하는 가족들의 소식을 받으며 웃음짓는 건강한 세상을 만듭니다.",

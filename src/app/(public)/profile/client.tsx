@@ -13,7 +13,7 @@ import { registerUser } from "@/api/profile";
 //컴포넌트
 import Header from "@/components/common/header";
 import GreenBasicButton from "@/components/button/profile-green-basic-button";
-// import AlertDialog from "@/components/modal/dialog/alert-dialog";
+import AlertDialog from "@/components/modal/dialog/alert-dialog";
 import SenderProfileEdit from "@/components/profile/sender-profile-edit";
 import Loading from "@/components/loading-fallback/loading";
 
@@ -37,7 +37,7 @@ const ProfileClient = () => {
 
   //프로필 등록 상태 관리
   const [editUserProfile, setEditUserProfile] = useState(userProfile);
-  // const [isProfileSubmitted, setIsProfileSubmitted] = useState(false);
+  const [isProfileNotSubmitted, setIsProfileNotSubmitted] = useState(false);
 
   //로딩 상태 관리
   const [isLoading, setIsLoading] = useState(true);
@@ -114,12 +114,11 @@ const ProfileClient = () => {
           "refreshToken",
           response.data.result.refreshToken || "",
         );
-        // setIsProfileSubmitted(true);
       }
       router.push(PATH.HOME);
     } catch (error) {
       console.error("프로필 등록 실패:", error);
-      // alert("프로필 등록에 실패했습니다. 다시 시도해주세요.");
+      setIsProfileNotSubmitted(true);
     }
   };
 
@@ -168,16 +167,16 @@ const ProfileClient = () => {
             </GreenBasicButton>
           </div>
         </form>
-        {/* {isProfileSubmitted && (
+        {isProfileNotSubmitted && (
           <AlertDialog
-            title="프로필 등록 완료"
-            content="프로필이 성공적으로 등록 되었습니다."
-            setIsOpen={setIsProfileSubmitted}
+            title="프로필 등록 실패"
+            content="프로필 등록에 실패했습니다. 다시 시도해주세요."
+            setIsOpen={setIsProfileNotSubmitted}
             onAction={() => {
-              router.push(PATH.HOME);
+              window.location.href = PATH.LOGIN;
             }}
           />
-        )} */}
+        )}
       </>
     );
   }

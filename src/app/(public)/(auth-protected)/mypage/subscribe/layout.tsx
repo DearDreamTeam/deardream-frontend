@@ -21,7 +21,7 @@ const SubscribeLayout = ({ children }: { children: React.ReactNode }) => {
       router.push(PATH.SUBSCRIBE);
       return;
     }
-    if (!plan.isActive && userProfile.role === "LEADER") {
+    if (userProfile.role === "LEADER") {
       const fetchReceiver = async () => {
         const response = await axios.get(`/v1/recipient`);
         if (response.status === 200) {

@@ -61,7 +61,7 @@ const CompleteClient = () => {
             description="소식지를 작성하러 가볼까요?"
             imageType="payment"
           />
-          <GreenBasicButton color="300" link={PATH.HOME}>
+          <GreenBasicButton color="300" link={PATH.HOME} newTab={true}>
             소식지 작성하기
           </GreenBasicButton>
         </div>

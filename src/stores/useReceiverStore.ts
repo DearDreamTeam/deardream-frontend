@@ -22,26 +22,6 @@ export interface ReceiverProfileInfo {
     code: string;
   };
 }
-
-export interface cleanReceiverAddressInfo {
-  deliveryType: "HOME" | "INSTITUTION" | "NONE";
-  recipientName: string;
-  recipientPhone: string;
-  postalCode: string;
-  address: string;
-}
-
-export interface cleanReceiverAddress {
-  deliveryType: "HOME";
-  recipientName: "";
-  recipientPhone: "";
-  postalCode: "";
-  address: "";
-  addressDetail: "";
-  institutionName: "";
-  institutionPhone: "";
-  code: "";
-}
 export interface ReceiverProfileImage {
   profileImage: File | null;
   profileImageKey?: string;
@@ -54,6 +34,7 @@ interface ReceiverState {
   receiverImage: ReceiverProfileImage;
   setReceiverImage: (image: ReceiverProfileImage) => void;
   resetReceiverImage: () => void;
+  resetReceiverAddress: () => void;
 }
 
 export const useReceiverStore = create<ReceiverState>((set) => ({
@@ -84,6 +65,7 @@ export const useReceiverStore = create<ReceiverState>((set) => ({
         ...info,
       },
     })),
+
   resetReceiver: () =>
     set({
       receiver: {
@@ -112,4 +94,21 @@ export const useReceiverStore = create<ReceiverState>((set) => ({
   },
   setReceiverImage: (image) => set({ receiverImage: { ...image } }),
   resetReceiverImage: () => set({ receiverImage: { profileImage: null } }),
+  resetReceiverAddress: () =>
+    set((state) => ({
+      receiver: {
+        ...state.receiver,
+        address: {
+          deliveryType: "HOME",
+          recipientName: "",
+          recipientPhone: "",
+          postalCode: "",
+          address: "",
+          addressDetail: "",
+          institutionName: "",
+          institutionPhone: "",
+          code: "",
+        },
+      },
+    })),
 }));
