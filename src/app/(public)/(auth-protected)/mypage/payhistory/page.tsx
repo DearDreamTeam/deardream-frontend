@@ -1,6 +1,7 @@
 "use client";
 
 import Header from "@/components/common/header";
+import PageImage from "@/components/images/page-image";
 import Loading from "@/components/loading-fallback/loading";
 import axios from "@/lib/axios";
 import { useUserStore } from "@/stores/useUserInfoStore";
@@ -56,6 +57,8 @@ const PayHistoryPage = () => {
     };
     if (userProfile.familyId) {
       fetchPayHistory();
+    } else {
+      setIsLoading(false);
     }
   }, [userProfile.familyId]);
   return (
@@ -69,8 +72,11 @@ const PayHistoryPage = () => {
           <Header>결제 내역</Header>
 
           {payHistory.length === 0 || !userProfile.familyId ? (
-            <div className="mt-auto mb-auto flex w-full items-center justify-center">
-              결제 내역이 없습니다
+            <div className="mt-auto mb-auto flex w-full flex-col items-center justify-center">
+              <PageImage />
+              <div className="text-title-3 text-grey-400">
+                결제 내역이 없습니다
+              </div>
             </div>
           ) : (
             <div className="overflow-auto-hide-scroll w-full">

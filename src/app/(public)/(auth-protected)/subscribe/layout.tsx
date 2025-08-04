@@ -24,7 +24,7 @@ export default function ProtectedLayout({
     // 한 번만 체크하도록 ref 사용
     if (!hasChecked.current && userProfile.id !== -1) {
       // 프로필이 로드된 후에만 체크
-      if (plan.isActive || userProfile.role === "USER") {
+      if (userProfile.role === "USER") {
         setShowForbidden(true);
       }
       hasChecked.current = true;
@@ -45,6 +45,14 @@ export default function ProtectedLayout({
           content="가족의 리더가 아니면 구독할 수 없습니다."
           setIsOpen={setShowForbidden}
           onAction={handleForbidden}
+        />
+      )}
+      {plan.isActive && (
+        <AlertDialog
+          title="이미 구독 중"
+          content="플랜 변경을 이용해주세요."
+          setIsOpen={setShowForbidden}
+          onAction={() => router.push(PATH.SUBSCRIBE_PLAN)}
         />
       )}
     </>

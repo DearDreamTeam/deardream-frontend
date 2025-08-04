@@ -13,10 +13,12 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const ReceiverProfilePage = () => {
-  const { receiver, setReceiver, setReceiverImage, receiverImage } =
+  const { receiver, setReceiver, receiverImage, setReceiverImage } =
     useReceiverStore();
+
   const [editUserProfile, setEditUserProfile] =
     useState<ReceiverProfileInfo>(receiver);
+
   const [selectedFile, setSelectedFile] = useState<File | null>(
     receiverImage.profileImage,
   );
@@ -26,7 +28,6 @@ const ReceiverProfilePage = () => {
 
   const router = useRouter();
 
-  // 프로필 정보 유효성 검사
   const isProfileIncomplete =
     !editUserProfile?.name?.trim() ||
     !editUserProfile?.birth?.trim() ||
@@ -35,27 +36,31 @@ const ReceiverProfilePage = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
+
+    // 상태 변경 먼저 적용
     setReceiver(editUserProfile);
     setReceiverImage({
       profileImage: selectedFile,
       profileImageKey: undefined,
     });
-    router.push(PATH.SUBSCRIBE + "/receiver/address");
+
+    // 라우팅은 상태 변경 이후 한 프레임 뒤에 처리 (UX 안정)
+    setTimeout(() => {
+      router.push(PATH.SUBSCRIBE + "/receiver/address");
+    }, 0);
   };
 
   return (
     <>
       <form
-        onSubmit={(e) => {
-          handleSubmit(e);
-        }}
+        onSubmit={handleSubmit}
         className="bg-grey-0 relative flex h-full w-full flex-col items-center justify-between p-4 pt-0"
       >
         <div>
           <Header setIsModalOpen={setShowAlert}>받는 분 정보</Header>
           <ReceiverProfileEdit
-            setEditReceiverProfile={setEditUserProfile}
             editReceiverProfile={editUserProfile}
+            setEditReceiverProfile={setEditUserProfile}
             setSelectedFile={setSelectedFile}
           />
         </div>
@@ -65,18 +70,17 @@ const ReceiverProfilePage = () => {
           </GreenBasicButton>
         </div>
       </form>
+
       {showAlert && (
         <ConfirmDialog
           title="정말 나가시겠습니까?"
-          content={`입력하신 정보가 저장되지 않습니다.`}
+          content="입력하신 정보가 저장되지 않습니다."
           setIsOpen={setShowAlert}
           actionLabel="나가기"
           action={() => {
             window.location.href = PATH.SUBSCRIBE;
           }}
-          cancelAction={() => {
-            setShowAlert(false);
-          }}
+          cancelAction={() => setShowAlert(false)}
         />
       )}
     </>

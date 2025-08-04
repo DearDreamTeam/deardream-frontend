@@ -23,6 +23,9 @@ import { PATH } from "@/constants/path";
 //카카오 로그인
 import { kakaoLogin } from "@/lib/kakao-login";
 
+//타입
+import { AxiosError } from "axios";
+
 const ProfileClient = () => {
   //카카오 로그인 코드 추출
   const searchParams = useSearchParams();
@@ -53,6 +56,9 @@ const ProfileClient = () => {
 
   //프로필 이미지 선택 상태 관리
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
+  //프로필 서버 전달 상태
+  const [message, setMessage] = useState<string>("");
 
   //초대 코드 저장
   useEffect(() => {
@@ -116,9 +122,14 @@ const ProfileClient = () => {
         );
       }
       router.push(PATH.HOME);
-    } catch (error) {
+    } catch (error: unknown) {
       console.error("프로필 등록 실패:", error);
       setIsProfileNotSubmitted(true);
+      if (error instanceof AxiosError && error.response) {
+        setMessage(error.response.data.message);
+      } else {
+        setMessage("관리자에게 문의해주세요.");
+      }
     }
   };
 
@@ -170,7 +181,7 @@ const ProfileClient = () => {
         {isProfileNotSubmitted && (
           <AlertDialog
             title="프로필 등록 실패"
-            content="프로필 등록에 실패했습니다. 다시 시도해주세요."
+            content={message}
             setIsOpen={setIsProfileNotSubmitted}
             onAction={() => {
               window.location.href = PATH.LOGIN;

@@ -20,7 +20,7 @@ import Header from "@/components/common/header";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import ConfirmDialog from "@/components/modal/dialog/confirm-dialog";
 import { useUserStore } from "@/stores/useUserInfoStore";
 import AlertDialog from "@/components/modal/dialog/alert-dialog";
@@ -47,8 +47,8 @@ const SectionItem = ({
 const MyPage = () => {
   const router = useRouter();
 
-  const [isOpen, setIsOpen] = useState(false);
-  const [isForbidden, setIsForbidden] = useState(false);
+  type DialogType = "LOGOUT" | "FORBIDDEN" | null;
+  const [dialog, setDialog] = useState<DialogType>(null);
 
   const { userProfile } = useUserStore();
   const { plan } = usePlanStore();
@@ -68,27 +68,67 @@ const MyPage = () => {
     fetchPlan();
   }, [userProfile.familyId]);
 
-  const formatImageUrl = (url?: string): string => {
-    const kakaoDefaultImage =
+  const imageUrl = useMemo(() => {
+    const kakaoDefault =
       "http://img1.kakaocdn.net/thumb/R640x640.q70/?fname=http://t1.kakaocdn.net/account_images/default_profile.jpeg";
 
-    const cleanedUrl = url?.trim().replace(/[\u200B-\u200D\uFEFF]/g, "");
+    const cleaned = userProfile?.profileImage
+      ?.trim()
+      .replace(/[\u200B-\u200D\uFEFF]/g, "");
+    return !cleaned || cleaned === kakaoDefault
+      ? "/images/default-img.svg"
+      : cleaned;
+  }, [userProfile?.profileImage]);
 
-    if (!cleanedUrl || cleanedUrl === kakaoDefaultImage) {
-      console.log("default image url");
-      return "/images/default-img.svg";
+  const handleSubscriptionClick = () => {
+    if (userProfile.role === "USER") {
+      setDialog("FORBIDDEN");
+      return;
     }
 
-    return cleanedUrl;
+    if (plan.isActive) {
+      router.push("/mypage/subscribe");
+    } else if (userProfile.role === "LEADER") {
+      router.push("/mypage/subscribe/plan");
+    } else {
+      router.push("/subscribe");
+    }
   };
 
-  const [imageUrl, setImageUrl] = useState<string>(
-    formatImageUrl(userProfile?.profileImage),
-  );
-
-  useEffect(() => {
-    setImageUrl(formatImageUrl(userProfile?.profileImage));
-  }, [userProfile?.profileImage]);
+  const sectionData = [
+    {
+      title: "가족",
+      items: [
+        { label: "나의 가족", onClick: () => router.push("/mypage/myfamily") },
+      ],
+    },
+    {
+      title: "정기구독",
+      items: [
+        { label: "나의 정기구독", onClick: handleSubscriptionClick },
+        {
+          label: "결제 내역",
+          onClick: () => router.push("/mypage/payhistory"),
+        },
+      ],
+    },
+    {
+      title: "도움말",
+      items: [
+        {
+          label: "이어드림 가이드",
+          onClick: () => router.push("/mypage/guide"),
+        },
+      ],
+    },
+    {
+      title: "계정",
+      items: [
+        { label: "로그아웃", onClick: () => setDialog("LOGOUT") },
+        { label: "회원 탈퇴", onClick: () => router.push("/mypage/quit") },
+      ],
+    },
+  ];
 
   return (
     <>
@@ -122,50 +162,21 @@ const MyPage = () => {
               </div>
             </div>
           </div>
-
-          <Section title="가족">
-            <SectionItem onClick={() => router.push("/mypage/myfamily")}>
-              나의 가족
-            </SectionItem>
-          </Section>
-
-          <Section title="정기구독">
-            <SectionItem
-              onClick={() => {
-                if (userProfile.role === "USER") {
-                  setIsForbidden(true);
-                } else if (plan.isActive) {
-                  router.push("/mypage/subscribe");
-                } else if (userProfile.role === "LEADER") {
-                  router.push("/mypage/subscribe/plan");
-                } else {
-                  router.push("/subscribe");
-                }
-              }}
-            >
-              나의 정기구독
-            </SectionItem>
-            <SectionItem onClick={() => router.push("/mypage/payhistory")}>
-              결제 내역
-            </SectionItem>
-          </Section>
-          <Section title="도움말">
-            <SectionItem onClick={() => router.push("/mypage/guide")}>
-              이어드림 가이드
-            </SectionItem>
-          </Section>
-          <Section title="계정">
-            <SectionItem onClick={() => setIsOpen(true)}>로그아웃</SectionItem>
-            <SectionItem onClick={() => router.push("/mypage/quit")}>
-              회원 탈퇴
-            </SectionItem>
-          </Section>
+          {sectionData.map(({ title, items }) => (
+            <Section key={title} title={title}>
+              {items.map(({ label, onClick }) => (
+                <SectionItem key={label} onClick={onClick}>
+                  {label}
+                </SectionItem>
+              ))}
+            </Section>
+          ))}
         </div>
-        {isOpen && (
+        {dialog === "LOGOUT" && (
           <ConfirmDialog
             title="로그아웃하시겠습니까?"
             content=""
-            setIsOpen={setIsOpen}
+            setIsOpen={() => setDialog(null)}
             action={() => {
               localStorage.clear();
               router.push("/onboarding");
@@ -173,11 +184,11 @@ const MyPage = () => {
             actionLabel="로그아웃"
           />
         )}
-        {isForbidden && (
+        {dialog === "FORBIDDEN" && (
           <AlertDialog
             title="접근 할 수 없습니다"
             content="리더만 접근 할 수 있습니다."
-            setIsOpen={setIsForbidden}
+            setIsOpen={() => setDialog(null)}
           />
         )}
       </div>
