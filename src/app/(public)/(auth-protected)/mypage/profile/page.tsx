@@ -87,7 +87,7 @@ const Profile = () => {
         }}
         className="bg-grey-0 relative flex h-full w-full flex-col items-center justify-between p-4 pt-0"
       >
-        <div>
+        <div className="mb-4 flex w-full flex-col items-center">
           <Header>내 정보 수정</Header>
           <SenderProfileEdit
             isInvite={userProfile.familyRegistered}

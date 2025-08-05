@@ -72,7 +72,7 @@ const CompletePage = () => {
   }, []);
 
   return (
-    <div className="flex h-screen w-full flex-col items-center justify-center gap-2 p-4">
+    <div className="overflow-auto-hide-scroll flex h-full w-full flex-col items-center justify-center gap-2 p-4">
       {isLoading ? (
         <Result
           title="구독을 해지하는 중이에요"

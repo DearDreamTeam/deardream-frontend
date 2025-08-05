@@ -90,7 +90,7 @@ const RelationClient = () => {
       ) : (
         <form
           onSubmit={handleSubmit}
-          className="flex h-full w-full flex-col items-center justify-center gap-2 p-4"
+          className="overflow-auto-hide-scroll flex h-full w-full flex-col items-center justify-center gap-2 p-4"
         >
           <StateTemplate>
             <StateTemplate.ImageFiled>
