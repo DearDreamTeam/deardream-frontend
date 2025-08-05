@@ -11,7 +11,7 @@ const PesonalPlanUse = ({ isActive, planType }: PlanTypeInfo) => {
         <CheckItem isActive={isActive} planType={planType}>
           원하는 주소로 배송{" "}
         </CheckItem>
-        <CheckItem isActive={isActive} planType={planType} option="pdf">
+        <CheckItem isActive={isActive} planType={planType}>
           PDF 열람 및 다운로드 지원
         </CheckItem>
         <CheckItem isActive={isActive} planType={planType}>

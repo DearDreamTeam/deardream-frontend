@@ -13,7 +13,7 @@ import { registerUser } from "@/api/profile";
 //컴포넌트
 import Header from "@/components/common/header";
 import GreenBasicButton from "@/components/button/profile-green-basic-button";
-// import AlertDialog from "@/components/modal/dialog/alert-dialog";
+import AlertDialog from "@/components/modal/dialog/alert-dialog";
 import SenderProfileEdit from "@/components/profile/sender-profile-edit";
 import Loading from "@/components/loading-fallback/loading";
 
@@ -22,6 +22,9 @@ import { PATH } from "@/constants/path";
 
 //카카오 로그인
 import { kakaoLogin } from "@/lib/kakao-login";
+
+//타입
+import { AxiosError } from "axios";
 
 const ProfileClient = () => {
   //카카오 로그인 코드 추출
@@ -37,10 +40,10 @@ const ProfileClient = () => {
 
   //프로필 등록 상태 관리
   const [editUserProfile, setEditUserProfile] = useState(userProfile);
-  // const [isProfileSubmitted, setIsProfileSubmitted] = useState(false);
 
   //로딩 상태 관리
   const [isLoading, setIsLoading] = useState(true);
+  const [isSubmitLoading, setIsSubmitLoading] = useState(false);
 
   //라우터
   const router = useRouter();
@@ -53,6 +56,9 @@ const ProfileClient = () => {
 
   //프로필 이미지 선택 상태 관리
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
+  //프로필 서버 전달 상태
+  const [message, setMessage] = useState<string>("");
 
   //초대 코드 저장
   useEffect(() => {
@@ -71,7 +77,7 @@ const ProfileClient = () => {
         await kakaoLogin(kakaoCode, setUserKaKaoInfo, updateUserProfile);
       } catch (error) {
         console.error("카카오 로그인 실패:", error);
-        alert("로그인에 실패했습니다. 다시 시도해주세요.");
+        setMessage("로그인에 실패했습니다. 다시 시도해주세요.");
         localStorage.clear();
         window.location.href = PATH.LOGIN;
       } finally {
@@ -95,9 +101,13 @@ const ProfileClient = () => {
       alert("이름과 생일을 입력해주세요.");
       return;
     }
+    if (selectedFile && selectedFile.size > 1024 * 1024) {
+      setMessage("이미지 파일은 1MB 이하 제한입니다.");
+      return;
+    }
 
     try {
-      setIsLoading(true);
+      setIsSubmitLoading(true);
       const response = await registerUser(
         editUserProfile,
         selectedFile,
@@ -114,12 +124,25 @@ const ProfileClient = () => {
           "refreshToken",
           response.data.result.refreshToken || "",
         );
-        // setIsProfileSubmitted(true);
       }
       router.push(PATH.HOME);
-    } catch (error) {
+    } catch (error: unknown) {
       console.error("프로필 등록 실패:", error);
-      // alert("프로필 등록에 실패했습니다. 다시 시도해주세요.");
+      if (error instanceof AxiosError) {
+        if (error.response?.status === 413) {
+          setMessage("이미지 파일 크기가 너무 큽니다.");
+        } else if (error.response?.status === 415) {
+          setMessage("이미지 파일 형식이 올바르지 않습니다.");
+        } else if (error.response?.status === 500) {
+          setMessage("카카오 로그인이 만료되었습니다.");
+        } else if (error.response?.data.message) {
+          setMessage(error.response?.data.message);
+        } else {
+          setMessage("이미지 파일은 1MB 이하 제한입니다.");
+        }
+      } else {
+        setMessage("프로필 업데이트에 실패했습니다. 다시 시도해주세요.");
+      }
     }
   };
 
@@ -149,6 +172,9 @@ const ProfileClient = () => {
         <form
           onSubmit={(e) => {
             e.preventDefault();
+            if (isProfileIncomplete) {
+              return;
+            }
             handleSubmitProfile();
           }}
           className="bg-grey-0 relative flex h-full w-full flex-col items-center justify-between p-4 pt-0"
@@ -163,21 +189,27 @@ const ProfileClient = () => {
             />
           </div>
           <div className="flex h-14 w-full items-center justify-center">
-            <GreenBasicButton disabled={isProfileIncomplete || isLoading}>
-              {isLoading ? "등록 중..." : "저장"}
+            <GreenBasicButton
+              disabled={isProfileIncomplete || isLoading || isSubmitLoading}
+            >
+              {isLoading || isSubmitLoading ? "등록 중..." : "저장"}
             </GreenBasicButton>
           </div>
         </form>
-        {/* {isProfileSubmitted && (
+        {message && (
           <AlertDialog
-            title="프로필 등록 완료"
-            content="프로필이 성공적으로 등록 되었습니다."
-            setIsOpen={setIsProfileSubmitted}
+            title="프로필 등록 실패"
+            content={message}
+            setIsOpen={() => setMessage("")}
             onAction={() => {
-              router.push(PATH.HOME);
+              if (message === "이미지 파일은 1MB 이하 제한입니다.") {
+                return;
+              } else {
+                window.location.href = PATH.LOGIN;
+              }
             }}
           />
-        )} */}
+        )}
       </>
     );
   }

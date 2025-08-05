@@ -47,7 +47,7 @@ const LoginPageClient = () => {
             updateUserProfile({
               ...userData,
             });
-            if (inviteCode) {
+            if (inviteCode && !userData.familyRegistered) {
               router.replace(PATH.RELATION + "?familyLink=" + inviteCode);
             } else {
               router.replace(PATH.HOME);

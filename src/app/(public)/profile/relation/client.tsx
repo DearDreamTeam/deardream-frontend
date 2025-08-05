@@ -37,6 +37,9 @@ const RelationClient = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!relationship) {
+      return;
+    }
     try {
       const response = await updateProfile(userProfile);
       if (response.status === 200) {

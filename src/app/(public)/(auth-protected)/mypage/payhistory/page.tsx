@@ -1,6 +1,7 @@
 "use client";
 
 import Header from "@/components/common/header";
+import PageImage from "@/components/images/page-image";
 import Loading from "@/components/loading-fallback/loading";
 import axios from "@/lib/axios";
 import { useUserStore } from "@/stores/useUserInfoStore";
@@ -43,9 +44,10 @@ const PayHistoryPage = () => {
       try {
         const response = await axios.get("/v1/test/payment/request", {
           params: {
-            familyId: userProfile.id,
+            familyId: userProfile.familyId,
           },
         });
+        console.log("response", response);
         setPayHistory(response.data.result);
       } catch (error) {
         console.error(error);
@@ -53,8 +55,12 @@ const PayHistoryPage = () => {
         setIsLoading(false);
       }
     };
-    fetchPayHistory();
-  }, [userProfile.id]);
+    if (userProfile.familyId) {
+      fetchPayHistory();
+    } else {
+      setIsLoading(false);
+    }
+  }, [userProfile.familyId]);
   return (
     <>
       {isLoading ? (
@@ -65,21 +71,23 @@ const PayHistoryPage = () => {
         <div className="bg-grey-0 flex h-full w-full flex-col items-center p-3 pt-0">
           <Header>결제 내역</Header>
 
-          {payHistory.length === 0 ? (
-            <div className="mt-auto mb-auto flex w-full items-center justify-center">
-              결제 내역이 없습니다
+          {payHistory.length === 0 || !userProfile.familyId ? (
+            <div className="mt-auto mb-auto flex w-full flex-col items-center justify-center">
+              <PageImage />
+              <div className="text-title-3 text-grey-400">
+                결제 내역이 없습니다
+              </div>
             </div>
           ) : (
-            payHistory.map((item) => (
-              <div
-                key={item.paymentDate}
-                className="mt-4 flex w-full flex-col gap-8"
-              >
-                <div className="flex w-full flex-col gap-4">
-                  <PayItem date={new Date(item.paymentDate)} />
+            <div className="overflow-auto-hide-scroll w-full">
+              {payHistory.map((item, index) => (
+                <div key={index} className="mt-4 flex w-full flex-col gap-8">
+                  <div className="flex w-full flex-col gap-4">
+                    <PayItem date={new Date(item.paymentDate)} />
+                  </div>
                 </div>
-              </div>
-            ))
+              ))}
+            </div>
           )}
         </div>
       )}
