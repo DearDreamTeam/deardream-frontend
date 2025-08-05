@@ -42,14 +42,14 @@ const HomeAddressInput = () => {
 
   return (
     <>
-      <div className="overflow-auto-hide-scroll flex w-full flex-col items-center gap-6">
+      <div className="flex h-full w-full flex-col items-center gap-6">
         <div className="flex-start text-grey-400 text-body-1 relative flex w-full flex-col gap-2">
           우편 번호
           <div className="flex w-full flex-row items-center justify-between">
             <input
               type="text"
               className="text-grey-900 placeholder:text-grey-400 border-grey-300 placeholder:text-title-3 text-title-1 w-full border-b-1 border-solid px-1 py-2 focus:ring-0 focus:outline-none"
-              placeholder="우편 번호"
+              placeholder="우편 번호(우편 번호 찾기 이용)"
               value={receiver?.address.postalCode || ""}
               readOnly
             />
@@ -75,7 +75,7 @@ const HomeAddressInput = () => {
             type="text"
             className="text-grey-900 placeholder:text-grey-400 border-grey-300 placeholder:text-title-3 text-title-1 w-full border-b-1 border-solid px-1 py-2 focus:ring-0 focus:outline-none"
             value={receiver?.address.address || ""}
-            placeholder="기관 건물, 지번 또는 도로명을 입력해주세요"
+            placeholder="기관 건물, 지번 또는 도로명(우편 번호 입력시 자동 입력)"
             readOnly
           />
         </div>

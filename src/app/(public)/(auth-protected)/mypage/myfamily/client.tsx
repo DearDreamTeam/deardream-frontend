@@ -119,7 +119,7 @@ const MyFamilyClient = () => {
   if (isLoading) return <Loading />;
 
   return (
-    <div className="bg-grey-0 flex h-full w-full flex-1 flex-col items-center p-4 pt-0">
+    <div className="bg-grey-0 overflow-auto-hide-scroll flex h-full w-full flex-1 flex-col items-center p-4 pt-0">
       <Header link={PATH.MYPAGE}>나의 가족</Header>
       {!userProfile.familyRegistered && (
         <div className="mt-auto mb-auto flex w-full flex-col items-center justify-center gap-3">
@@ -143,7 +143,7 @@ const MyFamilyClient = () => {
         </div>
       )}
 
-      <div className="overflow-auto-hide-scroll mt-4 flex w-full flex-col justify-center">
+      <div className="mt-4 flex w-full flex-col justify-center">
         {userProfile.familyRegistered && (
           <>
             <div className="mb-4 flex w-full flex-col">

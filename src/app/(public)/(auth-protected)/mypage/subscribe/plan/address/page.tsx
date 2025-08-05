@@ -41,30 +41,30 @@ const AddressPage = () => {
   return (
     <>
       <form
-        className="bg-grey-0 flex h-full w-full flex-col items-center justify-between p-4 pt-0"
+        className="bg-grey-0 overflow-auto-hide-scroll flex h-full w-full flex-col items-center justify-between p-4 pt-0"
         onSubmit={handleSubmit}
       >
-        <Header setIsModalOpen={setIsAlertOpen}>주소 변경</Header>
-        <div className="text-title-2 mt-4 flex h-full w-full flex-col">
-          {receiver.address.deliveryType === "INSTITUTION" ? (
-            <InstitutionAddressEdit />
-          ) : (
-            <HomeAddressInput />
-          )}
+        <div className="flex w-full flex-col items-center">
+          <Header setIsModalOpen={setIsAlertOpen}>주소 변경</Header>
+          <div className="text-title-2 my-4 flex w-full flex-col">
+            {receiver.address.deliveryType === "INSTITUTION" ? (
+              <InstitutionAddressEdit />
+            ) : (
+              <HomeAddressInput />
+            )}
+          </div>
         </div>
-        <div className="flex h-14 w-full items-center justify-center">
-          <GreenBasicButton
-            color="300"
-            link={
-              receiver.address.deliveryType === "HOME"
-                ? PATH.SUBSCRIBE + "/pay"
-                : PATH.SUBSCRIBE_PLAN + "/complete"
-            }
-            disabled={!receiver.address.address || isLoading}
-          >
-            {isLoading ? "저장 중..." : "저장"}
-          </GreenBasicButton>
-        </div>
+        <GreenBasicButton
+          color="300"
+          link={
+            receiver.address.deliveryType === "HOME"
+              ? PATH.SUBSCRIBE + "/pay"
+              : PATH.SUBSCRIBE_PLAN + "/complete"
+          }
+          disabled={!receiver.address.address || isLoading}
+        >
+          {isLoading ? "저장 중..." : "저장"}
+        </GreenBasicButton>
       </form>
       {isAlertOpen && (
         <ConfirmDialog

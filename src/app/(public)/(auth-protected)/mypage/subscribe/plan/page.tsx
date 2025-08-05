@@ -35,7 +35,7 @@ const PlanPage: FC = () => {
   }, [userProfile, setReceiver]);
 
   return (
-    <div className="bg-grey-0 relative flex h-full w-full flex-col items-center justify-between p-4 pt-0">
+    <div className="bg-grey-0 overflow-auto-hide-scroll relative flex h-full w-full flex-col items-center justify-between p-4 pt-0">
       <div>
         <Header link={PATH.HOME}>플랜 재구독</Header>
         <div className="border-grey-200 mt-3 flex w-full flex-col justify-center gap-2 border-b-1 border-solid p-3">

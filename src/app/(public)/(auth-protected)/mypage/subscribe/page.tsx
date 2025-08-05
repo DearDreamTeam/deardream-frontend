@@ -29,7 +29,7 @@ const SubScribePage = () => {
 
   return (
     <>
-      <div className="bg-grey-0 relative flex h-screen w-full flex-col items-center p-4 pt-0">
+      <div className="bg-grey-0 overflow-auto-hide-scroll relative flex h-full w-full flex-col items-center p-4 pt-0">
         <Header>나의 정기 구독</Header>
         <div className="border-grey-200 relative w-screen max-w-[768px] border-b-1 border-solid p-4">
           <div className="flex items-center gap-2">

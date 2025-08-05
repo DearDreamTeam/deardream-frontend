@@ -46,11 +46,11 @@ const PlanPage = () => {
 
   return (
     <div className="bg-grey-0 relative flex h-full w-full flex-col items-center justify-between pt-0">
-      <div className="w-full">
-        <Header link={PATH.HOME}>플랜 선택</Header>
+      <Header link={PATH.HOME}>플랜 선택</Header>
 
-        {/* 개인 플랜 */}
-        <div className="border-grey-200 mt-3 flex w-full flex-col gap-2 border-b-1 border-solid p-3">
+      {/* 개인 플랜 */}
+      <div className="overflow-auto-hide-scroll h-full w-full">
+        <div className="border-grey-200 overflow-auto-hide-scroll mt-3 flex w-full flex-col gap-2 border-b-1 border-solid p-3">
           <div className="text-headline-3 text-grey-400 flex items-center gap-2">
             <div
               onClick={() => setPlanType("HOME")}

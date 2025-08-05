@@ -57,7 +57,7 @@ const ReceiverProfilePage = () => {
     <>
       <form
         onSubmit={handleSubmit}
-        className="bg-grey-0 relative flex h-full w-full flex-col items-center justify-between p-4 pt-0"
+        className="bg-grey-0 overflow-auto-hide-scroll relative flex h-full w-full flex-col items-center justify-between p-4 pt-0"
       >
         <div>
           <Header setIsModalOpen={setShowAlert}>받는 분 정보</Header>
@@ -67,11 +67,10 @@ const ReceiverProfilePage = () => {
             setSelectedFile={setSelectedFile}
           />
         </div>
-        <div className="flex h-14 w-full items-center justify-center">
-          <GreenBasicButton disabled={isProfileIncomplete || isLoading}>
-            {isLoading ? "저장 중..." : "저장"}
-          </GreenBasicButton>
-        </div>
+
+        <GreenBasicButton disabled={isProfileIncomplete || isLoading}>
+          {isLoading ? "저장 중..." : "저장"}
+        </GreenBasicButton>
       </form>
 
       {showAlert && (

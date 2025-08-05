@@ -101,10 +101,6 @@ const ProfileClient = () => {
       alert("이름과 생일을 입력해주세요.");
       return;
     }
-    if (selectedFile && selectedFile.size > 1024 * 1024) {
-      setMessage("이미지 파일은 1MB 이하 제한입니다.");
-      return;
-    }
 
     try {
       setIsSubmitLoading(true);
@@ -188,13 +184,11 @@ const ProfileClient = () => {
               setSelectedFile={setSelectedFile}
             />
           </div>
-          <div className="flex h-14 w-full items-center justify-center">
-            <GreenBasicButton
-              disabled={isProfileIncomplete || isLoading || isSubmitLoading}
-            >
-              {isLoading || isSubmitLoading ? "등록 중..." : "저장"}
-            </GreenBasicButton>
-          </div>
+          <GreenBasicButton
+            disabled={isProfileIncomplete || isLoading || isSubmitLoading}
+          >
+            {isLoading || isSubmitLoading ? "등록 중..." : "저장"}
+          </GreenBasicButton>
         </form>
         {message && (
           <AlertDialog
