@@ -27,7 +27,7 @@ const AddressPage = () => {
 
   const isInstitution = receiver.address.deliveryType === "INSTITUTION";
   const isIncomplete = isInstitution
-    ? !receiver.address.code
+    ? !receiver.address.code || !receiver.address.institutionName
     : !receiver.address.address || !receiver.address.postalCode;
 
   useEffect(() => {
@@ -93,11 +93,9 @@ const AddressPage = () => {
           {isInstitution ? <InstitutionAddressEdit /> : <HomeAddressInput />}
         </div>
 
-        <div className="flex h-14 w-full items-center justify-center">
-          <GreenBasicButton color="300" disabled={isIncomplete || isLoading}>
-            {isLoading ? "저장 중..." : "저장"}
-          </GreenBasicButton>
-        </div>
+        <GreenBasicButton color="300" disabled={isIncomplete || isLoading}>
+          {isLoading ? "저장 중..." : "저장"}
+        </GreenBasicButton>
       </form>
 
       {isAlertOpen && (

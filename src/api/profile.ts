@@ -141,8 +141,6 @@ export const updateReceiverAddress = async (receiver: ReceiverProfileInfo) => {
 
 export const clearReceiverAddress = async (receiver: ReceiverProfileInfo) => {
   const response = await axios.patch(`/v1/recipients/${receiver.id}`, {
-    recipientName: "",
-    recipientPhone: "",
     postalCode: "",
     address: "",
     addressDetail: "",

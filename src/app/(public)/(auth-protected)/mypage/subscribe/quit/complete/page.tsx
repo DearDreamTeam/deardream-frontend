@@ -29,7 +29,8 @@ const CompletePage = () => {
         if (response.status === 200) {
           clearPlan();
           console.log(receiver);
-          await clearReceiverAddress(receiver);
+          const res = await clearReceiverAddress(receiver);
+          console.log(res);
           resetReceiverAddress();
         }
       } catch (error) {
@@ -52,7 +53,8 @@ const CompletePage = () => {
         if (response.status === 200) {
           clearPlan();
           console.log(receiver);
-          await clearReceiverAddress(receiver);
+          const res = await clearReceiverAddress(receiver);
+          console.log(res);
           resetReceiverAddress();
         }
       } catch (error) {

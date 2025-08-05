@@ -27,6 +27,7 @@ const SubscribeLayout = ({ children }: { children: React.ReactNode }) => {
         if (response.status === 200) {
           setReceiver(response.data.result);
         }
+        console.log(response.data.result);
       };
       fetchReceiver();
       return;

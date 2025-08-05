@@ -5,6 +5,7 @@ import { useState } from "react";
 //stores
 import { useUserStore } from "@/stores/useUserInfoStore";
 import { updateProfile } from "@/api/profile";
+import { AxiosError } from "axios";
 //components
 import GreenBasicButton from "@/components/button/profile-green-basic-button";
 import Header from "@/components/common/header";
@@ -22,6 +23,10 @@ const Profile = () => {
   const [showAlert, setShowAlert] = useState(false);
   // 저장 로딩 상태
   const [isLoading, setIsLoading] = useState(false);
+
+  // 프로필 수정 실패 상태
+  const [isProfileNotSubmitted, setIsProfileNotSubmitted] = useState(false);
+  const [message, setMessage] = useState("");
 
   // 프로필 정보 유효성 검사
   const isProfileIncomplete =
@@ -52,6 +57,18 @@ const Profile = () => {
     } catch (error) {
       console.error("프로필 업데이트 실패:", error);
       alert("프로필 업데이트에 실패했습니다. 다시 시도해주세요.");
+      if (error instanceof AxiosError) {
+        if (error.response?.data.message) {
+          setMessage(error.response?.data.message);
+        } else if (error.response?.status === 413) {
+          setMessage("이미지 파일 크기가 너무 큽니다.");
+        } else if (error.response?.status === 415) {
+          setMessage("이미지 파일 형식이 올바르지 않습니다.");
+        } else {
+          setMessage("관리자에게 문의해주세요.");
+        }
+        setIsProfileNotSubmitted(true);
+      }
     } finally {
       setIsLoading(false);
     }
@@ -89,6 +106,13 @@ const Profile = () => {
           onAction={() => {
             window.location.href = "/mypage";
           }}
+        />
+      )}
+      {isProfileNotSubmitted && (
+        <AlertDialog
+          title="프로필 수정 실패"
+          content={message}
+          setIsOpen={setIsProfileNotSubmitted}
         />
       )}
     </>

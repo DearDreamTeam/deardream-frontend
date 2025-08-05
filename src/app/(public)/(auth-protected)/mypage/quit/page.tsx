@@ -10,19 +10,7 @@ import { AxiosError } from "axios";
 import Check from "@/public/icons/common/check.svg";
 import { useUserStore } from "@/stores/useUserInfoStore";
 import { useState } from "react";
-
-interface UserPostInfo {
-  name: string;
-  messageCount: number;
-  planType: "PERSONAL" | "INSTITUTION" | "NONE";
-  willDeliverCount: number;
-}
-const userPostInfo: UserPostInfo = {
-  name: "김수진",
-  messageCount: 5,
-  planType: "PERSONAL",
-  willDeliverCount: 2,
-};
+import { usePlanStore } from "@/stores/usePlanStore";
 
 const QuitItem = ({
   text,
@@ -44,6 +32,8 @@ const QuitPage = () => {
   const [message, setMessage] = useState("");
 
   const { userProfile } = useUserStore();
+
+  const { plan } = usePlanStore();
 
   const handleClick = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -92,26 +82,22 @@ const QuitPage = () => {
           <div className="flex w-full flex-col gap-4">
             <div className="text-title-2">
               그동안 쌓아온 <br /> 소중한 추억들을 전부 잃어버려요
-              <QuitItem text="그동안 모인 소식">
-                {userPostInfo.messageCount}개
-              </QuitItem>
+              <QuitItem text="그동안 모인 소식">🤷개</QuitItem>
             </div>
             <div className="text-title-2">
               이용 중이신 플랜이 중지되며, <br />더 이상 서비스를 이용하실 수
               없어요
               <QuitItem text="구독 중인 플랜">
-                {userPostInfo.planType === "NONE"
+                {plan.isActive === false
                   ? "구독 중인 플랜이 없습니다"
-                  : userPostInfo.planType === "PERSONAL"
+                  : plan.type === "HOME"
                     ? "개인 플랜"
                     : "기관 플랜"}
               </QuitItem>
             </div>
             <div className="text-title-2">
               이번달 소식지는 제작 및 배송되지 않아요
-              <QuitItem text="발송 예정 소식지">
-                {userPostInfo.willDeliverCount}개
-              </QuitItem>
+              <QuitItem text="발송 예정 소식지">🥺</QuitItem>
             </div>
           </div>
         </div>

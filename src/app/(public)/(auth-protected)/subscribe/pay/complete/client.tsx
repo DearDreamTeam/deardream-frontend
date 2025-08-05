@@ -35,6 +35,7 @@ const CompleteClient = () => {
         });
         if (response.status === 200) {
           setIsComplete(true); // 성공 화면 보여주기
+          localStorage.removeItem("payment-storage");
         }
       } catch (error) {
         console.error(error);

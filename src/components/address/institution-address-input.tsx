@@ -5,21 +5,28 @@ import { useReceiverStore } from "@/stores/useReceiverStore";
 import { useState, useEffect } from "react";
 
 interface InstitutionAddressInputProps {
-  code: string;
-  name: string;
-  address: string;
-  phone: string;
+  deliveryType: "HOME" | "INSTITUTION" | "NONE";
+  recipientName?: string;
+  recipientPhone?: string;
   postalCode: string;
+  address: string;
+  addressDetail?: string;
+  institutionName: string;
+  institutionPhone: string;
+  code: string;
 }
 
 const InstitutionAddressInput = () => {
-  const [code, setCode] = useState("");
   const [message, setMessage] = useState<number>(-1);
-  const [institution, setInstitution] =
-    useState<InstitutionAddressInputProps | null>(null);
-  const [detailAddress, setDetailAddress] = useState("");
 
-  const { setReceiver } = useReceiverStore();
+  const { receiver, setReceiver } = useReceiverStore();
+
+  const [institution, setInstitution] =
+    useState<InstitutionAddressInputProps | null>(receiver.address);
+  const [code, setCode] = useState(receiver.address.code);
+  const [detailAddress, setDetailAddress] = useState(
+    receiver.address.addressDetail,
+  );
 
   // 📌 이걸 AddressPage에서 submit 직전에 호출해야 함
   useEffect(() => {
@@ -31,8 +38,8 @@ const InstitutionAddressInput = () => {
         code: institution.code,
         address: institution.address,
         postalCode: institution.postalCode,
-        institutionName: institution.name,
-        institutionPhone: institution.phone,
+        institutionName: institution.institutionName,
+        institutionPhone: institution.institutionPhone,
         addressDetail: detailAddress,
         recipientName: "",
         recipientPhone: "",
@@ -45,7 +52,31 @@ const InstitutionAddressInput = () => {
       const res = await axios.get("/v1/institutions", {
         params: { code },
       });
-      setInstitution(res.data.result);
+
+      setInstitution((prev: InstitutionAddressInputProps | null) => {
+        if (!prev) {
+          // prev가 null이면, deliveryType 등 필수 필드를 기본값으로 설정
+          return {
+            deliveryType: "INSTITUTION",
+            institutionName: res.data.result.name,
+            institutionPhone: res.data.result.phone,
+            address: res.data.result.address,
+            postalCode: res.data.result.postalCode,
+            code: code,
+            recipientName: "",
+            recipientPhone: "",
+            addressDetail: "",
+          };
+        }
+        // prev가 있으면 기존 값 유지하면서 새 값만 덮어쓰기
+        return {
+          ...prev,
+          institutionName: res.data.result.name,
+          institutionPhone: res.data.result.phone,
+          address: res.data.result.address,
+          postalCode: res.data.result.postalCode,
+        };
+      });
       setMessage(1);
     } catch (err) {
       console.error("기관 코드 확인 실패", err);
@@ -126,7 +157,7 @@ const InstitutionAddressInput = () => {
         기관명
         <input
           type="text"
-          value={getValue(institution?.name)}
+          value={getValue(institution?.institutionName)}
           readOnly
           placeholder="기관명"
           className="text-title-1 text-grey-900 placeholder:text-title-3 placeholder:text-grey-400 border-grey-300 w-full border-b-1 border-solid px-1 py-2 focus:outline-none"
@@ -138,7 +169,7 @@ const InstitutionAddressInput = () => {
         기관 전화번호
         <input
           type="text"
-          value={getValue(institution?.phone)}
+          value={getValue(institution?.institutionPhone)}
           readOnly
           placeholder="기관 전화번호"
           className="text-title-1 text-grey-900 placeholder:text-title-3 placeholder:text-grey-400 border-grey-300 w-full border-b-1 border-solid px-1 py-2 focus:outline-none"
