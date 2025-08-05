@@ -9,6 +9,7 @@ import {
   ReceiverProfileInfo,
   useReceiverStore,
 } from "@/stores/useReceiverStore";
+import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -20,6 +21,7 @@ const ReceiverProfilePage = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const [showAlert, setShowAlert] = useState(false);
+  const [message, setMessage] = useState("");
 
   const router = useRouter();
 
@@ -29,17 +31,34 @@ const ReceiverProfilePage = () => {
     !editUserProfile?.phone?.trim();
 
   const handleSave = async () => {
+    if (selectedFile && selectedFile.size > 1024 * 1024) {
+      setMessage("이미지 파일은 1MB 이하로 업로드해주세요.");
+      return;
+    }
     try {
       setIsLoading(true);
       const response = await updateReceiver(editUserProfile, selectedFile);
       if (response.data.isSuccess) {
         setReceiver(response.data.result);
+        setShowAlert(true);
       }
     } catch (error) {
-      console.error("Error updating receiver profile:", error);
+      console.error("프로필 업데이트 실패:", error);
+      if (error instanceof AxiosError) {
+        if (error.response?.data.message) {
+          setMessage(error.response?.data.message);
+        } else if (error.response?.status === 413) {
+          setMessage("이미지 파일 크기가 너무 큽니다.");
+        } else if (error.response?.status === 415) {
+          setMessage("이미지 파일 형식이 올바르지 않습니다.");
+        } else {
+          setMessage("이미지 파일은 1MB 이하 제한입니다.");
+        }
+      } else {
+        setMessage("프로필 업데이트에 실패했습니다. 다시 시도해주세요.");
+      }
     } finally {
       setIsLoading(false);
-      setShowAlert(true);
     }
   };
 
@@ -79,6 +98,13 @@ const ReceiverProfilePage = () => {
             setShowAlert(false);
             router.push("/mypage/myfamily/");
           }}
+        />
+      )}
+      {message && (
+        <AlertDialog
+          title="저장 실패"
+          content={message}
+          setIsOpen={() => setMessage("")}
         />
       )}
     </>

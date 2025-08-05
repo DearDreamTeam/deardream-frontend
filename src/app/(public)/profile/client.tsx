@@ -40,7 +40,6 @@ const ProfileClient = () => {
 
   //프로필 등록 상태 관리
   const [editUserProfile, setEditUserProfile] = useState(userProfile);
-  const [isProfileNotSubmitted, setIsProfileNotSubmitted] = useState(false);
 
   //로딩 상태 관리
   const [isLoading, setIsLoading] = useState(true);
@@ -77,7 +76,7 @@ const ProfileClient = () => {
         await kakaoLogin(kakaoCode, setUserKaKaoInfo, updateUserProfile);
       } catch (error) {
         console.error("카카오 로그인 실패:", error);
-        alert("로그인에 실패했습니다. 다시 시도해주세요.");
+        setMessage("로그인에 실패했습니다. 다시 시도해주세요.");
         localStorage.clear();
         window.location.href = PATH.LOGIN;
       } finally {
@@ -124,7 +123,6 @@ const ProfileClient = () => {
       router.push(PATH.HOME);
     } catch (error: unknown) {
       console.error("프로필 등록 실패:", error);
-      setIsProfileNotSubmitted(true);
       if (error instanceof AxiosError && error.response) {
         setMessage(error.response.data.message);
       } else {
@@ -178,11 +176,11 @@ const ProfileClient = () => {
             </GreenBasicButton>
           </div>
         </form>
-        {isProfileNotSubmitted && (
+        {message && (
           <AlertDialog
             title="프로필 등록 실패"
             content={message}
-            setIsOpen={setIsProfileNotSubmitted}
+            setIsOpen={() => setMessage("")}
             onAction={() => {
               window.location.href = PATH.LOGIN;
             }}

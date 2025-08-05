@@ -9,10 +9,14 @@ import HomeAddressInput from "@/components/address/home-address-input";
 import { PATH } from "@/constants/path";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import ConfirmDialog from "@/components/modal/dialog/confirm-dialog";
 const AddressPage = () => {
-  const { receiver } = useReceiverStore();
+  const { receiver, setReceiver } = useReceiverStore();
+
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+
+  const [isAlertOpen, setIsAlertOpen] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -37,7 +41,7 @@ const AddressPage = () => {
         className="bg-grey-0 flex h-full w-full flex-col items-center justify-between p-4 pt-0"
         onSubmit={handleSubmit}
       >
-        <Header>주소 변경</Header>
+        <Header setIsModalOpen={setIsAlertOpen}>주소 변경</Header>
         <div className="text-title-2 mt-4 flex h-full w-full flex-col">
           {receiver.address.deliveryType === "INSTITUTION" ? (
             <InstitutionAddressEdit />
@@ -59,6 +63,30 @@ const AddressPage = () => {
           </GreenBasicButton>
         </div>
       </form>
+      {isAlertOpen && (
+        <ConfirmDialog
+          title="정말 나가시겠습니까?"
+          content="입력하신 정보가 저장되지 않습니다."
+          setIsOpen={setIsAlertOpen}
+          actionLabel="나가기"
+          action={() => {
+            setReceiver({
+              address: {
+                deliveryType: receiver.address.deliveryType,
+                address: "",
+                code: "",
+                recipientName: "",
+                recipientPhone: "",
+                postalCode: "",
+                institutionName: "",
+                institutionPhone: "",
+              },
+            });
+            router.push(PATH.SUBSCRIBE_PLAN);
+          }}
+          cancelAction={() => setIsAlertOpen(false)}
+        />
+      )}
     </>
   );
 };

@@ -25,7 +25,6 @@ const Profile = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   // 프로필 수정 실패 상태
-  const [isProfileNotSubmitted, setIsProfileNotSubmitted] = useState(false);
   const [message, setMessage] = useState("");
 
   // 프로필 정보 유효성 검사
@@ -38,11 +37,16 @@ const Profile = () => {
       alert("이름과 생일을 입력해주세요.");
       return;
     }
+    if (selectedFile && selectedFile.size > 1024 * 1024) {
+      setMessage("이미지 파일은 1MB 이하로 업로드해주세요.");
+      return;
+    }
     setIsLoading(true);
     try {
       const response = await updateProfile(editUserProfile, selectedFile);
       console.log("프로필 업데이트 성공:", response.data);
       if (response.data.isSuccess) {
+        console.log("프로필 업데이트 성공:", response.data);
         setShowAlert(true);
       }
       if (response.data.result.profileImage) {
@@ -56,7 +60,6 @@ const Profile = () => {
       }
     } catch (error) {
       console.error("프로필 업데이트 실패:", error);
-      alert("프로필 업데이트에 실패했습니다. 다시 시도해주세요.");
       if (error instanceof AxiosError) {
         if (error.response?.data.message) {
           setMessage(error.response?.data.message);
@@ -65,9 +68,10 @@ const Profile = () => {
         } else if (error.response?.status === 415) {
           setMessage("이미지 파일 형식이 올바르지 않습니다.");
         } else {
-          setMessage("관리자에게 문의해주세요.");
+          setMessage("이미지 파일은 1MB 이하 제한입니다.");
         }
-        setIsProfileNotSubmitted(true);
+      } else {
+        setMessage("프로필 업데이트에 실패했습니다. 다시 시도해주세요.");
       }
     } finally {
       setIsLoading(false);
@@ -108,11 +112,11 @@ const Profile = () => {
           }}
         />
       )}
-      {isProfileNotSubmitted && (
+      {message && (
         <AlertDialog
           title="프로필 수정 실패"
           content={message}
-          setIsOpen={setIsProfileNotSubmitted}
+          setIsOpen={() => setMessage("")}
         />
       )}
     </>
