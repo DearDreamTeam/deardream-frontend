@@ -16,9 +16,9 @@ const QuitPage = () => {
 
   return (
     <>
-      <div className="relative flex h-screen w-full flex-col items-center justify-between p-4 pt-0">
+      <div className="relative flex h-full w-full flex-col items-center justify-between p-4 pt-0">
         <Header>구독 해지</Header>
-        <div className="w-full">
+        <div className="overflow-auto-hide-scroll h-full w-full">
           <div className="text-title-2 flex w-full flex-col items-center justify-center gap-2 py-10">
             <RibbonImage />
             <div className="text-label-2 text-center">
