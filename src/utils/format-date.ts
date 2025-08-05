@@ -6,11 +6,11 @@ export const formatDateToDots = (timestamp: string) => {
   const day = String(date.getDate()).padStart(2, "0");
 
   let hour = date.getHours();
-  const minutes = date.getMinutes();
+  const minutes = String(date.getMinutes()).padStart(2, "0");
 
   const isAm = hour < 12;
   const period = isAm ? "오전" : "오후";
-  hour = isAm ? hour : hour - 12;
+  hour = isAm ? (hour === 0 ? 12 : hour) : hour - 12;
 
   return `${year}.${month}.${day} ${period} ${hour}:${minutes}`;
 };
