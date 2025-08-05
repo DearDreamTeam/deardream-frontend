@@ -1,6 +1,3 @@
-"use client";
-
-import { useEffect, useState } from "react";
 import Checked from "@/public/icons/buttons/checkbox-checked.svg";
 import UnChecked from "@/public/icons/buttons/checkbox-default.svg";
 import { CheckboxProps } from "./checkbox-props";
@@ -12,28 +9,15 @@ const Checkbox = ({
 }: {
   idValue: number;
   callback: CheckboxProps;
-  isChecked?: boolean;
+  isChecked: boolean;
 }) => {
-  const [checked, setChecked] = useState<boolean>(false);
-  const handleCheckboxClick = () => setChecked((prev) => !prev);
-  const [isInitialized, setIsInitialized] = useState(false);
-
-  useEffect(() => {
-    if (isChecked !== undefined) {
-      setChecked(isChecked);
-      setIsInitialized(true);
-    }
-  }, [isChecked]);
-
-  useEffect(() => {
-    if (isInitialized) {
-      callback(idValue, checked);
-    }
-  }, [checked, isInitialized]);
+  const handleCheckboxClick = () => {
+    callback(idValue, !isChecked); // 부모 상태를 직접 토글
+  };
 
   return (
     <button type="button" onClick={handleCheckboxClick}>
-      {checked ? <Checked /> : <UnChecked />}
+      {isChecked ? <Checked /> : <UnChecked />}
     </button>
   );
 };
