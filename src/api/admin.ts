@@ -64,16 +64,16 @@ export const setArchiveDeliveryStatus = async (
   }
 };
 
-/* POST: 기관 플랜에 속한 모든 가족 배송 상태 변경 -> 작동 x */
+/* POST: 기관 플랜에 속한 모든 가족 배송 상태 변경 */
 export const setInstitutionDeliveryStatus = async (
-  institutionId: number,
+  code: string,
   deliveryStatus: keyof typeof DELIVERY_STATUS,
   year: number,
   month: number,
 ) => {
   try {
     const response = await axios.post(
-      `/v1/master/admin/${institutionId}/institution`,
+      `/v1/master/admin/${code}/institution`,
       null,
       {
         params: { deliveryStatus, year, month },
