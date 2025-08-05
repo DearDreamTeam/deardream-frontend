@@ -93,7 +93,7 @@ const Page = () => {
       </div>
 
       <TableHeader
-        items={INSTITUTION_FAMILY_TABLE_ITEMS}
+        TABLE_COLUMNS={INSTITUTION_FAMILY_TABLE_ITEMS}
         keyPrefix={"inst-f"}
         className="break-keep"
       />
