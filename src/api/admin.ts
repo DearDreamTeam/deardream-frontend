@@ -72,13 +72,11 @@ export const setInstitutionDeliveryStatus = async (
   month: number,
 ) => {
   try {
-    const response = await axios.post(
-      `/v1/master/admin/${code}/institution`,
-      null,
-      {
-        params: { deliveryStatus, year, month },
-      },
-    );
+    const response = await axios.post(`/v1/master/admin/${code}/institution`, {
+      deliveryStatus,
+      year,
+      month,
+    });
 
     if (response.data.isSuccess) {
       console.log("change delivery status");

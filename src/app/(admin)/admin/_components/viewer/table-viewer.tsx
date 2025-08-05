@@ -123,6 +123,7 @@ const TableViewer = ({
           items={items}
           onClose={() => setOpen(false)}
           handleCheckboxChange={handleCheckboxChange}
+          resetCheckItem={() => setCheckedItem([])}
         />
       )}
     </div>
