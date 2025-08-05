@@ -38,7 +38,6 @@ const QuitPage = () => {
   const handleClick = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!isChecked) {
-      alert("회원 탈퇴 약관에 동의해주세요.");
       return;
     } else {
       console.log("탈퇴 시작");

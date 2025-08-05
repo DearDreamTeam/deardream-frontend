@@ -35,6 +35,9 @@ const ReceiverProfilePage = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (isProfileIncomplete || isLoading) {
+      return;
+    }
     setIsLoading(true);
 
     // 상태 변경 먼저 적용

@@ -43,6 +43,7 @@ const ProfileClient = () => {
 
   //로딩 상태 관리
   const [isLoading, setIsLoading] = useState(true);
+  const [isSubmitLoading, setIsSubmitLoading] = useState(false);
 
   //라우터
   const router = useRouter();
@@ -100,9 +101,13 @@ const ProfileClient = () => {
       alert("이름과 생일을 입력해주세요.");
       return;
     }
+    if (selectedFile && selectedFile.size > 1024 * 1024) {
+      setMessage("이미지 파일은 1MB 이하 제한입니다.");
+      return;
+    }
 
     try {
-      setIsLoading(true);
+      setIsSubmitLoading(true);
       const response = await registerUser(
         editUserProfile,
         selectedFile,
@@ -123,10 +128,20 @@ const ProfileClient = () => {
       router.push(PATH.HOME);
     } catch (error: unknown) {
       console.error("프로필 등록 실패:", error);
-      if (error instanceof AxiosError && error.response) {
-        setMessage(error.response.data.message);
+      if (error instanceof AxiosError) {
+        if (error.response?.status === 413) {
+          setMessage("이미지 파일 크기가 너무 큽니다.");
+        } else if (error.response?.status === 415) {
+          setMessage("이미지 파일 형식이 올바르지 않습니다.");
+        } else if (error.response?.status === 500) {
+          setMessage("카카오 로그인이 만료되었습니다.");
+        } else if (error.response?.data.message) {
+          setMessage(error.response?.data.message);
+        } else {
+          setMessage("이미지 파일은 1MB 이하 제한입니다.");
+        }
       } else {
-        setMessage("관리자에게 문의해주세요.");
+        setMessage("프로필 업데이트에 실패했습니다. 다시 시도해주세요.");
       }
     }
   };
@@ -157,6 +172,9 @@ const ProfileClient = () => {
         <form
           onSubmit={(e) => {
             e.preventDefault();
+            if (isProfileIncomplete) {
+              return;
+            }
             handleSubmitProfile();
           }}
           className="bg-grey-0 relative flex h-full w-full flex-col items-center justify-between p-4 pt-0"
@@ -171,8 +189,10 @@ const ProfileClient = () => {
             />
           </div>
           <div className="flex h-14 w-full items-center justify-center">
-            <GreenBasicButton disabled={isProfileIncomplete || isLoading}>
-              {isLoading ? "등록 중..." : "저장"}
+            <GreenBasicButton
+              disabled={isProfileIncomplete || isLoading || isSubmitLoading}
+            >
+              {isLoading || isSubmitLoading ? "등록 중..." : "저장"}
             </GreenBasicButton>
           </div>
         </form>
@@ -182,7 +202,11 @@ const ProfileClient = () => {
             content={message}
             setIsOpen={() => setMessage("")}
             onAction={() => {
-              window.location.href = PATH.LOGIN;
+              if (message === "이미지 파일은 1MB 이하 제한입니다.") {
+                return;
+              } else {
+                window.location.href = PATH.LOGIN;
+              }
             }}
           />
         )}

@@ -20,6 +20,9 @@ const AddressPage = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!receiver.address.address || isLoading) {
+      return;
+    }
     setIsLoading(true);
     console.log("Receiver data submitted:", receiver);
     try {

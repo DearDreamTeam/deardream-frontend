@@ -62,6 +62,7 @@ export default function ProtectedLayout({
 
         if (result.isActive) {
           const linkRes = await axios.get("/v1/family/link");
+          console.log("linkRes", linkRes);
           setFamilyLink(linkRes.data.result);
         }
       } catch (error) {

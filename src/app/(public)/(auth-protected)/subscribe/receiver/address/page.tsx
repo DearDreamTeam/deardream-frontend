@@ -26,9 +26,6 @@ const AddressPage = () => {
   const [isAlertOpen, setIsAlertOpen] = useState(false);
 
   const isInstitution = receiver.address.deliveryType === "INSTITUTION";
-  const isIncomplete = isInstitution
-    ? !receiver.address.code || !receiver.address.institutionName
-    : !receiver.address.address || !receiver.address.postalCode;
 
   useEffect(() => {
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
@@ -60,6 +57,9 @@ const AddressPage = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!receiver.name || !receiver.address.address) {
+      return;
+    }
     setIsLoading(true);
 
     try {
@@ -77,7 +77,9 @@ const AddressPage = () => {
         (error?.response?.data as { message?: string })?.message ??
         "알 수 없는 오류입니다. 관리자에게 문의해주세요.";
       setMessage(apiMessage);
-      setIsAlertOpen(true);
+      if (error.response?.status === 403) {
+        router.push(PATH.SUBSCRIBE + "/family");
+      }
     }
   };
 
@@ -93,7 +95,10 @@ const AddressPage = () => {
           {isInstitution ? <InstitutionAddressEdit /> : <HomeAddressInput />}
         </div>
 
-        <GreenBasicButton color="300" disabled={isIncomplete || isLoading}>
+        <GreenBasicButton
+          color="300"
+          disabled={!receiver.name || !receiver.address.address || isLoading}
+        >
           {isLoading ? "저장 중..." : "저장"}
         </GreenBasicButton>
       </form>

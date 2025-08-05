@@ -78,7 +78,7 @@ const InvitePageClient = () => {
         </>
       ) : (
         <>
-          {userProfile.familyId ? (
+          {userProfile.familyRegistered ? (
             <>
               <div className="flex h-full w-full flex-col items-center justify-center gap-2 p-4">
                 <StateTemplate>

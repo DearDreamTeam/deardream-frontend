@@ -79,7 +79,7 @@ const CompletePage = () => {
           description="잠시만 기다려주세요."
           imageType="airplane"
         />
-      ) : plan.type === "HOME" ? (
+      ) : (
         <>
           <Result
             title="구독이 해지되었어요"
@@ -89,19 +89,10 @@ const CompletePage = () => {
           <GreenBasicButton color="300" link={PATH.SUBSCRIBE_PLAN}>
             다른 플랜 구독 하러가기
           </GreenBasicButton>
-          <GreenBasicButton color="100" link={PATH.LETTER_LIST}>
-            소식함 보러가기
+          <GreenBasicButton color="100" link={PATH.HOME}>
+            홈으로 가기
           </GreenBasicButton>
         </>
-      ) : (
-        <Result
-          title="소식지 제작이 중단되었어요"
-          description="소식지 제작은 잠시 중단되었지만"
-          description2="소식함 열람 및 다운로드는 계속 이용하실 수 있어요."
-          description3="마이 -> 나의 정기 구독 -> 플랜 관리에서"
-          description4="언제든 다시 플랜을 활성화 해주세요!"
-          imageType="airplane"
-        />
       )}
     </div>
   );

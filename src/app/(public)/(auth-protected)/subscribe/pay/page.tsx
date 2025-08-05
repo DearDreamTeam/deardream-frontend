@@ -110,7 +110,7 @@ const PayPage = () => {
       console.log(response);
       if (response.status === 200) {
         setTid(response.data.result.tid);
-        router.push(response.data.result.next_redirect_mobile_url);
+        router.push(response.data.result.next_redirect_pc_url);
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {

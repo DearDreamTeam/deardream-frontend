@@ -83,6 +83,9 @@ const Profile = () => {
       <form
         onSubmit={(e) => {
           e.preventDefault();
+          if (isProfileIncomplete || isLoading) {
+            return;
+          }
           handleSave(); // 이 함수 안에서 유효성 검사 + axios 처리
         }}
         className="bg-grey-0 relative flex h-full w-full flex-col items-center justify-between p-4 pt-0"

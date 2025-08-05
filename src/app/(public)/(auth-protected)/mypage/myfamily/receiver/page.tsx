@@ -67,11 +67,12 @@ const ReceiverProfilePage = () => {
       <form
         onSubmit={(e) => {
           e.preventDefault(); // 이 함수 안에서 유효성 검사 + axios 처리
-          if (!isProfileIncomplete) {
-            handleSave();
-          } else {
-            console.error("Profile is incomplete");
+          if (isProfileIncomplete || isLoading) {
+            console.log("isProfileIncomplete", isProfileIncomplete);
+            console.log("isLoading", isLoading);
+            return;
           }
+          handleSave();
         }}
         className="bg-grey-0 relative flex h-full w-full flex-col items-center justify-between p-4 pt-0"
       >
