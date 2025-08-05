@@ -86,7 +86,10 @@ const NavigationBar = () => {
             NOTIFICATION_MESSAGES.NO_FAMILY.WRITE.contnet,
           )}
           setIsOpen={setIsConfirmOpen}
-          action={() => router.push(PATH.SUBSCRIBE)}
+          action={() => {
+            setIsConfirmOpen(false);
+            router.push(PATH.SUBSCRIBE);
+          }}
           actionLabel="확인"
         />
       )}
