@@ -84,12 +84,11 @@ const MyFamilyClient = () => {
   const [family, setFamily] = useState<UserProfileInfo[]>([]);
   const { userProfile } = useUserStore();
   const [isOpen, setIsOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        setIsLoading(true);
         const [familyRes, receiverRes] = await Promise.all([
           axios.get("/v1/family"),
           userProfile.role === "LEADER"
@@ -114,9 +113,12 @@ const MyFamilyClient = () => {
     };
 
     if (userProfile.familyRegistered) fetchData();
+    else setIsLoading(false);
   }, [userProfile.familyRegistered, userProfile.role, setReceiver]);
 
-  if (isLoading) return <Loading />;
+  if (userProfile.id === -1 || isLoading) {
+    return <Loading />;
+  }
 
   return (
     <div className="bg-grey-0 overflow-auto-hide-scroll flex h-full w-full flex-1 flex-col items-center p-4 pt-0">

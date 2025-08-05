@@ -61,6 +61,10 @@ const PayHistoryPage = () => {
       setIsLoading(false);
     }
   }, [userProfile.familyId]);
+
+  if (userProfile.id === -1 || isLoading) {
+    return <Loading />;
+  }
   return (
     <>
       {isLoading ? (

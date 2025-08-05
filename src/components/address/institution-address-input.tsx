@@ -53,34 +53,38 @@ const InstitutionAddressInput = () => {
         params: { code },
       });
 
-      setInstitution((prev: InstitutionAddressInputProps | null) => {
-        if (!prev) {
-          // prev가 null이면, deliveryType 등 필수 필드를 기본값으로 설정
-          return {
-            deliveryType: "INSTITUTION",
-            institutionName: res.data.result.name,
-            institutionPhone: res.data.result.phone,
-            address: res.data.result.address,
-            postalCode: res.data.result.postalCode,
-            code: code,
-            recipientName: "",
-            recipientPhone: "",
-            addressDetail: "",
-          };
-        }
-        // prev가 있으면 기존 값 유지하면서 새 값만 덮어쓰기
-        return {
-          ...prev,
+      setReceiver({
+        address: {
+          deliveryType: "INSTITUTION",
           institutionName: res.data.result.name,
           institutionPhone: res.data.result.phone,
           address: res.data.result.address,
           postalCode: res.data.result.postalCode,
-        };
+          code: code,
+          recipientName: "",
+          recipientPhone: "",
+          addressDetail: "",
+        },
       });
+      // prev가 있으면 기존 값 유지하면서 새 값만 덮어쓰기
+
       setMessage(1);
     } catch (err) {
       console.error("기관 코드 확인 실패", err);
       setInstitution(null);
+      setReceiver({
+        address: {
+          code: "",
+          address: "",
+          postalCode: "",
+          addressDetail: "",
+          recipientName: "",
+          recipientPhone: "",
+          deliveryType: "INSTITUTION",
+          institutionName: "",
+          institutionPhone: "",
+        },
+      });
       setMessage(0);
     }
   };
@@ -121,7 +125,7 @@ const InstitutionAddressInput = () => {
         우편 번호
         <input
           type="text"
-          value={getValue(institution?.postalCode)}
+          value={getValue(receiver.address.postalCode)}
           readOnly
           placeholder="우편 번호(유효 코드 확인 시 자동 입력)"
           className="text-title-1 text-grey-900 placeholder:text-title-3 placeholder:text-grey-400 border-grey-300 w-full border-b-1 border-solid px-1 py-2 focus:outline-none"
@@ -133,7 +137,7 @@ const InstitutionAddressInput = () => {
         주소
         <input
           type="text"
-          value={getValue(institution?.address)}
+          value={getValue(receiver.address.address)}
           readOnly
           placeholder="주소(유효 코드 확인 시 자동 입력)"
           className="text-title-1 text-grey-900 placeholder:text-title-3 placeholder:text-grey-400 border-grey-300 w-full border-b-1 border-solid px-1 py-2 focus:outline-none"
@@ -157,7 +161,7 @@ const InstitutionAddressInput = () => {
         기관명
         <input
           type="text"
-          value={getValue(institution?.institutionName)}
+          value={getValue(receiver.address.institutionName)}
           readOnly
           placeholder="기관명(유효 코드 확인 시 자동 입력)"
           className="text-title-1 text-grey-900 placeholder:text-title-3 placeholder:text-grey-400 border-grey-300 w-full border-b-1 border-solid px-1 py-2 focus:outline-none"
@@ -169,7 +173,7 @@ const InstitutionAddressInput = () => {
         기관 전화번호
         <input
           type="text"
-          value={getValue(institution?.institutionPhone)}
+          value={getValue(receiver.address.institutionPhone)}
           readOnly
           placeholder="기관 전화번호(유효 코드 확인 시 자동 입력)"
           className="text-title-1 text-grey-900 placeholder:text-title-3 placeholder:text-grey-400 border-grey-300 w-full border-b-1 border-solid px-1 py-2 focus:outline-none"
