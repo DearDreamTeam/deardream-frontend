@@ -15,7 +15,6 @@ const Page = () => {
     <TableViewer
       items={individuals}
       TABLE_COLUMNS={INDIVIDUALS_TABLE_ITEMS}
-      idName={"archiveId"}
       curPageNum={DELIVERY_TYPE.HOME}
       keyPrefix={"home-th"}
       fetchItem={getHomeArchives}

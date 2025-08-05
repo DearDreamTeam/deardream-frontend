@@ -10,6 +10,7 @@ import { STATUS_CHANGE_ITEMS } from "../table/table-items";
 import ItemCount from "../table/item-count";
 import { IndividualsDto, InstitutionsDto } from "@/types/admin-dto";
 import { TableItem } from "../table/table-item";
+import { CheckboxProps } from "../button/checkbox-props";
 
 const Modal = ({
   idList,
@@ -20,7 +21,7 @@ const Modal = ({
   idList: number[];
   items: InstitutionsDto[] | IndividualsDto[];
   onClose: () => void;
-  handleCheckboxChange: (id: number, checked: boolean) => void;
+  handleCheckboxChange: CheckboxProps;
 }) => {
   const [selectedStatus, setStatus] = useState<
     keyof typeof DELIVERY_STATUS | null
@@ -46,8 +47,6 @@ const Modal = ({
       }
     })
     .filter((item) => item !== undefined);
-  console.log("targetList", targetList);
-  console.log("idList", idList);
 
   return createPortal(
     <div className="modal-bg top-0 left-0 flex h-full w-full items-center justify-center">
@@ -85,7 +84,7 @@ const Modal = ({
           TABLE_COLUMNS={STATUS_CHANGE_ITEMS}
           keyPrefix={"change-"}
         />
-        <section className="overflow-auto-hide-scroll h-[400px]">
+        <section className="overflow-auto-hide-scroll max-h-[400px]">
           {targetList.map((target, index) => (
             <TableItem
               key={"target" + index}
@@ -93,6 +92,7 @@ const Modal = ({
               index={index + 1}
               id={target.id}
               item={{ ...target, selectedStatus: selectedStatus }}
+              isChecked={idList.includes(target.id)}
               action={handleCheckboxChange}
             />
           ))}

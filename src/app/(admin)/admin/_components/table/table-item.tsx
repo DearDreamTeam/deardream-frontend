@@ -24,7 +24,8 @@ interface TableItemProps {
         selectedStatus: keyof typeof DELIVERY_STATUS | null;
       };
   TABLE_COLUMNS: TableItemsType;
-  action: (id: number, checked: boolean) => void;
+  action: CheckboxProps;
+  isChecked: boolean;
   gap?: string;
   isSelected?: boolean;
   onClick?: () => void;
@@ -37,6 +38,7 @@ export const TableItem = ({
   TABLE_COLUMNS,
   action,
   gap = "gap-4",
+  isChecked,
   isSelected,
   onClick,
 }: TableItemProps) => {
@@ -69,11 +71,7 @@ export const TableItem = ({
         if (value === "checkbox")
           return (
             <span key={key} className={flex}>
-              <Checkbox
-                idValue={id}
-                callback={action}
-                isChecked={"selectedStatus" in item}
-              />
+              <Checkbox idValue={id} callback={action} isChecked={isChecked} />
             </span>
           );
         if (value === "progressUi")
@@ -122,6 +120,7 @@ export const InstitutionDetailTableItem = (
 import More from "@/public/icons/post-card/more.svg";
 import Link from "next/link";
 import { DELIVERY_STATUS } from "@/constants/delivery-status";
+import { CheckboxProps } from "../button/checkbox-props";
 export const InstitutionFamilyTableItem = (
   props: {
     index: number;

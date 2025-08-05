@@ -23,7 +23,6 @@ const Page = () => {
       <TableViewer
         items={institutions}
         TABLE_COLUMNS={INSTITUTIONS_TABLE_ITEMS}
-        idName={"institutionId"}
         curPageNum={DELIVERY_TYPE.INSTITUTION}
         keyPrefix={"inst-th"}
         fetchItem={getInstitutionArchives}

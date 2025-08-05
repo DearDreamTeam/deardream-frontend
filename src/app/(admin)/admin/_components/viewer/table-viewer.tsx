@@ -16,7 +16,6 @@ import Modal from "../modal/modal";
 interface TableViewerProps {
   items: InstitutionsDto[] | IndividualsDto[];
   TABLE_COLUMNS: TableItemsType;
-  idName: "institutionId" | "archiveId";
   curPageNum: number;
   keyPrefix: string;
   fetchItem: (year: number, month: number) => Promise<never[] | undefined>;
@@ -29,7 +28,6 @@ const TableViewer = ({
   items,
   fetchItem,
   TABLE_COLUMNS,
-  idName,
   curPageNum,
   keyPrefix,
   gap = "gap-4",
@@ -53,9 +51,15 @@ const TableViewer = ({
   }, [pivotDate, fetchItem]);
 
   const handleCheckboxChange = (id: number, checked: boolean) => {
-    if (checked) setCheckedItem((prev) => [...prev, id]);
-    else
-      setCheckedItem((prev) => prev.filter((selectedId) => selectedId !== id));
+    setCheckedItem((prev) => {
+      const set = new Set(prev);
+      if (checked) {
+        set.add(id);
+      } else {
+        set.delete(id);
+      }
+      return Array.from(set);
+    });
   };
 
   const handleChangeStatus = () => {
@@ -87,18 +91,15 @@ const TableViewer = ({
           <TableItem
             key={index}
             index={index + 1}
-            id={
-              "institutionId" in item && idName === "institutionId"
-                ? item.institutionId
-                : "archiveId" in item && idName === "archiveId"
-                  ? item.archiveId
-                  : -1
-            }
+            id={"institutionId" in item ? item.institutionId : item.archiveId}
             item={item}
             TABLE_COLUMNS={TABLE_COLUMNS}
             action={handleCheckboxChange}
             gap={gap}
-            {...(idName === "institutionId" && "institutionId" in item
+            isChecked={checkedItem.includes(
+              "institutionId" in item ? item.institutionId : item.archiveId,
+            )}
+            {...("institutionId" in item
               ? {
                   isSelected: selectedInstitution === item.institutionId,
                   onClick: () =>
