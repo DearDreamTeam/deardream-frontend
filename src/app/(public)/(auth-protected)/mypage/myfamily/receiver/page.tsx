@@ -31,10 +31,6 @@ const ReceiverProfilePage = () => {
     !editUserProfile?.phone?.trim();
 
   const handleSave = async () => {
-    if (selectedFile && selectedFile.size > 1024 * 1024) {
-      setMessage("이미지 파일은 1MB 이하로 업로드해주세요.");
-      return;
-    }
     try {
       setIsLoading(true);
       const response = await updateReceiver(editUserProfile, selectedFile);
@@ -74,9 +70,9 @@ const ReceiverProfilePage = () => {
           }
           handleSave();
         }}
-        className="bg-grey-0 relative flex h-full w-full flex-col items-center justify-between p-4 pt-0"
+        className="bg-grey-0 overflow-auto-hide-scroll relative flex h-full w-full flex-col items-center justify-between p-4 pt-0"
       >
-        <div>
+        <div className="mb-4">
           <Header>받는 분 정보</Header>
           <ReceiverProfileEdit
             setEditReceiverProfile={setEditUserProfile}
@@ -84,11 +80,9 @@ const ReceiverProfilePage = () => {
             setSelectedFile={setSelectedFile}
           />
         </div>
-        <div className="flex h-14 w-full items-center justify-center">
-          <GreenBasicButton disabled={isProfileIncomplete || isLoading}>
-            {isLoading ? "저장 중..." : "저장"}
-          </GreenBasicButton>
-        </div>
+        <GreenBasicButton disabled={isProfileIncomplete || isLoading}>
+          {isLoading ? "저장 중..." : "저장"}
+        </GreenBasicButton>
       </form>
       {showAlert && (
         <AlertDialog

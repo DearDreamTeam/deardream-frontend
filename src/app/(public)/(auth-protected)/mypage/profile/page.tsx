@@ -37,10 +37,7 @@ const Profile = () => {
       alert("이름과 생일을 입력해주세요.");
       return;
     }
-    if (selectedFile && selectedFile.size > 1024 * 1024) {
-      setMessage("이미지 파일은 1MB 이하로 업로드해주세요.");
-      return;
-    }
+
     setIsLoading(true);
     try {
       const response = await updateProfile(editUserProfile, selectedFile);
@@ -99,11 +96,9 @@ const Profile = () => {
             setSelectedFile={setSelectedFile}
           />
         </div>
-        <div className="flex h-14 w-full items-center justify-center">
-          <GreenBasicButton disabled={isProfileIncomplete || isLoading}>
-            {isLoading ? "저장 중..." : "저장"}
-          </GreenBasicButton>
-        </div>
+        <GreenBasicButton disabled={isProfileIncomplete || isLoading}>
+          {isLoading ? "저장 중..." : "저장"}
+        </GreenBasicButton>
       </form>
       {showAlert && (
         <AlertDialog

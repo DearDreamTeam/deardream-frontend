@@ -1,4 +1,5 @@
 import axios from "@/lib/axios";
+import { compressImage } from "@/lib/compress-image";
 import { ReceiverProfileInfo } from "@/stores/useReceiverStore";
 import { UserProfileInfo } from "@/types/user-info";
 import { formatImageUrl } from "@/utils/format-image-url";
@@ -32,7 +33,8 @@ export const registerUser = async (
   formData.append("userRequestDto", jsonFile);
 
   if (imageFile) {
-    formData.append("profileImage", imageFile); // File 객체
+    const compressedImage = await compressImage(imageFile);
+    formData.append("profileImage", compressedImage); // File 객체
   }
   console.log("등록할 프로필 정보:", formData);
 
@@ -74,7 +76,8 @@ export const updateProfile = async (
   );
 
   if (imageFile) {
-    formData.append("profileImage", imageFile); // 이미지 파일
+    const compressedImage = await compressImage(imageFile);
+    formData.append("profileImage", compressedImage); // 이미지 파일
   }
 
   const response = await axios.patch("/v1/users/me", formData);
@@ -94,7 +97,8 @@ export const createReceiver = async (
   );
 
   if (imageFile) {
-    formData.append("profileImage", imageFile);
+    const compressedImage = await compressImage(imageFile);
+    formData.append("profileImage", compressedImage);
   }
 
   const response = await axios.post("/v1/recipients", formData);
@@ -122,7 +126,8 @@ export const updateReceiver = async (
   );
 
   if (imageFile) {
-    formData.append("profileImage", imageFile);
+    const compressedImage = await compressImage(imageFile);
+    formData.append("profileImage", compressedImage);
   }
 
   const response = await axios.put(`/v1/recipients/${receiver.id}`, formData);

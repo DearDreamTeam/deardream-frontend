@@ -130,82 +130,82 @@ const PayPage = () => {
   return (
     <>
       <form
-        className="bg-grey-0 flex h-screen w-full flex-col items-center justify-between p-4 pt-0"
+        className="bg-grey-0 overflow-auto-hide-scroll flex h-full w-full flex-col items-center justify-between p-4 pt-0"
         onSubmit={handleSubmit}
       >
-        <Header>결제 정보 입력</Header>
-        <div className="text-title-2 mt-4 flex h-full w-full flex-col">
-          이어드림 월 정기 구독
-          <GreenBox text="개인 플랜 구독권">월 8,900원</GreenBox>
-          <div className="text-label-2 border-grey-200 text-grey-500 flex w-full justify-between border-b-1 p-3">
-            구독 기간
-            <span className="text-grey-600">
-              {formattedCurrentMonth} ~ {formattedNextMonth}
-            </span>
-          </div>
-          <div className="text-label-2 border-grey-200 text-grey-500 flex w-full justify-between border-b-1 p-3">
-            다음 결제일{" "}
-            <span className="text-grey-600">{formattedNextSubscribe}</span>
-          </div>
-          <div className="text-title-2 mt-4 flex h-full w-full flex-col">
-            결제 수단
-            <div className="text-title-3 text-grey-800 mt-2 flex w-full items-center gap-2">
-              <div
-                // onClick={() => setIsPaymentCheck(!isPaymentCheck)}
-                className={`${!isPaymentCheck ? "bg-grey-300" : "bg-green-300"} inline-flex h-[24px] w-[24px] cursor-pointer flex-col items-center justify-center rounded-full`}
-              >
-                <Check />
-              </div>
-              카카오페이
+        <div className="flex w-full flex-col items-center">
+          <Header>결제 정보 입력</Header>
+          <div className="text-title-2 my-4 flex w-full flex-col">
+            이어드림 월 정기 구독
+            <GreenBox text="개인 플랜 구독권">월 8,900원</GreenBox>
+            <div className="text-label-2 border-grey-200 text-grey-500 flex w-full justify-between border-b-1 p-3">
+              구독 기간
+              <span className="text-grey-600">
+                {formattedCurrentMonth} ~ {formattedNextMonth}
+              </span>
             </div>
-            <span className="text-body-2 text-grey-500 mt-1">
-              아직은 카카오페이로만 결제가 가능해요
-            </span>
-            <div className="text-title-2 text-grey-800 mt-4 flex w-full items-center gap-2">
-              <div
-                onClick={handleAllCheck}
-                className={`${!isAllCheck ? "bg-grey-300" : "bg-green-300"} inline-flex min-h-[24px] min-w-[24px] cursor-pointer flex-col items-center justify-center rounded-full`}
-              >
-                <Check />
-              </div>
-              전체 약관 동의
+            <div className="text-label-2 border-grey-200 text-grey-500 flex w-full justify-between border-b-1 p-3">
+              다음 결제일{" "}
+              <span className="text-grey-600">{formattedNextSubscribe}</span>
             </div>
-            <div className="text-body-2 text-grey-500 grey-0space-normal mt-4 flex w-full items-center gap-2">
-              <div
-                onClick={handleCheck2}
-                className={`${!isCheck2 ? "bg-grey-300" : "bg-green-300"} inline-flex min-h-[24px] min-w-[24px] cursor-pointer flex-col items-center justify-center rounded-full`}
-              >
-                <Check />
+            <div className="text-title-2 mt-4 flex h-full w-full flex-col">
+              결제 수단
+              <div className="text-title-3 text-grey-800 mt-2 flex w-full items-center gap-2">
+                <div
+                  // onClick={() => setIsPaymentCheck(!isPaymentCheck)}
+                  className={`${!isPaymentCheck ? "bg-grey-300" : "bg-green-300"} inline-flex h-[24px] w-[24px] cursor-pointer flex-col items-center justify-center rounded-full`}
+                >
+                  <Check />
+                </div>
+                카카오페이
               </div>
-              [필수] 가격, 내용 등 상품 저옵에 대한 정기구독 안내를
-              확인하였으며, 이에 동의합니다.
-            </div>
-            <div className="text-body-2 text-grey-500 grey-0space-normal mt-4 flex w-full items-center gap-2">
-              <div
-                onClick={handleCheck3}
-                className={`${!isCheck3 ? "bg-grey-300" : "bg-green-300"} inline-flex min-h-[24px] min-w-[24px] cursor-pointer flex-col items-center justify-center rounded-full`}
-              >
-                <Check />
+              <span className="text-body-2 text-grey-500 mt-1">
+                아직은 카카오페이로만 결제가 가능해요
+              </span>
+              <div className="text-title-2 text-grey-800 mt-4 flex w-full items-center gap-2">
+                <div
+                  onClick={handleAllCheck}
+                  className={`${!isAllCheck ? "bg-grey-300" : "bg-green-300"} inline-flex min-h-[24px] min-w-[24px] cursor-pointer flex-col items-center justify-center rounded-full`}
+                >
+                  <Check />
+                </div>
+                전체 약관 동의
               </div>
-              [필수] 개인정보 수집 및 이용에 동의합니다.{" "}
-            </div>
-            <div className="text-body-2 text-grey-500 grey-0space-normal mt-4 flex w-full items-center gap-2">
-              <div
-                onClick={handleCheck4}
-                className={`${!isCheck4 ? "bg-grey-300" : "bg-green-300"} inline-flex min-h-[24px] min-w-[24px] cursor-pointer flex-col items-center justify-center rounded-full`}
-              >
-                <Check />
+              <div className="text-body-2 text-grey-500 grey-0space-normal mt-4 flex w-full items-center gap-2">
+                <div
+                  onClick={handleCheck2}
+                  className={`${!isCheck2 ? "bg-grey-300" : "bg-green-300"} inline-flex min-h-[24px] min-w-[24px] cursor-pointer flex-col items-center justify-center rounded-full`}
+                >
+                  <Check />
+                </div>
+                [필수] 가격, 내용 등 상품 저옵에 대한 정기구독 안내를
+                확인하였으며, 이에 동의합니다.
               </div>
-              [선택] SMS 광고성 정보 수신에 동의합니다{" "}
+              <div className="text-body-2 text-grey-500 grey-0space-normal mt-4 flex w-full items-center gap-2">
+                <div
+                  onClick={handleCheck3}
+                  className={`${!isCheck3 ? "bg-grey-300" : "bg-green-300"} inline-flex min-h-[24px] min-w-[24px] cursor-pointer flex-col items-center justify-center rounded-full`}
+                >
+                  <Check />
+                </div>
+                [필수] 개인정보 수집 및 이용에 동의합니다.{" "}
+              </div>
+              <div className="text-body-2 text-grey-500 grey-0space-normal mt-4 flex w-full items-center gap-2">
+                <div
+                  onClick={handleCheck4}
+                  className={`${!isCheck4 ? "bg-grey-300" : "bg-green-300"} inline-flex min-h-[24px] min-w-[24px] cursor-pointer flex-col items-center justify-center rounded-full`}
+                >
+                  <Check />
+                </div>
+                [선택] SMS 광고성 정보 수신에 동의합니다{" "}
+              </div>
             </div>
           </div>
         </div>
 
-        <div className="flex h-14 w-full items-center justify-center">
-          <GreenBasicButton color="300" disabled={!isAbleSubmit}>
-            결제하기
-          </GreenBasicButton>
-        </div>
+        <GreenBasicButton color="300" disabled={!isAbleSubmit}>
+          결제하기
+        </GreenBasicButton>
       </form>
       {message && (
         <AlertDialog

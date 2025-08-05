@@ -132,10 +132,10 @@ const MyPage = () => {
 
   return (
     <>
-      <div className="bg-grey-0 flex h-screen w-full flex-col items-center p-4 pt-0">
+      <div className="bg-grey-0 flex h-full w-full flex-col items-center p-4 pt-0">
         <Header>마이페이지</Header>
 
-        <div className="mt-4 flex w-full flex-col gap-8">
+        <div className="overflow-auto-hide-scroll mt-4 flex w-full flex-col gap-8">
           <div
             className="flex cursor-pointer items-center gap-3"
             onClick={() => router.push("/mypage/profile")}

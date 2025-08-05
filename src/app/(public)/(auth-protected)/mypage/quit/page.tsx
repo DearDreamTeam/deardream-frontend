@@ -66,7 +66,7 @@ const QuitPage = () => {
   return (
     <>
       <form
-        className="relative flex h-full w-full flex-col items-center justify-between p-4 pt-0"
+        className="overflow-auto-hide-scroll relative flex h-full w-full flex-col items-center justify-between p-4 pt-0"
         onSubmit={handleClick}
       >
         <Header>회원 탈퇴</Header>
@@ -101,7 +101,7 @@ const QuitPage = () => {
           </div>
         </div>
 
-        <div className="flex w-full flex-col justify-center gap-4">
+        <div className="mt-4 flex w-full flex-col justify-center gap-4">
           <div className="flex gap-2">
             <div
               onClick={() => setIsChecked(!isChecked)}

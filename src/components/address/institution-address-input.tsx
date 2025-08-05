@@ -88,7 +88,7 @@ const InstitutionAddressInput = () => {
   const getValue = (val?: string) => val ?? "";
 
   return (
-    <div className="overflow-auto-hide-scroll flex w-full flex-col items-center gap-4">
+    <div className="flex h-full w-full flex-col items-center gap-4">
       {/* 기관 코드 */}
       <div className="text-body-1 text-grey-400 flex w-full flex-col gap-2">
         기관 코드
@@ -123,7 +123,7 @@ const InstitutionAddressInput = () => {
           type="text"
           value={getValue(institution?.postalCode)}
           readOnly
-          placeholder="우편 번호"
+          placeholder="우편 번호(유효 코드 확인 시 자동 입력)"
           className="text-title-1 text-grey-900 placeholder:text-title-3 placeholder:text-grey-400 border-grey-300 w-full border-b-1 border-solid px-1 py-2 focus:outline-none"
         />
       </div>
@@ -135,7 +135,7 @@ const InstitutionAddressInput = () => {
           type="text"
           value={getValue(institution?.address)}
           readOnly
-          placeholder="주소"
+          placeholder="주소(유효 코드 확인 시 자동 입력)"
           className="text-title-1 text-grey-900 placeholder:text-title-3 placeholder:text-grey-400 border-grey-300 w-full border-b-1 border-solid px-1 py-2 focus:outline-none"
         />
       </div>
@@ -159,7 +159,7 @@ const InstitutionAddressInput = () => {
           type="text"
           value={getValue(institution?.institutionName)}
           readOnly
-          placeholder="기관명"
+          placeholder="기관명(유효 코드 확인 시 자동 입력)"
           className="text-title-1 text-grey-900 placeholder:text-title-3 placeholder:text-grey-400 border-grey-300 w-full border-b-1 border-solid px-1 py-2 focus:outline-none"
         />
       </div>
@@ -171,7 +171,7 @@ const InstitutionAddressInput = () => {
           type="text"
           value={getValue(institution?.institutionPhone)}
           readOnly
-          placeholder="기관 전화번호"
+          placeholder="기관 전화번호(유효 코드 확인 시 자동 입력)"
           className="text-title-1 text-grey-900 placeholder:text-title-3 placeholder:text-grey-400 border-grey-300 w-full border-b-1 border-solid px-1 py-2 focus:outline-none"
         />
       </div>
