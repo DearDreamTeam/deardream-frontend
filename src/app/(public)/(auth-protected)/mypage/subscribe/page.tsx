@@ -8,33 +8,28 @@ type PlanTypeInfo = "HOME" | "INSTITUTION" | "NONE";
 import { useRouter } from "next/navigation";
 import PersonalPlanUse from "@/components/profile/plan/personal-plan-use";
 import InstitutionPlanUse from "@/components/profile/plan/institution-plan-use";
-import { PATH } from "@/constants/path";
 import { usePlanStore } from "@/stores/usePlanStore";
+import { PATH } from "@/constants/path";
 
 const SubScribePage = () => {
   const { plan } = usePlanStore();
 
-  const [isActive] = useState(plan.isActive);
   const router = useRouter();
 
   const [planType, setPlanType] = useState<PlanTypeInfo>(plan.type);
 
   useEffect(() => {
-    if (!plan.isActive) {
-      router.push(PATH.SUBSCRIBE);
-      return;
-    }
     setPlanType(plan.type);
-  }, [plan.type, router, plan.isActive]);
+  }, [plan.type, router]);
 
   return (
     <>
       <div className="bg-grey-0 overflow-auto-hide-scroll relative flex h-full w-full flex-col items-center p-4 pt-0">
         <div className="flex w-full flex-col items-center">
-          <Header>나의 정기 구독</Header>
+          <Header link={PATH.MYPAGE}>나의 정기 구독</Header>
           <div className="border-grey-200 relative w-screen max-w-[768px] border-b-1 border-solid p-4">
             <div className="flex items-center gap-2">
-              {isActive ? (
+              {plan.isActive ? (
                 <label className="text-title-2 rounded bg-green-100 px-2 py-1 text-green-300">
                   활성화
                 </label>
@@ -51,17 +46,20 @@ const SubScribePage = () => {
                 <span className="ttext-title-2 text-grey-700">구독 없음</span>
               )}
             </div>
-            {isActive &&
+            {plan.isActive &&
               (planType === "HOME" ? (
-                <PersonalPlanUse isActive={isActive} planType={planType} />
+                <PersonalPlanUse isActive={plan.isActive} planType={planType} />
               ) : (
-                <InstitutionPlanUse isActive={isActive} planType={planType} />
+                <InstitutionPlanUse
+                  isActive={plan.isActive}
+                  planType={planType}
+                />
               ))}
 
             <div
-              className={`text-title-1 ${isActive ? "text-green-300" : "text-grey-700"} w-full text-right`}
+              className={`text-title-1 ${plan.isActive ? "text-green-300" : "text-grey-700"} w-full text-right`}
             >
-              {isActive
+              {plan.isActive
                 ? planType === "HOME"
                   ? "월 8,900원"
                   : planType === "INSTITUTION"

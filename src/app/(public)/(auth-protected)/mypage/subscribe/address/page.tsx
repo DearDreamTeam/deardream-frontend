@@ -9,10 +9,12 @@ import HomeAddressInput from "@/components/address/home-address-input";
 import { PATH } from "@/constants/path";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import ConfirmDialog from "@/components/modal/dialog/confirm-dialog";
 const AddressPage = () => {
   const { receiver } = useReceiverStore();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -37,7 +39,7 @@ const AddressPage = () => {
         onSubmit={handleSubmit}
       >
         <div className="flex w-full flex-col items-center">
-          <Header>주소 변경</Header>
+          <Header setIsModalOpen={() => setShowAlert(true)}>주소 변경</Header>
           <div className="text-title-2 my-4 flex w-full flex-col">
             {receiver.address.deliveryType === "INSTITUTION" ? (
               <InstitutionAddressEdit />
@@ -55,6 +57,18 @@ const AddressPage = () => {
           {isLoading ? "저장 중..." : "저장"}
         </GreenBasicButton>
       </form>
+      {showAlert && (
+        <ConfirmDialog
+          title="정말 나가시겠습니까?"
+          content="입력하신 정보가 저장되지 않습니다."
+          setIsOpen={setShowAlert}
+          actionLabel="나가기"
+          action={() => {
+            window.location.href = PATH.MYPAGE + "/subscribe";
+          }}
+          cancelAction={() => setShowAlert(false)}
+        />
+      )}
     </>
   );
 };
