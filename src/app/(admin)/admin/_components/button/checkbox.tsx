@@ -8,16 +8,28 @@ import { CheckboxProps } from "./checkbox-props";
 const Checkbox = ({
   idValue,
   callback,
+  isChecked,
 }: {
   idValue: number;
   callback: CheckboxProps;
+  isChecked?: boolean;
 }) => {
-  const [checked, setChecked] = useState(false);
+  const [checked, setChecked] = useState<boolean>(false);
   const handleCheckboxClick = () => setChecked((prev) => !prev);
+  const [isInitialized, setIsInitialized] = useState(false);
 
   useEffect(() => {
-    callback(idValue, checked);
-  }, [checked]);
+    if (isChecked !== undefined) {
+      setChecked(isChecked);
+      setIsInitialized(true);
+    }
+  }, [isChecked]);
+
+  useEffect(() => {
+    if (isInitialized) {
+      callback(idValue, checked);
+    }
+  }, [checked, isInitialized]);
 
   return (
     <button type="button" onClick={handleCheckboxClick}>

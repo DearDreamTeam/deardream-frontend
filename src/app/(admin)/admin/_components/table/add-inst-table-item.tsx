@@ -104,7 +104,7 @@ export const AddInstitutionTableItem = ({
           name={ADD_INSTITUTIONS_TABLE_ITEMS[5].value}
           onChange={handleChangeInput}
           type="tel"
-          pattern="([0-9]{3}-[0-9]{3}-[0-9]{4})|([0-9]{2}-[0-9]{3}-[0-9]{4})|([0-9]{3}-[0-9]{4}-[0-9]{4})"
+          pattern="([0-9]{3}-[0-9]{3}-[0-9]{4})|([0-9]{2}-[0-9]{3}-[0-9]{4})|([0-9]{3}-[0-9]{4}-[0-9]{4})|([0-9]{2}-[0-9]{4}-[0-9]{4})"
           placeholder="000-0000-0000"
           className="input-center"
           required

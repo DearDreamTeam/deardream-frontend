@@ -2,33 +2,23 @@
 
 import ArrowBack from "@/public/icons/common/arrow_back_ios.svg";
 import ArrowFront from "@/public/icons/common/arrow_front_ios.svg";
-import { useRef, useState } from "react";
+import { useSuperAdminStore } from "@/stores/admin/useSuperAdminStroe";
+import { useRef } from "react";
 
 const MonthPicker = () => {
-  const [pivotDate, setPivotDate] = useState(new Date());
+  const { pivotDate, updatePivotDate, setPivotDate } = useSuperAdminStore();
+  const date = new Date(pivotDate);
   const monthRef = useRef<HTMLInputElement>(null);
   return (
     <section className="flex w-full flex-col items-center justify-center">
       <div className="text-headline-0 text-grey-700 flex gap-4">
-        <button
-          onClick={() =>
-            setPivotDate(
-              new Date(pivotDate.getFullYear(), pivotDate.getMonth() - 1, 1),
-            )
-          }
-        >
+        <button onClick={() => updatePivotDate(-1)}>
           <ArrowBack />
         </button>
         <button onClick={() => monthRef.current?.showPicker()}>
-          {pivotDate.getFullYear()}년 {pivotDate.getMonth() + 1}월
+          {date.getFullYear()}년 {date.getMonth()}월
         </button>
-        <button
-          onClick={() =>
-            setPivotDate(
-              new Date(pivotDate.getFullYear(), pivotDate.getMonth() + 1, 1),
-            )
-          }
-        >
+        <button onClick={() => updatePivotDate(1)}>
           <ArrowFront />
         </button>
       </div>
@@ -36,8 +26,8 @@ const MonthPicker = () => {
       <input
         ref={monthRef}
         type="month"
-        value={`${pivotDate.getFullYear()}-${String(pivotDate.getMonth() + 1).padStart(2, "0")}`}
-        onChange={(e) => setPivotDate(new Date(e.target.value))}
+        value={`${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`}
+        onChange={(e) => setPivotDate(e.target.value)}
         className="opacity-0"
       />
     </section>
