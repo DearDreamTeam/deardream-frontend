@@ -67,3 +67,13 @@ export const INSTITUTION_FAMILY_TABLE_ITEMS = [
   { value: "", label: "", flex: "flex-[5]" },
   { value: "delete", label: "상세보기", flex: "flex-[1]" },
 ];
+
+export const STATUS_CHANGE_ITEMS = [
+  { value: "index", label: "번호", flex: "flex-[1]" },
+  { value: "name", label: "기관 이름", flex: "flex-[3]" },
+  { value: "code", label: "기관 코드", flex: "flex-[2]" },
+  { value: "deliveryStatus", label: "현재 상태", flex: "flex-[2] flex-center" },
+  { value: "progressUi", label: "", flex: "flex-[1] flex-center" },
+  { value: "selectedStatus", label: "변경 상태", flex: "flex-[2] flex-center" },
+  { value: "checkbox", label: "관리", flex: "flex-[1] flex-center" },
+];

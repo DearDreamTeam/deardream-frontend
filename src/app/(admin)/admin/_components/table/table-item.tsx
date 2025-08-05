@@ -13,7 +13,16 @@ import Checkbox from "../button/checkbox";
 interface TableItemProps {
   index: number;
   id: number;
-  item: IndividualsDto | InstitutionsDto;
+  item:
+    | IndividualsDto
+    | InstitutionsDto
+    | {
+        id: number;
+        name: string;
+        code: number | string;
+        deliveryStatus: string;
+        selectedStatus: keyof typeof DELIVERY_STATUS | null;
+      };
   TABLE_COLUMNS: TableItemsType;
   action: (id: number, checked: boolean) => void;
   gap?: string;
@@ -45,7 +54,13 @@ export const TableItem = ({
               {DeliveryStatus(item.deliveryStatus)}
             </span>
           );
-        if (value === "pdfUrl")
+        if ("selectedStatus" in item && value === "selectedStatus")
+          return (
+            <span key={key} className={flex}>
+              {DeliveryStatus(item.selectedStatus ?? "")}
+            </span>
+          );
+        if ("pdfUrl" in item && value === "pdfUrl")
           return (
             <span key={key} className={flex}>
               <DownloadPdf pdfUrl={item.pdfUrl ?? ""} isDownloaded={false} />
@@ -54,9 +69,15 @@ export const TableItem = ({
         if (value === "checkbox")
           return (
             <span key={key} className={flex}>
-              <Checkbox idValue={id} callback={action} />
+              <Checkbox
+                idValue={id}
+                callback={action}
+                isChecked={"selectedStatus" in item}
+              />
             </span>
           );
+        if (value === "progressUi")
+          return <span key={key} className={flex}>{`->`}</span>;
         return (
           <span key={key} className={flex}>
             {item[value as keyof typeof item] ?? index}
@@ -100,6 +121,7 @@ export const InstitutionDetailTableItem = (
 };
 import More from "@/public/icons/post-card/more.svg";
 import Link from "next/link";
+import { DELIVERY_STATUS } from "@/constants/delivery-status";
 export const InstitutionFamilyTableItem = (
   props: {
     index: number;

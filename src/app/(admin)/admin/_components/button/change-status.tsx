@@ -1,6 +1,14 @@
-const ChangeStatus = ({ selectedItemCount }: { selectedItemCount: number }) => {
+const ChangeStatus = ({
+  selectedItemCount,
+  onClick,
+}: {
+  selectedItemCount: number;
+  onClick: () => void;
+}) => {
   return (
-    <button className="button">{selectedItemCount}건 일괄 상태 변경</button>
+    <button className="button" onClick={onClick}>
+      {selectedItemCount}건 일괄 상태 변경
+    </button>
   );
 };
 

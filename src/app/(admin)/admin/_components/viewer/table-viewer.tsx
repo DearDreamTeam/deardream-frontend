@@ -11,6 +11,7 @@ import MonthPicker from "../month-picker";
 import ItemCount from "../table/item-count";
 import ChangeStatus from "../button/change-status";
 import MoreView from "../button/more-view";
+import Modal from "../modal/modal";
 
 interface TableViewerProps {
   items: InstitutionsDto[] | IndividualsDto[];
@@ -41,6 +42,8 @@ const TableViewer = ({
   const [viewLevel, setViewLevel] = useState(1);
   const viewItem = items.slice(0, viewLevel * 8);
 
+  const [open, setOpen] = useState(false);
+
   useEffect(() => {
     const fetchData = async () => {
       const date = new Date(pivotDate);
@@ -54,6 +57,10 @@ const TableViewer = ({
     else
       setCheckedItem((prev) => prev.filter((selectedId) => selectedId !== id));
   };
+
+  const handleChangeStatus = () => {
+    setOpen(true);
+  };
   return (
     <div className="bg-grey-0 w-full">
       <PageToggle curPage={curPageNum} />
@@ -62,7 +69,10 @@ const TableViewer = ({
         <ItemCount count={items.length} />
 
         <div className="flex items-center gap-4">
-          <ChangeStatus selectedItemCount={checkedItem.length} />
+          <ChangeStatus
+            selectedItemCount={checkedItem.length}
+            onClick={handleChangeStatus}
+          />
         </div>
       </div>
       <TableHeader
@@ -105,6 +115,15 @@ const TableViewer = ({
         count={items.length}
         onClick={() => setViewLevel((prev) => prev + 1)}
       />
+
+      {open && (
+        <Modal
+          idList={checkedItem}
+          items={items}
+          onClose={() => setOpen(false)}
+          handleCheckboxChange={handleCheckboxChange}
+        />
+      )}
     </div>
   );
 };
