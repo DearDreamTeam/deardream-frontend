@@ -10,7 +10,7 @@ const CompletePage = () => {
     localStorage.clear();
     const timer = setTimeout(() => {
       router.push("/onboarding");
-    }, 3000);
+    }, 2000);
 
     return () => clearTimeout(timer);
   }, [router]);

@@ -3,23 +3,14 @@
 import GreenBasicButton from "@/components/button/green-basic-button";
 import Header from "@/components/common/header";
 import AlertDialog from "@/components/modal/dialog/alert-dialog";
-import axios from "@/lib/axios";
+
+import instance from "@/lib/axios";
+import { AxiosError } from "axios";
+
 import Check from "@/public/icons/common/check.svg";
 import { useUserStore } from "@/stores/useUserInfoStore";
 import { useState } from "react";
-
-interface UserPostInfo {
-  name: string;
-  messageCount: number;
-  planType: "PERSONAL" | "INSTITUTION" | "NONE";
-  willDeliverCount: number;
-}
-const userPostInfo: UserPostInfo = {
-  name: "김수진",
-  messageCount: 5,
-  planType: "PERSONAL",
-  willDeliverCount: 2,
-};
+import { usePlanStore } from "@/stores/usePlanStore";
 
 const QuitItem = ({
   text,
@@ -38,18 +29,20 @@ const QuitItem = ({
 const QuitPage = () => {
   const [isChecked, setIsChecked] = useState(false);
   const [isNotPermitted, setIsNotPermitted] = useState(false);
+  const [message, setMessage] = useState("");
 
   const { userProfile } = useUserStore();
+
+  const { plan } = usePlanStore();
 
   const handleClick = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!isChecked) {
-      alert("회원 탈퇴 약관에 동의해주세요.");
       return;
     } else {
       console.log("탈퇴 시작");
       try {
-        const response = await axios.delete("/v1/users/me");
+        const response = await instance.delete("/v1/users/me");
         if (response.status === 200 || response.status === 204) {
           // 삭제가 성공적으로 완료되었을 때만 이동
           window.location.href = "/mypage/quit/complete";
@@ -58,8 +51,13 @@ const QuitPage = () => {
           alert("탈퇴에 실패했습니다. 다시 시도해주세요.");
           console.error("Unexpected response:", response);
         }
-      } catch (error) {
+      } catch (error: unknown) {
         console.error(error);
+        if (error instanceof AxiosError && error.response) {
+          setMessage(error.response.data.message);
+        } else {
+          setMessage("관리자에게 문의해주세요.");
+        }
         setIsNotPermitted(true);
       }
     }
@@ -83,26 +81,22 @@ const QuitPage = () => {
           <div className="flex w-full flex-col gap-4">
             <div className="text-title-2">
               그동안 쌓아온 <br /> 소중한 추억들을 전부 잃어버려요
-              <QuitItem text="그동안 모인 소식">
-                {userPostInfo.messageCount}개
-              </QuitItem>
+              <QuitItem text="그동안 모인 소식">🤷개</QuitItem>
             </div>
             <div className="text-title-2">
               이용 중이신 플랜이 중지되며, <br />더 이상 서비스를 이용하실 수
               없어요
               <QuitItem text="구독 중인 플랜">
-                {userPostInfo.planType === "NONE"
+                {plan.isActive === false
                   ? "구독 중인 플랜이 없습니다"
-                  : userPostInfo.planType === "PERSONAL"
+                  : plan.type === "HOME"
                     ? "개인 플랜"
                     : "기관 플랜"}
               </QuitItem>
             </div>
             <div className="text-title-2">
               이번달 소식지는 제작 및 배송되지 않아요
-              <QuitItem text="발송 예정 소식지">
-                {userPostInfo.willDeliverCount}개
-              </QuitItem>
+              <QuitItem text="발송 예정 소식지">🥺</QuitItem>
             </div>
           </div>
         </div>
@@ -129,7 +123,7 @@ const QuitPage = () => {
       {isNotPermitted && (
         <AlertDialog
           title="회원 탈퇴 불가"
-          content="플랜을 취소하고 탈퇴해 주세요."
+          content={message}
           setIsOpen={() => setIsNotPermitted(false)}
         />
       )}

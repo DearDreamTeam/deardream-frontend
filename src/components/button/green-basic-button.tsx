@@ -7,6 +7,7 @@ const GreenBasicButton = ({
   disabled = false,
   link,
   newTab = false,
+  onClick,
   color,
 }: {
   children: React.ReactNode;
@@ -14,6 +15,7 @@ const GreenBasicButton = ({
   link?: string; // 링크가 있을 경우 사용
   color?: string; // 버튼 색상
   newTab?: boolean; // 새 탭으로 열지 여부
+  onClick?: () => void; // 클릭 핸들러
 }) => {
   const router = useRouter();
   return (
@@ -30,6 +32,8 @@ const GreenBasicButton = ({
           window.location.href = link;
         } else if (link) {
           router.push(link);
+        } else if (onClick) {
+          onClick();
         }
       }}
       disabled={disabled} // 버튼이 비활성화된 경우

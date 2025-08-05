@@ -4,11 +4,12 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { useEffect } from "react";
 import Result from "@/components/result/result";
-import GreenBasicButton from "@/components/button/green-basic-button";
 import axios from "@/lib/axios";
 import { usePaymentStore } from "@/stores/usePaymentStore";
 import { PATH } from "@/constants/path";
 import AlertDialog from "@/components/modal/dialog/alert-dialog";
+import Loading from "@/components/loading-fallback/loading";
+import GreenBasicButton from "@/components/button/green-basic-button";
 
 const CompleteClient = () => {
   const router = useRouter();
@@ -25,60 +26,45 @@ const CompleteClient = () => {
 
   const [paymentFailed, setPaymentFailed] = useState(false);
 
-  // 결제 완료 버튼 클릭 시 결제 요청
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    try {
-      const response = await axios.get("/v1/test/payment/success", {
-        params: { pgToken, tid },
-      });
-      if (response.status === 200) {
-        setIsComplete(true); // 성공 화면 보여주기
-      }
-    } catch (error) {
-      console.error(error);
-      const response = await axios.get("/v1/test/payment/fail", {
-        params: { pgToken, tid },
-      });
-      if (response.status === 200) {
-        setPaymentFailed(true);
-        setTid(null);
-      }
-    }
-  };
-
-  // 성공 상태일 때 자동 이동
   useEffect(() => {
-    if (isComplete) {
-      const timer = setTimeout(() => {
-        router.push(PATH.SUBSCRIBE + "/receiver");
-      }, 2000);
-      return () => clearTimeout(timer);
-    }
-  }, [isComplete, router]);
+    if (!pgToken || !tid) return;
+    const checkPayment = async () => {
+      try {
+        const response = await axios.get("/v1/test/payment/success", {
+          params: { pgToken, tid },
+        });
+        if (response.status === 200) {
+          setIsComplete(true); // 성공 화면 보여주기
+          localStorage.removeItem("payment-storage");
+        }
+      } catch (error) {
+        console.error(error);
+        const response = await axios.get("/v1/test/payment/fail", {
+          params: { pgToken, tid },
+        });
+        if (response.status === 200) {
+          setPaymentFailed(true);
+          setTid(null);
+        }
+      }
+    };
+    checkPayment();
+  }, [pgToken, setTid, tid]);
 
   return (
     <>
       {!isComplete ? (
-        <form
-          className="flex h-full w-full flex-col items-center justify-center gap-2 p-4"
-          onSubmit={handleSubmit}
-        >
-          <Result
-            title="결제 완료 버튼을 눌러주세요!"
-            description="버튼을 누르시면 카카오 페이 결제가 완료됩니다."
-            imageType="payment"
-          />
-          <GreenBasicButton color="300">결제 완료 하기</GreenBasicButton>
-        </form>
+        <Loading />
       ) : (
         <div className="flex h-full w-full flex-col items-center justify-center gap-2 p-4">
           <Result
             title="결제가 완료되었어요"
-            description="받는 분의 정보와 주소를 입력하고"
-            description2="가족 생성을 완료해보세요!"
+            description="소식지를 작성하러 가볼까요?"
             imageType="payment"
           />
+          <GreenBasicButton color="300" link={PATH.HOME} newTab={true}>
+            소식지 작성하기
+          </GreenBasicButton>
         </div>
       )}
       {paymentFailed && (

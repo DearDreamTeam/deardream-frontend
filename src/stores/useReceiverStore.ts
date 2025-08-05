@@ -34,6 +34,7 @@ interface ReceiverState {
   receiverImage: ReceiverProfileImage;
   setReceiverImage: (image: ReceiverProfileImage) => void;
   resetReceiverImage: () => void;
+  resetReceiverAddress: () => void;
 }
 
 export const useReceiverStore = create<ReceiverState>((set) => ({
@@ -64,6 +65,7 @@ export const useReceiverStore = create<ReceiverState>((set) => ({
         ...info,
       },
     })),
+
   resetReceiver: () =>
     set({
       receiver: {
@@ -92,4 +94,21 @@ export const useReceiverStore = create<ReceiverState>((set) => ({
   },
   setReceiverImage: (image) => set({ receiverImage: { ...image } }),
   resetReceiverImage: () => set({ receiverImage: { profileImage: null } }),
+  resetReceiverAddress: () =>
+    set((state) => ({
+      receiver: {
+        ...state.receiver,
+        address: {
+          deliveryType: "HOME",
+          recipientName: "",
+          recipientPhone: "",
+          postalCode: "",
+          address: "",
+          addressDetail: "",
+          institutionName: "",
+          institutionPhone: "",
+          code: "",
+        },
+      },
+    })),
 }));

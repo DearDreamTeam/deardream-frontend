@@ -23,7 +23,7 @@ const LinkCopy = () => {
       <p className="text-body-2 p-1 text-center">또는 링크 복사하기</p>
       <div className="bg-grey-50 flex gap-1 rounded-sm px-4 py-[0.69rem]">
         <span className="line-clamp-1 flex-1">
-          {(SHARE_DATA.url ?? "") + "invite?familylink=" + (familyLink ?? "")}
+          {(SHARE_DATA.url ?? "") + (familyLink ?? "")}
         </span>
         <button onClick={handleCopy}>
           <FileCopy />

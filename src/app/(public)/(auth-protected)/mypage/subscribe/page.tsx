@@ -84,12 +84,6 @@ const SubScribePage = () => {
                 주소 변경
               </div>
               <div
-                className="text-title-2 text-grey-700 cursor-pointer"
-                onClick={() => router.push("/mypage/subscribe/plan")}
-              >
-                플랜 변경
-              </div>
-              <div
                 className="text-title-2 text-grey-800 cursor-pointer"
                 onClick={() => router.push("/mypage/subscribe/quit")}
               >

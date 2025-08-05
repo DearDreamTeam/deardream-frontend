@@ -5,6 +5,7 @@ import { useState } from "react";
 //stores
 import { useUserStore } from "@/stores/useUserInfoStore";
 import { updateProfile } from "@/api/profile";
+import { AxiosError } from "axios";
 //components
 import GreenBasicButton from "@/components/button/profile-green-basic-button";
 import Header from "@/components/common/header";
@@ -23,6 +24,9 @@ const Profile = () => {
   // 저장 로딩 상태
   const [isLoading, setIsLoading] = useState(false);
 
+  // 프로필 수정 실패 상태
+  const [message, setMessage] = useState("");
+
   // 프로필 정보 유효성 검사
   const isProfileIncomplete =
     !editUserProfile?.name?.trim() || !editUserProfile?.birth?.trim();
@@ -33,11 +37,16 @@ const Profile = () => {
       alert("이름과 생일을 입력해주세요.");
       return;
     }
+    if (selectedFile && selectedFile.size > 1024 * 1024) {
+      setMessage("이미지 파일은 1MB 이하로 업로드해주세요.");
+      return;
+    }
     setIsLoading(true);
     try {
       const response = await updateProfile(editUserProfile, selectedFile);
       console.log("프로필 업데이트 성공:", response.data);
       if (response.data.isSuccess) {
+        console.log("프로필 업데이트 성공:", response.data);
         setShowAlert(true);
       }
       if (response.data.result.profileImage) {
@@ -51,7 +60,19 @@ const Profile = () => {
       }
     } catch (error) {
       console.error("프로필 업데이트 실패:", error);
-      alert("프로필 업데이트에 실패했습니다. 다시 시도해주세요.");
+      if (error instanceof AxiosError) {
+        if (error.response?.data.message) {
+          setMessage(error.response?.data.message);
+        } else if (error.response?.status === 413) {
+          setMessage("이미지 파일 크기가 너무 큽니다.");
+        } else if (error.response?.status === 415) {
+          setMessage("이미지 파일 형식이 올바르지 않습니다.");
+        } else {
+          setMessage("이미지 파일은 1MB 이하 제한입니다.");
+        }
+      } else {
+        setMessage("프로필 업데이트에 실패했습니다. 다시 시도해주세요.");
+      }
     } finally {
       setIsLoading(false);
     }
@@ -62,6 +83,9 @@ const Profile = () => {
       <form
         onSubmit={(e) => {
           e.preventDefault();
+          if (isProfileIncomplete || isLoading) {
+            return;
+          }
           handleSave(); // 이 함수 안에서 유효성 검사 + axios 처리
         }}
         className="bg-grey-0 relative flex h-full w-full flex-col items-center justify-between p-4 pt-0"
@@ -89,6 +113,13 @@ const Profile = () => {
           onAction={() => {
             window.location.href = "/mypage";
           }}
+        />
+      )}
+      {message && (
+        <AlertDialog
+          title="프로필 수정 실패"
+          content={message}
+          setIsOpen={() => setMessage("")}
         />
       )}
     </>

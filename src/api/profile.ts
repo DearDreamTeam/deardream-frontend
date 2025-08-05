@@ -138,3 +138,16 @@ export const updateReceiverAddress = async (receiver: ReceiverProfileInfo) => {
   console.log("수신자 업데이트 응답:", response.data);
   return response;
 };
+
+export const clearReceiverAddress = async (receiver: ReceiverProfileInfo) => {
+  const response = await axios.patch(`/v1/recipients/${receiver.id}`, {
+    postalCode: "",
+    address: "",
+    addressDetail: "",
+    institutionName: "",
+    institutionPhone: "",
+    code: "",
+  });
+  console.log("수신자 주소 삭제 응답:", response.data);
+  return response;
+};

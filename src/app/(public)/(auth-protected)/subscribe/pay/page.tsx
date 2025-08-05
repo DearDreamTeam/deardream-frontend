@@ -9,10 +9,13 @@ import { useEffect, useState } from "react";
 import { useUserStore } from "@/stores/useUserInfoStore";
 import { useRouter } from "next/navigation";
 import { usePaymentStore } from "@/stores/usePaymentStore";
+import AlertDialog from "@/components/modal/dialog/alert-dialog";
 
 const PayPage = () => {
   const { userProfile } = useUserStore();
   const { setTid } = usePaymentStore();
+
+  const [message, setMessage] = useState("");
 
   const [isPaymentCheck] = useState(true);
   // 전체 약관 동의
@@ -91,13 +94,13 @@ const PayPage = () => {
       console.log(SECRET_KEY);
       const CLIENT_URL = process.env.NEXT_PUBLIC_KAKAO_PAY_REDIRECT_URI;
       const response = await axios.post(
-        API_URL + "/v1/test/payment/ready", // POST body는 없음
-        null,
+        API_URL + "/v1/test/payment/ready",
         {
-          params: {
-            userId: userProfile?.id, // 쿼리스트링 ?userId=123
-            redirectUri: CLIENT_URL,
-          },
+          familyId: userProfile?.familyId,
+          orderUserId: userProfile?.id, // 쿼리스트링 ?userId=123
+          redirectUrl: CLIENT_URL,
+        },
+        {
           headers: {
             Authorization: `SecretKey ${SECRET_KEY}`,
             "Content-Type": "application/json",
@@ -112,13 +115,13 @@ const PayPage = () => {
     } catch (error) {
       if (axios.isAxiosError(error)) {
         if (error.response?.status === 400) {
-          alert("이미 구독 중인 상품이 있어요");
+          setMessage("이미 구독 중인 상품이 있어요");
         } else if (error.response?.status === 401) {
-          alert("로그인 후 이용해주세요");
+          setMessage("로그인 후 이용해주세요");
         } else if (error.response?.status === 403) {
-          alert("권한이 없어요");
+          setMessage("권한이 없어요");
         } else if (error.response?.status === 404) {
-          alert("존재하지 않는 상품이에요");
+          setMessage("존재하지 않는 상품이에요");
         }
       }
     }
@@ -204,6 +207,13 @@ const PayPage = () => {
           </GreenBasicButton>
         </div>
       </form>
+      {message && (
+        <AlertDialog
+          title="결제 실패"
+          content={message}
+          setIsOpen={() => setMessage("")}
+        />
+      )}
     </>
   );
 };
