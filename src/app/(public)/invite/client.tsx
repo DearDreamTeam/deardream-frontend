@@ -80,7 +80,7 @@ const InvitePageClient = () => {
         <>
           {userProfile.familyRegistered ? (
             <>
-              <div className="flex h-full w-full flex-col items-center justify-center gap-2 p-4">
+              <div className="overflow-auto-hide-scroll flex h-full w-full flex-col items-center justify-center gap-2 p-4">
                 <StateTemplate>
                   <StateTemplate.ImageFiled>
                     <EllipseImage color="green-100" />
@@ -100,7 +100,7 @@ const InvitePageClient = () => {
             </>
           ) : (
             <>
-              <div className="flex h-full w-full flex-col items-center justify-center gap-2 p-4">
+              <div className="overflow-auto-hide-scroll flex h-full w-full flex-col items-center justify-center gap-2 p-4">
                 <StateTemplate>
                   <StateTemplate.ImageFiled>
                     <EllipseImage color="green-100" />

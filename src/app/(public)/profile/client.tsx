@@ -173,9 +173,9 @@ const ProfileClient = () => {
             }
             handleSubmitProfile();
           }}
-          className="bg-grey-0 relative flex h-full w-full flex-col items-center justify-between p-4 pt-0"
+          className="bg-grey-0 overflow-auto-hide-scroll relative flex h-full w-full flex-col items-center justify-between p-4 pt-0"
         >
-          <div>
+          <div className="flex w-full flex-col items-center">
             <Header>프로필 설정</Header>
             <SenderProfileEdit
               isInvite={Boolean(familylink)}

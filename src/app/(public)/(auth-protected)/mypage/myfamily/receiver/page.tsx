@@ -72,7 +72,7 @@ const ReceiverProfilePage = () => {
         }}
         className="bg-grey-0 overflow-auto-hide-scroll relative flex h-full w-full flex-col items-center justify-between p-4 pt-0"
       >
-        <div className="mb-4">
+        <div className="mb-4 flex w-full flex-col items-center">
           <Header>받는 분 정보</Header>
           <ReceiverProfileEdit
             setEditReceiverProfile={setEditUserProfile}

@@ -62,7 +62,7 @@ const FamilyJoinPage = () => {
   }
 
   return (
-    <div className="flex h-full w-full flex-col items-center justify-center gap-2 p-4">
+    <div className="overflow-auto-hide-scroll flex h-full w-full flex-col items-center justify-center gap-2 p-4">
       <Result
         imageType="family"
         title="가족 등록이 완료되었어요"
