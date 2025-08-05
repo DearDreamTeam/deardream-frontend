@@ -3,12 +3,13 @@
 import { useLettersStore } from "@/stores/useLettersStore";
 import { PostListProps } from "../letters-props";
 import PostItem from "./post-item";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { getLikedPostId, getPostboxList, likeALetters } from "@/api/archive";
 import { useUserStore } from "@/stores/useUserInfoStore";
 import { generatePDFTest } from "@/api/test";
 
 const PostList = ({ showOnlyFavorites, sortOption }: PostListProps) => {
+  const hasRun = useRef(false);
   const { newsletters, bookmarks } = useLettersStore();
   const { userProfile } = useUserStore();
 
@@ -22,13 +23,14 @@ const PostList = ({ showOnlyFavorites, sortOption }: PostListProps) => {
   }, [userProfile.id]);
 
   useEffect(() => {
-    if (userProfile.familyId) {
+    if (userProfile.familyId && !hasRun.current) {
       // 한 달 체크 로직
       const fetchData = async () => {
         await generatePDFTest(userProfile.familyId);
         await getPostboxList(userProfile.familyId!);
       };
       fetchData();
+      hasRun.current = true;
     }
   }, [userProfile.familyId]);
 
