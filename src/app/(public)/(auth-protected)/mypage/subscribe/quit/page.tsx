@@ -25,13 +25,10 @@ const QuitPage = () => {
               <div className="text-label-2 text-center">
                 {planType === "HOME" ? (
                   <>
-                    [개인 플랜] 구독은 소속 기관에서 관리하고 있어요
-                    <br />
-                    필요시 소식지 제작 및 배송을 중단 할 수 있지만
-                    <br />
-                    아래 혜택들을 이용할 수 없게 돼요
-                    <br />
-                    그래도 중단하시겠어요?
+                    [개인 플랜] 구독을 해지하시면 <br />
+                    아래 혜택들을 이용할 수 없게 돼요 <br />
+                    또한, 그동안 작성한 소식들은 완전히 소멸돼요 <br />
+                    그래도 해지하시겠어요?
                   </>
                 ) : (
                   <>
@@ -78,7 +75,7 @@ const QuitPage = () => {
 
         <div className="mt-4 flex w-full flex-col items-center justify-center gap-2">
           <GreenBasicButton color="300" link={PATH.MYPAGE}>
-            계속 소식지 받아오기
+            계속 소식지 받아보기
           </GreenBasicButton>
           <GreenBasicButton
             color="100"

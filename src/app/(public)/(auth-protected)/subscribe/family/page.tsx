@@ -21,7 +21,6 @@ const FamilyCreationPage = () => {
           <span className="text-green-300">나중에 입력하기</span>
         </GreenBasicButton>
       </>
-      )
     </div>
   );
 };
