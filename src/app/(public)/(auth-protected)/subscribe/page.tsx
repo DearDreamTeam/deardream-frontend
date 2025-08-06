@@ -45,12 +45,13 @@ const PlanPage = () => {
   }, [router]);
 
   return (
-    <div className="bg-grey-0 relative flex h-full w-full flex-col items-center justify-between pt-0">
-      <Header link={PATH.HOME}>플랜 선택</Header>
+    <div className="bg-grey-0 overflow-auto-hide-scroll relative flex h-full w-full flex-col items-center justify-between">
+      <div className="flex w-full flex-col items-center">
+        <Header link={PATH.HOME}>플랜 선택</Header>
 
-      {/* 개인 플랜 */}
-      <div className="overflow-auto-hide-scroll h-full w-full">
-        <div className="border-grey-200 overflow-auto-hide-scroll mt-3 flex w-full flex-col gap-2 border-b-1 border-solid p-3">
+        {/* 개인 플랜 */}
+
+        <div className="border-grey-200 mt-3 flex w-full flex-col gap-2 border-b-1 border-solid p-3">
           <div className="text-headline-3 text-grey-400 flex items-center gap-2">
             <div
               onClick={() => setPlanType("HOME")}
@@ -99,9 +100,13 @@ const PlanPage = () => {
             월 0원
           </div>
         </div>
+        <div className="text-grey-500 text-label-2 p-3">
+          이어드림과 제휴한 기관 (요양시설 등) 의 구성원 분들만 이용할 수 있는
+          플랜이에요
+        </div>
       </div>
 
-      <div className="m-4 flex h-14 w-full items-center justify-center px-4">
+      <div className="my-4 flex h-14 w-full items-center justify-center px-4">
         <GreenBasicButton color="300" onClick={handleNext}>
           저장
         </GreenBasicButton>

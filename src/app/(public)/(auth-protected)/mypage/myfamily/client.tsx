@@ -15,6 +15,9 @@ import { UserProfileInfo } from "@/types/user-info";
 import { ReceiverProfileInfo } from "@/stores/useReceiverStore";
 import Crown from "@/public/icons/common/crown.svg";
 import KakaoShareScript from "@/components/scripts/kakao-share-script";
+import ConfirmDialog from "@/components/modal/dialog/confirm-dialog";
+import { usePlanStore } from "@/stores/usePlanStore";
+import { renderMessageWithLineBreaks } from "@/utils/render-message-with-line-breaks";
 
 const Add = dynamic(() => import("@/public/icons/common/add.svg"));
 const ShareOptions = dynamic(
@@ -83,6 +86,7 @@ const MyFamilyClient = () => {
   const { receiver, setReceiver } = useReceiverStore();
   const [family, setFamily] = useState<UserProfileInfo[]>([]);
   const { userProfile } = useUserStore();
+  const { plan } = usePlanStore();
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -175,8 +179,19 @@ const MyFamilyClient = () => {
           </>
         )}
       </div>
+      {isOpen && !plan.isActive && (
+        <ConfirmDialog
+          setIsOpen={setIsOpen}
+          title="구독 내역 없음"
+          content={renderMessageWithLineBreaks(
+            `이어드림 플랜을 구독하시면 \n전체 서비스를 이용하실 수 있어요`,
+          )}
+          actionLabel="구독하기"
+          action={() => router.push(PATH.SUBSCRIBE_PLAN)}
+        />
+      )}
 
-      {isOpen && <ShareOptions setIsOpen={setIsOpen} />}
+      {isOpen && plan.isActive && <ShareOptions setIsOpen={setIsOpen} />}
       <KakaoShareScript />
     </div>
   );

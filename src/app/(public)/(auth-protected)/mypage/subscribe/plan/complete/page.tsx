@@ -41,7 +41,7 @@ const CompletePage = () => {
           description2="새 플랜으로 받아보실 소식을 남기러 가볼까요?"
           imageType="page"
         />
-        <GreenBasicButton color="300" link={PATH.LETTER_LIST} newTab={true}>
+        <GreenBasicButton color="300" link={PATH.HOME} newTab={true}>
           소식 남기러 가기
         </GreenBasicButton>
       </div>
