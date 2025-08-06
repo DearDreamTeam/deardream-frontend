@@ -53,4 +53,10 @@ export const NOTIFICATION_MESSAGES = {
         "소식을 작성하려면 가족 그룹이 필요해요\n가족 그룹을 만들러 가볼까요?",
     },
   },
+
+  REJECT_IMAGE_EDIT: {
+    title: "새로 올린 이미지만 수정할 수 있어요",
+    content:
+      "이미 올렸던 이미지는 아직 삭제만 가능해요\n 새로 올린 이미지는 수정할 수 있어요",
+  },
 };

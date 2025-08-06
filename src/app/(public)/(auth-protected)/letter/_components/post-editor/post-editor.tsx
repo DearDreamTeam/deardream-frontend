@@ -178,6 +178,11 @@ const PostEditor = ({ postcard }: { postcard?: Post }) => {
       target?.originalUrl &&
       target?.originalFile === null
     ) {
+      setWarningMessage({
+        title: NOTIFICATION_MESSAGES.REJECT_IMAGE_EDIT.title,
+        content: NOTIFICATION_MESSAGES.REJECT_IMAGE_EDIT.content,
+      });
+      setIsAlertOpen(true);
       return; // 수정 불가
     }
     setSelectedImageId(fileId);
