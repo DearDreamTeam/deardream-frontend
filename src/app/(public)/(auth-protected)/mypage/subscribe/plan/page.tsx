@@ -35,7 +35,7 @@ const PlanPage: FC = () => {
   }, [userProfile, setReceiver]);
 
   return (
-    <div className="bg-grey-0 overflow-auto-hide-scroll relative flex h-full w-full flex-col items-center justify-between p-4 pt-0">
+    <div className="bg-grey-0 overflow-auto-hide-scroll relative flex h-full w-full flex-col items-center justify-between pt-0">
       <div className="flex w-full flex-col items-center">
         <Header link={PATH.HOME}>플랜 재구독</Header>
         <div className="border-grey-200 mt-3 flex w-full flex-col justify-center gap-2 border-b-1 border-solid p-3">
@@ -83,9 +83,11 @@ const PlanPage: FC = () => {
           플랜이에요
         </div>
       </div>
-      <GreenBasicButton color="300" link={PATH.SUBSCRIBE_PLAN + "/address"}>
-        저장
-      </GreenBasicButton>
+      <div className="my-4 flex w-full flex-col items-center px-4">
+        <GreenBasicButton color="300" link={PATH.SUBSCRIBE_PLAN + "/address"}>
+          저장
+        </GreenBasicButton>
+      </div>
     </div>
   );
 };

@@ -11,6 +11,18 @@ import { useRouter } from "next/navigation";
 import { usePaymentStore } from "@/stores/usePaymentStore";
 import AlertDialog from "@/components/modal/dialog/alert-dialog";
 
+function getDeviceType() {
+  const ua = navigator.userAgent;
+
+  if (/tablet|ipad|playbook|silk/i.test(ua)) {
+    return "pc";
+  }
+  if (/Mobile|iPhone|Android/i.test(ua)) {
+    return "mobile";
+  }
+  return "pc";
+}
+
 const PayPage = () => {
   const { userProfile } = useUserStore();
   const { setTid } = usePaymentStore();
@@ -84,14 +96,21 @@ const PayPage = () => {
     }
   }, [isCheck2, isCheck3, isCheck4]);
 
+  useEffect(() => {
+    const deviceType = getDeviceType();
+    console.log(deviceType);
+  }, []);
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const deviceType = getDeviceType();
     if (!isAbleSubmit) return;
     try {
       console.log(userProfile?.id);
       const API_URL = process.env.NEXT_PUBLIC_API_URL;
       const SECRET_KEY = process.env.NEXT_PUBLIC_KAKAO_PAY_KEY;
       console.log(SECRET_KEY);
+      console.log(API_URL);
       const CLIENT_URL = process.env.NEXT_PUBLIC_KAKAO_PAY_REDIRECT_URI;
       const response = await axios.post(
         API_URL + "/v1/test/payment/ready",
@@ -110,7 +129,7 @@ const PayPage = () => {
       console.log(response);
       if (response.status === 200) {
         setTid(response.data.result.tid);
-        router.push(response.data.result.next_redirect_mobile_url);
+        router.push(response.data.result[`next_redirect_${deviceType}_url`]);
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {

@@ -99,6 +99,10 @@ const PlanPage = () => {
             월 0원
           </div>
         </div>
+        <div className="text-grey-500 text-label-2 p-3">
+          이어드림과 제휴한 기관 (요양시설 등) 의 구성원 분들만 이용할 수 있는
+          플랜이에요
+        </div>
       </div>
 
       <div className="m-4 flex h-14 w-full items-center justify-center px-4">
