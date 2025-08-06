@@ -27,6 +27,7 @@ import { Post } from "@/types/post-type";
 import { useUserStore } from "@/stores/useUserInfoStore";
 
 const PostEditor = ({ postcard }: { postcard?: Post }) => {
+  const [processing, setProcessing] = useState(false);
   const fileIdRef = useRef(0);
   const router = useRouter();
   const [warningMessage, setWarningMessage] = useState({
@@ -68,7 +69,9 @@ const PostEditor = ({ postcard }: { postcard?: Post }) => {
   }, [imageFiles]);
 
   const handleSubmitLetter = async (e: React.FormEvent<HTMLFormElement>) => {
+    setProcessing(true);
     e.preventDefault();
+
     if (!isActive) {
       if (imageCount > 0) {
         setWarningMessage(NOTIFICATION_MESSAGES.TEXT_LIMIT_INVALID.WITH_IMAGES);
@@ -114,6 +117,8 @@ const PostEditor = ({ postcard }: { postcard?: Post }) => {
     setIsComplete(true);
     setTimeout(() => {
       setIsComplete(false);
+      setProcessing(false);
+
       router.replace(PATH.HOME);
     }, 2000);
   };
@@ -173,14 +178,15 @@ const PostEditor = ({ postcard }: { postcard?: Post }) => {
       target?.originalUrl &&
       target?.originalFile === null
     ) {
+      setWarningMessage({
+        title: NOTIFICATION_MESSAGES.REJECT_IMAGE_EDIT.title,
+        content: NOTIFICATION_MESSAGES.REJECT_IMAGE_EDIT.content,
+      });
+      setIsAlertOpen(true);
       return; // 수정 불가
     }
     setSelectedImageId(fileId);
   };
-
-  useEffect(() => {
-    console.log("imageFiles", imageFiles);
-  }, [imageFiles]);
 
   return (
     <form
@@ -195,6 +201,7 @@ const PostEditor = ({ postcard }: { postcard?: Post }) => {
         <button
           type="submit"
           className={`p-2 ${isActive ? "text-green-300" : "text-grey-300"}`}
+          disabled={processing}
         >
           등록
         </button>

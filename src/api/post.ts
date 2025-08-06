@@ -28,8 +28,9 @@ export const registerPost = async (
       type: "application/json",
     }),
   );
+
   const compressedFiles = await Promise.all(
-    images.map((file) => compressImage(file)),
+    images.map((file) => compressImage(file, images.length === 2 ? 0.5 : 1)),
   );
 
   compressedFiles.forEach((file) => {
