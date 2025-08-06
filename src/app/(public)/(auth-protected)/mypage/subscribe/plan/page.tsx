@@ -78,7 +78,7 @@ const PlanPage: FC = () => {
             월 0원
           </div>
         </div>
-        <div className="text-grey-500 text-label-2 p-3">
+        <div className="text-grey-500 text-label-2 w-full p-3 text-left">
           이어드림과 제휴한 기관 (요양시설 등) 의 구성원 분들만 이용할 수 있는
           플랜이에요
         </div>
