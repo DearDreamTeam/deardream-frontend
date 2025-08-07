@@ -16,9 +16,12 @@ const ImagePreviewer = ({
   return (
     <div className="flex w-full justify-around gap-1 py-5">
       {imageFiles?.map((item) => (
-        <div key={item.fileId} className="relative w-full">
+        <div
+          key={item.fileId}
+          className={`relative ${imageFiles.length === 1 ? "w-1/2" : "w-full"}`}
+        >
           <div
-            className="w-full"
+            className="flex w-full justify-center"
             onClick={() => handleImageClick(item.fileId!)}
           >
             <ImageFallback
