@@ -20,7 +20,10 @@ export const useSuperAdminStore = create<SuperAdminState>()(
     immer((set) => ({
       individuals: [],
       institutions: [],
-      pivotDate: new Date(),
+      pivotDate: (() => {
+        const d = new Date();
+        return new Date(d.getFullYear(), d.getMonth() + 1, d.getDate());
+      })(),
       setPivotDate: (date) => set({ pivotDate: new Date(date) }),
       updatePivotDate: (value) =>
         set((state) => ({
