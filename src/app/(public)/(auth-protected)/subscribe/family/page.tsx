@@ -7,7 +7,6 @@ import { PATH } from "@/constants/path";
 const FamilyCreationPage = () => {
   return (
     <div className="overflow-auto-hide-scroll flex h-full w-full flex-col items-center justify-center gap-2 p-4">
-      (
       <>
         <Result
           title="가족 생성이 완료되었어요"

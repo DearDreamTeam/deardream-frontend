@@ -24,9 +24,6 @@ const InstitutionAddressInput = () => {
   const [institution, setInstitution] =
     useState<InstitutionAddressInputProps | null>(receiver.address);
   const [code, setCode] = useState(receiver.address.code);
-  const [detailAddress, setDetailAddress] = useState(
-    receiver.address.addressDetail,
-  );
 
   // 📌 이걸 AddressPage에서 submit 직전에 호출해야 함
   useEffect(() => {
@@ -40,12 +37,12 @@ const InstitutionAddressInput = () => {
         postalCode: institution.postalCode,
         institutionName: institution.institutionName,
         institutionPhone: institution.institutionPhone,
-        addressDetail: detailAddress,
+        addressDetail: receiver.address.addressDetail,
         recipientName: "",
         recipientPhone: "",
       },
     });
-  }, [institution, detailAddress, setReceiver]);
+  }, [institution, setReceiver]);
 
   const handleCodeCheck = async () => {
     try {
@@ -149,8 +146,15 @@ const InstitutionAddressInput = () => {
         상세 주소
         <input
           type="text"
-          value={detailAddress}
-          onChange={(e) => setDetailAddress(e.target.value)}
+          value={getValue(receiver.address.addressDetail)}
+          onChange={(e) =>
+            setReceiver({
+              address: {
+                ...receiver.address,
+                addressDetail: e.target.value,
+              },
+            })
+          }
           placeholder="상세 주소를 입력해주세요 (선택)"
           className="text-title-1 text-grey-900 placeholder:text-title-3 placeholder:text-grey-400 border-grey-300 w-full border-b-1 border-solid px-1 py-2 focus:outline-none"
         />
