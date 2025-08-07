@@ -33,16 +33,16 @@ const HomeBanner = () => {
               key={`banner-${index}`}
               className={`shadow-default relative z-20 w-full rounded-sm bg-green-200 pt-[1.36rem] pl-[0.91rem] text-green-300`}
             >
-              <Image
-                src={`/images/white-big-ribbon.svg`}
-                alt="ribbon-bg"
-                width={284.23}
-                height={250.49}
-                className="absolute -top-[4.45rem] -left-[0.94rem] z-20 opacity-20"
-              />
-              <Link href={href} className="relative z-30">
-                <p className="text-caption-1">{content}</p>
-                <p className="text-guide-title">{title}</p>
+              <Link href={href}>
+                <Image
+                  src={`/images/white-big-ribbon.svg`}
+                  alt="ribbon-bg"
+                  width={284.23}
+                  height={250.49}
+                  className="absolute -top-[4.45rem] -left-[0.94rem] z-20 opacity-20"
+                />
+                <p className="text-caption-1 relative z-40">{content}</p>
+                <p className="text-guide-title relative z-40">{title}</p>
               </Link>
             </SwiperSlide>
           ))}
